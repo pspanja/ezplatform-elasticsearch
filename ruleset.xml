@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<ruleset name="Cabbage">
+    <config name="installed_paths" value="../../slevomat/coding-standard"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation"/>
+</ruleset>
