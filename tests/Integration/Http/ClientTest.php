@@ -73,6 +73,7 @@ class ClientTest extends TestCase
         while (microtime(true) - $start <= $timeout) {
             if (self::isServerReachable($host, $port)) {
                 $reachable = true;
+
                 break;
             }
 
