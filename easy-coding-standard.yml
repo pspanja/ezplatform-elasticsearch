@@ -1,0 +1,21 @@
+imports:
+    - { resource: 'vendor/symplify/easy-coding-standard/config/symfony.yml' }
+    - { resource: 'vendor/symplify/easy-coding-standard/config/symfony-risky.yml' }
+    - { resource: 'vendor/symplify/easy-coding-standard/config/common/namespaces.yml' }
+
+parameters:
+    exclude_checkers:
+        - 'PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer'
+        - 'PhpCsFixer\Fixer\CastNotation\CastSpacesFixer'
+        - 'PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer'
+
+services:
+    SlevomatCodingStandard\Sniffs\Namespaces\FullyQualifiedClassNameInAnnotationSniff: ~
+    PhpCsFixer\Fixer\CastNotation\CastSpacesFixer:
+        space: none
+    PhpCsFixer\Fixer\ListNotation\ListSyntaxFixer:
+        syntax: short
+    PhpCsFixer\Fixer\ArrayNotation\ArraySyntaxFixer:
+        syntax: short
+    PhpCsFixer\Fixer\Operator\ConcatSpaceFixer:
+        spacing: one
