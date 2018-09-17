@@ -19,7 +19,6 @@ return PhpCsFixer\Config::create()
         'explicit_string_variable' => true,
         'fully_qualified_strict_types' => true,
         'heredoc_to_nowdoc' => true,
-        'list_syntax' => ['syntax' => 'long'],
         'mb_str_functions' => true,
         'multiline_comment_opening_closing' => true,
         'no_alternative_syntax' => true,
