@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Cabbage\Http;
 
@@ -43,10 +45,10 @@ final class Client
         $status = 200;
         $version = '1.1';
         $headers = [];
-        $pattern = "(^HTTP/(?P<version>\d+\.\d+)\s+(?P<status>\d+))S";
+        $pattern = '(^HTTP/(?P<version>\\d+\\.\\d+)\\s+(?P<status>\\d+))S';
 
         foreach ($responseHeaders as $responseHeader) {
-            if (preg_match( $pattern, $responseHeader, $matches)) {
+            if (preg_match($pattern, $responseHeader, $matches)) {
                 $version = $matches['version'];
                 $status = (int)$matches['status'];
                 $headers = [];

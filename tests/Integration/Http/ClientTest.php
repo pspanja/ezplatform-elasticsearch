@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration\Http;
 
@@ -84,7 +86,7 @@ class ClientTest extends TestCase
 
     protected static function isServerReachable($host, $port): bool
     {
-        set_error_handler(function() {return true;});
+        set_error_handler(function () {return true; });
         $pointer = fsockopen($host, $port);
         restore_error_handler();
 
@@ -115,7 +117,7 @@ class ClientTest extends TestCase
         }
 
         register_shutdown_function(
-            function() use ($pid) {
+            function () use ($pid) {
                 echo "Killing HTTP server process #{$pid}\n";
                 exec("kill {$pid}");
             }
