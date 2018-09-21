@@ -25,7 +25,7 @@ final class Client
 
         error_reporting($level);
 
-        if (false === $body) {
+        if ($body === false) {
             $error = error_get_last();
 
             throw new ConnectionException($error['message']);
@@ -64,7 +64,7 @@ final class Client
     /**
      * @param \Cabbage\Http\Request $request
      *
-     * @return array
+     * @return array[][]
      */
     private function getStreamContextOptions(Request $request): array
     {

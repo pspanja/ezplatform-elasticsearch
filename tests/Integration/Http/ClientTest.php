@@ -12,7 +12,7 @@ use RuntimeException;
 
 class ClientTest extends TestCase
 {
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         $timeout = (int)getenv('serverTimeout');
         $host = getenv('serverHost');
@@ -118,7 +118,7 @@ class ClientTest extends TestCase
         }
 
         register_shutdown_function(
-            function () use ($pid) {
+            function () use ($pid): void {
                 echo "Killing HTTP server process #{$pid}\n";
                 exec("kill {$pid}");
             }
