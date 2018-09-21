@@ -21,13 +21,13 @@ branches:
     only:
         - master
 
-# install dependencies
-install:
-    - travis_wait composer install
-
 before_install:
     - docker build --file ./.docker/elasticsearch/Dockerfile --tag elasticsearch .
     - docker run --detach --publish 9200:9200 elasticsearch
+
+# install dependencies
+install:
+    - travis_wait composer install
 
 # execute phpunit as the script command
 script:
