@@ -24,6 +24,7 @@ branches:
 before_install:
     - docker build --file ./.docker/elasticsearch/Dockerfile --tag elasticsearch .
     - docker run --detach --publish 9200:9200 elasticsearch
+    - ./bin/wait_for_server.sh
 
 # install dependencies
 install:
