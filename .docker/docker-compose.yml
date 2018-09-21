@@ -1,0 +1,21 @@
+version: '3'
+services:
+    elasticsearch:
+        build:
+            context: .
+            dockerfile: ./elasticsearch/Dockerfile
+        restart: on-failure:3
+        container_name: elasticsearch
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+    kibana:
+        build:
+            context: .
+            dockerfile: ./kibana/Dockerfile
+        restart: on-failure:3
+        container_name: kibana
+        links:
+            - elasticsearch
+        ports:
+            - "5601:5601"
