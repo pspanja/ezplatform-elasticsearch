@@ -9,7 +9,7 @@ matrix:
     fast_finish: true
     include:
         - php: 7.2
-          env: CONFIG="phpunit-integration.xml" COVERGAGE="all"
+          env: CONFIG="phpunit-integration.xml" COVERAGE="all"
 
 # test only master and pull requests to master
 branches:
@@ -37,4 +37,4 @@ sudo: false
 
 # send coverage to https://codecov.io
 after_success:
-    - bash <(curl -s https://codecov.io/bash) -F $COVERGAGE
+    - bash <(curl -s https://codecov.io/bash) -F $COVERAGE
