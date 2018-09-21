@@ -15,9 +15,9 @@ class ClientTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         $timeout = (int)getenv('serverTimeout');
-        $host = getenv('serverHost');
+        $host = (string)getenv('serverHost');
         $port = (int)getenv('serverPort');
-        $documentRoot = getenv('serverDocumentRoot');
+        $documentRoot = (string)getenv('serverDocumentRoot');
 
         static::startServer($host, $port, $documentRoot);
         static::waitForServer($host, $port, $timeout);
@@ -65,7 +65,12 @@ class ClientTest extends TestCase
         return new Client();
     }
 
-    protected static function waitForServer($host, $port, $timeout): void
+    /**
+     * @param string $host
+     * @param int $port
+     * @param int $timeout
+     */
+    protected static function waitForServer(string $host, int $port, int $timeout): void
     {
         $start = microtime(true);
         $reachable = false;
@@ -85,7 +90,13 @@ class ClientTest extends TestCase
         }
     }
 
-    protected static function isServerReachable($host, $port): bool
+    /**
+     * @param string $host
+     * @param int $port
+     *
+     * @return bool
+     */
+    protected static function isServerReachable(string $host, int $port): bool
     {
         set_error_handler(function () {return true; });
         $pointer = fsockopen($host, $port);
@@ -100,7 +111,12 @@ class ClientTest extends TestCase
         return true;
     }
 
-    protected static function startServer($host, $port, $documentRoot): void
+    /**
+     * @param string $host
+     * @param int $port
+     * @param string $documentRoot
+     */
+    protected static function startServer(string $host, int $port, string $documentRoot): void
     {
         $command = sprintf(
             'php -S %s:%d -t %s >/dev/null 2>&1 & echo $!',
