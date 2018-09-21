@@ -64,7 +64,7 @@ final class Client
     /**
      * @param \Cabbage\Http\Request $request
      *
-     * @return array[][]
+     * @return array[]|array[][]
      */
     private function getStreamContextOptions(Request $request): array
     {
