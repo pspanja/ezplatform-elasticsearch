@@ -25,7 +25,7 @@ branches:
 install:
     - travis_wait composer install
 
-before_script:
+before_install:
     - docker build --file ./.docker/elasticsearch/Dockerfile --tag elasticsearch .
     - docker run --publish 9200:9200 elasticsearch
 
