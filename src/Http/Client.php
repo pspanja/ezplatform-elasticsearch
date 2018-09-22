@@ -71,10 +71,21 @@ final class Client
         return [
             'http' => [
                 'content' => $request->body,
-                'header' => $request->headers,
+                'header' => $this->formatHeaders($request),
                 'ignore_errors' => true,
                 'method' => $request->method,
             ],
         ];
+    }
+
+    private function formatHeaders(Request $request): array
+    {
+        $headers = [];
+
+        foreach ($request->headers as $key => $value) {
+            $headers[] = "{$key}: $value";
+        }
+
+        return $headers;
     }
 }
