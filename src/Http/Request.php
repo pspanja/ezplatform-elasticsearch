@@ -15,6 +15,11 @@ final class Request
     public const GET = 'GET';
 
     /**
+     * HTTP PUT method.
+     */
+    public const PUT = 'PUT';
+
+    /**
      * HTTP URI.
      *
      * @var string
