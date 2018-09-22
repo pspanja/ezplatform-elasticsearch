@@ -10,13 +10,6 @@ namespace Cabbage\Http;
 final class Request
 {
     /**
-     * HTTP URI.
-     *
-     * @var string
-     */
-    public $uri;
-
-    /**
      * Request/response body.
      *
      * @var string
@@ -31,18 +24,11 @@ final class Request
     public $headers;
 
     /**
-     * Construct from headers and body.
-     *
-     * @param string $uri
      * @param string[] $headers
      * @param string $body
      */
-    public function __construct(
-        string $uri,
-        string $body = '',
-        array $headers = []
-    ) {
-        $this->uri = $uri;
+    public function __construct(string $body = '', array $headers = [])
+    {
         $this->headers = $headers;
         $this->body = $body;
     }

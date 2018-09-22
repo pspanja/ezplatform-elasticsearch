@@ -28,9 +28,9 @@ final class Gateway
 
     public function ping(string $uri): Response
     {
-        $request = new Request($uri);
+        $request = new Request();
 
-        return $this->client->get($request);
+        return $this->client->get($request, $uri);
     }
 
     public function createIndex(string $uri, string $name): Response
@@ -44,13 +44,12 @@ final class Gateway
         ];
 
         $request = new Request(
-            $uri,
             (string)json_encode($body),
             [
                 'Content-Type' => 'application/json',
             ]
         );
 
-        return $this->client->put($request);
+        return $this->client->put($request, $uri);
     }
 }

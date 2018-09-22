@@ -23,40 +23,43 @@ final class Client
      * Send $request with GET method and return the response.
      *
      * @param \Cabbage\Http\Request $request
+     * @param string $uri
      *
      * @return \Cabbage\Http\Response
      */
-    public function get(Request $request): Response
+    public function get(Request $request, string $uri): Response
     {
-        return $this->send($request, self::GET);
+        return $this->send($request, $uri, self::GET);
     }
 
     /**
      * Send $request with PUT method and return the response.
      *
      * @param \Cabbage\Http\Request $request
+     * @param string $uri
      *
      * @return \Cabbage\Http\Response
      */
-    public function put(Request $request): Response
+    public function put(Request $request, string $uri): Response
     {
-        return $this->send($request, self::PUT);
+        return $this->send($request, $uri, self::PUT);
     }
 
     /**
      * Send $request with $method and return the response.
      *
      * @param \Cabbage\Http\Request $request
+     * @param string $uri
      * @param string $method
      *
      * @return \Cabbage\Http\Response
      */
-    private function send(Request $request, string $method): Response
+    private function send(Request $request, string $uri, string $method): Response
     {
         $context = stream_context_create($this->getStreamContextOptions($request, $method));
 
         $level = error_reporting(0);
-        $body = file_get_contents($request->uri, false, $context);
+        $body = file_get_contents($uri, false, $context);
 
         error_reporting($level);
 
