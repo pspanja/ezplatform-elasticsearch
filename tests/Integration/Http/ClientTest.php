@@ -31,7 +31,7 @@ class ClientTest extends TestCase
         $port = (int)getenv('serverPort');
 
         $request = new Request("http://{$host}:{$port}/something.txt");
-        $response = $client->send($request);
+        $response = $client->get($request);
 
         $this->assertEquals(200, $response->status);
         $this->assertEquals("something in a text file\n", $response->body);
@@ -45,7 +45,7 @@ class ClientTest extends TestCase
         $port = (int)getenv('serverPort');
 
         $request = new Request("http://{$host}:{$port}/not_found.mpg");
-        $response = $client->send($request);
+        $response = $client->get($request);
 
         $this->assertEquals(404, $response->status);
     }
@@ -57,7 +57,7 @@ class ClientTest extends TestCase
         $this->expectException(ConnectionException::class);
 
         $request = new Request('http://remotehost:12345/passwords.txt');
-        $client->send($request);
+        $client->get($request);
     }
 
     protected function getClientUnderTest(): Client

@@ -10,28 +10,11 @@ namespace Cabbage\Http;
 final class Request
 {
     /**
-     * HTTP GET method.
-     */
-    public const GET = 'GET';
-
-    /**
-     * HTTP PUT method.
-     */
-    public const PUT = 'PUT';
-
-    /**
      * HTTP URI.
      *
      * @var string
      */
     public $uri;
-
-    /**
-     * HTTP method.
-     *
-     * @var string
-     */
-    public $method;
 
     /**
      * Request/response body.
@@ -51,18 +34,15 @@ final class Request
      * Construct from headers and body.
      *
      * @param string $uri
-     * @param string $method
      * @param string[] $headers
      * @param string $body
      */
     public function __construct(
         string $uri,
-        string $method = self::GET,
         string $body = '',
         array $headers = []
     ) {
         $this->uri = $uri;
-        $this->method = $method;
         $this->headers = $headers;
         $this->body = $body;
     }

@@ -10,15 +10,50 @@ namespace Cabbage\Http;
 final class Client
 {
     /**
-     * Send $request and return the response.
+     * HTTP GET method.
+     */
+    private const GET = 'GET';
+
+    /**
+     * HTTP PUT method.
+     */
+    private const PUT = 'PUT';
+
+    /**
+     * Send $request with GET method and return the response.
      *
      * @param \Cabbage\Http\Request $request
      *
      * @return \Cabbage\Http\Response
      */
-    public function send(Request $request): Response
+    public function get(Request $request): Response
     {
-        $context = stream_context_create($this->getStreamContextOptions($request));
+        return $this->send($request, self::GET);
+    }
+
+    /**
+     * Send $request with PUT method and return the response.
+     *
+     * @param \Cabbage\Http\Request $request
+     *
+     * @return \Cabbage\Http\Response
+     */
+    public function put(Request $request): Response
+    {
+        return $this->send($request, self::PUT);
+    }
+
+    /**
+     * Send $request with $method and return the response.
+     *
+     * @param \Cabbage\Http\Request $request
+     * @param string $method
+     *
+     * @return \Cabbage\Http\Response
+     */
+    private function send(Request $request, string $method): Response
+    {
+        $context = stream_context_create($this->getStreamContextOptions($request, $method));
 
         $level = error_reporting(0);
         $body = file_get_contents($request->uri, false, $context);
@@ -63,17 +98,18 @@ final class Client
 
     /**
      * @param \Cabbage\Http\Request $request
+     * @param string $method
      *
      * @return array[]|array[][]
      */
-    private function getStreamContextOptions(Request $request): array
+    private function getStreamContextOptions(Request $request, string $method): array
     {
         return [
             'http' => [
                 'content' => $request->body,
                 'header' => $this->formatHeaders($request),
                 'ignore_errors' => true,
-                'method' => $request->method,
+                'method' => $method,
             ],
         ];
     }

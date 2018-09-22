@@ -30,7 +30,7 @@ final class Gateway
     {
         $request = new Request($uri);
 
-        return $this->client->send($request);
+        return $this->client->get($request);
     }
 
     public function createIndex(string $uri, string $name): Response
@@ -45,13 +45,12 @@ final class Gateway
 
         $request = new Request(
             $uri,
-            Request::PUT,
             (string)json_encode($body),
             [
                 'Content-Type' => 'application/json',
             ]
         );
 
-        return $this->client->send($request);
+        return $this->client->put($request);
     }
 }
