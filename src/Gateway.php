@@ -32,4 +32,26 @@ final class Gateway
 
         return $this->client->send($request);
     }
+
+    public function createIndex(string $uri, string $name): Response
+    {
+        $uri = "{$uri}/{$name}";
+        $body = [
+            'settings' => [
+                'number_of_shards' => 1,
+                'index.write.wait_for_active_shards' => 1,
+            ],
+        ];
+
+        $request = new Request(
+            $uri,
+            Request::PUT,
+            json_encode($body),
+            [
+                'Content-Type' => 'application/json',
+            ]
+        );
+
+        return $this->client->send($request);
+    }
 }

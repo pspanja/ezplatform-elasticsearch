@@ -23,6 +23,15 @@ class GatewayTest extends TestCase
         $this->assertEquals('You Know, for Search', $body->tagline);
     }
 
+    public function testCreateIndex(): void
+    {
+        $gateway = $this->getGatewayUnderTest();
+
+        $response = $gateway->createIndex('http://localhost:9200', 'test');
+
+        $this->assertEquals(200, $response->status);
+    }
+
     public function getGatewayUnderTest(): Gateway
     {
         return new Gateway(new Client());
