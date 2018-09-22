@@ -50,4 +50,25 @@ final class Response
         $this->body = $body;
         $this->headers = $headers;
     }
+
+    public static function fromHeadersAndBody(array $responseHeaders, string $body): Response
+    {
+        $status = 200;
+        $version = '1.1';
+        $headers = [];
+        $pattern = '(^HTTP/(?P<version>\\d+\\.\\d+)\\s+(?P<status>\\d+))S';
+
+        foreach ($responseHeaders as $responseHeader) {
+            if (preg_match($pattern, $responseHeader, $matches)) {
+                $version = $matches['version'];
+                $status = (int)$matches['status'];
+                $headers = [];
+            } else {
+                [$key, $value] = explode(':', $responseHeader, 2);
+                $headers[$key] = trim($value);
+            }
+        }
+
+        return new self($version, $status, $body, $headers);
+    }
 }

@@ -69,34 +69,7 @@ final class Client
             throw new ConnectionException($error['message']);
         }
 
-        return $this->buildResponse($http_response_header, $body);
-    }
-
-    /**
-     * @param string[] $responseHeaders
-     * @param string $body
-     *
-     * @return \Cabbage\Http\Response
-     */
-    private function buildResponse(array $responseHeaders, string $body): Response
-    {
-        $status = 200;
-        $version = '1.1';
-        $headers = [];
-        $pattern = '(^HTTP/(?P<version>\\d+\\.\\d+)\\s+(?P<status>\\d+))S';
-
-        foreach ($responseHeaders as $responseHeader) {
-            if (preg_match($pattern, $responseHeader, $matches)) {
-                $version = $matches['version'];
-                $status = (int)$matches['status'];
-                $headers = [];
-            } else {
-                [$key, $value] = explode(':', $responseHeader, 2);
-                $headers[$key] = trim($value);
-            }
-        }
-
-        return new Response($version, $status, $body, $headers);
+        return Response::fromHeadersAndBody($http_response_header, $body);
     }
 
     /**
