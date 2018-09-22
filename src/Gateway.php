@@ -46,7 +46,7 @@ final class Gateway
         $request = new Request(
             $uri,
             Request::PUT,
-            json_encode($body),
+            (string)json_encode($body),
             [
                 'Content-Type' => 'application/json',
             ]

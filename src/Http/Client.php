@@ -78,6 +78,11 @@ final class Client
         ];
     }
 
+    /**
+     * @param \Cabbage\Http\Request $request
+     *
+     * @return string[]
+     */
     private function formatHeaders(Request $request): array
     {
         $headers = [];
