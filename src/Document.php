@@ -12,17 +12,17 @@ final class Document
     public $type;
 
     /**
-     * @var mixed
+     * @var \Cabbage\Field[]
      */
-    public $content;
+    public $fields;
 
     /**
      * @param string $type
-     * @param mixed $content
+     * @param \Cabbage\Field[] $fields
      */
-    public function __construct(string $type, $content)
+    public function __construct(string $type, array $fields)
     {
         $this->type = $type;
-        $this->content = $content;
+        $this->fields = $fields;
     }
 }

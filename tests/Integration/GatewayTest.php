@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Tests\Integration;
 
 use Cabbage\Document;
+use Cabbage\Field;
 use Cabbage\Gateway;
 use Cabbage\Http\Client;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +37,8 @@ class GatewayTest extends TestCase
     public function testIndex(): void
     {
         $gateway = $this->getGatewayUnderTest();
-        $document = new Document('test', ['field' => 'test']);
+        $fields = [new Field('test_name', 'test_value')];
+        $document = new Document('test', $fields);
 
         $response = $gateway->index('http://localhost:9200', $document);
 

@@ -7,6 +7,7 @@ namespace Cabbage;
 use Cabbage\Http\Client;
 use Cabbage\Http\Request;
 use Cabbage\Http\Response;
+use RuntimeException;
 
 /**
  * The gateway communicates with Elasticsearch server using HTTP client.
@@ -58,12 +59,29 @@ final class Gateway
         $uri = "{$uri}/test/{$document->type}";
 
         $request = new Request(
-            (string)json_encode($document->content),
+            $this->serialize($document),
             [
                 'Content-Type' => 'application/json',
             ]
         );
 
         return $this->client->post($request, $uri);
+    }
+
+    private function serialize(Document $document): string
+    {
+        $content = [];
+
+        foreach ($document->fields as $field) {
+            $content[$field->name] = $field->value;
+        }
+
+        $content = json_encode($content);
+
+        if ($content === false) {
+            throw new RuntimeException('Could not JSON encode given document');
+        }
+
+        return $content;
     }
 }
