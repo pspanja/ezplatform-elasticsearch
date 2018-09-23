@@ -7,7 +7,6 @@ namespace Cabbage;
 use Cabbage\Http\Client;
 use Cabbage\Http\Request;
 use Cabbage\Http\Response;
-use RuntimeException;
 
 /**
  * The gateway communicates with Elasticsearch server using HTTP client.
@@ -20,11 +19,18 @@ final class Gateway
     private $client;
 
     /**
-     * @param \Cabbage\Http\Client $client
+     * @var \Cabbage\DocumentSerializer
      */
-    public function __construct(Client $client)
+    private $documentSerializer;
+
+    /**
+     * @param \Cabbage\Http\Client $client
+     * @param \Cabbage\DocumentSerializer $documentSerializer
+     */
+    public function __construct(Client $client, DocumentSerializer $documentSerializer)
     {
         $this->client = $client;
+        $this->documentSerializer = $documentSerializer;
     }
 
     public function ping(string $uri): Response
@@ -59,29 +65,12 @@ final class Gateway
         $uri = "{$uri}/test/{$document->type}";
 
         $request = new Request(
-            $this->serialize($document),
+            $this->documentSerializer->serialize($document),
             [
                 'Content-Type' => 'application/json',
             ]
         );
 
         return $this->client->post($request, $uri);
-    }
-
-    private function serialize(Document $document): string
-    {
-        $content = [];
-
-        foreach ($document->fields as $field) {
-            $content[$field->name] = $field->value;
-        }
-
-        $content = json_encode($content);
-
-        if ($content === false) {
-            throw new RuntimeException('Could not JSON encode given document');
-        }
-
-        return $content;
     }
 }

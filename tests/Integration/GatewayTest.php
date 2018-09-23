@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Tests\Integration;
 
 use Cabbage\Document;
+use Cabbage\DocumentSerializer;
 use Cabbage\Field;
 use Cabbage\Gateway;
 use Cabbage\Http\Client;
@@ -47,6 +48,9 @@ class GatewayTest extends TestCase
 
     public function getGatewayUnderTest(): Gateway
     {
-        return new Gateway(new Client());
+        return new Gateway(
+            new Client(),
+            new DocumentSerializer()
+        );
     }
 }
