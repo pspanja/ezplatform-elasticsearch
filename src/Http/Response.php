@@ -51,7 +51,13 @@ final class Response
         $this->headers = $headers;
     }
 
-    public static function fromHeadersAndBody(array $responseHeaders, string $body): Response
+    /**
+     * @param string[] $responseHeaders
+     * @param string $body
+     *
+     * @return \Cabbage\Http\Response
+     */
+    public static function fromHeadersAndBody(array $responseHeaders, string $body): self
     {
         $status = 200;
         $version = '1.1';

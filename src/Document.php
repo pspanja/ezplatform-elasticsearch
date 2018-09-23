@@ -12,15 +12,15 @@ final class Document
     public $type;
 
     /**
-     * @var array
+     * @var mixed
      */
     public $content;
 
     /**
      * @param string $type
-     * @param array $content
+     * @param mixed $content
      */
-    public function __construct(string $type, array $content)
+    public function __construct(string $type, $content)
     {
         $this->type = $type;
         $this->content = $content;
