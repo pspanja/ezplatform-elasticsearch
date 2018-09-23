@@ -35,8 +35,20 @@ final class DocumentSerializer
         return $content;
     }
 
-    private function mapValue(Field $field): string
+    /**
+     * @param \Cabbage\Field $field
+     *
+     * @return bool|string
+     */
+    private function mapValue(Field $field)
     {
-        return $field->value;
+        switch ($field->type) {
+            case 'string':
+                return (string)$field->value;
+            case 'bool':
+                return (bool)$field->value;
+        }
+
+        throw new RuntimeException("Field of type '{$field->type}' is not handled");
     }
 }

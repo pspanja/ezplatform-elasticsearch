@@ -38,7 +38,10 @@ class GatewayTest extends TestCase
     public function testIndex(): void
     {
         $gateway = $this->getGatewayUnderTest();
-        $fields = [new Field('test_name', 'test_value')];
+        $fields = [
+            new Field('test_string', 'value', 'string'),
+            new Field('test_bool', true, 'bool'),
+        ];
         $document = new Document('test', $fields);
 
         $response = $gateway->index('http://localhost:9200', $document);

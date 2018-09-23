@@ -12,17 +12,24 @@ final class Field
     public $name;
 
     /**
-     * @var string
+     * @var mixed
      */
     public $value;
 
     /**
-     * @param string $name
-     * @param string $value
+     * @var string
      */
-    public function __construct(string $name, string $value)
+    public $type;
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     * @param string $type
+     */
+    public function __construct(string $name, $value, string $type)
     {
         $this->name = $name;
         $this->value = $value;
+        $this->type = $type;
     }
 }
