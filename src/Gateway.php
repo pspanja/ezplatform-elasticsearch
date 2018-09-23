@@ -52,4 +52,21 @@ final class Gateway
 
         return $this->client->put($request, $uri);
     }
+
+    public function index(string $uri, string $content): Response
+    {
+        $uri = "{$uri}/test/test";
+        $body = [
+            'field' => $content,
+        ];
+
+        $request = new Request(
+            (string)json_encode($body),
+            [
+                'Content-Type' => 'application/json',
+            ]
+        );
+
+        return $this->client->post($request, $uri);
+    }
 }

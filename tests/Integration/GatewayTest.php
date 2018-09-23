@@ -32,6 +32,15 @@ class GatewayTest extends TestCase
         $this->assertEquals(200, $response->status);
     }
 
+    public function testIndex(): void
+    {
+        $gateway = $this->getGatewayUnderTest();
+
+        $response = $gateway->index('http://localhost:9200', 'test');
+
+        $this->assertEquals(201, $response->status);
+    }
+
     public function getGatewayUnderTest(): Gateway
     {
         return new Gateway(new Client());
