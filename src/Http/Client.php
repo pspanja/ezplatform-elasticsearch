@@ -20,7 +20,7 @@ final class Client
     private const PUT = 'PUT';
 
     /**
-     * Send $request with GET method and return the response.
+     * Send $request to $uri with GET method and return the response.
      *
      * @param \Cabbage\Http\Request $request
      * @param string $uri
@@ -33,7 +33,7 @@ final class Client
     }
 
     /**
-     * Send $request with PUT method and return the response.
+     * Send $request to $uri with PUT method and return the response.
      *
      * @param \Cabbage\Http\Request $request
      * @param string $uri
