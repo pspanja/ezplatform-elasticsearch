@@ -53,15 +53,12 @@ final class Gateway
         return $this->client->put($request, $uri);
     }
 
-    public function index(string $uri, string $content): Response
+    public function index(string $uri, Document $document): Response
     {
-        $uri = "{$uri}/test/test";
-        $body = [
-            'field' => $content,
-        ];
+        $uri = "{$uri}/test/{$document->type}";
 
         $request = new Request(
-            (string)json_encode($body),
+            (string)json_encode($document->content),
             [
                 'Content-Type' => 'application/json',
             ]
