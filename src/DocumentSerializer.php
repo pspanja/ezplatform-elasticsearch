@@ -23,7 +23,7 @@ final class DocumentSerializer
         $content = [];
 
         foreach ($document->fields as $field) {
-            $content[$field->name] = $this->mapValue($field);
+            $content[$this->mapFieldName($field)] = $this->mapValue($field);
         }
 
         $content = json_encode($content);
@@ -50,5 +50,10 @@ final class DocumentSerializer
         }
 
         throw new RuntimeException("Field of type '{$field->type}' is not handled");
+    }
+
+    private function mapFieldName(Field $field): string
+    {
+        return $field->name;
     }
 }
