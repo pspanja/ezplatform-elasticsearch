@@ -23,7 +23,7 @@ final class DocumentSerializer
         $content = [];
 
         foreach ($document->fields as $field) {
-            $content[$field->name] = $field->value;
+            $content[$field->name] = $this->mapValue($field);
         }
 
         $content = json_encode($content);
@@ -33,5 +33,10 @@ final class DocumentSerializer
         }
 
         return $content;
+    }
+
+    private function mapValue(Field $field): string
+    {
+        return $field->value;
     }
 }
