@@ -17,6 +17,11 @@ final class Client
     /**
      * HTTP PUT method.
      */
+    private const POST = 'POST';
+
+    /**
+     * HTTP PUT method.
+     */
     private const PUT = 'PUT';
 
     /**
@@ -43,6 +48,19 @@ final class Client
     public function put(Request $request, string $uri): Response
     {
         return $this->send($request, $uri, self::PUT);
+    }
+
+    /**
+     * Send $request to $uri with POST method and return the response.
+     *
+     * @param \Cabbage\Http\Request $request
+     * @param string $uri
+     *
+     * @return \Cabbage\Http\Response
+     */
+    public function post(Request $request, string $uri): Response
+    {
+        return $this->send($request, $uri, self::POST);
     }
 
     /**
