@@ -2,6 +2,7 @@
     "name": "pspanja/ezplatform-elasticsearch",
     "description": "Elasticsearch search engine for eZ Platform",
     "type": "ezplatform-bundle",
+    "license": "GPL-2.0",
     "authors": [
         {
             "name": "Petar Španja",
