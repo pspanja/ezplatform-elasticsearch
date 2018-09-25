@@ -21,7 +21,7 @@ final class Handler implements HandlerInterface, Capable
         // TODO: Implement supports() method.
     }
 
-   public function findContent(Query $query, array $languageFilter = []): SearchResult
+    public function findContent(Query $query, array $languageFilter = []): SearchResult
     {
         // TODO: Implement findContent() method.
     }
@@ -36,7 +36,7 @@ final class Handler implements HandlerInterface, Capable
         // TODO: Implement findLocations() method.
     }
 
-    public function suggest($prefix, $fieldPaths = array(), $limit = 10, Criterion $filter = null): void
+    public function suggest($prefix, $fieldPaths = [], $limit = 10, ?Criterion $filter = null): void
     {
         // TODO: Implement suggest() method.
     }

@@ -86,7 +86,7 @@ final class Gateway
         ];
 
         $request = new Request(
-            json_encode($body),
+            (string)json_encode($body),
             [
                 'Content-Type' => 'application/json',
             ]
