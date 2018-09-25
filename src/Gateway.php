@@ -60,9 +60,9 @@ final class Gateway
         return $this->client->put($request, $uri);
     }
 
-    public function index(string $uri, Document $document): Response
+    public function index(string $uri, string $index, Document $document): Response
     {
-        $uri = "{$uri}/test/{$document->type}";
+        $uri = "{$uri}/{$index}/{$document->type}";
 
         $request = new Request(
             $this->documentSerializer->serialize($document),

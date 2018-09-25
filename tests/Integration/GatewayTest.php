@@ -44,7 +44,7 @@ class GatewayTest extends TestCase
         ];
         $document = new Document('test', $fields);
 
-        $response = $gateway->index('http://localhost:9200', $document);
+        $response = $gateway->index('http://localhost:9200', 'test', $document);
 
         $this->assertEquals(201, $response->status);
     }
