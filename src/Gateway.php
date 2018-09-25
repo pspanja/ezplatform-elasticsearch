@@ -73,4 +73,25 @@ final class Gateway
 
         return $this->client->post($request, $uri);
     }
+
+    public function find(string $uri, string $index, string $type, string $field, $value): Response
+    {
+        $uri = "{$uri}/{$index}/{$type}/_search";
+        $body = [
+            'query' => [
+                'term' => [
+                    $field => $value,
+                ],
+            ],
+        ];
+
+        $request = new Request(
+            json_encode($body),
+            [
+                'Content-Type' => 'application/json',
+            ]
+        );
+
+        return $this->client->get($request, $uri);
+    }
 }

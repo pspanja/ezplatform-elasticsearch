@@ -49,6 +49,26 @@ class GatewayTest extends TestCase
         $this->assertEquals(201, $response->status);
     }
 
+    public function testFind(): void
+    {
+        $gateway = $this->getGatewayUnderTest();
+        $uri = 'http://localhost:9200';
+        $index = 'test';
+        $fields = [
+            new Field('field', 'value', 'string'),
+        ];
+        $document = new Document('test', $fields);
+
+        $gateway->index($uri, $index, $document);
+        $response = $gateway->find($uri, $index, $document->type, 'field', 'value');
+
+        $this->assertEquals(200, $response->status);
+
+        $body = json_decode($response->body);
+
+        $this->assertGreaterThanOrEqual(1, $body->hits->total);
+    }
+
     public function getGatewayUnderTest(): Gateway
     {
         return new Gateway(
