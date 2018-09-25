@@ -94,4 +94,12 @@ final class Gateway
 
         return $this->client->get($request, $uri);
     }
+
+    public function flush(string $uri): Response
+    {
+        $uri = "{$uri}/_flush";
+        $request = new Request();
+
+        return $this->client->post($request, $uri);
+    }
 }

@@ -49,6 +49,15 @@ class GatewayTest extends TestCase
         $this->assertEquals(201, $response->status);
     }
 
+    public function testFlush(): void
+    {
+        $gateway = $this->getGatewayUnderTest();
+
+        $response = $gateway->flush('http://localhost:9200');
+
+        $this->assertEquals(200, $response->status);
+    }
+
     public function testFind(): void
     {
         $gateway = $this->getGatewayUnderTest();
