@@ -69,7 +69,7 @@ class GatewayTest extends TestCase
         $document = new Document('test', $fields);
 
         $gateway->index($uri, $index, $document);
-        sleep(10);
+        $gateway->flush($uri);
         $response = $gateway->find($uri, $index, $document->type, 'field', 'value');
 
         $this->assertEquals(200, $response->status);
