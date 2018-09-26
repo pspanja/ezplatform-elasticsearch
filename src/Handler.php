@@ -16,6 +16,16 @@ use eZ\Publish\SPI\Search\Handler as HandlerInterface;
 
 final class Handler implements HandlerInterface, Capable
 {
+    /**
+     * @var \Cabbage\Gateway
+     */
+    private $gateway;
+
+    public function __construct(Gateway $gateway)
+    {
+        $this->gateway = $gateway;
+    }
+
     public function supports($capabilityFlag): bool
     {
         // TODO: Implement supports() method.
@@ -43,7 +53,13 @@ final class Handler implements HandlerInterface, Capable
 
     public function indexContent(Content $content): void
     {
-        // TODO: Implement indexContent() method.
+        $fields = [
+            new Field('test_string', 'value', 'string'),
+            new Field('test_bool', true, 'bool'),
+        ];
+        $document = new Document('test', $fields);
+
+        $this->gateway->index('http://localhost:9200', 'index', $document);
     }
 
     public function deleteContent($contentId, $versionId = null): void
