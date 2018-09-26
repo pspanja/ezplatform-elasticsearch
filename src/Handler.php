@@ -7,6 +7,7 @@ namespace Cabbage;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\ContentInfo;
@@ -39,7 +40,19 @@ final class Handler implements HandlerInterface, Capable
 
     public function findContent(Query $query, array $languageFilter = []): SearchResult
     {
-        // TODO: Implement findContent() method.
+        $response = $this->gateway->find('http://localhost:9200', 'index', 'test', 'test_string', 'value');
+
+        $body = json_decode($response->body);
+        $searchHits = [];
+
+        foreach ($body->hits->hits as $hit) {
+            $searchHits[] = new SearchHit(['valueObject' => $hit]);
+        }
+
+        return new SearchResult([
+            'searchHits' => $searchHits,
+            'totalCount' => $body->hits->total,
+        ]);
     }
 
     public function findSingle(Criterion $filter, array $languageFilter = []): ContentInfo
