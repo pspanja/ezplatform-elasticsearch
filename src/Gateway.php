@@ -99,7 +99,13 @@ final class Gateway
             ]
         );
 
-        return $this->client->get($request, $uri);
+        $response = $this->client->get($request, $uri);
+
+        if ($response->status !== 200) {
+            throw new RuntimeException("Invalid response status {$response->status}");
+        }
+
+        return $response;
     }
 
     public function flush(string $uri): Response
