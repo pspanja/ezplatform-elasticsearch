@@ -7,6 +7,7 @@ namespace Cabbage;
 use Cabbage\Http\Client;
 use Cabbage\Http\Request;
 use Cabbage\Http\Response;
+use RuntimeException;
 
 /**
  * The gateway communicates with Elasticsearch server using HTTP client.
@@ -71,7 +72,13 @@ final class Gateway
             ]
         );
 
-        return $this->client->post($request, $uri);
+        $response = $this->client->post($request, $uri);
+
+        if ($response->status !== 201) {
+            throw new RuntimeException("Invalid response status {$response->status}");
+        }
+
+        return $response;
     }
 
     public function find(string $uri, string $index, string $type, string $field, $value): Response
