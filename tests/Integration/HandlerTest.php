@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class HandlerTest extends TestCase
 {
-    public function testPing(): void
+    public function testIndexContent(): void
     {
         $handler = $this->getHandlerUnderTest();
         /** @var \eZ\Publish\SPI\Persistence\Content $content */
