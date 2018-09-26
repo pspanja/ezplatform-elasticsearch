@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration;
 
+use Cabbage\DocumentMapper;
 use Cabbage\DocumentSerializer;
 use Cabbage\Gateway;
 use Cabbage\Handler;
@@ -30,7 +31,8 @@ class HandlerTest extends TestCase
             new Gateway(
                 new Client(),
                 new DocumentSerializer()
-            )
+            ),
+            new DocumentMapper()
         );
     }
 }

@@ -21,9 +21,15 @@ final class Handler implements HandlerInterface, Capable
      */
     private $gateway;
 
-    public function __construct(Gateway $gateway)
+    /**
+     * @var \Cabbage\DocumentMapper
+     */
+    private $documentMapper;
+
+    public function __construct(Gateway $gateway, DocumentMapper $documentMapper)
     {
         $this->gateway = $gateway;
+        $this->documentMapper = $documentMapper;
     }
 
     public function supports($capabilityFlag): bool
@@ -53,11 +59,7 @@ final class Handler implements HandlerInterface, Capable
 
     public function indexContent(Content $content): void
     {
-        $fields = [
-            new Field('test_string', 'value', 'string'),
-            new Field('test_bool', true, 'bool'),
-        ];
-        $document = new Document('test', $fields);
+        $document = $this->documentMapper->map();
 
         $this->gateway->index('http://localhost:9200', 'index', $document);
     }
