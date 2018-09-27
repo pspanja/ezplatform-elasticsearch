@@ -66,13 +66,7 @@ final class Endpoint
      */
     public static function fromDsn(string $dsn): self
     {
-        $defaults = [
-            'scheme' => 'http',
-            'port' => 9200,
-        ];
-        $elements = self::parseDsn($dsn) + $defaults;
-
-        self::validateIndex($elements['path']);
+        $elements = self::parseDsn($dsn);
 
         return new self(
             $elements['scheme'],
@@ -89,7 +83,11 @@ final class Endpoint
      */
     private static function parseDsn(string $dsn): array
     {
-        $elements = parse_url(rtrim($dsn, '/'));
+        $defaults = [
+            'scheme' => 'http',
+            'port' => 9200,
+        ];
+        $elements = parse_url(rtrim($dsn, '/')) + $defaults;
 
         if ($elements === false) {
             throw new RuntimeException(
@@ -98,6 +96,7 @@ final class Endpoint
         }
 
         $elements['path'] = trim($elements['path'], '/');
+        self::validateIndex($elements['path']);
 
         return $elements;
     }
