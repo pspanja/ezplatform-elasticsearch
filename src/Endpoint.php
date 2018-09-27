@@ -87,7 +87,7 @@ final class Endpoint
             'scheme' => 'http',
             'port' => 9200,
         ];
-        $elements = parse_url(rtrim($dsn, '/')) + $defaults;
+        $elements = parse_url(rtrim($dsn, '/'));
 
         if ($elements === false) {
             throw new RuntimeException(
@@ -95,6 +95,7 @@ final class Endpoint
             );
         }
 
+        $elements += $defaults;
         $elements['path'] = trim($elements['path'], '/');
         self::validateIndex($elements['path']);
 
