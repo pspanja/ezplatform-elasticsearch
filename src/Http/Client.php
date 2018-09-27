@@ -79,7 +79,7 @@ final class Client
         $context = stream_context_create($this->getStreamContextOptions($request, $method));
 
         $level = error_reporting(0);
-        $body = file_get_contents($url , false, $context);
+        $body = file_get_contents($url, false, $context);
 
         error_reporting($level);
 
