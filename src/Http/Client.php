@@ -27,59 +27,59 @@ final class Client
     private const PUT = 'PUT';
 
     /**
-     * Send $request to $uri with GET method and return the response.
+     * Send $request to $url with GET method and return the response.
      *
      * @param \Cabbage\Http\Request $request
-     * @param string $uri
+     * @param string $url
      *
      * @return \Cabbage\Http\Response
      */
-    public function get(Request $request, string $uri): Response
+    public function get(Request $request, string $url): Response
     {
-        return $this->send($request, $uri, self::GET);
+        return $this->send($request, $url, self::GET);
     }
 
     /**
-     * Send $request to $uri with PUT method and return the response.
+     * Send $request to $url with PUT method and return the response.
      *
      * @param \Cabbage\Http\Request $request
-     * @param string $uri
+     * @param string $url
      *
      * @return \Cabbage\Http\Response
      */
-    public function put(Request $request, string $uri): Response
+    public function put(Request $request, string $url): Response
     {
-        return $this->send($request, $uri, self::PUT);
+        return $this->send($request, $url, self::PUT);
     }
 
     /**
-     * Send $request to $uri with POST method and return the response.
+     * Send $request to $url with POST method and return the response.
      *
      * @param \Cabbage\Http\Request $request
-     * @param string $uri
+     * @param string $url
      *
      * @return \Cabbage\Http\Response
      */
-    public function post(Request $request, string $uri): Response
+    public function post(Request $request, string $url): Response
     {
-        return $this->send($request, $uri, self::POST);
+        return $this->send($request, $url, self::POST);
     }
 
     /**
      * Send $request with $method and return the response.
      *
      * @param \Cabbage\Http\Request $request
-     * @param string $uri
+     * @param string $url
      * @param string $method
      *
      * @return \Cabbage\Http\Response
      */
-    private function send(Request $request, string $uri, string $method): Response
+    private function send(Request $request, string $url, string $method): Response
     {
         $context = stream_context_create($this->getStreamContextOptions($request, $method));
 
         $level = error_reporting(0);
-        $body = file_get_contents($uri, false, $context);
+        $body = file_get_contents($url , false, $context);
 
         error_reporting($level);
 
