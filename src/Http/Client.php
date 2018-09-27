@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Cabbage\Http;
 
 /**
- * Simple HTTP client based on PHP stream.
+ * Allows communication with Elasticsearch server.
+ *
+ * This HTTP client is based on PHP stream.
  */
 final class Client
 {

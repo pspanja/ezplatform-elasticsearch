@@ -7,7 +7,7 @@ namespace Cabbage\Http;
 use RuntimeException;
 
 /**
- * HTTP client connection exception.
+ * Thrown when the HTTP client can't connect to the server.
  */
 final class ConnectionException extends RuntimeException
 {
