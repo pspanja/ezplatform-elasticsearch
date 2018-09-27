@@ -33,11 +33,17 @@ final class Handler implements HandlerInterface, Capable
         $this->documentMapper = $documentMapper;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function supports($capabilityFlag): bool
     {
         // TODO: Implement supports() method.
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function findContent(Query $query, array $languageFilter = []): SearchResult
     {
         $response = $this->gateway->find('http://localhost:9200', 'index', 'test', 'test_string', 'value');
@@ -55,21 +61,33 @@ final class Handler implements HandlerInterface, Capable
         ]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function findSingle(Criterion $filter, array $languageFilter = []): ContentInfo
     {
         // TODO: Implement findSingle() method.
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function findLocations(LocationQuery $query, array $languageFilter = []): SearchResult
     {
         // TODO: Implement findLocations() method.
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function suggest($prefix, $fieldPaths = [], $limit = 10, ?Criterion $filter = null): void
     {
         // TODO: Implement suggest() method.
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function indexContent(Content $content): void
     {
         $document = $this->documentMapper->map();
@@ -77,21 +95,33 @@ final class Handler implements HandlerInterface, Capable
         $this->gateway->index('http://localhost:9200', 'index', $document);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function deleteContent($contentId, $versionId = null): void
     {
         // TODO: Implement deleteContent() method.
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function indexLocation(Location $location): void
     {
         // TODO: Implement indexLocation() method.
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function deleteLocation($locationId, $contentId): void
     {
         // TODO: Implement deleteLocation() method.
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function purgeIndex(): void
     {
         // TODO: Implement purgeIndex() method.
