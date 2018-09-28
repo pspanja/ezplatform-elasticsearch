@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Http;
 
 /**
- * HTTP response.
+ * Represents a HTTP response.
  */
 final class Response
 {
@@ -52,6 +52,8 @@ final class Response
     }
 
     /**
+     * Build an instance of Response from headers and body.
+     *
      * @param string[] $responseHeaders
      * @param string $body
      *

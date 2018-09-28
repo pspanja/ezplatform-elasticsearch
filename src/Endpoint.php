@@ -46,7 +46,7 @@ final class Endpoint
     }
 
     /**
-     * Return URL of this Endpoint instance.
+     * Return the URL of the Endpoint instance.
      *
      * @return string
      */
@@ -102,6 +102,9 @@ final class Endpoint
         return $elements;
     }
 
+    /**
+     * @param string $index
+     */
     private static function validateIndex(string $index): void
     {
         if (\is_string($index) && \strpos($index, '/') !== false) {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage;
 
 /**
- * Document mapper maps nothing to a Document object.
+ * Maps nothing to a Document object.
  *
  * @see \Cabbage\Document
  */

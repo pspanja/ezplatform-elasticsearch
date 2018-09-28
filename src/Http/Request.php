@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Http;
 
 /**
- * HTTP request.
+ * Represents a HTTP request.
  */
 final class Request
 {

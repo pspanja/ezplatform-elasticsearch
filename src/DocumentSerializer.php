@@ -7,7 +7,7 @@ namespace Cabbage;
 use RuntimeException;
 
 /**
- * Document serializer serializes a Document object into a JSON string for indexing.
+ * Serializes a Document object into a JSON string for indexing.
  *
  * @see \Cabbage\Document
  */

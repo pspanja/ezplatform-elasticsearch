@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Cabbage;
 
+/**
+ * Represents a field in a Document.
+ *
+ * @see \Cabbage\Document
+ */
 final class Field
 {
     /**
