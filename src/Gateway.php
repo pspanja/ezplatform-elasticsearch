@@ -34,13 +34,6 @@ final class Gateway
         $this->documentSerializer = $documentSerializer;
     }
 
-    public function ping(string $uri): Response
-    {
-        $request = new Request();
-
-        return $this->client->get($request, $uri);
-    }
-
     public function createIndex(string $uri, string $name): Response
     {
         $uri = "{$uri}/{$name}";

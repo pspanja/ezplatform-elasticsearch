@@ -13,19 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 class GatewayTest extends TestCase
 {
-    public function testPing(): void
-    {
-        $gateway = $this->getGatewayUnderTest();
-
-        $response = $gateway->ping('http://localhost:9200');
-
-        $this->assertEquals(200, $response->status);
-
-        $body = json_decode($response->body);
-
-        $this->assertEquals('You Know, for Search', $body->tagline);
-    }
-
     public function testCreateIndex(): void
     {
         $gateway = $this->getGatewayUnderTest();
