@@ -6,6 +6,7 @@ namespace Cabbage\Tests\Integration;
 
 use Cabbage\DocumentMapper;
 use Cabbage\DocumentSerializer;
+use Cabbage\Endpoint;
 use Cabbage\Gateway;
 use Cabbage\Handler;
 use Cabbage\Http\Client;
@@ -33,6 +34,7 @@ class HandlerTest extends TestCase
      */
     public function testFindContent(): void
     {
+        $endpoint = Endpoint::fromDsn('http://localhost:9200/index');
         $handler = $this->getHandlerUnderTest();
         $gateway = $this->getGateway();
 
@@ -40,7 +42,7 @@ class HandlerTest extends TestCase
         $content = $this->getMockBuilder(Content::class)->getMock();
 
         $handler->indexContent($content);
-        $gateway->flush('http://localhost:9200');
+        $gateway->flush($endpoint);
 
         /** @var \eZ\Publish\API\Repository\Values\Content\Query $query */
         $query = $this->getMockBuilder(Query::class)->getMock();

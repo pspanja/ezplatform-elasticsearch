@@ -46,7 +46,8 @@ final class Handler implements HandlerInterface, Capable
      */
     public function findContent(Query $query, array $languageFilter = []): SearchResult
     {
-        $response = $this->gateway->find('http://localhost:9200', 'index', 'test', 'test_string', 'value');
+        $endpoint = Endpoint::fromDsn('http://localhost:9200/index');
+        $response = $this->gateway->find($endpoint, 'test', 'test_string', 'value');
 
         $body = json_decode($response->body);
         $searchHits = [];
@@ -90,9 +91,10 @@ final class Handler implements HandlerInterface, Capable
      */
     public function indexContent(Content $content): void
     {
+        $endpoint = Endpoint::fromDsn('http://localhost:9200/index');
         $document = $this->documentMapper->map();
 
-        $this->gateway->index('http://localhost:9200', 'index', $document);
+        $this->gateway->index($endpoint, $document);
     }
 
     /**

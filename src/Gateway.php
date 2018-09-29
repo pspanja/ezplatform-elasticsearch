@@ -34,9 +34,13 @@ final class Gateway
         $this->documentSerializer = $documentSerializer;
     }
 
-    public function createIndex(string $uri, string $name): Response
+    /**
+     * @param \Cabbage\Endpoint $endpoint
+     *
+     * @return \Cabbage\Http\Response
+     */
+    public function createIndex(Endpoint $endpoint): Response
     {
-        $uri = "{$uri}/{$name}";
         $body = [
             'settings' => [
                 'number_of_shards' => 1,
@@ -51,12 +55,18 @@ final class Gateway
             ]
         );
 
-        return $this->client->put($request, $uri);
+        return $this->client->put($request, $endpoint->getUrl());
     }
 
-    public function index(string $uri, string $index, Document $document): Response
+    /**
+     * @param \Cabbage\Endpoint $endpoint
+     * @param \Cabbage\Document $document
+     *
+     * @return \Cabbage\Http\Response
+     */
+    public function index(Endpoint $endpoint, Document $document): Response
     {
-        $uri = "{$uri}/{$index}/{$document->type}";
+        $url = "{$endpoint->getUrl()}/{$document->type}";
 
         $request = new Request(
             $this->documentSerializer->serialize($document),
@@ -65,7 +75,7 @@ final class Gateway
             ]
         );
 
-        $response = $this->client->post($request, $uri);
+        $response = $this->client->post($request, $url);
 
         if ($response->status !== 201) {
             throw new RuntimeException("Invalid response status {$response->status}");
@@ -74,9 +84,17 @@ final class Gateway
         return $response;
     }
 
-    public function find(string $uri, string $index, string $type, string $field, $value): Response
+    /**
+     * @param \Cabbage\Endpoint $endpoint
+     * @param string $type
+     * @param string $field
+     * @param mixed $value
+     *
+     * @return \Cabbage\Http\Response
+     */
+    public function find(Endpoint $endpoint, string $type, string $field, $value): Response
     {
-        $uri = "{$uri}/{$index}/{$type}/_search";
+        $url = "{$endpoint->getUrl()}/{$type}/_search";
         $body = [
             'query' => [
                 'term' => [
@@ -92,7 +110,7 @@ final class Gateway
             ]
         );
 
-        $response = $this->client->get($request, $uri);
+        $response = $this->client->get($request, $url);
 
         if ($response->status !== 200) {
             throw new RuntimeException("Invalid response status {$response->status}");
@@ -101,11 +119,16 @@ final class Gateway
         return $response;
     }
 
-    public function flush(string $uri): Response
+    /**
+     * @param \Cabbage\Endpoint $endpoint
+     *
+     * @return \Cabbage\Http\Response
+     */
+    public function flush(Endpoint $endpoint): Response
     {
-        $uri = "{$uri}/_flush";
+        $url = "{$endpoint->getUrl()}/_flush";
         $request = new Request();
 
-        return $this->client->post($request, $uri);
+        return $this->client->post($request, $url);
     }
 }

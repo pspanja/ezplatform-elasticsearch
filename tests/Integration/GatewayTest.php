@@ -6,6 +6,7 @@ namespace Cabbage\Tests\Integration;
 
 use Cabbage\Document;
 use Cabbage\DocumentSerializer;
+use Cabbage\Endpoint;
 use Cabbage\Field;
 use Cabbage\Gateway;
 use Cabbage\Http\Client;
@@ -16,8 +17,9 @@ class GatewayTest extends TestCase
     public function testCreateIndex(): void
     {
         $gateway = $this->getGatewayUnderTest();
+        $endpoint = Endpoint::fromDsn('http://localhost:9200/test');
 
-        $response = $gateway->createIndex('http://localhost:9200', 'test');
+        $response = $gateway->createIndex($endpoint);
 
         $this->assertEquals(200, $response->status);
     }
@@ -25,13 +27,14 @@ class GatewayTest extends TestCase
     public function testIndex(): void
     {
         $gateway = $this->getGatewayUnderTest();
+        $endpoint = Endpoint::fromDsn('http://localhost:9200/test');
         $fields = [
             new Field('test_string', 'value', 'string'),
             new Field('test_bool', true, 'bool'),
         ];
         $document = new Document('test', $fields);
 
-        $response = $gateway->index('http://localhost:9200', 'test', $document);
+        $response = $gateway->index($endpoint, $document);
 
         $this->assertEquals(201, $response->status);
     }
@@ -39,8 +42,10 @@ class GatewayTest extends TestCase
     public function testFlush(): void
     {
         $gateway = $this->getGatewayUnderTest();
+        $endpoint = Endpoint::fromDsn('http://localhost:9200/test');
 
-        $response = $gateway->flush('http://localhost:9200');
+        $gateway->createIndex($endpoint);
+        $response = $gateway->flush($endpoint);
 
         $this->assertEquals(200, $response->status);
     }
@@ -48,16 +53,15 @@ class GatewayTest extends TestCase
     public function testFind(): void
     {
         $gateway = $this->getGatewayUnderTest();
-        $uri = 'http://localhost:9200';
-        $index = 'test';
+        $endpoint = Endpoint::fromDsn('http://localhost:9200/test');
         $fields = [
             new Field('field', 'value', 'string'),
         ];
         $document = new Document('test', $fields);
 
-        $gateway->index($uri, $index, $document);
-        $gateway->flush($uri);
-        $response = $gateway->find($uri, $index, $document->type, 'field', 'value');
+        $gateway->index($endpoint, $document);
+        $gateway->flush($endpoint);
+        $response = $gateway->find($endpoint, $document->type, 'field', 'value');
 
         $this->assertEquals(200, $response->status);
 
