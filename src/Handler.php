@@ -38,21 +38,29 @@ final class Handler implements HandlerInterface, Capable
     private $queryRouter;
 
     /**
+     * @var \Cabbage\ResultExtractor
+     */
+    private $resultExtractor;
+
+    /**
      * @param \Cabbage\Gateway $gateway
      * @param \Cabbage\DocumentMapper $documentMapper
      * @param \Cabbage\DocumentRouter $documentRouter
      * @param \Cabbage\QueryRouter $queryRouter
+     * @param \Cabbage\ResultExtractor $resultExtractor
      */
     public function __construct(
         Gateway $gateway,
         DocumentMapper $documentMapper,
         DocumentRouter $documentRouter,
-        QueryRouter $queryRouter
+        QueryRouter $queryRouter,
+        ResultExtractor $resultExtractor
     ) {
         $this->gateway = $gateway;
         $this->documentMapper = $documentMapper;
         $this->documentRouter = $documentRouter;
         $this->queryRouter = $queryRouter;
+        $this->resultExtractor = $resultExtractor;
     }
 
     /**
@@ -71,17 +79,7 @@ final class Handler implements HandlerInterface, Capable
         $endpoint = $this->queryRouter->match($query);
         $response = $this->gateway->find($endpoint, 'test', 'test_string', 'value');
 
-        $body = json_decode($response->body);
-        $searchHits = [];
-
-        foreach ($body->hits->hits as $hit) {
-            $searchHits[] = new SearchHit(['valueObject' => $hit]);
-        }
-
-        return new SearchResult([
-            'searchHits' => $searchHits,
-            'totalCount' => $body->hits->total,
-        ]);
+        return $this->resultExtractor->extract($response);
     }
 
     /**
