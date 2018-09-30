@@ -27,10 +27,21 @@ final class Handler implements HandlerInterface, Capable
      */
     private $documentMapper;
 
-    public function __construct(Gateway $gateway, DocumentMapper $documentMapper)
+    /**
+     * @var \Cabbage\DocumentRouter
+     */
+    private $documentRouter;
+
+    /**
+     * @param \Cabbage\Gateway $gateway
+     * @param \Cabbage\DocumentMapper $documentMapper
+     * @param \Cabbage\DocumentRouter $documentRouter
+     */
+    public function __construct(Gateway $gateway, DocumentMapper $documentMapper, DocumentRouter $documentRouter)
     {
         $this->gateway = $gateway;
         $this->documentMapper = $documentMapper;
+        $this->documentRouter = $documentRouter;
     }
 
     /**
@@ -91,8 +102,8 @@ final class Handler implements HandlerInterface, Capable
      */
     public function indexContent(Content $content): void
     {
-        $endpoint = Endpoint::fromDsn('http://localhost:9200/index');
         $document = $this->documentMapper->map();
+        $endpoint = $this->documentRouter->match($document);
 
         $this->gateway->index($endpoint, $document);
     }

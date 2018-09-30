@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Tests\Integration;
 
 use Cabbage\DocumentMapper;
+use Cabbage\DocumentRouter;
 use Cabbage\DocumentSerializer;
 use Cabbage\Endpoint;
 use Cabbage\Gateway;
@@ -56,7 +57,8 @@ class HandlerTest extends TestCase
     {
         return new Handler(
             $this->getGateway(),
-            new DocumentMapper()
+            new DocumentMapper(),
+            new DocumentRouter()
         );
     }
 
