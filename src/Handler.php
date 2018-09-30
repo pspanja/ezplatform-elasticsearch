@@ -33,15 +33,26 @@ final class Handler implements HandlerInterface, Capable
     private $documentRouter;
 
     /**
+     * @var \Cabbage\QueryRouter
+     */
+    private $queryRouter;
+
+    /**
      * @param \Cabbage\Gateway $gateway
      * @param \Cabbage\DocumentMapper $documentMapper
      * @param \Cabbage\DocumentRouter $documentRouter
+     * @param \Cabbage\QueryRouter $queryRouter
      */
-    public function __construct(Gateway $gateway, DocumentMapper $documentMapper, DocumentRouter $documentRouter)
-    {
+    public function __construct(
+        Gateway $gateway,
+        DocumentMapper $documentMapper,
+        DocumentRouter $documentRouter,
+        QueryRouter $queryRouter
+    ) {
         $this->gateway = $gateway;
         $this->documentMapper = $documentMapper;
         $this->documentRouter = $documentRouter;
+        $this->queryRouter = $queryRouter;
     }
 
     /**
@@ -57,7 +68,7 @@ final class Handler implements HandlerInterface, Capable
      */
     public function findContent(Query $query, array $languageFilter = []): SearchResult
     {
-        $endpoint = Endpoint::fromDsn('http://localhost:9200/index');
+        $endpoint = $this->queryRouter->match($query);
         $response = $this->gateway->find($endpoint, 'test', 'test_string', 'value');
 
         $body = json_decode($response->body);
