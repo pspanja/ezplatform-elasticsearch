@@ -9,7 +9,7 @@ use eZ\Publish\API\Repository\Values\Content\Query;
 /**
  * Matches a query to an index.
  */
-class QueryRouter
+final class QueryRouter
 {
     public function match(Query $query): Endpoint
     {

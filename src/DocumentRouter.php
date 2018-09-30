@@ -7,7 +7,7 @@ namespace Cabbage;
 /**
  * Matches a document to an index.
  */
-class DocumentRouter
+final class DocumentRouter
 {
     public function match(Document $document): Endpoint
     {
