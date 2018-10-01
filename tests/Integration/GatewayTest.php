@@ -61,7 +61,15 @@ class GatewayTest extends TestCase
 
         $gateway->index($endpoint, $document);
         $gateway->flush($endpoint);
-        $response = $gateway->find($endpoint, $document->type, 'field', 'value');
+
+        $query = [
+            'query' => [
+                'term' => [
+                    'field' => 'value',
+                ],
+            ],
+        ];
+        $response = $gateway->find($endpoint, $document->type, $query);
 
         $this->assertEquals(200, $response->status);
 

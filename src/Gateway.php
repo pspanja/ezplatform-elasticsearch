@@ -87,24 +87,16 @@ final class Gateway
     /**
      * @param \Cabbage\Endpoint $endpoint
      * @param string $type
-     * @param string $field
-     * @param mixed $value
+     * @param array|array[] $query
      *
      * @return \Cabbage\Http\Response
      */
-    public function find(Endpoint $endpoint, string $type, string $field, $value): Response
+    public function find(Endpoint $endpoint, string $type, array $query): Response
     {
         $url = "{$endpoint->getUrl()}/{$type}/_search";
-        $body = [
-            'query' => [
-                'term' => [
-                    $field => $value,
-                ],
-            ],
-        ];
 
         $request = new Request(
-            (string)json_encode($body),
+            (string)json_encode($query),
             [
                 'Content-Type' => 'application/json',
             ]

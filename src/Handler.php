@@ -76,7 +76,15 @@ final class Handler implements HandlerInterface, Capable
     public function findContent(Query $query, array $languageFilter = []): SearchResult
     {
         $endpoint = $this->queryRouter->match($query);
-        $response = $this->gateway->find($endpoint, 'test', 'test_string', 'value');
+
+        $queryDsl = [
+            'query' => [
+                'term' => [
+                    'test_string' => 'value',
+                ],
+            ],
+        ];
+        $response = $this->gateway->find($endpoint, 'test', $queryDsl);
 
         return $this->resultExtractor->extract($response);
     }
