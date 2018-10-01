@@ -12,6 +12,7 @@ use Cabbage\Gateway;
 use Cabbage\Handler;
 use Cabbage\Http\Client;
 use Cabbage\QueryRouter;
+use Cabbage\QueryTranslator;
 use Cabbage\ResultExtractor;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\SPI\Persistence\Content;
@@ -61,6 +62,7 @@ class HandlerTest extends TestCase
             $this->getGateway(),
             new DocumentMapper(),
             new DocumentRouter(),
+            new QueryTranslator(),
             new QueryRouter(),
             new ResultExtractor()
         );

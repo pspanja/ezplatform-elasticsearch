@@ -32,6 +32,11 @@ final class Handler implements HandlerInterface, Capable
     private $documentRouter;
 
     /**
+     * @var \Cabbage\QueryTranslator
+     */
+    private $queryTranslator;
+
+    /**
      * @var \Cabbage\QueryRouter
      */
     private $queryRouter;
@@ -45,6 +50,7 @@ final class Handler implements HandlerInterface, Capable
      * @param \Cabbage\Gateway $gateway
      * @param \Cabbage\DocumentMapper $documentMapper
      * @param \Cabbage\DocumentRouter $documentRouter
+     * @param \Cabbage\QueryTranslator $queryTranslator
      * @param \Cabbage\QueryRouter $queryRouter
      * @param \Cabbage\ResultExtractor $resultExtractor
      */
@@ -52,12 +58,14 @@ final class Handler implements HandlerInterface, Capable
         Gateway $gateway,
         DocumentMapper $documentMapper,
         DocumentRouter $documentRouter,
+        QueryTranslator $queryTranslator,
         QueryRouter $queryRouter,
         ResultExtractor $resultExtractor
     ) {
         $this->gateway = $gateway;
         $this->documentMapper = $documentMapper;
         $this->documentRouter = $documentRouter;
+        $this->queryTranslator = $queryTranslator;
         $this->queryRouter = $queryRouter;
         $this->resultExtractor = $resultExtractor;
     }
@@ -76,15 +84,9 @@ final class Handler implements HandlerInterface, Capable
     public function findContent(Query $query, array $languageFilter = []): SearchResult
     {
         $endpoint = $this->queryRouter->match($query);
+        $gatewayQuery = $this->queryTranslator->translate($query);
 
-        $queryDsl = [
-            'query' => [
-                'term' => [
-                    'test_string' => 'value',
-                ],
-            ],
-        ];
-        $response = $this->gateway->find($endpoint, 'test', $queryDsl);
+        $response = $this->gateway->find($endpoint, 'test', $gatewayQuery);
 
         return $this->resultExtractor->extract($response);
     }
