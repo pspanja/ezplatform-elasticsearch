@@ -10,9 +10,8 @@ use Cabbage\Endpoint;
 use Cabbage\Field;
 use Cabbage\Gateway;
 use Cabbage\Http\Client;
-use PHPUnit\Framework\TestCase;
 
-class GatewayTest extends TestCase
+class GatewayTest extends BaseTest
 {
     public function testCreateIndex(): void
     {

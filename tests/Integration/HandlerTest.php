@@ -16,9 +16,10 @@ use Cabbage\QueryTranslator;
 use Cabbage\ResultExtractor;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\SPI\Persistence\Content;
-use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class HandlerTest extends TestCase
+class HandlerTest extends BaseTest
 {
     public function testIndexContent(): void
     {
@@ -66,6 +67,15 @@ class HandlerTest extends TestCase
             new QueryRouter(),
             new ResultExtractor()
         );
+    }
+
+    public function testContainer(): void
+    {
+        $container = $this->getContainer();
+
+        $parameter = $container->getParameter('test');
+
+        $this->assertEquals('bla bla', $parameter);
     }
 
     /**
