@@ -13,6 +13,7 @@ $loader = new YamlFileLoader(
     new FileLocator(__DIR__ . '/config')
 );
 
+/** @noinspection PhpUnhandledExceptionInspection */
 $loader->load('services.yml');
 
 return $containerBuilder;
