@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Cabbage\Tests\Integration;
 
 use Cabbage\Document;
-use Cabbage\DocumentSerializer;
 use Cabbage\Endpoint;
 use Cabbage\Field;
 use Cabbage\Gateway;
-use Cabbage\Http\Client;
 
 class GatewayTest extends BaseTest
 {
+    /**
+     * @throws \Exception
+     */
     public function testCreateIndex(): void
     {
         $gateway = $this->getGatewayUnderTest();
@@ -23,6 +24,9 @@ class GatewayTest extends BaseTest
         $this->assertEquals(200, $response->status);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testIndex(): void
     {
         $gateway = $this->getGatewayUnderTest();
@@ -38,6 +42,9 @@ class GatewayTest extends BaseTest
         $this->assertEquals(201, $response->status);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testFlush(): void
     {
         $gateway = $this->getGatewayUnderTest();
@@ -49,6 +56,9 @@ class GatewayTest extends BaseTest
         $this->assertEquals(200, $response->status);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testFind(): void
     {
         $gateway = $this->getGatewayUnderTest();
@@ -77,11 +87,13 @@ class GatewayTest extends BaseTest
         $this->assertGreaterThanOrEqual(1, $body->hits->total);
     }
 
+    /**
+     * @throws \Exception
+     *
+     * @return \Cabbage\Gateway
+     */
     public function getGatewayUnderTest(): Gateway
     {
-        return new Gateway(
-            new Client(),
-            new DocumentSerializer()
-        );
+        return $this->getContainer()->get('cabbage.gateway');
     }
 }
