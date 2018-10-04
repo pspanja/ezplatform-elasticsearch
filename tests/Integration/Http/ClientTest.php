@@ -15,15 +15,15 @@ use RuntimeException;
  */
 class ClientTest extends TestCase
 {
+    protected static $timeout = 5;
+    protected static $host = 'localhost';
+    protected static $port = 8005;
+    protected static $documentRoot = __DIR__ . '/_fixtures/';
+
     public static function setUpBeforeClass(): void
     {
-        $timeout = (int)getenv('serverTimeout');
-        $host = (string)getenv('serverHost');
-        $port = (int)getenv('serverPort');
-        $documentRoot = (string)getenv('serverDocumentRoot');
-
-        static::startServer($host, $port, $documentRoot);
-        static::waitForServer($host, $port, $timeout);
+        static::startServer(self::$host, self::$port, self::$documentRoot);
+        static::waitForServer(self::$host, self::$port, self::$timeout);
     }
 
     /**
@@ -33,8 +33,8 @@ class ClientTest extends TestCase
     {
         $client = $this->getClientUnderTest();
 
-        $host = getenv('serverHost');
-        $port = (int)getenv('serverPort');
+        $host = self::$host;
+        $port = self::$port;
 
         $request = new Request();
         $response = $client->get($request, "http://{$host}:{$port}/something.txt");
@@ -50,8 +50,8 @@ class ClientTest extends TestCase
     {
         $client = $this->getClientUnderTest();
 
-        $host = getenv('serverHost');
-        $port = (int)getenv('serverPort');
+        $host = self::$host;
+        $port = self::$port;
 
         $request = new Request();
         $response = $client->get($request, "http://{$host}:{$port}/not_found.mpg");

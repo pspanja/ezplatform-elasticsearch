@@ -3,12 +3,6 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true">
-    <php>
-        <env name="serverHost" value="localhost" />
-        <env name="serverPort" value="8005" />
-        <env name="serverDocumentRoot" value="./tests/Integration/Http/_fixtures/" />
-        <env name="serverTimeout" value="5" />
-    </php>
     <testsuites>
         <testsuite name="Integration tests">
             <directory suffix="Test.php">./tests/Integration/Http</directory>
