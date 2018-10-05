@@ -10,7 +10,7 @@ use Cabbage\Http\Response;
 use RuntimeException;
 
 /**
- * Communicates with Elasticsearch server using HTTP client.
+ * Communicates with Elasticsearch server using an HTTP client.
  */
 final class Gateway
 {
