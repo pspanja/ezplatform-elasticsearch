@@ -12,6 +12,11 @@ final class Document
     /**
      * @var string
      */
+    public $id;
+
+    /**
+     * @var string
+     */
     public $type;
 
     /**
@@ -20,11 +25,13 @@ final class Document
     public $fields;
 
     /**
+     * @param string $id
      * @param string $type
      * @param \Cabbage\Field[] $fields
      */
-    public function __construct(string $type, array $fields)
+    public function __construct(string $id, string $type, array $fields)
     {
+        $this->id = $id;
         $this->type = $type;
         $this->fields = $fields;
     }

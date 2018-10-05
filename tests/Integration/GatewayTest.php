@@ -35,7 +35,7 @@ class GatewayTest extends BaseTest
             new Field('test_string', 'value', 'string'),
             new Field('test_bool', true, 'bool'),
         ];
-        $document = new Document('test', $fields);
+        $document = new Document(uniqid('blah', true), 'test', $fields);
 
         $response = $gateway->index($endpoint, $document);
 
@@ -66,7 +66,7 @@ class GatewayTest extends BaseTest
         $fields = [
             new Field('field', 'value', 'string'),
         ];
-        $document = new Document('test', $fields);
+        $document = new Document(uniqid('blah', true), 'test', $fields);
 
         $gateway->index($endpoint, $document);
         $gateway->flush($endpoint);

@@ -66,7 +66,7 @@ final class Gateway
      */
     public function index(Endpoint $endpoint, Document $document): Response
     {
-        $url = "{$endpoint->getUrl()}/{$document->type}";
+        $url = "{$endpoint->getUrl()}/{$document->type}/{$document->id}";
 
         $request = new Request(
             $this->documentSerializer->serialize($document),

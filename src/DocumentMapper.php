@@ -18,6 +18,6 @@ final class DocumentMapper
             new Field('test_bool', true, 'bool'),
         ];
 
-        return new Document('test', $fields);
+        return new Document(uniqid('blah', true), 'test', $fields);
     }
 }
