@@ -56,6 +56,7 @@ class GatewayTest extends BaseTest
 EOD;
 
         $response = $gateway->bulkIndex($endpoint, $payload);
+        $gateway->flush($endpoint);
 
         $this->assertEquals(200, $response->status);
     }
