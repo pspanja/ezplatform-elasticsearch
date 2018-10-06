@@ -10,11 +10,30 @@ namespace Cabbage;
 final class Document
 {
     /**
+     * Content document type identifier.
+     *
+     * @var string
+     */
+    public const TypeContent = 'content';
+
+    /**
+     * Location document type identifier.
+     *
+     * @var string
+     */
+    public const TypeLocation = 'location';
+
+    /**
      * @var string
      */
     public $id;
 
     /**
+     * Document type identifier.
+     *
+     * @see \Cabbage\Document::TypeContent
+     * @see \Cabbage\Document::TypeLocation
+     *
      * @var string
      */
     public $type;
