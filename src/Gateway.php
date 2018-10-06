@@ -79,15 +79,50 @@ final class Gateway
 
     /**
      * @param \Cabbage\Endpoint $endpoint
+     * @param array|array[] $query
+     *
+     * @return \Cabbage\Http\Response
+     */
+    public function findContent(Endpoint $endpoint, array $query): Response
+    {
+        return $this->find($endpoint, Document::TypeContent, $query);
+    }
+
+    /**
+     * @param \Cabbage\Endpoint $endpoint
+     * @param array|array[] $query
+     *
+     * @return \Cabbage\Http\Response
+     */
+    public function findLocations(Endpoint $endpoint, array $query): Response
+    {
+        return $this->find($endpoint, Document::TypeLocation, $query);
+    }
+
+    /**
+     * @param \Cabbage\Endpoint $endpoint
      * @param string $type
      * @param array|array[] $query
      *
      * @return \Cabbage\Http\Response
      */
-    public function find(Endpoint $endpoint, string $type, array $query): Response
+    private function find(Endpoint $endpoint, string $type, array $query): Response
     {
-        $url = "{$endpoint->getUrl()}/{$type}/_search";
-
+        $url = "{$endpoint->getUrl()}/temporary/_search";
+        $query = [
+            'query' => [
+                'bool' => [
+                    'must' => [
+                        [
+                            'term' => [
+                                'type' => $type,
+                            ]
+                        ],
+                        $query['query'],
+                    ],
+                ],
+            ],
+        ];
         $request = new Request(
             (string)json_encode($query),
             [

@@ -22,8 +22,8 @@ final class DocumentMapper
         ];
 
         return [
-            new Document(uniqid('blah', true), Document::TypeContent, $fields),
-            new Document(uniqid('blah', true), Document::TypeLocation, $fields),
+            new Document(uniqid('content_', true), Document::TypeContent, $fields),
+            new Document(uniqid('location_', true), Document::TypeLocation, $fields),
         ];
     }
 }
