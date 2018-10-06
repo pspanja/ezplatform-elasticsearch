@@ -51,7 +51,6 @@ class HandlerTest extends BaseTest
         $this->assertGreaterThanOrEqual(1, $searchResult->totalCount);
     }
 
-
     /**
      * @depends testIndexContent
      *

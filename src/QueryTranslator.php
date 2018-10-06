@@ -30,7 +30,7 @@ final class QueryTranslator
                         [
                             'term' => [
                                 'type' => Document::TypeContent,
-                            ]
+                            ],
                         ],
                         [
                             'term' => [
@@ -57,7 +57,7 @@ final class QueryTranslator
                         [
                             'term' => [
                                 'type' => Document::TypeLocation,
-                            ]
+                            ],
                         ],
                         [
                             'term' => [

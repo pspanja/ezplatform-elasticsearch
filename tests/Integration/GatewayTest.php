@@ -77,7 +77,7 @@ EOD;
                         [
                             'term' => [
                                 'type' => Document::TypeContent,
-                            ]
+                            ],
                         ],
                         [
                             'term' => [
@@ -114,7 +114,7 @@ EOD;
                         [
                             'term' => [
                                 'type' => Document::TypeLocation,
-                            ]
+                            ],
                         ],
                         [
                             'term' => [
