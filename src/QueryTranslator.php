@@ -17,15 +17,27 @@ final class QueryTranslator
 {
     /**
      * @param \eZ\Publish\API\Repository\Values\Content\Query $query
+     * @param string $documentType
      *
      * @return array|array[]
      */
-    public function translate(Query $query): array
+    public function translate(Query $query, string $documentType): array
     {
         return [
             'query' => [
-                'term' => [
-                    'test_string' => 'value',
+                'bool' => [
+                    'must' => [
+                        [
+                            'term' => [
+                                'type' => $documentType,
+                            ]
+                        ],
+                        [
+                            'term' => [
+                                'test_string' => 'value',
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ];

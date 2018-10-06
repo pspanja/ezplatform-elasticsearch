@@ -84,9 +84,9 @@ final class Handler implements HandlerInterface, Capable
     public function findContent(Query $query, array $languageFilter = []): SearchResult
     {
         $endpoint = $this->queryRouter->match($query);
-        $gatewayQuery = $this->queryTranslator->translate($query);
+        $gatewayQuery = $this->queryTranslator->translate($query, Document::TypeContent);
 
-        $response = $this->gateway->findContent($endpoint, $gatewayQuery);
+        $response = $this->gateway->find($endpoint, $gatewayQuery);
 
         return $this->resultExtractor->extract($response);
     }
@@ -105,9 +105,9 @@ final class Handler implements HandlerInterface, Capable
     public function findLocations(LocationQuery $query, array $languageFilter = []): SearchResult
     {
         $endpoint = $this->queryRouter->match($query);
-        $gatewayQuery = $this->queryTranslator->translate($query);
+        $gatewayQuery = $this->queryTranslator->translate($query, Document::TypeLocation);
 
-        $response = $this->gateway->findLocations($endpoint, $gatewayQuery);
+        $response = $this->gateway->find($endpoint, $gatewayQuery);
 
         return $this->resultExtractor->extract($response);
     }

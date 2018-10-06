@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration;
 
+use Cabbage\Document;
 use Cabbage\Endpoint;
 use Cabbage\Gateway;
 
@@ -32,7 +33,6 @@ class GatewayTest extends BaseTest
         $gateway = $this->getGatewayUnderTest();
         $endpoint = Endpoint::fromDsn('http://localhost:9200/test');
 
-        $gateway->createIndex($endpoint);
         $response = $gateway->flush($endpoint);
 
         $this->assertEquals(200, $response->status);
@@ -49,9 +49,9 @@ class GatewayTest extends BaseTest
         $endpoint = Endpoint::fromDsn('http://localhost:9200/test');
         $payload = <<<'EOD'
 {"index":{"_index":"test","_type":"temporary","_id":"content_1"}}
-{"type":"content","field":"value"}
+{"type":"content","field":"content_value"}
 {"index":{"_index":"test","_type":"temporary","_id":"location_1"}}
-{"type":"location","field":"value"}
+{"type":"location","field":"location_value"}
 
 EOD;
 
@@ -72,19 +72,30 @@ EOD;
         $endpoint = Endpoint::fromDsn('http://localhost:9200/test');
         $query = [
             'query' => [
-                'term' => [
-                    'field' => 'value',
+                'bool' => [
+                    'must' => [
+                        [
+                            'term' => [
+                                'type' => Document::TypeContent,
+                            ]
+                        ],
+                        [
+                            'term' => [
+                                'field' => 'content_value',
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ];
 
-        $response = $gateway->findContent($endpoint, $query);
+        $response = $gateway->find($endpoint, $query);
 
         $this->assertEquals(200, $response->status);
 
         $body = json_decode($response->body);
 
-        $this->assertGreaterThanOrEqual(1, $body->hits->total);
+        $this->assertEquals(1, $body->hits->total);
     }
 
     /**
@@ -98,19 +109,30 @@ EOD;
         $endpoint = Endpoint::fromDsn('http://localhost:9200/test');
         $query = [
             'query' => [
-                'term' => [
-                    'field' => 'value',
+                'bool' => [
+                    'must' => [
+                        [
+                            'term' => [
+                                'type' => Document::TypeLocation,
+                            ]
+                        ],
+                        [
+                            'term' => [
+                                'field' => 'location_value',
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ];
 
-        $response = $gateway->findLocations($endpoint, $query);
+        $response = $gateway->find($endpoint, $query);
 
         $this->assertEquals(200, $response->status);
 
         $body = json_decode($response->body);
 
-        $this->assertGreaterThanOrEqual(1, $body->hits->total);
+        $this->assertEquals(1, $body->hits->total);
     }
 
     /**
