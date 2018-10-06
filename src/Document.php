@@ -39,6 +39,8 @@ final class Document
     public $type;
 
     /**
+     * Document's fields.
+     *
      * @var \Cabbage\Field[]
      */
     public $fields;
