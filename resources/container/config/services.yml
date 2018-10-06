@@ -2,20 +2,25 @@ services:
     cabbage.http.client:
         class: Cabbage\Http\Client
 
-    cabbage.document_serializer:
-        class: Cabbage\DocumentSerializer
-
     cabbage.gateway:
         class: Cabbage\Gateway
         arguments:
             - '@cabbage.http.client'
-            - '@cabbage.document_serializer'
 
     cabbage.document_mapper:
         class: Cabbage\DocumentMapper
 
     cabbage.document_router:
         class: Cabbage\DocumentRouter
+
+    cabbage.document_serializer:
+        class: Cabbage\DocumentSerializer
+
+    cabbage.document_bulk_serializer:
+        class: Cabbage\DocumentBulkSerializer
+        arguments:
+            - '@cabbage.document_router'
+            - '@cabbage.document_serializer'
 
     cabbage.query_translator:
         class: Cabbage\QueryTranslator
@@ -31,7 +36,7 @@ services:
         arguments:
             - '@cabbage.gateway'
             - '@cabbage.document_mapper'
-            - '@cabbage.document_router'
+            - '@cabbage.document_bulk_serializer'
             - '@cabbage.query_translator'
             - '@cabbage.query_router'
             - '@cabbage.result_extractor'

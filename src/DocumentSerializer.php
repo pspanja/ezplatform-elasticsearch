@@ -20,7 +20,9 @@ final class DocumentSerializer
      */
     public function serialize(Document $document): string
     {
-        $content = [];
+        $content = [
+            'type' => $document->type,
+        ];
 
         foreach ($document->fields as $field) {
             $content[$this->mapFieldName($field)] = $this->mapValue($field);

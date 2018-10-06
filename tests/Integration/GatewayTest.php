@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration;
 
-use Cabbage\Document;
 use Cabbage\Endpoint;
-use Cabbage\Field;
 use Cabbage\Gateway;
 
 class GatewayTest extends BaseTest
@@ -25,21 +23,23 @@ class GatewayTest extends BaseTest
     }
 
     /**
+     * @depends testCreateIndex
+     *
      * @throws \Exception
      */
-    public function testIndex(): void
+    public function testBulkIndex(): void
     {
         $gateway = $this->getGatewayUnderTest();
         $endpoint = Endpoint::fromDsn('http://localhost:9200/test');
-        $fields = [
-            new Field('test_string', 'value', 'string'),
-            new Field('test_bool', true, 'bool'),
-        ];
-        $document = new Document(uniqid('blah', true), 'test', $fields);
+        $payload = <<<'EOD'
+{"index":{"_index":"test","_type":"temporary","_id":"1"}}
+{"field":"value"}
 
-        $response = $gateway->index($endpoint, $document);
+EOD;
 
-        $this->assertEquals(201, $response->status);
+        $response = $gateway->bulkIndex($endpoint, $payload);
+
+        $this->assertEquals(200, $response->status);
     }
 
     /**
@@ -57,18 +57,15 @@ class GatewayTest extends BaseTest
     }
 
     /**
+     * @depends testBulkIndex
+     * @depends testFlush
+     *
      * @throws \Exception
      */
     public function testFind(): void
     {
         $gateway = $this->getGatewayUnderTest();
         $endpoint = Endpoint::fromDsn('http://localhost:9200/test');
-        $fields = [
-            new Field('field', 'value', 'string'),
-        ];
-        $document = new Document(uniqid('blah', true), 'test', $fields);
-
-        $gateway->index($endpoint, $document);
         $gateway->flush($endpoint);
 
         $query = [
@@ -78,7 +75,7 @@ class GatewayTest extends BaseTest
                 ],
             ],
         ];
-        $response = $gateway->find($endpoint, $document->type, $query);
+        $response = $gateway->find($endpoint, 'temporary', $query);
 
         $this->assertEquals(200, $response->status);
 

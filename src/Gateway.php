@@ -20,18 +20,11 @@ final class Gateway
     private $client;
 
     /**
-     * @var \Cabbage\DocumentSerializer
-     */
-    private $documentSerializer;
-
-    /**
      * @param \Cabbage\Http\Client $client
-     * @param \Cabbage\DocumentSerializer $documentSerializer
      */
-    public function __construct(Client $client, DocumentSerializer $documentSerializer)
+    public function __construct(Client $client)
     {
         $this->client = $client;
-        $this->documentSerializer = $documentSerializer;
     }
 
     /**
@@ -60,24 +53,24 @@ final class Gateway
 
     /**
      * @param \Cabbage\Endpoint $endpoint
-     * @param \Cabbage\Document $document
+     * @param string $payload
      *
      * @return \Cabbage\Http\Response
      */
-    public function index(Endpoint $endpoint, Document $document): Response
+    public function bulkIndex(Endpoint $endpoint, string $payload): Response
     {
-        $url = "{$endpoint->getUrl()}/{$document->type}/{$document->id}";
+        $url = "{$endpoint->getUrl()}/_bulk";
 
         $request = new Request(
-            $this->documentSerializer->serialize($document),
+            $payload,
             [
-                'Content-Type' => 'application/json',
+                'Content-Type' => 'application/x-ndjson',
             ]
         );
 
         $response = $this->client->post($request, $url);
 
-        if ($response->status !== 201) {
+        if ($response->status !== 200) {
             throw new RuntimeException("Invalid response status {$response->status}");
         }
 

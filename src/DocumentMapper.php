@@ -11,13 +11,19 @@ namespace Cabbage;
  */
 final class DocumentMapper
 {
-    public function map(): Document
+    /**
+     * @return \Cabbage\Document[]
+     */
+    public function map(): array
     {
         $fields = [
             new Field('test_string', 'value', 'string'),
             new Field('test_bool', true, 'bool'),
         ];
 
-        return new Document(uniqid('blah', true), 'test', $fields);
+        return [
+            new Document(uniqid('blah', true), 'content', $fields),
+            new Document(uniqid('blah', true), 'location', $fields),
+        ];
     }
 }

@@ -27,9 +27,9 @@ final class Handler implements HandlerInterface, Capable
     private $documentMapper;
 
     /**
-     * @var \Cabbage\DocumentRouter
+     * @var \Cabbage\DocumentBulkSerializer
      */
-    private $documentRouter;
+    private $documentBulkSerializer;
 
     /**
      * @var \Cabbage\QueryTranslator
@@ -49,7 +49,7 @@ final class Handler implements HandlerInterface, Capable
     /**
      * @param \Cabbage\Gateway $gateway
      * @param \Cabbage\DocumentMapper $documentMapper
-     * @param \Cabbage\DocumentRouter $documentRouter
+     * @param \Cabbage\DocumentBulkSerializer $documentBulkSerializer
      * @param \Cabbage\QueryTranslator $queryTranslator
      * @param \Cabbage\QueryRouter $queryRouter
      * @param \Cabbage\ResultExtractor $resultExtractor
@@ -57,14 +57,14 @@ final class Handler implements HandlerInterface, Capable
     public function __construct(
         Gateway $gateway,
         DocumentMapper $documentMapper,
-        DocumentRouter $documentRouter,
+        DocumentBulkSerializer $documentBulkSerializer,
         QueryTranslator $queryTranslator,
         QueryRouter $queryRouter,
         ResultExtractor $resultExtractor
     ) {
         $this->gateway = $gateway;
         $this->documentMapper = $documentMapper;
-        $this->documentRouter = $documentRouter;
+        $this->documentBulkSerializer = $documentBulkSerializer;
         $this->queryTranslator = $queryTranslator;
         $this->queryRouter = $queryRouter;
         $this->resultExtractor = $resultExtractor;
@@ -86,7 +86,7 @@ final class Handler implements HandlerInterface, Capable
         $endpoint = $this->queryRouter->match($query);
         $gatewayQuery = $this->queryTranslator->translate($query);
 
-        $response = $this->gateway->find($endpoint, 'test', $gatewayQuery);
+        $response = $this->gateway->find($endpoint, 'temporary', $gatewayQuery);
 
         return $this->resultExtractor->extract($response);
     }
@@ -120,10 +120,11 @@ final class Handler implements HandlerInterface, Capable
      */
     public function indexContent(Content $content): void
     {
-        $document = $this->documentMapper->map();
-        $endpoint = $this->documentRouter->match($document);
+        $documents = $this->documentMapper->map();
 
-        $this->gateway->index($endpoint, $document);
+        $payload = $this->documentBulkSerializer->serialize($documents);
+
+        $this->gateway->bulkIndex(Endpoint::fromDsn('http://localhost:9200/index'), $payload);
     }
 
     /**
