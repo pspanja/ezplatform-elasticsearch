@@ -20,21 +20,21 @@ final class DocumentSerializer
      */
     public function serialize(Document $document): string
     {
-        $content = [
+        $data = [
             'type' => $document->type,
         ];
 
         foreach ($document->fields as $field) {
-            $content[$this->mapFieldName($field)] = $this->mapValue($field);
+            $data[$this->mapFieldName($field)] = $this->mapValue($field);
         }
 
-        $content = json_encode($content);
+        $data = json_encode($data);
 
-        if ($content === false) {
+        if ($data === false) {
             throw new RuntimeException('Could not JSON encode given document');
         }
 
-        return $content;
+        return $data;
     }
 
     /**
