@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage;
 
+use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 
 /**
@@ -17,11 +18,10 @@ final class QueryTranslator
 {
     /**
      * @param \eZ\Publish\API\Repository\Values\Content\Query $query
-     * @param string $documentType
      *
      * @return array|array[]
      */
-    public function translate(Query $query, string $documentType): array
+    public function translateContentQuery(Query $query): array
     {
         return [
             'query' => [
@@ -29,7 +29,34 @@ final class QueryTranslator
                     'must' => [
                         [
                             'term' => [
-                                'type' => $documentType,
+                                'type' => Document::TypeContent,
+                            ]
+                        ],
+                        [
+                            'term' => [
+                                'test_string' => 'value',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @param \eZ\Publish\API\Repository\Values\Content\LocationQuery $query
+     *
+     * @return array|array[]
+     */
+    public function translateLocationQuery(LocationQuery $query): array
+    {
+        return [
+            'query' => [
+                'bool' => [
+                    'must' => [
+                        [
+                            'term' => [
+                                'type' => Document::TypeLocation,
                             ]
                         ],
                         [
