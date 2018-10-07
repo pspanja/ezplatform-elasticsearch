@@ -114,4 +114,38 @@ final class Gateway
 
         return $this->client->post($request, $url);
     }
+
+    /**
+     * @param \Cabbage\Endpoint $endpoint
+     *
+     * @return \Cabbage\Http\Response
+     */
+    public function deleteIndex(Endpoint $endpoint): Response
+    {
+        $request = new Request();
+
+        return $this->client->delete($request, $endpoint->getUrl());
+    }
+
+    /**
+     * @param \Cabbage\Endpoint $endpoint
+     *
+     * @return bool
+     */
+    public function hasIndex(Endpoint $endpoint): bool
+    {
+        $request = new Request();
+
+        $response = $this->client->head($request, $endpoint->getUrl());
+
+        if ($response->status === 200) {
+            return true;
+        }
+
+        if ($response->status === 404) {
+            return false;
+        }
+
+        throw new RuntimeException("Invalid response status {$response->status}");
+    }
 }
