@@ -17,6 +17,11 @@ final class Client
     private const GET = 'GET';
 
     /**
+     * HTTP HEAD method.
+     */
+    private const HEAD = 'HEAD';
+
+    /**
      * HTTP PUT method.
      */
     private const POST = 'POST';
@@ -25,6 +30,11 @@ final class Client
      * HTTP PUT method.
      */
     private const PUT = 'PUT';
+
+    /**
+     * HTTP DELETE method.
+     */
+    private const DELETE = 'DELETE';
 
     /**
      * Send $request to $url with GET method and return the response.
@@ -63,6 +73,32 @@ final class Client
     public function post(Request $request, string $url): Response
     {
         return $this->send($request, $url, self::POST);
+    }
+
+    /**
+     * Send $request to $url with DELETE method and return the response.
+     *
+     * @param \Cabbage\Http\Request $request
+     * @param string $url
+     *
+     * @return \Cabbage\Http\Response
+     */
+    public function delete(Request $request, string $url): Response
+    {
+        return $this->send($request, $url, self::DELETE);
+    }
+
+    /**
+     * Send $request to $url with HEAD method and return the response.
+     *
+     * @param \Cabbage\Http\Request $request
+     * @param string $url
+     *
+     * @return \Cabbage\Http\Response
+     */
+    public function head(Request $request, string $url): Response
+    {
+        return $this->send($request, $url, self::HEAD);
     }
 
     /**
