@@ -6,19 +6,38 @@ namespace Cabbage\Tests\Integration;
 
 use Cabbage\Document;
 use Cabbage\Endpoint;
-use Cabbage\Gateway;
 
 class GatewayTest extends BaseTest
 {
+    /**
+     * @var \Cabbage\Endpoint
+     */
+    private static $endpoint;
+
+    /**
+     * @var \Cabbage\Gateway
+     */
+    private static $gateway;
+
+    /**
+     * @throws \Exception
+     */
+    public static function setUpBeforeClass(): void
+    {
+        self::$endpoint = Endpoint::fromDsn('http://localhost:9200/gateway_test');
+        self::$gateway = self::getContainer()->get('cabbage.gateway');
+
+        if (self::$gateway->hasIndex(self::$endpoint)) {
+            self::$gateway->deleteIndex(self::$endpoint);
+        }
+    }
+
     /**
      * @throws \Exception
      */
     public function testCreateIndex(): void
     {
-        $gateway = $this->getGatewayUnderTest();
-        $endpoint = Endpoint::fromDsn('http://localhost:9200/test');
-
-        $response = $gateway->createIndex($endpoint);
+        $response = self::$gateway->createIndex(self::$endpoint);
 
         $this->assertEquals(200, $response->status);
     }
@@ -30,10 +49,7 @@ class GatewayTest extends BaseTest
      */
     public function testFlush(): void
     {
-        $gateway = $this->getGatewayUnderTest();
-        $endpoint = Endpoint::fromDsn('http://localhost:9200/test');
-
-        $response = $gateway->flush($endpoint);
+        $response = self::$gateway->flush(self::$endpoint);
 
         $this->assertEquals(200, $response->status);
     }
@@ -45,18 +61,17 @@ class GatewayTest extends BaseTest
      */
     public function testBulkIndex(): void
     {
-        $gateway = $this->getGatewayUnderTest();
-        $endpoint = Endpoint::fromDsn('http://localhost:9200/test');
-        $payload = <<<'EOD'
-{"index":{"_index":"test","_type":"temporary","_id":"content_1"}}
+        $endpoint = self::$endpoint;
+        $payload = <<<EOD
+{"index":{"_index":"{$endpoint->index}","_type":"temporary","_id":"content_1"}}
 {"type":"content","field":"content_value"}
-{"index":{"_index":"test","_type":"temporary","_id":"location_1"}}
+{"index":{"_index":"{$endpoint->index}","_type":"temporary","_id":"location_1"}}
 {"type":"location","field":"location_value"}
 
 EOD;
 
-        $response = $gateway->bulkIndex($endpoint, $payload);
-        $gateway->flush($endpoint);
+        $response = self::$gateway->bulkIndex(self::$endpoint, $payload);
+        self::$gateway->flush(self::$endpoint);
 
         $this->assertEquals(200, $response->status);
     }
@@ -68,8 +83,6 @@ EOD;
      */
     public function testFindContent(): void
     {
-        $gateway = $this->getGatewayUnderTest();
-        $endpoint = Endpoint::fromDsn('http://localhost:9200/test');
         $query = [
             'query' => [
                 'bool' => [
@@ -89,7 +102,7 @@ EOD;
             ],
         ];
 
-        $response = $gateway->find($endpoint, $query);
+        $response = self::$gateway->find(self::$endpoint, $query);
 
         $this->assertEquals(200, $response->status);
 
@@ -103,10 +116,8 @@ EOD;
      *
      * @throws \Exception
      */
-    public function testFindLocations(): void
+    public function testFindLocation(): void
     {
-        $gateway = $this->getGatewayUnderTest();
-        $endpoint = Endpoint::fromDsn('http://localhost:9200/test');
         $query = [
             'query' => [
                 'bool' => [
@@ -126,22 +137,12 @@ EOD;
             ],
         ];
 
-        $response = $gateway->find($endpoint, $query);
+        $response = self::$gateway->find(self::$endpoint, $query);
 
         $this->assertEquals(200, $response->status);
 
         $body = json_decode($response->body);
 
         $this->assertEquals(1, $body->hits->total);
-    }
-
-    /**
-     * @throws \Exception
-     *
-     * @return \Cabbage\Gateway
-     */
-    public function getGatewayUnderTest(): Gateway
-    {
-        return $this->getContainer()->get('cabbage.gateway');
     }
 }

@@ -82,7 +82,7 @@ class HandlerTest extends BaseTest
      */
     protected function getHandlerUnderTest(): Handler
     {
-        return $this->getContainer()->get('cabbage.handler');
+        return self::getContainer()->get('cabbage.handler');
     }
 
     /**
@@ -92,6 +92,6 @@ class HandlerTest extends BaseTest
      */
     protected function flush(Endpoint $endpoint): void
     {
-        $this->getContainer()->get('cabbage.gateway')->flush($endpoint);
+        self::getContainer()->get('cabbage.gateway')->flush($endpoint);
     }
 }

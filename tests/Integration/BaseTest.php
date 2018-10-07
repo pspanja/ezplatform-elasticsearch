@@ -17,7 +17,7 @@ abstract class BaseTest extends TestCase
     /**
      * @return \Symfony\Component\DependencyInjection\Container
      */
-    public function getContainer(): Container
+    protected static function getContainer(): Container
     {
         if (self::$serviceContainer === null) {
             self::$serviceContainer = include __DIR__ . '/../../resources/container/builder.php';
