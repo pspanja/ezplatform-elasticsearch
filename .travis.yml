@@ -24,7 +24,6 @@ before_install:
     - docker run --detach --publish 9200:9200 elasticsearch
     - ./bin/wait_for_server.sh
     - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-    - phpenv config-add travis.php.ini
 
 install:
     - travis_wait composer install
