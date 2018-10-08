@@ -8,9 +8,6 @@ use Cabbage\Endpoint;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-/**
- * @testdox Endpoint test
- */
 class EndpointTest extends TestCase
 {
     /**
@@ -50,7 +47,7 @@ class EndpointTest extends TestCase
     }
 
     /**
-     * @testdox It should build an Endpoint from a DSN
+     * @testdox Endpoint can be built from a correct DSN
      * @dataProvider providerForBuildFromDsn
      *
      * @param string $dsn
@@ -83,7 +80,7 @@ class EndpointTest extends TestCase
     }
 
     /**
-     * @testdox It should fail to build an Endpoint from a DSN
+     * @testdox Endpoint can't be built from a incorrect DSN
      * @dataProvider providerForFailToBuildFromDsn
      *
      * @param string $dsn
