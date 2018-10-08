@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage;
 
 use Cabbage\Http\Client;
-use Cabbage\Http\Request;
+use Cabbage\Http\Message;
 use Cabbage\Http\Response;
 use RuntimeException;
 
@@ -42,14 +42,14 @@ final class Configurator
             ],
         ];
 
-        $request = new Request(
+        $message = new Message(
             (string)json_encode($body),
             [
                 'Content-Type' => 'application/json',
             ]
         );
 
-        return $this->client->put($request, $endpoint->getUrl());
+        return $this->client->put($message, $endpoint->getUrl());
     }
 
     /**
@@ -59,9 +59,9 @@ final class Configurator
      */
     public function hasIndex(Endpoint $endpoint): bool
     {
-        $request = new Request();
+        $message = new Message();
 
-        $response = $this->client->head($request, $endpoint->getUrl());
+        $response = $this->client->head($message, $endpoint->getUrl());
 
         if ($response->status === 200) {
             return true;
@@ -83,8 +83,8 @@ final class Configurator
      */
     public function deleteIndex(Endpoint $endpoint): Response
     {
-        $request = new Request();
+        $message = new Message();
 
-        return $this->client->delete($request, $endpoint->getUrl());
+        return $this->client->delete($message, $endpoint->getUrl());
     }
 }

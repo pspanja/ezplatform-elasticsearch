@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace Cabbage\Http;
 
 /**
- * Represents a HTTP request.
+ * Represents a HTTP request message.
  */
-final class Request
+final class Message
 {
     /**
-     * Request/response body.
+     * Message body.
      *
      * @var string
      */
     public $body;
 
     /**
-     * Request/response headers.
+     * Message headers.
      *
      * @var string[]
      */
@@ -34,11 +34,11 @@ final class Request
     }
 
     /**
-     * Build the Request instance from the given JSON string.
+     * Build the Message instance from the given JSON string.
      *
      * @param string $json
      *
-     * @return \Cabbage\Http\Request
+     * @return \Cabbage\Http\Message
      */
     public static function fromJson(string $json): self
     {

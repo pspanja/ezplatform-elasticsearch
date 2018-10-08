@@ -24,14 +24,14 @@ final class Response
     public $status;
 
     /**
-     * Request/response body.
+     * Response body.
      *
      * @var string
      */
     public $body;
 
     /**
-     * Request/response headers.
+     * Response headers.
      *
      * @var string[]
      */

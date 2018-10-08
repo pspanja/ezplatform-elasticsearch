@@ -6,7 +6,7 @@ namespace Cabbage\Tests\Integration\Http;
 
 use Cabbage\Http\Client;
 use Cabbage\Http\ConnectionException;
-use Cabbage\Http\Request;
+use Cabbage\Http\Message;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
@@ -33,7 +33,7 @@ class ClientTest extends TestCase
         $host = self::$host;
         $port = self::$port;
 
-        $request = new Request();
+        $request = new Message();
         $response = $client->get($request, "http://{$host}:{$port}/something.txt");
 
         $this->assertEquals(200, $response->status);
@@ -50,7 +50,7 @@ class ClientTest extends TestCase
         $host = self::$host;
         $port = self::$port;
 
-        $request = new Request();
+        $request = new Message();
         $response = $client->get($request, "http://{$host}:{$port}/not_found.mpg");
 
         $this->assertEquals(404, $response->status);
@@ -65,7 +65,7 @@ class ClientTest extends TestCase
 
         $this->expectException(ConnectionException::class);
 
-        $request = new Request();
+        $request = new Message();
         $client->get($request, 'http://remotehost:12345/passwords.txt');
     }
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage;
 
 use Cabbage\Http\Client;
-use Cabbage\Http\Request;
+use Cabbage\Http\Message;
 use Cabbage\Http\Response;
 use RuntimeException;
 
@@ -37,14 +37,14 @@ final class Gateway
     {
         $url = "{$endpoint->getUrl()}/_bulk";
 
-        $request = new Request(
+        $message = new Message(
             $payload,
             [
                 'Content-Type' => 'application/x-ndjson',
             ]
         );
 
-        $response = $this->client->post($request, $url);
+        $response = $this->client->post($message, $url);
 
         if ($response->status !== 200) {
             throw new RuntimeException("Invalid response status {$response->status}");
@@ -62,9 +62,9 @@ final class Gateway
     public function find(Endpoint $endpoint, array $query): Response
     {
         $url = "{$endpoint->getUrl()}/temporary/_search";
-        $request = Request::fromJson((string)json_encode($query));
+        $message = Message::fromJson((string)json_encode($query));
 
-        $response = $this->client->get($request, $url);
+        $response = $this->client->get($message, $url);
 
         if ($response->status !== 200) {
             throw new RuntimeException("Invalid response status {$response->status}");
@@ -81,8 +81,8 @@ final class Gateway
     public function flush(Endpoint $endpoint): Response
     {
         $url = "{$endpoint->getUrl()}/_flush";
-        $request = new Request();
+        $message = new Message();
 
-        return $this->client->post($request, $url);
+        return $this->client->post($message, $url);
     }
 }

@@ -37,82 +37,82 @@ final class Client
     private const DELETE = 'DELETE';
 
     /**
-     * Send $request to $url with GET method and return the response.
+     * Send $message to $url with GET method and return the response.
      *
-     * @param \Cabbage\Http\Request $request
+     * @param \Cabbage\Http\Message $message
      * @param string $url
      *
      * @return \Cabbage\Http\Response
      */
-    public function get(Request $request, string $url): Response
+    public function get(Message $message, string $url): Response
     {
-        return $this->send($request, $url, self::GET);
+        return $this->send($message, $url, self::GET);
     }
 
     /**
-     * Send $request to $url with PUT method and return the response.
+     * Send $message to $url with PUT method and return the response.
      *
-     * @param \Cabbage\Http\Request $request
+     * @param \Cabbage\Http\Message $message
      * @param string $url
      *
      * @return \Cabbage\Http\Response
      */
-    public function put(Request $request, string $url): Response
+    public function put(Message $message, string $url): Response
     {
-        return $this->send($request, $url, self::PUT);
+        return $this->send($message, $url, self::PUT);
     }
 
     /**
-     * Send $request to $url with POST method and return the response.
+     * Send $message to $url with POST method and return the response.
      *
-     * @param \Cabbage\Http\Request $request
+     * @param \Cabbage\Http\Message $message
      * @param string $url
      *
      * @return \Cabbage\Http\Response
      */
-    public function post(Request $request, string $url): Response
+    public function post(Message $message, string $url): Response
     {
-        return $this->send($request, $url, self::POST);
+        return $this->send($message, $url, self::POST);
     }
 
     /**
-     * Send $request to $url with DELETE method and return the response.
+     * Send $message to $url with DELETE method and return the response.
      *
-     * @param \Cabbage\Http\Request $request
+     * @param \Cabbage\Http\Message $message
      * @param string $url
      *
      * @return \Cabbage\Http\Response
      */
-    public function delete(Request $request, string $url): Response
+    public function delete(Message $message, string $url): Response
     {
-        return $this->send($request, $url, self::DELETE);
+        return $this->send($message, $url, self::DELETE);
     }
 
     /**
-     * Send $request to $url with HEAD method and return the response.
+     * Send $message to $url with HEAD method and return the response.
      *
-     * @param \Cabbage\Http\Request $request
+     * @param \Cabbage\Http\Message $message
      * @param string $url
      *
      * @return \Cabbage\Http\Response
      */
-    public function head(Request $request, string $url): Response
+    public function head(Message $message, string $url): Response
     {
-        return $this->send($request, $url, self::HEAD);
+        return $this->send($message, $url, self::HEAD);
     }
 
     /**
-     * Send $request with $method and return the response.
+     * Send $message with $method and return the response.
      *
-     * @param \Cabbage\Http\Request $request
+     * @param \Cabbage\Http\Message $message
      * @param string $url
      * @param string $method
      *
      * @return \Cabbage\Http\Response
      */
-    private function send(Request $request, string $url, string $method): Response
+    private function send(Message $message, string $url, string $method): Response
     {
-        $context = stream_context_create($this->getStreamContextOptions($request, $method));
+        $context = stream_context_create($this->getStreamContextOptions($message, $method));
 
         $level = error_reporting(0);
         $body = file_get_contents($url, false, $context);
@@ -129,17 +129,17 @@ final class Client
     }
 
     /**
-     * @param \Cabbage\Http\Request $request
+     * @param \Cabbage\Http\Message $message
      * @param string $method
      *
      * @return array[]|array[][]
      */
-    private function getStreamContextOptions(Request $request, string $method): array
+    private function getStreamContextOptions(Message $message, string $method): array
     {
         return [
             'http' => [
-                'content' => $request->body,
-                'header' => $this->formatHeaders($request),
+                'content' => $message->body,
+                'header' => $this->formatHeaders($message),
                 'ignore_errors' => true,
                 'method' => $method,
             ],
@@ -147,15 +147,15 @@ final class Client
     }
 
     /**
-     * @param \Cabbage\Http\Request $request
+     * @param \Cabbage\Http\Message $message
      *
      * @return string[]
      */
-    private function formatHeaders(Request $request): array
+    private function formatHeaders(Message $message): array
     {
         $headers = [];
 
-        foreach ($request->headers as $key => $value) {
+        foreach ($message->headers as $key => $value) {
             $headers[] = "{$key}: $value";
         }
 
