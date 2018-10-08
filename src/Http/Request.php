@@ -32,4 +32,16 @@ final class Request
         $this->headers = $headers;
         $this->body = $body;
     }
+
+    /**
+     * Build the Request instance from the given JSON string.
+     *
+     * @param string $json
+     *
+     * @return \Cabbage\Http\Request
+     */
+    public static function fromJson(string $json): self
+    {
+        return new self($json, ['Content-Type' => 'application/json']);
+    }
 }

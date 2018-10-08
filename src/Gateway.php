@@ -62,12 +62,7 @@ final class Gateway
     public function find(Endpoint $endpoint, array $query): Response
     {
         $url = "{$endpoint->getUrl()}/temporary/_search";
-        $request = new Request(
-            (string)json_encode($query),
-            [
-                'Content-Type' => 'application/json',
-            ]
-        );
+        $request = Request::fromJson((string)json_encode($query));
 
         $response = $this->client->get($request, $url);
 
