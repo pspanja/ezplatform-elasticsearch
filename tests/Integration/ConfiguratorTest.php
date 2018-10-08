@@ -63,7 +63,7 @@ class ConfiguratorTest extends BaseTest
      * @testdox Index can be deleted
      * @depends testHasIndexAfterCreated
      */
-    public function  testDeleteIndex(): void
+    public function testDeleteIndex(): void
     {
         $response = self::$configurator->deleteIndex(self::$endpoint);
 
@@ -74,7 +74,7 @@ class ConfiguratorTest extends BaseTest
      * @testdox Index doesn't exist after it's deleted
      * @depends testDeleteIndex
      */
-    public function  testDoesNotHaveIndexAfterDeleted(): void
+    public function testDoesNotHaveIndexAfterDeleted(): void
     {
         $this->assertFalse(self::$configurator->hasIndex(self::$endpoint));
     }
