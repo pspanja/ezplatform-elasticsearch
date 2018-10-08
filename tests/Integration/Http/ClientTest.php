@@ -10,9 +10,6 @@ use Cabbage\Http\Request;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-/**
- * @testdox Stream HTTP client test
- */
 class ClientTest extends TestCase
 {
     protected static $timeout = 5;
@@ -27,9 +24,9 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @testdox It should send GET request and receive response with status 200
+     * @testdox GET request to known resource returns response with status 200
      */
-    public function testSendRequestFound(): void
+    public function testGetRequestFound(): void
     {
         $client = $this->getClientUnderTest();
 
@@ -44,9 +41,9 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @testdox It should send GET request and receive response with status 400
+     * @testdox GET request to unknown resource returns response with status 400
      */
-    public function testSendRequestNotFound(): void
+    public function testGetRequestNotFound(): void
     {
         $client = $this->getClientUnderTest();
 
@@ -60,9 +57,9 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @testdox It should throw ConnectionException when host does not exist
+     * @testdox ConnectionException is thrown when host does not exist
      */
-    public function testSendRequestThrowsConnectionException(): void
+    public function testGetRequestThrowsConnectionException(): void
     {
         $client = $this->getClientUnderTest();
 

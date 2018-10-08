@@ -35,6 +35,8 @@ class GatewayTest extends BaseTest
     }
 
     /**
+     * @testdox Index can be flushed
+     *
      * @throws \Exception
      */
     public function testFlush(): void
@@ -45,6 +47,7 @@ class GatewayTest extends BaseTest
     }
 
     /**
+     * @testdox Data can be indexed
      * @depends testFlush
      *
      * @throws \Exception
@@ -67,11 +70,12 @@ EOD;
     }
 
     /**
+     * @testdox Documents can be found by field value
      * @depends testBulkIndex
      *
      * @throws \Exception
      */
-    public function testFindByValue(): void
+    public function testFindByFieldValue(): void
     {
         $query = [
             'query' => [
@@ -91,6 +95,7 @@ EOD;
     }
 
     /**
+     * @testdox Documents can be found by type
      * @depends testBulkIndex
      *
      * @throws \Exception

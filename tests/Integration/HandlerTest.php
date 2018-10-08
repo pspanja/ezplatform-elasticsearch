@@ -13,6 +13,8 @@ use eZ\Publish\SPI\Persistence\Content;
 class HandlerTest extends BaseTest
 {
     /**
+     * @testdox Content can be indexed
+     *
      * @throws \Exception
      */
     public function testIndexContent(): void
@@ -27,6 +29,7 @@ class HandlerTest extends BaseTest
     }
 
     /**
+     * @testdox Content can be found
      * @depends testIndexContent
      *
      * @throws \Exception
@@ -52,6 +55,7 @@ class HandlerTest extends BaseTest
     }
 
     /**
+     * @testdox Locations can be found
      * @depends testIndexContent
      *
      * @throws \Exception

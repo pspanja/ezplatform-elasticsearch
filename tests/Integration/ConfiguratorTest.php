@@ -31,12 +31,16 @@ class ConfiguratorTest extends BaseTest
         }
     }
 
+    /**
+     * @testdox Index initially does not exist
+     */
     public function testDoesNotHaveIndexUntilCreated(): void
     {
         $this->assertFalse(self::$configurator->hasIndex(self::$endpoint));
     }
 
     /**
+     * @testdox Index can be created
      * @depends testDoesNotHaveIndexUntilCreated
      */
     public function testCreateIndex(): void
@@ -47,6 +51,7 @@ class ConfiguratorTest extends BaseTest
     }
 
     /**
+     * @testdox Index exists after it's created
      * @depends testCreateIndex
      */
     public function testHasIndexAfterCreated(): void
@@ -55,6 +60,7 @@ class ConfiguratorTest extends BaseTest
     }
 
     /**
+     * @testdox Index can be deleted
      * @depends testHasIndexAfterCreated
      */
     public function  testDeleteIndex(): void
@@ -65,6 +71,7 @@ class ConfiguratorTest extends BaseTest
     }
 
     /**
+     * @testdox Index doesn't exist after it's deleted
      * @depends testDeleteIndex
      */
     public function  testDoesNotHaveIndexAfterDeleted(): void
