@@ -5,8 +5,10 @@
          convertWarningsToExceptions="true">
     <testsuites>
         <testsuite name="Integration tests">
-            <directory suffix="Test.php">./tests/Integration/Http</directory>
-            <directory suffix="Test.php">./tests/Integration</directory>
+            <file>./tests/Integration/Http/ClientTest.php</file>
+            <file>./tests/Integration/ConfiguratorTest.php</file>
+            <file>./tests/Integration/GatewayTest.php</file>
+            <file>./tests/Integration/HandlerTest.php</file>
         </testsuite>
     </testsuites>
     <filter>

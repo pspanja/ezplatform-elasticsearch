@@ -29,30 +29,6 @@ final class Gateway
 
     /**
      * @param \Cabbage\Endpoint $endpoint
-     *
-     * @return \Cabbage\Http\Response
-     */
-    public function createIndex(Endpoint $endpoint): Response
-    {
-        $body = [
-            'settings' => [
-                'number_of_shards' => 1,
-                'index.write.wait_for_active_shards' => 1,
-            ],
-        ];
-
-        $request = new Request(
-            (string)json_encode($body),
-            [
-                'Content-Type' => 'application/json',
-            ]
-        );
-
-        return $this->client->put($request, $endpoint->getUrl());
-    }
-
-    /**
-     * @param \Cabbage\Endpoint $endpoint
      * @param string $payload
      *
      * @return \Cabbage\Http\Response
@@ -113,39 +89,5 @@ final class Gateway
         $request = new Request();
 
         return $this->client->post($request, $url);
-    }
-
-    /**
-     * @param \Cabbage\Endpoint $endpoint
-     *
-     * @return \Cabbage\Http\Response
-     */
-    public function deleteIndex(Endpoint $endpoint): Response
-    {
-        $request = new Request();
-
-        return $this->client->delete($request, $endpoint->getUrl());
-    }
-
-    /**
-     * @param \Cabbage\Endpoint $endpoint
-     *
-     * @return bool
-     */
-    public function hasIndex(Endpoint $endpoint): bool
-    {
-        $request = new Request();
-
-        $response = $this->client->head($request, $endpoint->getUrl());
-
-        if ($response->status === 200) {
-            return true;
-        }
-
-        if ($response->status === 404) {
-            return false;
-        }
-
-        throw new RuntimeException("Invalid response status {$response->status}");
     }
 }

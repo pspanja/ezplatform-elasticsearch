@@ -26,25 +26,16 @@ class GatewayTest extends BaseTest
     {
         self::$endpoint = Endpoint::fromDsn('http://localhost:9200/gateway_test');
         self::$gateway = self::getContainer()->get('cabbage.gateway');
+        $configurator = self::getContainer()->get('cabbage.configurator');
 
-        if (self::$gateway->hasIndex(self::$endpoint)) {
-            self::$gateway->deleteIndex(self::$endpoint);
+        if ($configurator->hasIndex(self::$endpoint)) {
+            $configurator->deleteIndex(self::$endpoint);
         }
+
+        $configurator->createIndex(self::$endpoint);
     }
 
     /**
-     * @throws \Exception
-     */
-    public function testCreateIndex(): void
-    {
-        $response = self::$gateway->createIndex(self::$endpoint);
-
-        $this->assertEquals(200, $response->status);
-    }
-
-    /**
-     * @depends testCreateIndex
-     *
      * @throws \Exception
      */
     public function testFlush(): void
