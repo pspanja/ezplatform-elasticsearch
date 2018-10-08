@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration;
 
-use Cabbage\Document;
 use Cabbage\Endpoint;
 
 class GatewayTest extends BaseTest
@@ -54,10 +53,10 @@ class GatewayTest extends BaseTest
     {
         $endpoint = self::$endpoint;
         $payload = <<<EOD
-{"index":{"_index":"{$endpoint->index}","_type":"temporary","_id":"content_1"}}
-{"type":"content","field":"content_value"}
-{"index":{"_index":"{$endpoint->index}","_type":"temporary","_id":"location_1"}}
-{"type":"location","field":"location_value"}
+{"index":{"_index":"{$endpoint->index}","_type":"temporary","_id":"a_1"}}
+{"type":"type_a","field":"value"}
+{"index":{"_index":"{$endpoint->index}","_type":"temporary","_id":"b_1"}}
+{"type":"type_b","field":"value"}
 
 EOD;
 
@@ -72,23 +71,12 @@ EOD;
      *
      * @throws \Exception
      */
-    public function testFindContent(): void
+    public function testFindByValue(): void
     {
         $query = [
             'query' => [
-                'bool' => [
-                    'must' => [
-                        [
-                            'term' => [
-                                'type' => Document::TypeContent,
-                            ],
-                        ],
-                        [
-                            'term' => [
-                                'field' => 'content_value',
-                            ],
-                        ],
-                    ],
+                'term' => [
+                    'field' => 'value',
                 ],
             ],
         ];
@@ -99,7 +87,7 @@ EOD;
 
         $body = json_decode($response->body);
 
-        $this->assertEquals(1, $body->hits->total);
+        $this->assertEquals(2, $body->hits->total);
     }
 
     /**
@@ -107,23 +95,12 @@ EOD;
      *
      * @throws \Exception
      */
-    public function testFindLocation(): void
+    public function testFindByType(): void
     {
         $query = [
             'query' => [
-                'bool' => [
-                    'must' => [
-                        [
-                            'term' => [
-                                'type' => Document::TypeLocation,
-                            ],
-                        ],
-                        [
-                            'term' => [
-                                'field' => 'location_value',
-                            ],
-                        ],
-                    ],
+                'term' => [
+                    'type' => 'type_b',
                 ],
             ],
         ];
