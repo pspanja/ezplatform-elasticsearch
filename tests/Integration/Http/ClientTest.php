@@ -12,9 +12,24 @@ use RuntimeException;
 
 class ClientTest extends TestCase
 {
+    /**
+     * @var int
+     */
     protected static $timeout = 5;
+
+    /**
+     * @var string
+     */
     protected static $host = 'localhost';
+
+    /**
+     * @var int
+     */
     protected static $port = 8005;
+
+    /**
+     * @var string
+     */
     protected static $documentRoot = __DIR__ . '/_fixtures/';
 
     public static function setUpBeforeClass(): void
