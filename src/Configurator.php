@@ -49,7 +49,7 @@ final class Configurator
             ]
         );
 
-        return $this->client->put($message, $endpoint->getUrl());
+        return $this->client->put($endpoint->getUrl(), $message);
     }
 
     /**
@@ -61,7 +61,7 @@ final class Configurator
     {
         $message = new Message();
 
-        $response = $this->client->head($message, $endpoint->getUrl());
+        $response = $this->client->head($endpoint->getUrl(), $message);
 
         if ($response->status === 200) {
             return true;
@@ -83,8 +83,6 @@ final class Configurator
      */
     public function deleteIndex(Endpoint $endpoint): Response
     {
-        $message = new Message();
-
-        return $this->client->delete($message, $endpoint->getUrl());
+        return $this->client->delete($endpoint->getUrl());
     }
 }

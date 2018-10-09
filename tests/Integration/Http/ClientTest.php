@@ -33,8 +33,8 @@ class ClientTest extends TestCase
         $host = self::$host;
         $port = self::$port;
 
-        $request = new Message();
-        $response = $client->get($request, "http://{$host}:{$port}/something.txt");
+        $message = new Message();
+        $response = $client->get("http://{$host}:{$port}/something.txt", $message);
 
         $this->assertEquals(200, $response->status);
         $this->assertEquals("something in a text file\n", $response->body);
@@ -50,8 +50,8 @@ class ClientTest extends TestCase
         $host = self::$host;
         $port = self::$port;
 
-        $request = new Message();
-        $response = $client->get($request, "http://{$host}:{$port}/not_found.mpg");
+        $message = new Message();
+        $response = $client->get("http://{$host}:{$port}/not_found.mpg", $message);
 
         $this->assertEquals(404, $response->status);
     }
@@ -65,8 +65,8 @@ class ClientTest extends TestCase
 
         $this->expectException(ConnectionException::class);
 
-        $request = new Message();
-        $client->get($request, 'http://remotehost:12345/passwords.txt');
+        $message = new Message();
+        $client->get('http://remotehost:12345/passwords.txt', $message);
     }
 
     protected function getClientUnderTest(): Client

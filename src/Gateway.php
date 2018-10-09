@@ -44,7 +44,7 @@ final class Gateway
             ]
         );
 
-        $response = $this->client->post($message, $url);
+        $response = $this->client->post($url, $message);
 
         if ($response->status !== 200) {
             throw new RuntimeException("Invalid response status {$response->status}");
@@ -64,7 +64,7 @@ final class Gateway
         $url = "{$endpoint->getUrl()}/temporary/_search";
         $message = Message::fromJson((string)json_encode($query));
 
-        $response = $this->client->get($message, $url);
+        $response = $this->client->get($url, $message);
 
         if ($response->status !== 200) {
             throw new RuntimeException("Invalid response status {$response->status}");
@@ -81,8 +81,7 @@ final class Gateway
     public function flush(Endpoint $endpoint): Response
     {
         $url = "{$endpoint->getUrl()}/_flush";
-        $message = new Message();
 
-        return $this->client->post($message, $url);
+        return $this->client->post($url);
     }
 }
