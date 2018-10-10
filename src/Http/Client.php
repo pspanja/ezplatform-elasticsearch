@@ -37,7 +37,7 @@ final class Client
     private const DELETE = 'DELETE';
 
     /**
-     * Send $message to $url with GET method and return the response.
+     * Perform GET request to the URL with the given message.
      *
      * @param string $url
      * @param \Cabbage\Http\Message $message
@@ -46,11 +46,11 @@ final class Client
      */
     public function get(string $url, ?Message $message = null): Response
     {
-        return $this->send($url, self::GET, $message);
+        return $this->request(self::GET, $url, $message);
     }
 
     /**
-     * Send $message to $url with PUT method and return the response.
+     * Perform PUT request to the URL with the given message.
      *
      * @param string $url
      * @param \Cabbage\Http\Message $message
@@ -59,11 +59,11 @@ final class Client
      */
     public function put(string $url, ?Message $message = null): Response
     {
-        return $this->send($url, self::PUT, $message);
+        return $this->request(self::PUT, $url, $message);
     }
 
     /**
-     * Send $message to $url with POST method and return the response.
+     * Perform POST request to the URL with the given message.
      *
      * @param string $url
      * @param \Cabbage\Http\Message $message
@@ -72,11 +72,11 @@ final class Client
      */
     public function post(string $url, ?Message $message = null): Response
     {
-        return $this->send($url, self::POST, $message);
+        return $this->request(self::POST, $url, $message);
     }
 
     /**
-     * Send $message to $url with DELETE method and return the response.
+     * Perform DELETE request to the URL with the given message.
      *
      * @param string $url
      * @param \Cabbage\Http\Message $message
@@ -85,11 +85,11 @@ final class Client
      */
     public function delete(string $url, ?Message $message = null): Response
     {
-        return $this->send($url, self::DELETE, $message);
+        return $this->request(self::DELETE, $url, $message);
     }
 
     /**
-     * Send $message to $url with HEAD method and return the response.
+     * Perform HEAD request to the URL with the given message.
      *
      * @param string $url
      * @param \Cabbage\Http\Message $message
@@ -98,19 +98,19 @@ final class Client
      */
     public function head(string $url, ?Message $message = null): Response
     {
-        return $this->send($url, self::HEAD, $message);
+        return $this->request(self::HEAD, $url, $message);
     }
 
     /**
      * Send $message with $method and return the response.
      *
-     * @param string $url
      * @param string $method
+     * @param string $url
      * @param \Cabbage\Http\Message $message
      *
      * @return \Cabbage\Http\Response
      */
-    private function send(string $url, string $method, ?Message $message = null): Response
+    private function request(string $method, string $url, ?Message $message = null): Response
     {
         $message = $message ?? new Message();
         $context = stream_context_create($this->getStreamContextOptions($message, $method));
