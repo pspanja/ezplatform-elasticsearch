@@ -86,9 +86,9 @@ final class Handler implements HandlerInterface, Capable
         $endpoint = $this->queryRouter->match($query);
         $gatewayQuery = $this->queryTranslator->translateContentQuery($query);
 
-        $response = $this->gateway->find($endpoint, $gatewayQuery);
+        $data = $this->gateway->find($endpoint, $gatewayQuery);
 
-        return $this->resultExtractor->extract($response);
+        return $this->resultExtractor->extract($data);
     }
 
     /**
@@ -107,9 +107,9 @@ final class Handler implements HandlerInterface, Capable
         $endpoint = $this->queryRouter->match($query);
         $gatewayQuery = $this->queryTranslator->translateLocationQuery($query);
 
-        $response = $this->gateway->find($endpoint, $gatewayQuery);
+        $data = $this->gateway->find($endpoint, $gatewayQuery);
 
-        return $this->resultExtractor->extract($response);
+        return $this->resultExtractor->extract($data);
     }
 
     /**

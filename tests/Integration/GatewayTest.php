@@ -85,13 +85,10 @@ EOD;
             ],
         ];
 
-        $response = self::$gateway->find(self::$endpoint, $query);
+        $data = self::$gateway->find(self::$endpoint, $query);
+        $data = json_decode($data);
 
-        $this->assertEquals(200, $response->status);
-
-        $body = json_decode($response->body);
-
-        $this->assertEquals(2, $body->hits->total);
+        $this->assertEquals(2, $data->hits->total);
     }
 
     /**
@@ -110,12 +107,9 @@ EOD;
             ],
         ];
 
-        $response = self::$gateway->find(self::$endpoint, $query);
+        $data = self::$gateway->find(self::$endpoint, $query);
+        $data = json_decode($data);
 
-        $this->assertEquals(200, $response->status);
-
-        $body = json_decode($response->body);
-
-        $this->assertEquals(1, $body->hits->total);
+        $this->assertEquals(1, $data->hits->total);
     }
 }

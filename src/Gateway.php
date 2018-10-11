@@ -6,7 +6,6 @@ namespace Cabbage;
 
 use Cabbage\Http\Client;
 use Cabbage\Http\Message;
-use Cabbage\Http\Response;
 use RuntimeException;
 
 /**
@@ -53,9 +52,9 @@ final class Gateway
      * @param \Cabbage\Endpoint $endpoint
      * @param array|array[] $query
      *
-     * @return \Cabbage\Http\Response
+     * @return string
      */
-    public function find(Endpoint $endpoint, array $query): Response
+    public function find(Endpoint $endpoint, array $query): string
     {
         $url = "{$endpoint->getUrl()}/temporary/_search";
         $message = Message::fromJson((string)json_encode($query));
@@ -66,7 +65,7 @@ final class Gateway
             throw new RuntimeException("Invalid response status {$response->status}");
         }
 
-        return $response;
+        return $response->body;
     }
 
     /**

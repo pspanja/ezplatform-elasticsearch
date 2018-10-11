@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cabbage;
 
-use Cabbage\Http\Response;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 
@@ -16,9 +15,14 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
  */
 final class ResultExtractor
 {
-    public function extract(Response $response): SearchResult
+    /**
+     * @param string $data
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
+     */
+    public function extract(string $data): SearchResult
     {
-        $body = json_decode($response->body);
+        $body = json_decode($data);
         $searchHits = [];
 
         foreach ($body->hits->hits as $hit) {
