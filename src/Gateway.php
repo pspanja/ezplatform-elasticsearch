@@ -30,10 +30,8 @@ final class Gateway
     /**
      * @param \Cabbage\Endpoint $endpoint
      * @param string $payload
-     *
-     * @return \Cabbage\Http\Response
      */
-    public function bulkIndex(Endpoint $endpoint, string $payload): Response
+    public function bulkIndex(Endpoint $endpoint, string $payload): void
     {
         $url = "{$endpoint->getUrl()}/_bulk";
 
@@ -49,8 +47,6 @@ final class Gateway
         if ($response->status !== 200) {
             throw new RuntimeException("Invalid response status {$response->status}");
         }
-
-        return $response;
     }
 
     /**
@@ -75,13 +71,15 @@ final class Gateway
 
     /**
      * @param \Cabbage\Endpoint $endpoint
-     *
-     * @return \Cabbage\Http\Response
      */
-    public function flush(Endpoint $endpoint): Response
+    public function flush(Endpoint $endpoint): void
     {
         $url = "{$endpoint->getUrl()}/_flush";
 
-        return $this->client->post($url);
+        $response = $this->client->post($url);
+
+        if ($response->status !== 200) {
+            throw new RuntimeException("Invalid response status {$response->status}");
+        }
     }
 }
