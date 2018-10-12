@@ -13,6 +13,7 @@ use eZ\Publish\SPI\Persistence\Content\ContentInfo;
 use eZ\Publish\SPI\Persistence\Content\Location;
 use eZ\Publish\SPI\Search\Capable;
 use eZ\Publish\SPI\Search\Handler as HandlerInterface;
+use RuntimeException;
 
 final class Handler implements HandlerInterface, Capable
 {
@@ -75,7 +76,7 @@ final class Handler implements HandlerInterface, Capable
      */
     public function supports($capabilityFlag): bool
     {
-        // TODO: Implement supports() method.
+        throw new RuntimeException('Not implemented');
     }
 
     /**
@@ -96,7 +97,7 @@ final class Handler implements HandlerInterface, Capable
      */
     public function findSingle(Criterion $filter, array $languageFilter = []): ContentInfo
     {
-        // TODO: Implement findSingle() method.
+        throw new RuntimeException('Not implemented');
     }
 
     /**
@@ -117,7 +118,7 @@ final class Handler implements HandlerInterface, Capable
      */
     public function suggest($prefix, $fieldPaths = [], $limit = 10, ?Criterion $filter = null): void
     {
-        // TODO: Implement suggest() method.
+        throw new RuntimeException('Not implemented');
     }
 
     /**
@@ -137,7 +138,7 @@ final class Handler implements HandlerInterface, Capable
      */
     public function deleteContent($contentId, $versionId = null): void
     {
-        // TODO: Implement deleteContent() method.
+        throw new RuntimeException('Not implemented');
     }
 
     /**
@@ -145,7 +146,7 @@ final class Handler implements HandlerInterface, Capable
      */
     public function indexLocation(Location $location): void
     {
-        // TODO: Implement indexLocation() method.
+        throw new RuntimeException('Not implemented');
     }
 
     /**
@@ -153,7 +154,7 @@ final class Handler implements HandlerInterface, Capable
      */
     public function deleteLocation($locationId, $contentId): void
     {
-        // TODO: Implement deleteLocation() method.
+        throw new RuntimeException('Not implemented');
     }
 
     /**
@@ -161,6 +162,6 @@ final class Handler implements HandlerInterface, Capable
      */
     public function purgeIndex(): void
     {
-        // TODO: Implement purgeIndex() method.
+        throw new RuntimeException('Not implemented');
     }
 }
