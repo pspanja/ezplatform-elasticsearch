@@ -9,6 +9,8 @@ use Cabbage\Handler;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\SPI\Persistence\Content;
+use eZ\Publish\SPI\Persistence\Content\ContentInfo;
+use eZ\Publish\SPI\Persistence\Content\VersionInfo;
 
 class HandlerTest extends BaseTest
 {
@@ -20,8 +22,11 @@ class HandlerTest extends BaseTest
     public function testIndexContent(): void
     {
         $handler = $this->getHandlerUnderTest();
-        /** @var \eZ\Publish\SPI\Persistence\Content $content */
-        $content = $this->getMockBuilder(Content::class)->getMock();
+        $content = new Content([
+            'versionInfo' => new VersionInfo([
+                'contentInfo' => new ContentInfo(),
+            ]),
+        ]);
 
         $handler->indexContent($content);
 
@@ -39,9 +44,11 @@ class HandlerTest extends BaseTest
     {
         $endpoint = Endpoint::fromDsn('http://localhost:9200/index');
         $handler = $this->getHandlerUnderTest();
-
-        /** @var \eZ\Publish\SPI\Persistence\Content $content */
-        $content = $this->getMockBuilder(Content::class)->getMock();
+        $content = new Content([
+            'versionInfo' => new VersionInfo([
+                'contentInfo' => new ContentInfo(),
+            ]),
+        ]);
 
         $handler->indexContent($content);
         $this->flush($endpoint);
@@ -64,9 +71,11 @@ class HandlerTest extends BaseTest
     {
         $endpoint = Endpoint::fromDsn('http://localhost:9200/index');
         $handler = $this->getHandlerUnderTest();
-
-        /** @var \eZ\Publish\SPI\Persistence\Content $content */
-        $content = $this->getMockBuilder(Content::class)->getMock();
+        $content = new Content([
+            'versionInfo' => new VersionInfo([
+                'contentInfo' => new ContentInfo(),
+            ]),
+        ]);
 
         $handler->indexContent($content);
         $this->flush($endpoint);

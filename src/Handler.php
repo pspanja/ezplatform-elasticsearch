@@ -125,7 +125,7 @@ final class Handler implements HandlerInterface, Capable
      */
     public function indexContent(Content $content): void
     {
-        $documents = $this->documentMapper->map();
+        $documents = $this->documentMapper->map($content);
 
         $payload = $this->documentBulkSerializer->serialize($documents);
 
