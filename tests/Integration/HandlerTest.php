@@ -21,6 +21,7 @@ class HandlerTest extends BaseTest
      */
     public function testIndexContent(): void
     {
+        $endpoint = Endpoint::fromDsn('http://localhost:9200/index');
         $handler = $this->getHandlerUnderTest();
         $content = new Content([
             'versionInfo' => new VersionInfo([
@@ -29,6 +30,7 @@ class HandlerTest extends BaseTest
         ]);
 
         $handler->indexContent($content);
+        $this->flush($endpoint);
 
         $this->assertTrue(true);
     }
@@ -42,16 +44,7 @@ class HandlerTest extends BaseTest
      */
     public function testFindContent(): void
     {
-        $endpoint = Endpoint::fromDsn('http://localhost:9200/index');
         $handler = $this->getHandlerUnderTest();
-        $content = new Content([
-            'versionInfo' => new VersionInfo([
-                'contentInfo' => new ContentInfo(),
-            ]),
-        ]);
-
-        $handler->indexContent($content);
-        $this->flush($endpoint);
 
         /** @var \eZ\Publish\API\Repository\Values\Content\Query $query */
         $query = $this->getMockBuilder(Query::class)->getMock();
@@ -69,16 +62,7 @@ class HandlerTest extends BaseTest
      */
     public function testFindLocation(): void
     {
-        $endpoint = Endpoint::fromDsn('http://localhost:9200/index');
         $handler = $this->getHandlerUnderTest();
-        $content = new Content([
-            'versionInfo' => new VersionInfo([
-                'contentInfo' => new ContentInfo(),
-            ]),
-        ]);
-
-        $handler->indexContent($content);
-        $this->flush($endpoint);
 
         /** @var \eZ\Publish\API\Repository\Values\Content\LocationQuery $query */
         $query = $this->getMockBuilder(LocationQuery::class)->getMock();
