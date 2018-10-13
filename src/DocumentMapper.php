@@ -63,7 +63,7 @@ final class DocumentMapper
         ];
 
         return new Document(
-            uniqid('content_', true),
+            "content_{$content->versionInfo->contentInfo->id}",
             Document::TypeContent,
             $fields
         );
@@ -82,7 +82,7 @@ final class DocumentMapper
         ];
 
         return new Document(
-            uniqid('location_', true),
+            "location_{$location->id}",
             Document::TypeLocation,
             $fields
         );

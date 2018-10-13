@@ -28,7 +28,9 @@ class LocationHandler implements LocationHandlerInterface
     public function loadLocationsByContent($contentId, $rootLocationId = null): array
     {
         return [
-            new Location([]),
+            new Location([
+                'id' => 'LOCATION_ID',
+            ]),
         ];
     }
 

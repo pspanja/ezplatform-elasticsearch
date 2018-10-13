@@ -25,7 +25,9 @@ class HandlerTest extends BaseTest
         $handler = $this->getHandlerUnderTest();
         $content = new Content([
             'versionInfo' => new VersionInfo([
-                'contentInfo' => new ContentInfo(),
+                'contentInfo' => new ContentInfo([
+                    'id' => 'CONTENT_ID'
+                ]),
             ]),
         ]);
 
