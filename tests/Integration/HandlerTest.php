@@ -15,6 +15,32 @@ use eZ\Publish\SPI\Persistence\Content\VersionInfo;
 class HandlerTest extends BaseTest
 {
     /**
+     * @var \Cabbage\Endpoint
+     */
+    private static $endpoint;
+
+    /**
+     * @var \Cabbage\Gateway
+     */
+    private static $gateway;
+
+    /**
+     * @throws \Exception
+     */
+    public static function setUpBeforeClass(): void
+    {
+        self::$endpoint = Endpoint::fromDsn('http://localhost:9200/index');
+        self::$gateway = self::getContainer()->get('cabbage.gateway');
+        $configurator = self::getContainer()->get('cabbage.configurator');
+
+        if ($configurator->hasIndex(self::$endpoint)) {
+            $configurator->deleteIndex(self::$endpoint);
+        }
+
+        $configurator->createIndex(self::$endpoint);
+    }
+
+    /**
      * @testdox Content can be indexed
      *
      * @throws \Exception
