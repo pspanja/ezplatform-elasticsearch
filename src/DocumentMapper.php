@@ -63,8 +63,8 @@ final class DocumentMapper
         ];
 
         return new Document(
-            uniqid('location_', true),
-            Document::TypeLocation,
+            uniqid('content_', true),
+            Document::TypeContent,
             $fields
         );
     }
@@ -82,8 +82,8 @@ final class DocumentMapper
         ];
 
         return new Document(
-            uniqid('content_', true),
-            Document::TypeContent,
+            uniqid('location_', true),
+            Document::TypeLocation,
             $fields
         );
     }
