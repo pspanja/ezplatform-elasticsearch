@@ -34,7 +34,7 @@ class HandlerTest extends BaseTest
         $handler->indexContent($content);
         $this->flush($endpoint);
 
-        $this->assertTrue(true);
+        $this->addToAssertionCount(1);
     }
 
     /**
