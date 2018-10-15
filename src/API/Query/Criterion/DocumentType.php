@@ -11,7 +11,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator\Specificat
 /**
  * Defines a match on document's type.
  *
- * @see \Cabbage\Document
+ * @see \Cabbage\SPI\Document
  */
 final class DocumentType extends Criterion
 {
