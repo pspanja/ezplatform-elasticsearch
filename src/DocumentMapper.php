@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage;
 
+use Cabbage\SPI\Document;
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Location;
 use eZ\Publish\SPI\Persistence\Content\Location\Handler as LocationHandler;
@@ -12,7 +13,7 @@ use eZ\Publish\SPI\Persistence\Content\Location\Handler as LocationHandler;
  * Maps eZ Platform Content to an array of Document instances.
  *
  * @see \eZ\Publish\SPI\Persistence\Content
- * @see \Cabbage\Document
+ * @see \Cabbage\SPI\Document
  */
 final class DocumentMapper
 {
@@ -32,7 +33,7 @@ final class DocumentMapper
     /**
      * @param \eZ\Publish\SPI\Persistence\Content $content
      *
-     * @return \Cabbage\Document[]
+     * @return \Cabbage\SPI\Document[]
      */
     public function map(Content $content): array
     {
@@ -53,7 +54,7 @@ final class DocumentMapper
     /**
      * @param \eZ\Publish\SPI\Persistence\Content $content
      *
-     * @return \Cabbage\Document
+     * @return \Cabbage\SPI\Document
      */
     private function mapContent(Content $content): Document
     {
@@ -72,7 +73,7 @@ final class DocumentMapper
     /**
      * @param \eZ\Publish\SPI\Persistence\Content\Location $location
      *
-     * @return \Cabbage\Document
+     * @return \Cabbage\SPI\Document
      */
     private function mapLocation(Location $location): Document
     {

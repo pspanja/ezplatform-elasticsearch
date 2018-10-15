@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage;
 
+use Cabbage\SPI\Document;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 

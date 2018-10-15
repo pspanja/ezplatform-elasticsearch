@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Cabbage;
 
+use Cabbage\SPI\Document;
 use RuntimeException;
 
 /**
  * Serializes a Document object into a JSON string for indexing.
  *
- * @see \Cabbage\Document
+ * @see \Cabbage\SPI\Document
  */
 final class DocumentSerializer
 {
     /**
-     * @param \Cabbage\Document $document
+     * @param \Cabbage\SPI\Document $document
      *
      * @return string
      */

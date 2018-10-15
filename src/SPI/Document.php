@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage;
+namespace Cabbage\SPI;
 
 /**
  * Represents a document to be indexed in the Elasticsearch backed.
@@ -31,8 +31,8 @@ final class Document
     /**
      * Document type identifier.
      *
-     * @see \Cabbage\Document::TypeContent
-     * @see \Cabbage\Document::TypeLocation
+     * @see \Cabbage\SPI\Document::TypeContent
+     * @see \Cabbage\SPI\Document::TypeLocation
      *
      * @var string
      */

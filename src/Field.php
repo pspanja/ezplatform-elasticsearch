@@ -7,7 +7,7 @@ namespace Cabbage;
 /**
  * Represents a field in a Document.
  *
- * @see \Cabbage\Document
+ * @see \Cabbage\SPI\Document
  */
 final class Field
 {
