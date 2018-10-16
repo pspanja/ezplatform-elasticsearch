@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Cabbage;
+namespace Cabbage\Core;
 
-use Cabbage\Core\Gateway;
-use Cabbage\Core\ResultExtractor;
+use Cabbage\DocumentBulkSerializer;
+use Cabbage\DocumentMapper;
+use Cabbage\QueryRouter;
+use Cabbage\QueryTranslator;
 use Cabbage\SPI\Endpoint;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;

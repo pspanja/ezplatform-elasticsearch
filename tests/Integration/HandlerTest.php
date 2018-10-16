@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration;
 
-use Cabbage\Handler;
+use Cabbage\Core\Handler;
 use Cabbage\SPI\Endpoint;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -20,7 +20,7 @@ class HandlerTest extends BaseTest
     private static $endpoint;
 
     /**
-     * @var \Cabbage\Gateway
+     * @var \Cabbage\Core\Gateway
      */
     private static $gateway;
 
@@ -111,7 +111,7 @@ class HandlerTest extends BaseTest
     /**
      * @throws \Exception
      *
-     * @return \Cabbage\Handler
+     * @return \Cabbage\Core\Handler
      */
     protected function getHandlerUnderTest(): Handler
     {

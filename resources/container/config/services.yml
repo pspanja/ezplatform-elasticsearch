@@ -39,7 +39,7 @@ services:
         class: Cabbage\Core\ResultExtractor
 
     cabbage.handler:
-        class: Cabbage\Handler
+        class: Cabbage\Core\Handler
         arguments:
             - '@cabbage.gateway'
             - '@cabbage.document_mapper'
