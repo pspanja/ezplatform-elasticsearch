@@ -1,6 +1,6 @@
 services:
     cabbage.http.client:
-        class: Cabbage\Http\Client
+        class: Cabbage\Core\Http\Client
 
     cabbage.gateway:
         class: Cabbage\Gateway

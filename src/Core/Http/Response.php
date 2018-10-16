@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Http;
+namespace Cabbage\Core\Http;
 
 /**
  * Represents a HTTP response.
@@ -57,7 +57,7 @@ final class Response
      * @param string[] $responseHeaders
      * @param string $body
      *
-     * @return \Cabbage\Http\Response
+     * @return \Cabbage\Core\Http\Response
      */
     public static function fromHeadersAndBody(array $responseHeaders, string $body): self
     {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration\Http;
 
-use Cabbage\Http\Client;
-use Cabbage\Http\ConnectionException;
-use Cabbage\Http\Message;
+use Cabbage\Core\Http\Client;
+use Cabbage\Core\Http\ConnectionException;
+use Cabbage\Core\Http\Message;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 

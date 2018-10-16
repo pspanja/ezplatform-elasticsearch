@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Http;
+namespace Cabbage\Core\Http;
 
 /**
  * Allows communication with Elasticsearch server.
@@ -40,9 +40,9 @@ final class Client
      * Perform GET request to the URL with the given message.
      *
      * @param string $url
-     * @param \Cabbage\Http\Message $message
+     * @param \Cabbage\Core\Http\Message $message
      *
-     * @return \Cabbage\Http\Response
+     * @return \Cabbage\Core\Http\Response
      */
     public function get(string $url, ?Message $message = null): Response
     {
@@ -53,9 +53,9 @@ final class Client
      * Perform PUT request to the URL with the given message.
      *
      * @param string $url
-     * @param \Cabbage\Http\Message $message
+     * @param \Cabbage\Core\Http\Message $message
      *
-     * @return \Cabbage\Http\Response
+     * @return \Cabbage\Core\Http\Response
      */
     public function put(string $url, ?Message $message = null): Response
     {
@@ -66,9 +66,9 @@ final class Client
      * Perform POST request to the URL with the given message.
      *
      * @param string $url
-     * @param \Cabbage\Http\Message $message
+     * @param \Cabbage\Core\Http\Message $message
      *
-     * @return \Cabbage\Http\Response
+     * @return \Cabbage\Core\Http\Response
      */
     public function post(string $url, ?Message $message = null): Response
     {
@@ -79,9 +79,9 @@ final class Client
      * Perform DELETE request to the URL with the given message.
      *
      * @param string $url
-     * @param \Cabbage\Http\Message $message
+     * @param \Cabbage\Core\Http\Message $message
      *
-     * @return \Cabbage\Http\Response
+     * @return \Cabbage\Core\Http\Response
      */
     public function delete(string $url, ?Message $message = null): Response
     {
@@ -92,9 +92,9 @@ final class Client
      * Perform HEAD request to the URL with the given message.
      *
      * @param string $url
-     * @param \Cabbage\Http\Message $message
+     * @param \Cabbage\Core\Http\Message $message
      *
-     * @return \Cabbage\Http\Response
+     * @return \Cabbage\Core\Http\Response
      */
     public function head(string $url, ?Message $message = null): Response
     {
@@ -106,9 +106,9 @@ final class Client
      *
      * @param string $method
      * @param string $url
-     * @param \Cabbage\Http\Message $message
+     * @param \Cabbage\Core\Http\Message $message
      *
-     * @return \Cabbage\Http\Response
+     * @return \Cabbage\Core\Http\Response
      */
     private function request(string $method, string $url, ?Message $message = null): Response
     {
@@ -130,7 +130,7 @@ final class Client
     }
 
     /**
-     * @param \Cabbage\Http\Message $message
+     * @param \Cabbage\Core\Http\Message $message
      * @param string $method
      *
      * @return array[]|array[][]
@@ -148,7 +148,7 @@ final class Client
     }
 
     /**
-     * @param \Cabbage\Http\Message $message
+     * @param \Cabbage\Core\Http\Message $message
      *
      * @return string[]
      */

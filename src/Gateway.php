@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage;
 
-use Cabbage\Http\Client;
-use Cabbage\Http\Message;
+use Cabbage\Core\Http\Client;
+use Cabbage\Core\Http\Message;
 use Cabbage\SPI\Endpoint;
 use RuntimeException;
 
@@ -15,12 +15,12 @@ use RuntimeException;
 final class Gateway
 {
     /**
-     * @var \Cabbage\Http\Client
+     * @var \Cabbage\Core\Http\Client
      */
     private $client;
 
     /**
-     * @param \Cabbage\Http\Client $client
+     * @param \Cabbage\Core\Http\Client $client
      */
     public function __construct(Client $client)
     {

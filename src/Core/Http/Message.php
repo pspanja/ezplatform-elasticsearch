@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Http;
+namespace Cabbage\Core\Http;
 
 /**
  * Represents a HTTP request message.
@@ -38,7 +38,7 @@ final class Message
      *
      * @param string $json
      *
-     * @return \Cabbage\Http\Message
+     * @return \Cabbage\Core\Http\Message
      */
     public static function fromJson(string $json): self
     {
