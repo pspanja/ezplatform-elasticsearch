@@ -14,7 +14,7 @@ class ConfiguratorTest extends BaseTest
     private static $endpoint;
 
     /**
-     * @var \Cabbage\Configurator
+     * @var \Cabbage\Core\Configurator
      */
     private static $configurator;
 
