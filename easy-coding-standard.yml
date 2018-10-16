@@ -17,3 +17,4 @@ services:
         space: none
     PhpCsFixer\Fixer\Operator\ConcatSpaceFixer:
         spacing: one
+    SlevomatCodingStandard\Sniffs\Commenting\UselessInheritDocCommentSniff: ~

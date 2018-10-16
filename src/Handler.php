@@ -122,9 +122,6 @@ final class Handler implements HandlerInterface, Capable
         throw new RuntimeException('Not implemented');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function indexContent(Content $content): void
     {
         $documents = $this->documentMapper->map($content);
@@ -142,9 +139,6 @@ final class Handler implements HandlerInterface, Capable
         throw new RuntimeException('Not implemented');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function indexLocation(Location $location): void
     {
         throw new RuntimeException('Not implemented');
@@ -158,9 +152,6 @@ final class Handler implements HandlerInterface, Capable
         throw new RuntimeException('Not implemented');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function purgeIndex(): void
     {
         throw new RuntimeException('Not implemented');
