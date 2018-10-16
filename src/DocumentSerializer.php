@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cabbage;
 
 use Cabbage\SPI\Document;
+use Cabbage\SPI\Field;
 use RuntimeException;
 
 /**
@@ -39,7 +40,7 @@ final class DocumentSerializer
     }
 
     /**
-     * @param \Cabbage\Field $field
+     * @param \Cabbage\SPI\Field $field
      *
      * @return bool|string
      */

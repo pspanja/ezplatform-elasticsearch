@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage;
+namespace Cabbage\SPI;
 
 /**
  * Represents a field in a Document.
