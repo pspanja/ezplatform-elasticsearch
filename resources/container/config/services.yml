@@ -33,7 +33,7 @@ services:
         class: Cabbage\QueryTranslator
 
     cabbage.query_router:
-        class: Cabbage\QueryRouter
+        class: Cabbage\Core\QueryRouter
 
     cabbage.result_extractor:
         class: Cabbage\Core\ResultExtractor
