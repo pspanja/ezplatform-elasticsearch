@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration;
 
-use Cabbage\SPI\Endpoint;
 use Cabbage\Handler;
+use Cabbage\SPI\Endpoint;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\SPI\Persistence\Content;
