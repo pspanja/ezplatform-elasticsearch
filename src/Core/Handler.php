@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Core;
 
+use Cabbage\Core\Query\Router;
+use Cabbage\Core\Query\Translator;
 use Cabbage\DocumentBulkSerializer;
 use Cabbage\DocumentMapper;
 use Cabbage\SPI\Endpoint;
@@ -36,12 +38,12 @@ final class Handler implements HandlerInterface, Capable
     private $documentBulkSerializer;
 
     /**
-     * @var \Cabbage\Core\QueryTranslator
+     * @var \Cabbage\Core\Query\Translator
      */
     private $queryTranslator;
 
     /**
-     * @var \Cabbage\Core\QueryRouter
+     * @var \Cabbage\Core\Query\Router
      */
     private $queryRouter;
 
@@ -54,16 +56,16 @@ final class Handler implements HandlerInterface, Capable
      * @param \Cabbage\Core\Gateway $gateway
      * @param \Cabbage\DocumentMapper $documentMapper
      * @param \Cabbage\DocumentBulkSerializer $documentBulkSerializer
-     * @param \Cabbage\Core\QueryTranslator $queryTranslator
-     * @param \Cabbage\Core\QueryRouter $queryRouter
+     * @param \Cabbage\Core\Query\Translator $queryTranslator
+     * @param \Cabbage\Core\Query\Router $queryRouter
      * @param \Cabbage\Core\ResultExtractor $resultExtractor
      */
     public function __construct(
         Gateway $gateway,
         DocumentMapper $documentMapper,
         DocumentBulkSerializer $documentBulkSerializer,
-        QueryTranslator $queryTranslator,
-        QueryRouter $queryRouter,
+        Translator $queryTranslator,
+        Router $queryRouter,
         ResultExtractor $resultExtractor
     ) {
         $this->gateway = $gateway;

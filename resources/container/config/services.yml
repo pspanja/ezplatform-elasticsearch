@@ -30,10 +30,10 @@ services:
             - '@cabbage.document_serializer'
 
     cabbage.query_translator:
-        class: Cabbage\Core\QueryTranslator
+        class: Cabbage\Core\Query\Translator
 
     cabbage.query_router:
-        class: Cabbage\Core\QueryRouter
+        class: Cabbage\Core\Query\Router
 
     cabbage.result_extractor:
         class: Cabbage\Core\ResultExtractor

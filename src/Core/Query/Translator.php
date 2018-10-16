@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core;
+namespace Cabbage\Core\Query;
 
 use Cabbage\SPI\Document;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
@@ -15,7 +15,7 @@ use eZ\Publish\API\Repository\Values\Content\Query;
  * @see \eZ\Publish\API\Repository\Values\Content\Query
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
  */
-final class QueryTranslator
+final class Translator
 {
     /**
      * @param \eZ\Publish\API\Repository\Values\Content\Query $query

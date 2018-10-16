@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core;
+namespace Cabbage\Core\Query;
 
 use Cabbage\SPI\Endpoint;
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -10,7 +10,7 @@ use eZ\Publish\API\Repository\Values\Content\Query;
 /**
  * Matches a query to an index.
  */
-final class QueryRouter
+final class Router
 {
     public function match(Query $query): Endpoint
     {
