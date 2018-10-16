@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage;
+namespace Cabbage\Core;
 
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;

@@ -36,7 +36,7 @@ services:
         class: Cabbage\QueryRouter
 
     cabbage.result_extractor:
-        class: Cabbage\ResultExtractor
+        class: Cabbage\Core\ResultExtractor
 
     cabbage.handler:
         class: Cabbage\Handler
