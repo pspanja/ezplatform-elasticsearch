@@ -8,9 +8,8 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 
 /**
- * Extracts search result from a HTTP response.
+ * Extracts search result from the raw response string.
  *
- * @see \Cabbage\Http\Response
  * @see \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
  */
 final class ResultExtractor
