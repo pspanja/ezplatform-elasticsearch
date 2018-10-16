@@ -52,7 +52,7 @@ class HandlerTest extends BaseTest
         $content = new Content([
             'versionInfo' => new VersionInfo([
                 'contentInfo' => new ContentInfo([
-                    'id' => 'CONTENT_ID'
+                    'id' => 'CONTENT_ID',
                 ]),
             ]),
         ]);
