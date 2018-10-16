@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage;
+namespace Cabbage\Core;
 
 use Cabbage\Core\Http\Client;
 use Cabbage\Core\Http\Message;

@@ -14,7 +14,7 @@ class GatewayTest extends BaseTest
     private static $endpoint;
 
     /**
-     * @var \Cabbage\Gateway
+     * @var \Cabbage\Core\Gateway
      */
     private static $gateway;
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage;
 
+use Cabbage\Core\Gateway;
 use Cabbage\Core\ResultExtractor;
 use Cabbage\SPI\Endpoint;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
@@ -20,7 +21,7 @@ use RuntimeException;
 final class Handler implements HandlerInterface, Capable
 {
     /**
-     * @var \Cabbage\Gateway
+     * @var \Cabbage\Core\Gateway
      */
     private $gateway;
 
@@ -50,7 +51,7 @@ final class Handler implements HandlerInterface, Capable
     private $resultExtractor;
 
     /**
-     * @param \Cabbage\Gateway $gateway
+     * @param \Cabbage\Core\Gateway $gateway
      * @param \Cabbage\DocumentMapper $documentMapper
      * @param \Cabbage\DocumentBulkSerializer $documentBulkSerializer
      * @param \Cabbage\QueryTranslator $queryTranslator
