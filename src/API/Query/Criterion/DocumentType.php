@@ -17,12 +17,12 @@ final class DocumentType extends Criterion
 {
     public function getSpecifications(): array
     {
-        return array(
+        return [
             new Specifications(
                 Operator::EQ,
                 Specifications::FORMAT_SINGLE,
                 Specifications::TYPE_STRING
             ),
-        );
+        ];
     }
 }
