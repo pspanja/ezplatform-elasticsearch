@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage;
 
+use Cabbage\SPI\Endpoint;
 use eZ\Publish\API\Repository\Values\Content\Query;
 
 /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration;
 
-use Cabbage\Endpoint;
+use Cabbage\SPI\Endpoint;
 use Cabbage\Handler;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -15,7 +15,7 @@ use eZ\Publish\SPI\Persistence\Content\VersionInfo;
 class HandlerTest extends BaseTest
 {
     /**
-     * @var \Cabbage\Endpoint
+     * @var \Cabbage\SPI\Endpoint
      */
     private static $endpoint;
 
@@ -121,7 +121,7 @@ class HandlerTest extends BaseTest
     /**
      * @throws \Exception
      *
-     * @param \Cabbage\Endpoint $endpoint
+     * @param \Cabbage\SPI\Endpoint $endpoint
      */
     protected function flush(Endpoint $endpoint): void
     {

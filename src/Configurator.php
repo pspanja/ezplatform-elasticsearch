@@ -7,6 +7,7 @@ namespace Cabbage;
 use Cabbage\Http\Client;
 use Cabbage\Http\Message;
 use Cabbage\Http\Response;
+use Cabbage\SPI\Endpoint;
 use RuntimeException;
 
 /**
@@ -29,7 +30,7 @@ final class Configurator
     }
 
     /**
-     * @param \Cabbage\Endpoint $endpoint
+     * @param \Cabbage\SPI\Endpoint $endpoint
      *
      * @return \Cabbage\Http\Response
      */
@@ -53,7 +54,7 @@ final class Configurator
     }
 
     /**
-     * @param \Cabbage\Endpoint $endpoint
+     * @param \Cabbage\SPI\Endpoint $endpoint
      *
      * @return bool
      */
@@ -77,7 +78,7 @@ final class Configurator
     }
 
     /**
-     * @param \Cabbage\Endpoint $endpoint
+     * @param \Cabbage\SPI\Endpoint $endpoint
      *
      * @return \Cabbage\Http\Response
      */

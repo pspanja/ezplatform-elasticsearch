@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cabbage;
 
 use Cabbage\SPI\Document;
+use Cabbage\SPI\Endpoint;
 
 /**
  * Serializes an array of Document objects into a JSON string for bulk indexing.
@@ -64,7 +65,7 @@ final class DocumentBulkSerializer
     /**
      * Generate action and metadata for the indexed Document.
      *
-     * @param \Cabbage\Endpoint $endpoint
+     * @param \Cabbage\SPI\Endpoint $endpoint
      * @param \Cabbage\SPI\Document $document
      *
      * @return string

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests;
 
-use Cabbage\Endpoint;
+use Cabbage\SPI\Endpoint;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
@@ -51,7 +51,7 @@ class EndpointTest extends TestCase
      * @dataProvider providerForBuildFromDsn
      *
      * @param string $dsn
-     * @param \Cabbage\Endpoint $expectedEndpoint
+     * @param \Cabbage\SPI\Endpoint $expectedEndpoint
      */
     public function testBuildFromDsn(string $dsn, Endpoint $expectedEndpoint): void
     {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage;
+namespace Cabbage\SPI;
 
 use RuntimeException;
 
@@ -62,7 +62,7 @@ final class Endpoint
      *
      * @param string $dsn
      *
-     * @return \Cabbage\Endpoint
+     * @return \Cabbage\SPI\Endpoint
      */
     public static function fromDsn(string $dsn): self
     {

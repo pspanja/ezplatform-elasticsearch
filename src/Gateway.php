@@ -6,6 +6,7 @@ namespace Cabbage;
 
 use Cabbage\Http\Client;
 use Cabbage\Http\Message;
+use Cabbage\SPI\Endpoint;
 use RuntimeException;
 
 /**
@@ -27,7 +28,7 @@ final class Gateway
     }
 
     /**
-     * @param \Cabbage\Endpoint $endpoint
+     * @param \Cabbage\SPI\Endpoint $endpoint
      * @param string $payload
      */
     public function bulkIndex(Endpoint $endpoint, string $payload): void
@@ -49,7 +50,7 @@ final class Gateway
     }
 
     /**
-     * @param \Cabbage\Endpoint $endpoint
+     * @param \Cabbage\SPI\Endpoint $endpoint
      * @param array|array[] $query
      *
      * @return string
@@ -69,7 +70,7 @@ final class Gateway
     }
 
     /**
-     * @param \Cabbage\Endpoint $endpoint
+     * @param \Cabbage\SPI\Endpoint $endpoint
      */
     public function flush(Endpoint $endpoint): void
     {

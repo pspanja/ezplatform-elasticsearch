@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration;
 
-use Cabbage\Endpoint;
+use Cabbage\SPI\Endpoint;
 
 class GatewayTest extends BaseTest
 {
     /**
-     * @var \Cabbage\Endpoint
+     * @var \Cabbage\SPI\Endpoint
      */
     private static $endpoint;
 

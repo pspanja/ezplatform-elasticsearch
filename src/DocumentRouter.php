@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cabbage;
 
 use Cabbage\SPI\Document;
+use Cabbage\SPI\Endpoint;
 
 /**
  * Matches a document to an index.
