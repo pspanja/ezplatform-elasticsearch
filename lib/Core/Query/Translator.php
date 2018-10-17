@@ -22,11 +22,11 @@ final class Translator
     /**
      * @var \Cabbage\Core\Query\Translator\CriterionVisitor\DocumentType
      */
-    private $converter;
+    private $visitor;
 
-    public function __construct(DocumentTypeCriterionConverter $converter)
+    public function __construct(DocumentTypeCriterionConverter $visitor)
     {
-        $this->converter = $converter;
+        $this->visitor = $visitor;
     }
 
     /**
@@ -36,12 +36,12 @@ final class Translator
      */
     public function translateContentQuery(Query $query): array
     {
-        if (!$this->converter->accept($query->filter)) {
+        if (!$this->visitor->accept($query->filter)) {
             throw new RuntimeException('Unknown criterion');
         }
 
         return [
-            'query' => $this->converter->visit($query->filter),
+            'query' => $this->visitor->visit($query->filter),
         ];
     }
 
@@ -52,12 +52,12 @@ final class Translator
      */
     public function translateLocationQuery(LocationQuery $query): array
     {
-        if (!$this->converter->accept($query->filter)) {
+        if (!$this->visitor->accept($query->filter)) {
             throw new RuntimeException('Unknown criterion');
         }
 
         return [
-            'query' => $this->converter->visit($query->filter),
+            'query' => $this->visitor->visit($query->filter),
         ];
     }
 }
