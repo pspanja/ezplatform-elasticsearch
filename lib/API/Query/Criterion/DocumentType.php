@@ -15,7 +15,10 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator\Specificat
  */
 final class DocumentType extends Criterion
 {
-    public function __construct($value)
+    /**
+     * @param string $value
+     */
+    public function __construct(string $value)
     {
         parent::__construct(null, null, $value);
     }
