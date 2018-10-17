@@ -15,6 +15,11 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator\Specificat
  */
 final class DocumentType extends Criterion
 {
+    public function __construct($value)
+    {
+        parent::__construct(null, null, $value);
+    }
+
     public function getSpecifications(): array
     {
         return [
