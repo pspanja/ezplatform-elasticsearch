@@ -29,13 +29,13 @@ services:
             - '@cabbage.document_router'
             - '@cabbage.document_serializer'
 
-    cabbage.query_translator.criterion_converter.document_type:
-        class: Cabbage\Core\Query\Translator\CriterionConverter\DocumentType
+    cabbage.query_translator.criterion_visitor.document_type:
+        class: Cabbage\Core\Query\Translator\CriterionVisitor\DocumentType
 
     cabbage.query_translator:
         class: Cabbage\Core\Query\Translator
         arguments:
-            - '@cabbage.query_translator.criterion_converter.document_type'
+            - '@cabbage.query_translator.criterion_visitor.document_type'
 
     cabbage.query_router:
         class: Cabbage\Core\Query\Router

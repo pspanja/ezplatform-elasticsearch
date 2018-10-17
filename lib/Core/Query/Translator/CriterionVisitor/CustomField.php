@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Query\Translator\CriterionConverter;
+namespace Cabbage\Core\Query\Translator\CriterionVisitor;
 
 use Cabbage\API\Query\Criterion\CustomField as CustomFieldCriterion;
-use Cabbage\Core\Query\Translator\CriterionConverter;
+use Cabbage\Core\Query\Translator\CriterionVisitor;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 
-final class CustomField extends CriterionConverter
+final class CustomField extends CriterionVisitor
 {
     public function accept(Criterion $criterion): bool
     {

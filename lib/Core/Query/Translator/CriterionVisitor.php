@@ -6,7 +6,7 @@ namespace Cabbage\Core\Query\Translator;
 
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 
-abstract class CriterionConverter
+abstract class CriterionVisitor
 {
     /**
      * @param \eZ\Publish\API\Repository\Values\Content\Query\Criterion $criterion
