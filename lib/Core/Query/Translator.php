@@ -36,7 +36,7 @@ final class Translator
      */
     public function translateContentQuery(Query $query): array
     {
-        if (!$query->filter instanceof DocumentType) {
+        if (!$this->converter->accept($query->filter)) {
             throw new RuntimeException('Unknown criterion');
         }
 
@@ -52,7 +52,7 @@ final class Translator
      */
     public function translateLocationQuery(LocationQuery $query): array
     {
-        if (!$query->filter instanceof DocumentType) {
+        if (!$this->converter->accept($query->filter)) {
             throw new RuntimeException('Unknown criterion');
         }
 
