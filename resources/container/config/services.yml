@@ -18,7 +18,7 @@ services:
             - '@ezpublish.spi.persistence.location_handler'
 
     cabbage.document_router:
-        class: Cabbage\DocumentRouter
+        class: Cabbage\Core\DocumentRouter
 
     cabbage.document_serializer:
         class: Cabbage\Core\DocumentSerializer
