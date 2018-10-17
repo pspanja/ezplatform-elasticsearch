@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Query;
 
+use Cabbage\API\Query\Criterion\DocumentType;
+use Cabbage\Core\Query\Translator\DocumentTypeCriterionConverter;
 use Cabbage\SPI\Document;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
+use RuntimeException;
 
 /**
  * Translates eZ Platform Query instance to an array that can be can be
@@ -18,18 +21,28 @@ use eZ\Publish\API\Repository\Values\Content\Query;
 final class Translator
 {
     /**
+     * @var \Cabbage\Core\Query\Translator\DocumentTypeCriterionConverter
+     */
+    private $converter;
+
+    public function __construct(DocumentTypeCriterionConverter $converter)
+    {
+        $this->converter = $converter;
+    }
+
+    /**
      * @param \eZ\Publish\API\Repository\Values\Content\Query $query
      *
      * @return array|array[]
      */
     public function translateContentQuery(Query $query): array
     {
+        if (!$query->filter instanceof DocumentType) {
+            throw new RuntimeException('Unknown criterion');
+        }
+
         return [
-            'query' => [
-                'term' => [
-                    'type' => Document::TypeContent,
-                ],
-            ],
+            'query' => $this->converter->convert($query->filter),
         ];
     }
 
@@ -40,12 +53,12 @@ final class Translator
      */
     public function translateLocationQuery(LocationQuery $query): array
     {
+        if (!$query->filter instanceof DocumentType) {
+            throw new RuntimeException('Unknown criterion');
+        }
+
         return [
-            'query' => [
-                'term' => [
-                    'type' => Document::TypeLocation,
-                ],
-            ],
+            'query' => $this->converter->convert($query->filter),
         ];
     }
 }

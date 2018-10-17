@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration;
 
+use Cabbage\API\Query\Criterion\DocumentType;
 use Cabbage\Core\Handler;
+use Cabbage\SPI\Document;
 use Cabbage\SPI\Endpoint;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -73,9 +75,9 @@ class HandlerTest extends BaseTest
     public function testFindContent(): void
     {
         $handler = $this->getHandlerUnderTest();
-
-        /** @var \eZ\Publish\API\Repository\Values\Content\Query $query */
-        $query = $this->getMockBuilder(Query::class)->getMock();
+        $query = new Query([
+            'filter' => new DocumentType(Document::TypeContent),
+        ]);
 
         $searchResult = $handler->findContent($query);
 
@@ -95,9 +97,9 @@ class HandlerTest extends BaseTest
     public function testFindLocation(): void
     {
         $handler = $this->getHandlerUnderTest();
-
-        /** @var \eZ\Publish\API\Repository\Values\Content\LocationQuery $query */
-        $query = $this->getMockBuilder(LocationQuery::class)->getMock();
+        $query = new LocationQuery([
+            'filter' => new DocumentType(Document::TypeLocation),
+        ]);
 
         $searchResult = $handler->findLocations($query);
 
