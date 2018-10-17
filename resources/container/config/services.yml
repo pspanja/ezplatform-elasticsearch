@@ -13,18 +13,18 @@ services:
             - '@cabbage.http.client'
 
     cabbage.document_mapper:
-        class: Cabbage\Core\DocumentMapper
+        class: Cabbage\Core\Document\Mapper
         arguments:
             - '@ezpublish.spi.persistence.location_handler'
 
     cabbage.document_router:
-        class: Cabbage\Core\DocumentRouter
+        class: Cabbage\Core\Document\Router
 
     cabbage.document_serializer:
-        class: Cabbage\Core\DocumentSerializer
+        class: Cabbage\Core\Document\Serializer
 
     cabbage.document_bulk_serializer:
-        class: Cabbage\Core\DocumentBulkSerializer
+        class: Cabbage\Core\Document\BulkSerializer
         arguments:
             - '@cabbage.document_router'
             - '@cabbage.document_serializer'

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core;
+namespace Cabbage\Core\Document;
 
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Field;
@@ -16,7 +16,7 @@ use eZ\Publish\SPI\Persistence\Content\Location\Handler as LocationHandler;
  * @see \eZ\Publish\SPI\Persistence\Content
  * @see \Cabbage\SPI\Document
  */
-final class DocumentMapper
+final class Mapper
 {
     /**
      * @var \eZ\Publish\SPI\Persistence\Content\Location\Handler

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core;
+namespace Cabbage\Core\Document;
 
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Endpoint;
@@ -10,7 +10,7 @@ use Cabbage\SPI\Endpoint;
 /**
  * Matches a document to an index.
  */
-final class DocumentRouter
+final class Router
 {
     public function match(Document $document): Endpoint
     {

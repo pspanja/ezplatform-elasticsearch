@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core;
+namespace Cabbage\Core\Document;
 
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Field;
@@ -13,7 +13,7 @@ use RuntimeException;
  *
  * @see \Cabbage\SPI\Document
  */
-final class DocumentSerializer
+final class Serializer
 {
     /**
      * @param \Cabbage\SPI\Document $document

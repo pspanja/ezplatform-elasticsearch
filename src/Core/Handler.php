@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Core;
 
+use Cabbage\Core\Document\BulkSerializer;
+use Cabbage\Core\Document\Mapper;
 use Cabbage\Core\Query\Router;
 use Cabbage\Core\Query\Translator;
 use Cabbage\SPI\Endpoint;
@@ -26,12 +28,12 @@ final class Handler implements HandlerInterface, Capable
     private $gateway;
 
     /**
-     * @var \Cabbage\Core\DocumentMapper
+     * @var \Cabbage\Core\Document\Mapper
      */
     private $documentMapper;
 
     /**
-     * @var \Cabbage\Core\DocumentBulkSerializer
+     * @var \Cabbage\Core\Document\BulkSerializer
      */
     private $documentBulkSerializer;
 
@@ -52,16 +54,16 @@ final class Handler implements HandlerInterface, Capable
 
     /**
      * @param \Cabbage\Core\Gateway $gateway
-     * @param \Cabbage\Core\DocumentMapper $documentMapper
-     * @param \Cabbage\Core\DocumentBulkSerializer $documentBulkSerializer
+     * @param \Cabbage\Core\Document\Mapper $documentMapper
+     * @param \Cabbage\Core\Document\BulkSerializer $documentBulkSerializer
      * @param \Cabbage\Core\Query\Translator $queryTranslator
      * @param \Cabbage\Core\Query\Router $queryRouter
      * @param \Cabbage\Core\ResultExtractor $resultExtractor
      */
     public function __construct(
         Gateway $gateway,
-        DocumentMapper $documentMapper,
-        DocumentBulkSerializer $documentBulkSerializer,
+        Mapper $documentMapper,
+        BulkSerializer $documentBulkSerializer,
         Translator $queryTranslator,
         Router $queryRouter,
         ResultExtractor $resultExtractor
