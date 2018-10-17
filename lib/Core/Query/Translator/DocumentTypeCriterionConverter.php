@@ -5,11 +5,19 @@ declare(strict_types=1);
 namespace Cabbage\Core\Query\Translator;
 
 use Cabbage\API\Query\Criterion\DocumentType;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
+use RuntimeException;
 
-final class DocumentTypeCriterionConverter
+final class DocumentTypeCriterionConverter extends CriterionConverter
 {
-    public function convert(DocumentType $criterion): array
+    public function convert(Criterion $criterion): array
     {
+        if (!$criterion instanceof DocumentType) {
+            throw new RuntimeException(
+                'This converter does not accept the given criterion'
+            );
+        }
+
         return [
             'term' => [
                 'type' => $criterion->value[0],
