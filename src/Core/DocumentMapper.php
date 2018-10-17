@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage;
+namespace Cabbage\Core;
 
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Field;

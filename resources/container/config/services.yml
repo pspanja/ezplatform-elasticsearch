@@ -13,7 +13,7 @@ services:
             - '@cabbage.http.client'
 
     cabbage.document_mapper:
-        class: Cabbage\DocumentMapper
+        class: Cabbage\Core\DocumentMapper
         arguments:
             - '@ezpublish.spi.persistence.location_handler'
 
