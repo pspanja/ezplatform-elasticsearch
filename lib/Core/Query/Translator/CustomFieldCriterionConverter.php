@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Query\Translator;
 
-use Cabbage\API\Query\Criterion\DocumentType;
+use Cabbage\API\Query\Criterion\CustomField;
 
 final class CustomFieldCriterionConverter
 {
-    public function convert(DocumentType $criterion): array
+    public function convert(CustomField $criterion): array
     {
         return [
             'term' => [
