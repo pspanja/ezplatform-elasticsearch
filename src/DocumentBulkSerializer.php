@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage;
 
+use Cabbage\Core\DocumentSerializer;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Endpoint;
 
@@ -20,13 +21,13 @@ final class DocumentBulkSerializer
     private $documentRouter;
 
     /**
-     * @var \Cabbage\DocumentSerializer
+     * @var \Cabbage\Core\DocumentSerializer
      */
     private $documentSerializer;
 
     /**
      * @param \Cabbage\DocumentRouter $documentRouter
-     * @param \Cabbage\DocumentSerializer $documentSerializer
+     * @param \Cabbage\Core\DocumentSerializer $documentSerializer
      */
     public function __construct(
         DocumentRouter $documentRouter,
