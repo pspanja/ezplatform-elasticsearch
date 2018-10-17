@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cabbage;
+namespace Cabbage\Core;
 
-use Cabbage\Core\DocumentSerializer;
+use Cabbage\DocumentRouter;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Endpoint;
 

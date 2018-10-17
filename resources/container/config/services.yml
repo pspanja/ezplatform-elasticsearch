@@ -24,7 +24,7 @@ services:
         class: Cabbage\Core\DocumentSerializer
 
     cabbage.document_bulk_serializer:
-        class: Cabbage\DocumentBulkSerializer
+        class: Cabbage\Core\DocumentBulkSerializer
         arguments:
             - '@cabbage.document_router'
             - '@cabbage.document_serializer'

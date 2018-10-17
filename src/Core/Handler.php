@@ -6,7 +6,6 @@ namespace Cabbage\Core;
 
 use Cabbage\Core\Query\Router;
 use Cabbage\Core\Query\Translator;
-use Cabbage\DocumentBulkSerializer;
 use Cabbage\SPI\Endpoint;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -32,7 +31,7 @@ final class Handler implements HandlerInterface, Capable
     private $documentMapper;
 
     /**
-     * @var \Cabbage\DocumentBulkSerializer
+     * @var \Cabbage\Core\DocumentBulkSerializer
      */
     private $documentBulkSerializer;
 
@@ -54,7 +53,7 @@ final class Handler implements HandlerInterface, Capable
     /**
      * @param \Cabbage\Core\Gateway $gateway
      * @param \Cabbage\Core\DocumentMapper $documentMapper
-     * @param \Cabbage\DocumentBulkSerializer $documentBulkSerializer
+     * @param \Cabbage\Core\DocumentBulkSerializer $documentBulkSerializer
      * @param \Cabbage\Core\Query\Translator $queryTranslator
      * @param \Cabbage\Core\Query\Router $queryRouter
      * @param \Cabbage\Core\ResultExtractor $resultExtractor
