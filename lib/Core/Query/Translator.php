@@ -26,19 +26,8 @@ final class Translator
     {
         return [
             'query' => [
-                'bool' => [
-                    'must' => [
-                        [
-                            'term' => [
-                                'type' => Document::TypeContent,
-                            ],
-                        ],
-                        [
-                            'term' => [
-                                'test_string' => 'value',
-                            ],
-                        ],
-                    ],
+                'term' => [
+                    'type' => Document::TypeContent,
                 ],
             ],
         ];
@@ -53,19 +42,8 @@ final class Translator
     {
         return [
             'query' => [
-                'bool' => [
-                    'must' => [
-                        [
-                            'term' => [
-                                'type' => Document::TypeLocation,
-                            ],
-                        ],
-                        [
-                            'term' => [
-                                'test_string' => 'value',
-                            ],
-                        ],
-                    ],
+                'term' => [
+                    'type' => Document::TypeLocation,
                 ],
             ],
         ];
