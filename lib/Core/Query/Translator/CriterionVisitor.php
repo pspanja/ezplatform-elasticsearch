@@ -20,5 +20,5 @@ abstract class CriterionVisitor
      *
      * @return array
      */
-    abstract public function convert(Criterion $criterion): array;
+    abstract public function visit(Criterion $criterion): array;
 }

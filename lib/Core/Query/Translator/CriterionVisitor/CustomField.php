@@ -15,7 +15,7 @@ final class CustomField extends CriterionVisitor
         return $criterion instanceof CustomFieldCriterion;
     }
 
-    public function convert(Criterion $criterion): array
+    public function visit(Criterion $criterion): array
     {
         return [
             'term' => [

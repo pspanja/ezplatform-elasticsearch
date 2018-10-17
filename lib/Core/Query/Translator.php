@@ -41,7 +41,7 @@ final class Translator
         }
 
         return [
-            'query' => $this->converter->convert($query->filter),
+            'query' => $this->converter->visit($query->filter),
         ];
     }
 
@@ -57,7 +57,7 @@ final class Translator
         }
 
         return [
-            'query' => $this->converter->convert($query->filter),
+            'query' => $this->converter->visit($query->filter),
         ];
     }
 }
