@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core\Query;
 
 use Cabbage\API\Query\Criterion\DocumentType;
-use Cabbage\Core\Query\Translator\DocumentTypeCriterionConverter;
-use Cabbage\SPI\Document;
+use Cabbage\Core\Query\Translator\CriterionConverter\DocumentType as DocumentTypeCriterionConverter;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use RuntimeException;
@@ -21,7 +20,7 @@ use RuntimeException;
 final class Translator
 {
     /**
-     * @var \Cabbage\Core\Query\Translator\DocumentTypeCriterionConverter
+     * @var \Cabbage\Core\Query\Translator\CriterionConverter\DocumentType
      */
     private $converter;
 

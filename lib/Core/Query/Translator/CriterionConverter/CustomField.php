@@ -2,17 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Query\Translator;
+namespace Cabbage\Core\Query\Translator\CriterionConverter;
 
-use Cabbage\API\Query\Criterion\DocumentType;
+use Cabbage\API\Query\Criterion\CustomField as CustomFieldCriterion;
+use Cabbage\Core\Query\Translator\CriterionConverter;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use RuntimeException;
 
-final class DocumentTypeCriterionConverter extends CriterionConverter
+final class CustomField extends CriterionConverter
 {
     public function convert(Criterion $criterion): array
     {
-        if (!$criterion instanceof DocumentType) {
+        if (!$criterion instanceof CustomFieldCriterion) {
             throw new RuntimeException(
                 'This converter does not accept the given criterion'
             );
@@ -20,7 +21,7 @@ final class DocumentTypeCriterionConverter extends CriterionConverter
 
         return [
             'term' => [
-                'type' => $criterion->value[0],
+                $criterion->target => $criterion->value[0],
             ],
         ];
     }
