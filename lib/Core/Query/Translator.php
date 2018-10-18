@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Query;
 
-use Cabbage\API\Query\Criterion\DocumentType;
-use Cabbage\Core\Query\Translator\CriterionVisitor\DocumentType as DocumentTypeCriterionConverter;
+use Cabbage\Core\Query\Translator\CriterionVisitor;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use RuntimeException;
@@ -24,7 +23,7 @@ final class Translator
      */
     private $visitor;
 
-    public function __construct(DocumentTypeCriterionConverter $visitor)
+    public function __construct(CriterionVisitor $visitor)
     {
         $this->visitor = $visitor;
     }
