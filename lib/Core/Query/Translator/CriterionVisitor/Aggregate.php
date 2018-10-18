@@ -20,8 +20,7 @@ final class Aggregate extends CriterionVisitor
      */
     public function __construct(array $visitors)
     {
-        foreach ($visitors as $visitor)
-        {
+        foreach ($visitors as $visitor) {
             $this->addVisitor($visitor);
         }
     }
