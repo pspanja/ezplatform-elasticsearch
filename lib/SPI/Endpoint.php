@@ -79,7 +79,7 @@ final class Endpoint
     /**
      * @param string $dsn
      *
-     * @return array
+     * @return mixed[]
      */
     private static function parseDsn(string $dsn): array
     {

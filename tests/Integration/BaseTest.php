@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration;
 
-use Exception;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Throwable;
 
 abstract class BaseTest extends TestCase
 {
@@ -45,7 +45,7 @@ abstract class BaseTest extends TestCase
 
         try {
             $loader->load('services.yml');
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             throw new RuntimeException($e->getMessage());
         }
 
