@@ -19,7 +19,7 @@ use RuntimeException;
 final class Translator
 {
     /**
-     * @var \Cabbage\Core\Query\Translator\CriterionVisitor\DocumentType
+     * @var \Cabbage\Core\Query\Translator\CriterionVisitor
      */
     private $visitor;
 
