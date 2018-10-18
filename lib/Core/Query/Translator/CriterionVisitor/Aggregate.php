@@ -13,11 +13,22 @@ final class Aggregate extends CriterionVisitor
     /**
      * @var \Cabbage\Core\Query\Translator\CriterionVisitor[]
      */
-    private $visitors;
+    private $visitors = [];
 
+    /**
+     * @param \Cabbage\Core\Query\Translator\CriterionVisitor[] $visitors
+     */
     public function __construct(array $visitors)
     {
-        $this->visitors = $visitors;
+        foreach ($visitors as $visitor)
+        {
+            $this->addVisitor($visitor);
+        }
+    }
+
+    private function addVisitor(CriterionVisitor $visitor): void
+    {
+        $this->visitors[] = $visitor;
     }
 
     public function accept(Criterion $criterion): bool
