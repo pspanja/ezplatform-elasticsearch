@@ -15,7 +15,7 @@ final class DocumentType extends CriterionVisitor
         return $criterion instanceof DocumentTypeCriterion;
     }
 
-    public function visit(Criterion $criterion): array
+    public function visit(Criterion $criterion, CriterionVisitor $subVisitor = null): array
     {
         return [
             'term' => [

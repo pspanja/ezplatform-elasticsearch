@@ -35,11 +35,13 @@ final class Aggregate extends CriterionVisitor
         return true;
     }
 
-    public function visit(Criterion $criterion): array
-    {
+    public function visit(
+        Criterion $criterion,
+        CriterionVisitor $subVisitor = null
+    ): array {
         foreach ($this->visitors as $visitor) {
             if ($visitor->accept($criterion)) {
-                return $visitor->visit($criterion);
+                return $visitor->visit($criterion, $this);
             }
         }
 
