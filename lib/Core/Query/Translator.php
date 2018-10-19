@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Query;
 
-use Cabbage\Core\Query\Translator\CriterionVisitorDispatcher;
+use Cabbage\Core\Query\Translator\Criterion\VisitorDispatcher;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 
@@ -18,11 +18,11 @@ use eZ\Publish\API\Repository\Values\Content\Query;
 final class Translator
 {
     /**
-     * @var \Cabbage\Core\Query\Translator\CriterionVisitorDispatcher
+     * @var \Cabbage\Core\Query\Translator\Criterion\VisitorDispatcher
      */
     private $visitorDispatcher;
 
-    public function __construct(CriterionVisitorDispatcher $visitorDispatcher)
+    public function __construct(VisitorDispatcher $visitorDispatcher)
     {
         $this->visitorDispatcher = $visitorDispatcher;
     }

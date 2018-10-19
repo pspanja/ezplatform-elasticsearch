@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Query\Translator;
+namespace Cabbage\Core\Query\Translator\Criterion;
 
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use RuntimeException;
 
-final class CriterionVisitorDispatcher
+final class VisitorDispatcher
 {
     /**
-     * @var \Cabbage\Core\Query\Translator\CriterionVisitor[]
+     * @var \Cabbage\Core\Query\Translator\Criterion\Visitor[]
      */
     private $visitors = [];
 
     /**
-     * @param \Cabbage\Core\Query\Translator\CriterionVisitor[] $visitors
+     * @param \Cabbage\Core\Query\Translator\Criterion\Visitor[] $visitors
      */
     public function __construct(array $visitors)
     {
@@ -24,7 +24,7 @@ final class CriterionVisitorDispatcher
         }
     }
 
-    private function addVisitor(CriterionVisitor $visitor): void
+    private function addVisitor(Visitor $visitor): void
     {
         $this->visitors[] = $visitor;
     }

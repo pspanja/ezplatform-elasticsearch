@@ -30,13 +30,13 @@ services:
             - '@cabbage.document_serializer'
 
     cabbage.query_translator.criterion_visitor.custom_field:
-        class: Cabbage\Core\Query\Translator\CriterionVisitor\CustomField
+        class: Cabbage\Core\Query\Translator\Criterion\Visitor\CustomField
 
     cabbage.query_translator.criterion_visitor.document_type:
-        class: Cabbage\Core\Query\Translator\CriterionVisitor\DocumentType
+        class: Cabbage\Core\Query\Translator\Criterion\Visitor\DocumentType
 
     cabbage.query_translator.criterion_visitor_dispatcher:
-        class: Cabbage\Core\Query\Translator\CriterionVisitorDispatcher
+        class: Cabbage\Core\Query\Translator\Criterion\VisitorDispatcher
         arguments:
             -
                 - '@cabbage.query_translator.criterion_visitor.custom_field'

@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Query\Translator\CriterionVisitor;
+namespace Cabbage\Core\Query\Translator\Criterion\Visitor;
 
-use Cabbage\Core\Query\Translator\CriterionVisitor;
-use Cabbage\Core\Query\Translator\CriterionVisitorDispatcher;
+use Cabbage\Core\Query\Translator\Criterion\Visitor;
+use Cabbage\Core\Query\Translator\Criterion\VisitorDispatcher;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd as LogicalAndCriterion;
 
-final class LogicalAnd extends CriterionVisitor
+final class LogicalAnd extends Visitor
 {
     public function accept(Criterion $criterion): bool
     {
         return $criterion instanceof LogicalAndCriterion;
     }
 
-    public function visit(Criterion $criterion, CriterionVisitorDispatcher $dispatcher): array
+    public function visit(Criterion $criterion, VisitorDispatcher $dispatcher): array
     {
         \assert($criterion instanceof LogicalAndCriterion);
 

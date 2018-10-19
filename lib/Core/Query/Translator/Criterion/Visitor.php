@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Query\Translator;
+namespace Cabbage\Core\Query\Translator\Criterion;
 
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 
-abstract class CriterionVisitor
+abstract class Visitor
 {
     /**
      * @param \eZ\Publish\API\Repository\Values\Content\Query\Criterion $criterion
@@ -17,12 +17,9 @@ abstract class CriterionVisitor
 
     /**
      * @param \eZ\Publish\API\Repository\Values\Content\Query\Criterion $criterion
-     * @param \Cabbage\Core\Query\Translator\CriterionVisitorDispatcher $dispatcher
+     * @param \Cabbage\Core\Query\Translator\Criterion\VisitorDispatcher $dispatcher
      *
      * @return array
      */
-    abstract public function visit(
-        Criterion $criterion,
-        CriterionVisitorDispatcher $dispatcher
-    ): array;
+    abstract public function visit(Criterion $criterion, VisitorDispatcher $dispatcher): array;
 }
