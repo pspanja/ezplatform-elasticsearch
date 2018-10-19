@@ -6,6 +6,7 @@ namespace Cabbage\Core\Query\Translator\CriterionVisitor;
 
 use Cabbage\API\Query\Criterion\CustomField as CustomFieldCriterion;
 use Cabbage\Core\Query\Translator\CriterionVisitor;
+use Cabbage\Core\Query\Translator\CriterionVisitorDispatcher;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 
 final class CustomField extends CriterionVisitor
@@ -15,7 +16,7 @@ final class CustomField extends CriterionVisitor
         return $criterion instanceof CustomFieldCriterion;
     }
 
-    public function visit(Criterion $criterion, CriterionVisitor $subVisitor = null): array
+    public function visit(Criterion $criterion, CriterionVisitorDispatcher $dispatcher): array
     {
         return [
             'term' => [

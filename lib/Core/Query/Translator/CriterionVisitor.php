@@ -17,12 +17,12 @@ abstract class CriterionVisitor
 
     /**
      * @param \eZ\Publish\API\Repository\Values\Content\Query\Criterion $criterion
-     * @param \Cabbage\Core\Query\Translator\CriterionVisitor $subVisitor
+     * @param \Cabbage\Core\Query\Translator\CriterionVisitorDispatcher $dispatcher
      *
      * @return array
      */
     abstract public function visit(
         Criterion $criterion,
-        CriterionVisitor $subVisitor = null
+        CriterionVisitorDispatcher $dispatcher
     ): array;
 }

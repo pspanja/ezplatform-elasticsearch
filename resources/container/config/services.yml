@@ -35,8 +35,8 @@ services:
     cabbage.query_translator.criterion_visitor.document_type:
         class: Cabbage\Core\Query\Translator\CriterionVisitor\DocumentType
 
-    cabbage.query_translator.criterion_visitor.aggregate:
-        class: Cabbage\Core\Query\Translator\CriterionVisitor\Aggregate
+    cabbage.query_translator.criterion_visitor_dispatcher:
+        class: Cabbage\Core\Query\Translator\CriterionVisitorDispatcher
         arguments:
             -
                 - '@cabbage.query_translator.criterion_visitor.custom_field'
@@ -45,7 +45,7 @@ services:
     cabbage.query_translator:
         class: Cabbage\Core\Query\Translator
         arguments:
-            - '@cabbage.query_translator.criterion_visitor.aggregate'
+            - '@cabbage.query_translator.criterion_visitor_dispatcher'
 
     cabbage.query_router:
         class: Cabbage\Core\Query\Router

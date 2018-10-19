@@ -6,6 +6,7 @@ namespace Cabbage\Core\Query\Translator\CriterionVisitor;
 
 use Cabbage\API\Query\Criterion\DocumentType as DocumentTypeCriterion;
 use Cabbage\Core\Query\Translator\CriterionVisitor;
+use Cabbage\Core\Query\Translator\CriterionVisitorDispatcher;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 
 final class DocumentType extends CriterionVisitor
@@ -15,7 +16,7 @@ final class DocumentType extends CriterionVisitor
         return $criterion instanceof DocumentTypeCriterion;
     }
 
-    public function visit(Criterion $criterion, CriterionVisitor $subVisitor = null): array
+    public function visit(Criterion $criterion, CriterionVisitorDispatcher $dispatcher): array
     {
         return [
             'term' => [

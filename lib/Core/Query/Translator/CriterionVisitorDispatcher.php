@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Query\Translator\CriterionVisitor;
+namespace Cabbage\Core\Query\Translator;
 
-use Cabbage\Core\Query\Translator\CriterionVisitor;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use RuntimeException;
 
-final class Aggregate extends CriterionVisitor
+final class CriterionVisitorDispatcher
 {
     /**
      * @var \Cabbage\Core\Query\Translator\CriterionVisitor[]
@@ -30,15 +29,8 @@ final class Aggregate extends CriterionVisitor
         $this->visitors[] = $visitor;
     }
 
-    public function accept(Criterion $criterion): bool
+    public function dispatch(Criterion $criterion): array
     {
-        return true;
-    }
-
-    public function visit(
-        Criterion $criterion,
-        CriterionVisitor $subVisitor = null
-    ): array {
         foreach ($this->visitors as $visitor) {
             if ($visitor->accept($criterion)) {
                 return $visitor->visit($criterion, $this);

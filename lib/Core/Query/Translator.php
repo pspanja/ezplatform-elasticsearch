@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Query;
 
-use Cabbage\Core\Query\Translator\CriterionVisitor;
+use Cabbage\Core\Query\Translator\CriterionVisitorDispatcher;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
-use RuntimeException;
 
 /**
  * Translates eZ Platform Query instance to an array that can be can be
@@ -19,13 +18,13 @@ use RuntimeException;
 final class Translator
 {
     /**
-     * @var \Cabbage\Core\Query\Translator\CriterionVisitor
+     * @var \Cabbage\Core\Query\Translator\CriterionVisitorDispatcher
      */
-    private $visitor;
+    private $visitorDispatcher;
 
-    public function __construct(CriterionVisitor $visitor)
+    public function __construct(CriterionVisitorDispatcher $visitorDispatcher)
     {
-        $this->visitor = $visitor;
+        $this->visitorDispatcher = $visitorDispatcher;
     }
 
     /**
@@ -35,12 +34,8 @@ final class Translator
      */
     public function translateContentQuery(Query $query): array
     {
-        if (!$this->visitor->accept($query->filter)) {
-            throw new RuntimeException('Unknown criterion');
-        }
-
         return [
-            'query' => $this->visitor->visit($query->filter),
+            'query' => $this->visitorDispatcher->dispatch($query->filter),
         ];
     }
 
@@ -51,12 +46,8 @@ final class Translator
      */
     public function translateLocationQuery(LocationQuery $query): array
     {
-        if (!$this->visitor->accept($query->filter)) {
-            throw new RuntimeException('Unknown criterion');
-        }
-
         return [
-            'query' => $this->visitor->visit($query->filter),
+            'query' => $this->visitorDispatcher->dispatch($query->filter),
         ];
     }
 }
