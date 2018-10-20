@@ -9,6 +9,11 @@ use Cabbage\Core\Query\Translator\Criterion\VisitorDispatcher;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd as LogicalAndCriterion;
 
+/**
+ * Visits LogicalAnd criterion.
+ *
+ * @see \eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd
+ */
 final class LogicalAnd extends Visitor
 {
     public function accept(Criterion $criterion): bool

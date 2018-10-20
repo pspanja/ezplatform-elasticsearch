@@ -7,9 +7,14 @@ namespace Cabbage\Core\Query\Translator\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use RuntimeException;
 
+/**
+ * VisitorDispatcher aggregates and dispatches criterion visitors.
+ */
 final class VisitorDispatcher
 {
     /**
+     * A collection of aggregated visitors.
+     *
      * @var \Cabbage\Core\Query\Translator\Criterion\Visitor[]
      */
     private $visitors = [];
@@ -24,11 +29,23 @@ final class VisitorDispatcher
         }
     }
 
+    /**
+     * Add visitor to the internal collection.
+     *
+     * @param \Cabbage\Core\Query\Translator\Criterion\Visitor $visitor
+     */
     private function addVisitor(Visitor $visitor): void
     {
         $this->visitors[] = $visitor;
     }
 
+    /**
+     * Visit the given criterion by dispatching aggregated visitors.
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Query\Criterion $criterion
+     *
+     * @return array
+     */
     public function dispatch(Criterion $criterion): array
     {
         foreach ($this->visitors as $visitor) {

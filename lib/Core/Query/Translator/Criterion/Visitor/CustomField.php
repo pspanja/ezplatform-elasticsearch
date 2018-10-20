@@ -9,6 +9,11 @@ use Cabbage\Core\Query\Translator\Criterion\Visitor;
 use Cabbage\Core\Query\Translator\Criterion\VisitorDispatcher;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 
+/**
+ * Visits CustomField criterion.
+ *
+ * @see \Cabbage\API\Query\Criterion\CustomField
+ */
 final class CustomField extends Visitor
 {
     public function accept(Criterion $criterion): bool
