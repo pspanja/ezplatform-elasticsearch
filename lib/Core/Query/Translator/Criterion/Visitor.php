@@ -9,8 +9,6 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 /**
  * Criterion visitor translates Criterion object into fragment of Elasticsearch Query DSL.
  *
- * Visitor is part of query translation.
- *
  * @see \Cabbage\Core\Query\Translator
  * @see \eZ\Publish\API\Repository\Values\Content\Query\Criterion
  */
