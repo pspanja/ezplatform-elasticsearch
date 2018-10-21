@@ -1,0 +1,35 @@
+{
+    "mappings": {
+        "_doc": {
+            "dynamic_templates": [
+                {
+                    "strings": {
+                        "path_match": "*_identifier",
+                        "match_mapping_type": "string",
+                        "mapping": {
+                            "type": "string"
+                        }
+                    }
+                },
+                {
+                    "integers": {
+                        "path_match": "*_integer",
+                        "match_mapping_type": "integer",
+                        "mapping": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                {
+                    "strings": {
+                        "path_match": "*_string",
+                        "match_mapping_type": "string",
+                        "mapping": {
+                            "type": "string"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
