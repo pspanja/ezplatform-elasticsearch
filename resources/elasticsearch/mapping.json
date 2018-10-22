@@ -3,7 +3,7 @@
         "_doc": {
             "dynamic_templates": [
                 {
-                    "strings": {
+                    "identifiers": {
                         "path_match": "*_identifier",
                         "match_mapping_type": "string",
                         "mapping": {
