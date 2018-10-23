@@ -86,4 +86,18 @@ final class Configurator
     {
         return $this->client->delete($endpoint->getUrl());
     }
+
+    /**
+     * @param \Cabbage\SPI\Endpoint $endpoint
+     * @param string $mapping
+     *
+     * @return \Cabbage\Core\Http\Response
+     */
+    public function setMapping(Endpoint $endpoint, string $mapping): Response
+    {
+        return $this->client->put(
+            $endpoint->getUrl() . '/_mapping/_doc',
+            Message::fromJson($mapping)
+        );
+    }
 }

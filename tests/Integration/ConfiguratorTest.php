@@ -60,6 +60,19 @@ class ConfiguratorTest extends BaseTest
     }
 
     /**
+     * @testdox Mapping can be set to index
+     * @depends testHasIndexAfterCreated
+     */
+    public function testSetMapping(): void
+    {
+        $mapping = \file_get_contents(__DIR__ . '/../../resources/elasticsearch/mapping.json');
+
+        $response = self::$configurator->setMapping(self::$endpoint, $mapping);
+
+        $this->assertEquals(200, $response->status);
+    }
+
+    /**
      * @testdox Index can be deleted
      * @depends testHasIndexAfterCreated
      */
