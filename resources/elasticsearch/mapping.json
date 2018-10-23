@@ -1,35 +1,31 @@
 {
-    "mappings": {
-        "_doc": {
-            "dynamic_templates": [
-                {
-                    "identifiers": {
-                        "path_match": "*_identifier",
-                        "match_mapping_type": "string",
-                        "mapping": {
-                            "type": "string"
-                        }
-                    }
-                },
-                {
-                    "integers": {
-                        "path_match": "*_integer",
-                        "match_mapping_type": "integer",
-                        "mapping": {
-                            "type": "integer"
-                        }
-                    }
-                },
-                {
-                    "strings": {
-                        "path_match": "*_string",
-                        "match_mapping_type": "string",
-                        "mapping": {
-                            "type": "string"
-                        }
-                    }
+    "dynamic_templates": [
+        {
+            "identifiers": {
+                "path_match": "*_identifier",
+                "match_mapping_type": "string",
+                "mapping": {
+                    "type": "string"
                 }
-            ]
+            }
+        },
+        {
+            "integers": {
+                "path_match": "*_long",
+                "match_mapping_type": "long",
+                "mapping": {
+                    "type": "long"
+                }
+            }
+        },
+        {
+            "strings": {
+                "path_match": "*_string",
+                "match_mapping_type": "string",
+                "mapping": {
+                    "type": "string"
+                }
+            }
         }
-    }
+    ]
 }
