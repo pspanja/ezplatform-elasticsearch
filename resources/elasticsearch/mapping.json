@@ -26,6 +26,15 @@
                     "type": "text"
                 }
             }
+        },
+        {
+            "strings": {
+                "path_match": "*_boolean",
+                "match_mapping_type": "boolean",
+                "mapping": {
+                    "type": "boolean"
+                }
+            }
         }
     ]
 }
