@@ -31,7 +31,10 @@ class GatewayTest extends BaseTest
             $configurator->deleteIndex(self::$endpoint);
         }
 
+        $mapping = \file_get_contents(__DIR__ . '/../../resources/elasticsearch/mapping.json');
+
         $configurator->createIndex(self::$endpoint);
+        $configurator->setMapping(self::$endpoint, $mapping);
     }
 
     /**
@@ -56,10 +59,10 @@ class GatewayTest extends BaseTest
     {
         $endpoint = self::$endpoint;
         $payload = <<<EOD
-{"index":{"_index":"{$endpoint->index}","_type":"temporary","_id":"a_1"}}
-{"type":"type_a","field":"value"}
-{"index":{"_index":"{$endpoint->index}","_type":"temporary","_id":"b_1"}}
-{"type":"type_b","field":"value"}
+{"index":{"_index":"{$endpoint->index}","_type":"_doc","_id":"a_1"}}
+{"type_identifier":"type_a","field_string":"value"}
+{"index":{"_index":"{$endpoint->index}","_type":"_doc","_id":"b_1"}}
+{"type_identifier":"type_b","field_string":"value"}
 
 EOD;
 
@@ -80,7 +83,7 @@ EOD;
         $query = [
             'query' => [
                 'term' => [
-                    'field' => 'value',
+                    'field_string' => 'value',
                 ],
             ],
         ];
@@ -102,7 +105,7 @@ EOD;
         $query = [
             'query' => [
                 'term' => [
-                    'type' => 'type_b',
+                    'type_identifier' => 'type_b',
                 ],
             ],
         ];

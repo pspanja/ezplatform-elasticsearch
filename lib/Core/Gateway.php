@@ -57,7 +57,7 @@ final class Gateway
      */
     public function find(Endpoint $endpoint, array $query): string
     {
-        $url = "{$endpoint->getUrl()}/temporary/_search";
+        $url = "{$endpoint->getUrl()}/_doc/_search";
         $message = Message::fromJson((string)json_encode($query));
 
         $response = $this->client->get($url, $message);

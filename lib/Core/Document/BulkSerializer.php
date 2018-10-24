@@ -75,7 +75,7 @@ final class BulkSerializer
         return json_encode([
             'index' => [
                 '_index' => $endpoint->index,
-                '_type' => 'temporary',
+                '_type' => '_doc',
                 '_id' => $document->id,
             ],
         ]);
