@@ -7,7 +7,7 @@ namespace Cabbage\Core\Query\Translator\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 
 /**
- * Criterion visitor translates Criterion object into fragment of Elasticsearch Query DSL.
+ * Criterion visitor translates Criterion object into a fragment of Elasticsearch Query DSL.
  *
  * @see \Cabbage\Core\Query\Translator
  * @see \eZ\Publish\API\Repository\Values\Content\Query\Criterion
