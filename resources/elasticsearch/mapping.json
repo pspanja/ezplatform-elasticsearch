@@ -28,6 +28,15 @@
             }
         },
         {
+            "keywords": {
+                "path_match": "*_keyword",
+                "match_mapping_type": "string",
+                "mapping": {
+                    "type": "keyword"
+                }
+            }
+        },
+        {
             "strings": {
                 "path_match": "*_boolean",
                 "match_mapping_type": "boolean",
