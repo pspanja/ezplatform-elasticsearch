@@ -60,8 +60,8 @@ final class Mapper
     private function mapContent(Content $content): Document
     {
         $fields = [
-            new Field('test_string', 'value', 'string'),
-            new Field('test_bool', true, 'bool'),
+            new Field('test_keyword', 'value', 'string'),
+            new Field('test_boolean', true, 'bool'),
         ];
 
         return new Document(
@@ -79,8 +79,8 @@ final class Mapper
     private function mapLocation(Location $location): Document
     {
         $fields = [
-            new Field('test_string', 'value', 'string'),
-            new Field('test_bool', true, 'bool'),
+            new Field('test_keyword', 'value', 'string'),
+            new Field('test_boolean', true, 'bool'),
         ];
 
         return new Document(
