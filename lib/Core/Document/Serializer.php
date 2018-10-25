@@ -40,7 +40,7 @@ final class Serializer
         ];
 
         foreach ($document->fields as $field) {
-            $data[$this->mapFieldName($field)] = $this->fieldValueMapper->map($field);
+            $data[$this->generateFieldName($field)] = $this->fieldValueMapper->map($field);
         }
 
         $data = json_encode($data);
@@ -52,7 +52,7 @@ final class Serializer
         return $data;
     }
 
-    private function mapFieldName(Field $field): string
+    private function generateFieldName(Field $field): string
     {
         return $field->name;
     }
