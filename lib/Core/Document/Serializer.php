@@ -16,16 +16,25 @@ use RuntimeException;
 final class Serializer
 {
     /**
+     * @var \Cabbage\Core\Document\FieldNameGenerator
+     */
+    private $fieldNameGenerator;
+
+    /**
      * @var \Cabbage\Core\Document\FieldValueMapper
      */
     private $fieldValueMapper;
 
     /**
+     * @param \Cabbage\Core\Document\FieldNameGenerator $fieldNameGenerator
      * @param \Cabbage\Core\Document\FieldValueMapper $fieldValueMapper
      */
-    public function __construct(FieldValueMapper $fieldValueMapper)
-    {
+    public function __construct(
+        FieldNameGenerator $fieldNameGenerator,
+        FieldValueMapper $fieldValueMapper
+    ) {
         $this->fieldValueMapper = $fieldValueMapper;
+        $this->fieldNameGenerator = $fieldNameGenerator;
     }
 
     /**
@@ -40,7 +49,10 @@ final class Serializer
         ];
 
         foreach ($document->fields as $field) {
-            $data[$this->generateFieldName($field)] = $this->fieldValueMapper->map($field);
+            $fieldName = $this->fieldNameGenerator->generate($field);
+            $fieldValue = $this->fieldValueMapper->map($field);
+
+            $data[$fieldName] = $fieldValue;
         }
 
         $data = json_encode($data);
@@ -50,10 +62,5 @@ final class Serializer
         }
 
         return $data;
-    }
-
-    private function generateFieldName(Field $field): string
-    {
-        return $field->name;
     }
 }

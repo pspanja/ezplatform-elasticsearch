@@ -23,9 +23,13 @@ services:
     cabbage.field_value_mapper:
         class: Cabbage\Core\Document\FieldValueMapper
 
+    cabbage.field_name_generator:
+        class: Cabbage\Core\Document\FieldNameGenerator
+
     cabbage.document_serializer:
         class: Cabbage\Core\Document\Serializer
         arguments:
+            - '@cabbage.field_name_generator'
             - '@cabbage.field_value_mapper'
 
     cabbage.document_bulk_serializer:
