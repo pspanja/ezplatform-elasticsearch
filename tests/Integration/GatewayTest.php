@@ -60,9 +60,9 @@ class GatewayTest extends BaseTest
         $endpoint = self::$endpoint;
         $payload = <<<EOD
 {"index":{"_index":"{$endpoint->index}","_type":"_doc","_id":"a_1"}}
-{"type_identifier":"type_a","field_string":"value"}
+{"type_identifier":"type_a","field_keyword":"value"}
 {"index":{"_index":"{$endpoint->index}","_type":"_doc","_id":"b_1"}}
-{"type_identifier":"type_b","field_string":"value"}
+{"type_identifier":"type_b","field_keyword":"value"}
 
 EOD;
 
@@ -83,7 +83,7 @@ EOD;
         $query = [
             'query' => [
                 'term' => [
-                    'field_string' => 'value',
+                    'field_keyword' => 'value',
                 ],
             ],
         ];
