@@ -16,6 +16,19 @@ use RuntimeException;
 final class Serializer
 {
     /**
+     * @var \Cabbage\Core\Document\FieldValueMapper
+     */
+    private $fieldValueMapper;
+
+    /**
+     * @param \Cabbage\Core\Document\FieldValueMapper $fieldValueMapper
+     */
+    public function __construct(FieldValueMapper $fieldValueMapper)
+    {
+        $this->fieldValueMapper = $fieldValueMapper;
+    }
+
+    /**
      * @param \Cabbage\SPI\Document $document
      *
      * @return string
@@ -27,7 +40,7 @@ final class Serializer
         ];
 
         foreach ($document->fields as $field) {
-            $data[$this->mapFieldName($field)] = $this->mapValue($field);
+            $data[$this->mapFieldName($field)] = $this->fieldValueMapper->map($field);
         }
 
         $data = json_encode($data);
@@ -37,23 +50,6 @@ final class Serializer
         }
 
         return $data;
-    }
-
-    /**
-     * @param \Cabbage\SPI\Field $field
-     *
-     * @return bool|string
-     */
-    private function mapValue(Field $field)
-    {
-        switch ($field->type) {
-            case 'string':
-                return (string)$field->value;
-            case 'bool':
-                return (bool)$field->value;
-        }
-
-        throw new RuntimeException("Field of type '{$field->type}' is not handled");
     }
 
     private function mapFieldName(Field $field): string

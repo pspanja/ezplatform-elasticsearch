@@ -20,8 +20,13 @@ services:
     cabbage.document_router:
         class: Cabbage\Core\Document\Router
 
+    cabbage.field_value_mapper:
+        class: Cabbage\Core\Document\FieldValueMapper
+
     cabbage.document_serializer:
         class: Cabbage\Core\Document\Serializer
+        arguments:
+            - '@cabbage.field_value_mapper'
 
     cabbage.document_bulk_serializer:
         class: Cabbage\Core\Document\BulkSerializer
