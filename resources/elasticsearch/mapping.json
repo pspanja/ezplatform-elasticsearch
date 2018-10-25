@@ -19,7 +19,7 @@
             }
         },
         {
-            "strings": {
+            "text": {
                 "path_match": "*_text",
                 "match_mapping_type": "string",
                 "mapping": {
