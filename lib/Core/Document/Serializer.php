@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Document;
 
+use Cabbage\Core\Document\Field\NameGenerator;
+use Cabbage\Core\Document\Field\ValueMapper;
 use Cabbage\SPI\Document;
-use Cabbage\SPI\Field;
 use RuntimeException;
 
 /**
@@ -16,22 +17,22 @@ use RuntimeException;
 final class Serializer
 {
     /**
-     * @var \Cabbage\Core\Document\FieldNameGenerator
+     * @var \Cabbage\Core\Document\Field\NameGenerator
      */
     private $fieldNameGenerator;
 
     /**
-     * @var \Cabbage\Core\Document\FieldValueMapper
+     * @var \Cabbage\Core\Document\Field\ValueMapper
      */
     private $fieldValueMapper;
 
     /**
-     * @param \Cabbage\Core\Document\FieldNameGenerator $fieldNameGenerator
-     * @param \Cabbage\Core\Document\FieldValueMapper $fieldValueMapper
+     * @param \Cabbage\Core\Document\Field\NameGenerator $fieldNameGenerator
+     * @param \Cabbage\Core\Document\Field\ValueMapper $fieldValueMapper
      */
     public function __construct(
-        FieldNameGenerator $fieldNameGenerator,
-        FieldValueMapper $fieldValueMapper
+        NameGenerator $fieldNameGenerator,
+        ValueMapper $fieldValueMapper
     ) {
         $this->fieldValueMapper = $fieldValueMapper;
         $this->fieldNameGenerator = $fieldNameGenerator;

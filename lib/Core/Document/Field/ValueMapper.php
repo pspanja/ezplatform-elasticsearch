@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Document;
+namespace Cabbage\Core\Document\Field;
 
 use Cabbage\SPI\Field;
 use RuntimeException;
@@ -12,7 +12,7 @@ use RuntimeException;
  *
  * @see \Cabbage\SPI\Field
  */
-final class FieldValueMapper
+final class ValueMapper
 {
     public function map(Field $field)
     {

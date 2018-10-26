@@ -21,10 +21,10 @@ services:
         class: Cabbage\Core\Document\Router
 
     cabbage.field_value_mapper:
-        class: Cabbage\Core\Document\FieldValueMapper
+        class: Cabbage\Core\Document\Field\ValueMapper
 
     cabbage.field_name_generator:
-        class: Cabbage\Core\Document\FieldNameGenerator
+        class: Cabbage\Core\Document\Field\NameGenerator
 
     cabbage.document_serializer:
         class: Cabbage\Core\Document\Serializer

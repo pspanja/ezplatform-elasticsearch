@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Document;
+namespace Cabbage\Core\Document\Field;
 
 use Cabbage\SPI\Field;
 
@@ -11,7 +11,7 @@ use Cabbage\SPI\Field;
  *
  * @see \Cabbage\SPI\Field
  */
-final class FieldNameGenerator
+final class NameGenerator
 {
     public function generate(Field $field): string
     {
