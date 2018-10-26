@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Cabbage\Core\Document\Field;
 
 use Cabbage\SPI\Field;
+use Cabbage\SPI\FieldType\Boolean;
+use Cabbage\SPI\FieldType\Keyword;
 use RuntimeException;
 
 /**
@@ -16,15 +18,18 @@ final class ValueMapper
 {
     public function map(Field $field)
     {
-        switch ($field->type) {
-            case 'string':
-                return (string)$field->value;
-            case 'bool':
-                return (bool)$field->value;
+        if ($field->type instanceof Keyword) {
+            return (string)$field->value;
         }
 
+        if ($field->type instanceof Boolean) {
+            return (bool)$field->value;
+        }
+
+        $type = \get_class($field->type);
+
         throw new RuntimeException(
-            "Field of type '{$field->type}' is not handled"
+            "Field of type '{$type}' is not handled"
         );
     }
 }

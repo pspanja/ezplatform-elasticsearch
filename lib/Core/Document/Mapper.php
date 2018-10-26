@@ -6,6 +6,8 @@ namespace Cabbage\Core\Document;
 
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Field;
+use Cabbage\SPI\FieldType\Boolean;
+use Cabbage\SPI\FieldType\Keyword;
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Location;
 use eZ\Publish\SPI\Persistence\Content\Location\Handler as LocationHandler;
@@ -60,8 +62,8 @@ final class Mapper
     private function mapContent(Content $content): Document
     {
         $fields = [
-            new Field('test_keyword', 'value', 'string'),
-            new Field('test_boolean', true, 'bool'),
+            new Field('test_keyword', 'value', new Keyword()),
+            new Field('test_boolean', true, new Boolean()),
         ];
 
         return new Document(
@@ -79,8 +81,8 @@ final class Mapper
     private function mapLocation(Location $location): Document
     {
         $fields = [
-            new Field('test_keyword', 'value', 'string'),
-            new Field('test_boolean', true, 'bool'),
+            new Field('test_keyword', 'value', new Keyword()),
+            new Field('test_boolean', true, new Boolean()),
         ];
 
         return new Document(

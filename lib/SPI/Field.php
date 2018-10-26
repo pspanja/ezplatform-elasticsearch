@@ -22,16 +22,16 @@ final class Field
     public $value;
 
     /**
-     * @var string
+     * @var \Cabbage\SPI\FieldType
      */
     public $type;
 
     /**
      * @param string $name
      * @param mixed $value
-     * @param string $type
+     * @param \Cabbage\SPI\FieldType $type
      */
-    public function __construct(string $name, $value, string $type)
+    public function __construct(string $name, $value, FieldType $type)
     {
         $this->name = $name;
         $this->value = $value;
