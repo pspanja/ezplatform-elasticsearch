@@ -13,4 +13,8 @@ use Cabbage\SPI\FieldType;
  */
 final class Boolean extends FieldType
 {
+    public function __construct()
+    {
+        $this->identifier = 'boolean';
+    }
 }
