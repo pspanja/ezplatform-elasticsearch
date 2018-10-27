@@ -15,6 +15,6 @@ final class NameGenerator
 {
     public function generate(Field $field): string
     {
-        return $field->name;
+        return "{$field->name}_{$field->type->identifier}";
     }
 }
