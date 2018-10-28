@@ -20,8 +20,18 @@ services:
     cabbage.document_router:
         class: Cabbage\Core\Document\Router
 
-    cabbage.field_value_mapper:
+    cabbage.document.field.value_mapper.visitor.boolean:
+        class: Cabbage\Core\Document\Field\ValueMapper\Visitor\Boolean
+
+    cabbage.document.field.value_mapper.visitor.keyword:
+        class: Cabbage\Core\Document\Field\ValueMapper\Visitor\Keyword
+
+    cabbage.document.field.value_mapper:
         class: Cabbage\Core\Document\Field\ValueMapper
+        arguments:
+            -
+                - '@cabbage.document.field.value_mapper.visitor.boolean'
+                - '@cabbage.document.field.value_mapper.visitor.keyword'
 
     cabbage.field_name_generator:
         class: Cabbage\Core\Document\Field\NameGenerator
@@ -30,7 +40,7 @@ services:
         class: Cabbage\Core\Document\Serializer
         arguments:
             - '@cabbage.field_name_generator'
-            - '@cabbage.field_value_mapper'
+            - '@cabbage.document.field.value_mapper'
 
     cabbage.document_bulk_serializer:
         class: Cabbage\Core\Document\BulkSerializer
