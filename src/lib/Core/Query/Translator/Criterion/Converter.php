@@ -10,7 +10,7 @@ use RuntimeException;
 /**
  * VisitorDispatcher aggregates and dispatches criterion visitors.
  */
-final class VisitorDispatcher
+final class Converter
 {
     /**
      * A collection of aggregated visitors.
@@ -46,7 +46,7 @@ final class VisitorDispatcher
      *
      * @return array
      */
-    public function dispatch(Criterion $criterion): array
+    public function convert(Criterion $criterion): array
     {
         foreach ($this->visitors as $visitor) {
             if ($visitor->accept($criterion)) {

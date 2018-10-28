@@ -9,7 +9,10 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 /**
  * Criterion visitor translates Criterion object into a fragment of Elasticsearch Query DSL.
  *
+ * It uses criterion converter to translate aggregated criteria like logical operators.
+ *
  * @see \Cabbage\Core\Query\Translator
+ * @see \Cabbage\Core\Query\Translator\Criterion\Converter
  * @see \eZ\Publish\API\Repository\Values\Content\Query\Criterion
  */
 abstract class Visitor
@@ -24,12 +27,12 @@ abstract class Visitor
     abstract public function accept(Criterion $criterion): bool;
 
     /**
-     * Visit the criterion using dispatcher for visiting aggregate criteria.
+     * Visit the criterion using converter for visiting aggregate criteria.
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Query\Criterion $criterion
-     * @param \Cabbage\Core\Query\Translator\Criterion\VisitorDispatcher $dispatcher
+     * @param \Cabbage\Core\Query\Translator\Criterion\Converter $converter
      *
      * @return array
      */
-    abstract public function visit(Criterion $criterion, VisitorDispatcher $dispatcher): array;
+    abstract public function visit(Criterion $criterion, Converter $converter): array;
 }

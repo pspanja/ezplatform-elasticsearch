@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Query;
 
-use Cabbage\Core\Query\Translator\Criterion\VisitorDispatcher;
+use Cabbage\Core\Query\Translator\Criterion\Converter;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 
@@ -18,13 +18,13 @@ use eZ\Publish\API\Repository\Values\Content\Query;
 final class Translator
 {
     /**
-     * @var \Cabbage\Core\Query\Translator\Criterion\VisitorDispatcher
+     * @var \Cabbage\Core\Query\Translator\Criterion\Converter
      */
-    private $visitorDispatcher;
+    private $criterionConverter;
 
-    public function __construct(VisitorDispatcher $visitorDispatcher)
+    public function __construct(Converter $criterionConverter)
     {
-        $this->visitorDispatcher = $visitorDispatcher;
+        $this->criterionConverter = $criterionConverter;
     }
 
     /**
@@ -35,7 +35,7 @@ final class Translator
     public function translateContentQuery(Query $query): array
     {
         return [
-            'query' => $this->visitorDispatcher->dispatch($query->filter),
+            'query' => $this->criterionConverter->convert($query->filter),
         ];
     }
 
@@ -47,7 +47,7 @@ final class Translator
     public function translateLocationQuery(LocationQuery $query): array
     {
         return [
-            'query' => $this->visitorDispatcher->dispatch($query->filter),
+            'query' => $this->criterionConverter->convert($query->filter),
         ];
     }
 }

@@ -48,23 +48,23 @@ services:
             - '@cabbage.document.router'
             - '@cabbage.document.serializer'
 
-    cabbage.query_translator.criterion_visitor.custom_field:
+    cabbage.query_translator.criterion.visitor.custom_field:
         class: Cabbage\Core\Query\Translator\Criterion\Visitor\CustomField
 
-    cabbage.query_translator.criterion_visitor.document_type:
+    cabbage.query_translator.criterion.visitor.document_type:
         class: Cabbage\Core\Query\Translator\Criterion\Visitor\DocumentType
 
-    cabbage.query_translator.criterion_visitor_dispatcher:
-        class: Cabbage\Core\Query\Translator\Criterion\VisitorDispatcher
+    cabbage.query_translator.criterion.converter:
+        class: Cabbage\Core\Query\Translator\Criterion\Converter
         arguments:
             -
-                - '@cabbage.query_translator.criterion_visitor.custom_field'
-                - '@cabbage.query_translator.criterion_visitor.document_type'
+                - '@cabbage.query_translator.criterion.visitor.custom_field'
+                - '@cabbage.query_translator.criterion.visitor.document_type'
 
     cabbage.query.translator:
         class: Cabbage\Core\Query\Translator
         arguments:
-            - '@cabbage.query_translator.criterion_visitor_dispatcher'
+            - '@cabbage.query_translator.criterion.converter'
 
     cabbage.query.router:
         class: Cabbage\Core\Query\Router

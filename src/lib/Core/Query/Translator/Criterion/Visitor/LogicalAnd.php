@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core\Query\Translator\Criterion\Visitor;
 
 use Cabbage\Core\Query\Translator\Criterion\Visitor;
-use Cabbage\Core\Query\Translator\Criterion\VisitorDispatcher;
+use Cabbage\Core\Query\Translator\Criterion\Converter;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd as LogicalAndCriterion;
 
@@ -21,13 +21,13 @@ final class LogicalAnd extends Visitor
         return $criterion instanceof LogicalAndCriterion;
     }
 
-    public function visit(Criterion $criterion, VisitorDispatcher $dispatcher): array
+    public function visit(Criterion $criterion, Converter $converter): array
     {
         \assert($criterion instanceof LogicalAndCriterion);
 
         $criteria = array_map(
-            function ($value) use ($dispatcher) {
-                return $dispatcher->dispatch($value);
+            function ($value) use ($converter) {
+                return $converter->convert($value);
             },
             $criterion->criteria
         );
