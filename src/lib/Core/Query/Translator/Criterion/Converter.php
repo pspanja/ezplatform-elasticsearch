@@ -8,7 +8,10 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use RuntimeException;
 
 /**
- * VisitorDispatcher aggregates and dispatches criterion visitors.
+ * Criterion converter translates criteria tree into a fragment of Elasticsearch Query DSL.
+ *
+ * @see \Cabbage\Core\Query\Translator\Criterion\Visitor
+ * @see \eZ\Publish\API\Repository\Values\Content\Query\Criterion
  */
 final class Converter
 {
