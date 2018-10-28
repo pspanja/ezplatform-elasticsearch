@@ -36,7 +36,7 @@ abstract class BaseTest extends TestCase
      */
     private static function buildContainer(): ContainerBuilder
     {
-        $containerBuilder = include __DIR__ . '/../../resources/container/builder.php';
+        $containerBuilder = include __DIR__ . '/container_builder.php';
 
         $loader = new YamlFileLoader(
             $containerBuilder,
