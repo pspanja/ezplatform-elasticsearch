@@ -12,12 +12,12 @@ services:
         arguments:
             - '@cabbage.http.client'
 
-    cabbage.document_mapper:
+    cabbage.document.mapper:
         class: Cabbage\Core\Document\Mapper
         arguments:
             - '@ezpublish.spi.persistence.location_handler'
 
-    cabbage.document_router:
+    cabbage.document.router:
         class: Cabbage\Core\Document\Router
 
     cabbage.document.field.value_mapper.visitor.boolean:
@@ -33,20 +33,20 @@ services:
                 - '@cabbage.document.field.value_mapper.visitor.boolean'
                 - '@cabbage.document.field.value_mapper.visitor.keyword'
 
-    cabbage.field_name_generator:
+    cabbage.document.field.name_generator:
         class: Cabbage\Core\Document\Field\NameGenerator
 
-    cabbage.document_serializer:
+    cabbage.document.serializer:
         class: Cabbage\Core\Document\Serializer
         arguments:
-            - '@cabbage.field_name_generator'
+            - '@cabbage.document.field.name_generator'
             - '@cabbage.document.field.value_mapper'
 
-    cabbage.document_bulk_serializer:
+    cabbage.document.bulk_serializer:
         class: Cabbage\Core\Document\BulkSerializer
         arguments:
-            - '@cabbage.document_router'
-            - '@cabbage.document_serializer'
+            - '@cabbage.document.router'
+            - '@cabbage.document.serializer'
 
     cabbage.query_translator.criterion_visitor.custom_field:
         class: Cabbage\Core\Query\Translator\Criterion\Visitor\CustomField
@@ -61,12 +61,12 @@ services:
                 - '@cabbage.query_translator.criterion_visitor.custom_field'
                 - '@cabbage.query_translator.criterion_visitor.document_type'
 
-    cabbage.query_translator:
+    cabbage.query.translator:
         class: Cabbage\Core\Query\Translator
         arguments:
             - '@cabbage.query_translator.criterion_visitor_dispatcher'
 
-    cabbage.query_router:
+    cabbage.query.router:
         class: Cabbage\Core\Query\Router
 
     cabbage.result_extractor:
@@ -76,8 +76,8 @@ services:
         class: Cabbage\Core\Handler
         arguments:
             - '@cabbage.gateway'
-            - '@cabbage.document_mapper'
-            - '@cabbage.document_bulk_serializer'
-            - '@cabbage.query_translator'
-            - '@cabbage.query_router'
+            - '@cabbage.document.mapper'
+            - '@cabbage.document.bulk_serializer'
+            - '@cabbage.query.translator'
+            - '@cabbage.query.router'
             - '@cabbage.result_extractor'
