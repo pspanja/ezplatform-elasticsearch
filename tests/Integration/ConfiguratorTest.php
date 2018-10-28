@@ -65,7 +65,7 @@ class ConfiguratorTest extends BaseTest
      */
     public function testSetMapping(): void
     {
-        $mapping = \file_get_contents(__DIR__ . '/../../resources/elasticsearch/mapping.json');
+        $mapping = \file_get_contents(__DIR__ . '/../../config/elasticsearch/mapping.json');
 
         $response = self::$configurator->setMapping(self::$endpoint, $mapping);
 

@@ -39,7 +39,7 @@ class HandlerTest extends BaseTest
             $configurator->deleteIndex(self::$endpoint);
         }
 
-        $mapping = \file_get_contents(__DIR__ . '/../../resources/elasticsearch/mapping.json');
+        $mapping = \file_get_contents(__DIR__ . '/../../config/elasticsearch/mapping.json');
 
         $configurator->createIndex(self::$endpoint);
         $configurator->setMapping(self::$endpoint, $mapping);
