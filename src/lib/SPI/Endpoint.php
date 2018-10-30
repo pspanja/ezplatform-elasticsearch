@@ -107,7 +107,7 @@ final class Endpoint
      */
     private static function validateIndex(string $index): void
     {
-        if (\is_string($index) && \strpos($index, '/') !== false) {
+        if (\strpos($index, '/') !== false) {
             throw new RuntimeException(
                 'Index name must not contain a slash'
             );
