@@ -23,6 +23,9 @@ final class DocumentType extends Criterion
         parent::__construct(null, null, $value);
     }
 
+    /**
+     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator\Specifications[]
+     */
     public function getSpecifications(): array
     {
         return [

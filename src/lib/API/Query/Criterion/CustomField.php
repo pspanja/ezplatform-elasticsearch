@@ -24,6 +24,9 @@ final class CustomField extends Criterion
         parent::__construct($field, null, $value);
     }
 
+    /**
+     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator\Specifications[]
+     */
     public function getSpecifications(): array
     {
         return [
