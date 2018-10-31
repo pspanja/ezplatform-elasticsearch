@@ -40,7 +40,7 @@ final class Client
      * Perform GET request to the URL with the given message.
      *
      * @param string $url
-     * @param \Cabbage\Core\Http\Message $message
+     * @param \Cabbage\Core\Http\Message|null $message
      *
      * @return \Cabbage\Core\Http\Response
      */
@@ -53,7 +53,7 @@ final class Client
      * Perform PUT request to the URL with the given message.
      *
      * @param string $url
-     * @param \Cabbage\Core\Http\Message $message
+     * @param \Cabbage\Core\Http\Message|null $message
      *
      * @return \Cabbage\Core\Http\Response
      */
@@ -66,7 +66,7 @@ final class Client
      * Perform POST request to the URL with the given message.
      *
      * @param string $url
-     * @param \Cabbage\Core\Http\Message $message
+     * @param \Cabbage\Core\Http\Message|null $message
      *
      * @return \Cabbage\Core\Http\Response
      */
@@ -79,7 +79,7 @@ final class Client
      * Perform DELETE request to the URL with the given message.
      *
      * @param string $url
-     * @param \Cabbage\Core\Http\Message $message
+     * @param \Cabbage\Core\Http\Message|null $message
      *
      * @return \Cabbage\Core\Http\Response
      */
@@ -92,7 +92,7 @@ final class Client
      * Perform HEAD request to the URL with the given message.
      *
      * @param string $url
-     * @param \Cabbage\Core\Http\Message $message
+     * @param \Cabbage\Core\Http\Message|null $message
      *
      * @return \Cabbage\Core\Http\Response
      */
