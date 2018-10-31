@@ -106,7 +106,7 @@ final class Client
      *
      * @param string $method
      * @param string $url
-     * @param \Cabbage\Core\Http\Message $message
+     * @param \Cabbage\Core\Http\Message|null $message
      *
      * @return \Cabbage\Core\Http\Response
      */
