@@ -24,8 +24,8 @@ final class Message
     public $headers;
 
     /**
-     * @param string[] $headers
      * @param string $body
+     * @param string[] $headers
      */
     public function __construct(string $body = '', array $headers = [])
     {

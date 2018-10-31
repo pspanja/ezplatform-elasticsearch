@@ -38,10 +38,10 @@ final class Response
     public $headers;
 
     /**
-     * @param string[] $headers
-     * @param string $body
-     * @param int $status
      * @param string $version
+     * @param int $status
+     * @param string $body
+     * @param string[] $headers
      */
     public function __construct(string $version, int $status, string $body, array $headers)
     {
