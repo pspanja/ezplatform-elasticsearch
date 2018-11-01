@@ -14,7 +14,7 @@ use eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition;
 use RuntimeException;
 
 /**
- * Maps content fields to Elasticsearch index fields.
+ * Maps eZ Platform Content Fields to search Fields for indexing.
  *
  * @see \eZ\Publish\SPI\Persistence\Content\Field
  * @see \Cabbage\SPI\Field
