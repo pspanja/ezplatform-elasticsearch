@@ -45,7 +45,9 @@ final class Gateway
         $response = $this->client->post($url, $message);
 
         if ($response->status !== 200) {
-            throw new RuntimeException("Invalid response status {$response->status}");
+            throw new RuntimeException(
+                "Invalid response status {$response->status}"
+            );
         }
     }
 
@@ -63,7 +65,9 @@ final class Gateway
         $response = $this->client->get($url, $message);
 
         if ($response->status !== 200) {
-            throw new RuntimeException("Invalid response status {$response->status}");
+            throw new RuntimeException(
+                "Invalid response status {$response->status}"
+            );
         }
 
         return $response->body;
@@ -79,7 +83,9 @@ final class Gateway
         $response = $this->client->post($url);
 
         if ($response->status !== 200) {
-            throw new RuntimeException("Invalid response status {$response->status}");
+            throw new RuntimeException(
+                "Invalid response status {$response->status}"
+            );
         }
     }
 }
