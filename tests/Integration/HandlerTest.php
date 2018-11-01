@@ -60,6 +60,7 @@ class HandlerTest extends BaseTest
                     'id' => 'CONTENT_ID',
                 ]),
             ]),
+            'fields' => [],
         ]);
 
         $handler->indexContent($content);

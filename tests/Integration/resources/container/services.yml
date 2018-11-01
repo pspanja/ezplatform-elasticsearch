@@ -1,3 +1,6 @@
 services:
     ezpublish.spi.persistence.location_handler:
         class: Cabbage\Tests\Integration\Stubs\LocationHandler
+
+    ezpublish.spi.persistence.content_type_handler:
+        class: Cabbage\Tests\Integration\Stubs\ContentTypeHandler

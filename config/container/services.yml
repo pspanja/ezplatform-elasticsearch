@@ -21,6 +21,7 @@ services:
         class: Cabbage\Core\Document\Mapper
         arguments:
             - '@ezpublish.spi.persistence.location_handler'
+            - '@ezpublish.spi.persistence.content_type_handler'
 
     cabbage.document.router:
         class: Cabbage\Core\Document\Router
