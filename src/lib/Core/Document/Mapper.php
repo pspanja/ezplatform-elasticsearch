@@ -38,18 +38,26 @@ final class Mapper
     private $contentFieldMapper;
 
     /**
+     * @var \Cabbage\Core\Document\IdGenerator
+     */
+    private $idGenerator;
+
+    /**
      * @param \eZ\Publish\SPI\Persistence\Content\Location\Handler $locationHandler
      * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $typeHandler
      * @param \Cabbage\Core\Document\Mapper\ContentFieldMapper $contentFieldMapper
+     * @param \Cabbage\Core\Document\IdGenerator $idGenerator
      */
     public function __construct(
         LocationHandler $locationHandler,
         TypeHandler $typeHandler,
-        ContentFieldMapper $contentFieldMapper
+        ContentFieldMapper $contentFieldMapper,
+        IdGenerator $idGenerator
     ) {
         $this->locationHandler = $locationHandler;
         $this->typeHandler = $typeHandler;
         $this->contentFieldMapper = $contentFieldMapper;
+        $this->idGenerator = $idGenerator;
     }
 
     /**
@@ -94,7 +102,7 @@ final class Mapper
         ];
 
         return new Document(
-            "content_{$content->versionInfo->contentInfo->id}",
+            $this->idGenerator->generateContentDocumentId($content),
             Document::TypeContent,
             array_merge(...$fieldsGrouped)
         );
@@ -113,7 +121,7 @@ final class Mapper
         ];
 
         return new Document(
-            "location_{$location->id}",
+            $this->idGenerator->generateLocationDocumentId($location),
             Document::TypeLocation,
             $fields
         );

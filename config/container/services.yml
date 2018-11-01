@@ -20,12 +20,16 @@ services:
     cabbage.document.mapper.content_field_mapper:
         class: Cabbage\Core\Document\Mapper\ContentFieldMapper
 
+    cabbage.document.id_generator:
+        class: Cabbage\Core\Document\IdGenerator
+
     cabbage.document.mapper:
         class: Cabbage\Core\Document\Mapper
         arguments:
             - '@ezpublish.spi.persistence.location_handler'
             - '@ezpublish.spi.persistence.content_type_handler'
             - '@cabbage.document.mapper.content_field_mapper'
+            - '@cabbage.document.id_generator'
 
     cabbage.document.router:
         class: Cabbage\Core\Document\Router
