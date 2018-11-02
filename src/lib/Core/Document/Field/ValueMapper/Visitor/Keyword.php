@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Cabbage\Core\Document\Field\ValueMapper\Visitor;
 
 use Cabbage\Core\Document\Field\ValueMapper\Visitor;
-use Cabbage\SPI\Field;
-use Cabbage\SPI\FieldType\Keyword as KeywordType;
+use Cabbage\SPI\Document\Field;
+use Cabbage\SPI\Document\Field\Type\Keyword as KeywordType;
 
 class Keyword extends Visitor
 {

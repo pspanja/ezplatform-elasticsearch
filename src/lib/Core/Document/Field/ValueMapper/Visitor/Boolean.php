@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Cabbage\Core\Document\Field\ValueMapper\Visitor;
 
 use Cabbage\Core\Document\Field\ValueMapper\Visitor;
-use Cabbage\SPI\Field;
-use Cabbage\SPI\FieldType\Boolean as BooleanType;
+use Cabbage\SPI\Document\Field;
+use Cabbage\SPI\Document\Field\Type\Boolean as BooleanType;
 
 class Boolean extends Visitor
 {

@@ -6,9 +6,9 @@ namespace Cabbage\Core\Document;
 
 use Cabbage\Core\Document\Mapper\ContentFieldMapper;
 use Cabbage\SPI\Document;
-use Cabbage\SPI\Field;
-use Cabbage\SPI\FieldType\Boolean;
-use Cabbage\SPI\FieldType\Keyword;
+use Cabbage\SPI\Document\Field;
+use Cabbage\SPI\Document\Field\Type\Boolean;
+use Cabbage\SPI\Document\Field\Type\Keyword;
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Location;
 use eZ\Publish\SPI\Persistence\Content\Location\Handler as LocationHandler;

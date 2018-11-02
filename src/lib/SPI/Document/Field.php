@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\SPI;
+namespace Cabbage\SPI\Document;
+
+use Cabbage\SPI\Document\Field\Type;
 
 /**
  * Represents a field in a Document.
@@ -22,16 +24,16 @@ final class Field
     public $value;
 
     /**
-     * @var \Cabbage\SPI\FieldType
+     * @var \Cabbage\SPI\Document\Field\Type
      */
     public $type;
 
     /**
      * @param string $name
      * @param mixed $value
-     * @param \Cabbage\SPI\FieldType $type
+     * @param \Cabbage\SPI\Document\Field\Type $type
      */
-    public function __construct(string $name, $value, FieldType $type)
+    public function __construct(string $name, $value, Type $type)
     {
         $this->name = $name;
         $this->value = $value;

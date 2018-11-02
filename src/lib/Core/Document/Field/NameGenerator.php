@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Document\Field;
 
-use Cabbage\SPI\Field;
+use Cabbage\SPI\Document\Field;
 
 /**
  * Generates the name of the field in the search engine.
@@ -29,7 +29,7 @@ final class NameGenerator
     /**
      * Generate field name for the Elasticsearch index.
      *
-     * @param \Cabbage\SPI\Field $field
+     * @param \Cabbage\SPI\Document\Field $field
      *
      * @return string
      */

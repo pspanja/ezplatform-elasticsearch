@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\SPI;
+namespace Cabbage\SPI\Document\Field;
+
+use Cabbage\SPI\ValueObject;
 
 /**
  * Represents a type of the field in a Document.
@@ -11,7 +13,7 @@ namespace Cabbage\SPI;
  *
  * @property-read string $identifier Identifier of the field type, must be handled by the Elasticsearch mapping.
  */
-abstract class FieldType extends ValueObject
+abstract class Type extends ValueObject
 {
     /**
      * Identifier of the field type, must be handled by the Elasticsearch mapping.

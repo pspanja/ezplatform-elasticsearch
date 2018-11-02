@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Document\Mapper;
 
-use Cabbage\SPI\Field;
-use Cabbage\SPI\FieldType\Boolean;
-use Cabbage\SPI\FieldType\Keyword;
+use Cabbage\SPI\Document\Field;
+use Cabbage\SPI\Document\Field\Type\Boolean;
+use Cabbage\SPI\Document\Field\Type\Keyword;
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Field as ContentField;
 use eZ\Publish\SPI\Persistence\Content\Type;
@@ -25,7 +25,7 @@ final class ContentFieldMapper
      * @param \eZ\Publish\SPI\Persistence\Content $content
      * @param \eZ\Publish\SPI\Persistence\Content\Type $type
      *
-     * @return \Cabbage\SPI\Field[]
+     * @return \Cabbage\SPI\Document\Field[]
      */
     public function map(Content $content, Type $type): array
     {

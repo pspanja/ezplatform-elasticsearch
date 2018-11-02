@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core\Document\Field;
 
 use Cabbage\Core\Document\Field\ValueMapper\Visitor;
-use Cabbage\SPI\Field;
+use Cabbage\SPI\Document\Field;
 use RuntimeException;
 
 /**
@@ -45,7 +45,7 @@ final class ValueMapper
     /**
      * Map the field's value.
      *
-     * @param \Cabbage\SPI\Field $field
+     * @param \Cabbage\SPI\Document\Field $field
      *
      * @return mixed
      */
