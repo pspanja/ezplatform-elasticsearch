@@ -17,6 +17,19 @@ services:
         arguments:
             - '@cabbage.http.client'
 
+    cabbage.field_type.data_mapper.checkbox:
+        class: Cabbage\Core\FieldType\DataMapper\Checkbox
+
+    cabbage.field_type.data_mapper.text_line:
+        class: Cabbage\Core\FieldType\DataMapper\TextLine
+
+    cabbage.field_type.data_mapper_registry:
+        class: Cabbage\Core\FieldType\DataMapperRegistry
+        arguments:
+            -
+                ezboolean: '@cabbage.field_type.data_mapper.checkbox'
+                ezstring: '@cabbage.field_type.data_mapper.text_line'
+
     cabbage.document.mapper.content_field_mapper:
         class: Cabbage\Core\Document\Mapper\ContentFieldMapper
 
