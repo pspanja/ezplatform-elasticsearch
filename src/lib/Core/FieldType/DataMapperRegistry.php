@@ -47,9 +47,9 @@ final class DataMapperRegistry
      *
      * @param string $identifier
      *
-     * @return mixed
+     * @return \Cabbage\SPI\FieldType\DataMapper
      */
-    public function get(string $identifier)
+    public function get(string $identifier): DataMapper
     {
         if (array_key_exists($identifier, $this->dataMappersByIdentifier)) {
             return $this->dataMappersByIdentifier[$identifier];
