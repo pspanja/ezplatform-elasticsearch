@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Document\Mapper;
 
-use Cabbage\SPI\Document\Field;
-use Cabbage\SPI\Document\Field\Type\Boolean;
-use Cabbage\SPI\Document\Field\Type\Keyword;
+use Cabbage\Core\FieldType\DataMapperRegistry;
+use Cabbage\SPI\Document\Field as DocumentField;
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Field as ContentField;
 use eZ\Publish\SPI\Persistence\Content\Type;
@@ -22,6 +21,19 @@ use RuntimeException;
 final class ContentFieldMapper
 {
     /**
+     * @var \Cabbage\Core\FieldType\DataMapperRegistry
+     */
+    private $dataMapperRegistry;
+
+    /**
+     * @param \Cabbage\Core\FieldType\DataMapperRegistry $dataMapperRegistry
+     */
+    public function __construct(DataMapperRegistry $dataMapperRegistry)
+    {
+        $this->dataMapperRegistry = $dataMapperRegistry;
+    }
+
+    /**
      * @param \eZ\Publish\SPI\Persistence\Content $content
      * @param \eZ\Publish\SPI\Persistence\Content\Type $type
      *
@@ -29,38 +41,33 @@ final class ContentFieldMapper
      */
     public function map(Content $content, Type $type): array
     {
-        $indexFields = [];
+        $documentFieldGrouped = [[]];
 
         $fieldDefinitionMapById = $this->mapFieldDefinitionsById($type);
 
         foreach ($content->fields as $field) {
             $fieldDefinition = $this->getFieldDefinition($field, $fieldDefinitionMapById);
-
-            switch ($field->type) {
-                case 'ezboolean':
-                    $indexFields[] = new Field(
-                        $fieldDefinition->identifier,
-                        $field->value->data,
-                        new Boolean()
-                    );
-
-                    break;
-                case 'ezstring':
-                    $indexFields[] = new Field(
-                        $fieldDefinition->identifier,
-                        $field->value->data,
-                        new Keyword()
-                    );
-
-                    break;
-                default:
-                    throw new RuntimeException(
-                        "Field of type '{$field->type}' is not handled"
-                    );
-            }
+            $documentFieldGrouped[] = $this->mapField($field, $fieldDefinition);
         }
 
-        return $indexFields;
+        return array_merge(...$documentFieldGrouped);
+    }
+
+    private function mapField(ContentField $field, FieldDefinition $fieldDefinition): array
+    {
+        $namedDocumentFields = [];
+        $dataMapper = $this->dataMapperRegistry->get($field->type);
+        $documentFields = $dataMapper->map($field, $fieldDefinition);
+
+        foreach ($documentFields as $documentField) {
+            $namedDocumentFields[] = new DocumentField(
+                "{$fieldDefinition->identifier}_{$fieldDefinition->fieldType}_{$documentField->name}",
+                $documentField->value,
+                $documentField->type
+            );
+        }
+
+        return $namedDocumentFields;
     }
 
     /**

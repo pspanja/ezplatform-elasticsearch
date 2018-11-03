@@ -32,6 +32,8 @@ services:
 
     cabbage.document.mapper.content_field_mapper:
         class: Cabbage\Core\Document\Mapper\ContentFieldMapper
+        arguments:
+            - '@cabbage.field_type.data_mapper_registry'
 
     cabbage.document.id_generator:
         class: Cabbage\Core\Document\IdGenerator
