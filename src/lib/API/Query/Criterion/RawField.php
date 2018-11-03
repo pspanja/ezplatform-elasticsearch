@@ -9,11 +9,11 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator\Specifications;
 
 /**
- * Defines a match on a custom field.
+ * Defines a match on a document field by it's exact name.
  *
- * @see \Cabbage\SPI\Document
+ * @see \Cabbage\SPI\Document\Field
  */
-final class CustomField extends Criterion
+final class RawField extends Criterion
 {
     /**
      * @param string $field

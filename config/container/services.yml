@@ -65,7 +65,7 @@ services:
             - '@cabbage.document.serializer'
 
     cabbage.query_translator.criterion.visitor.custom_field:
-        class: Cabbage\Core\Query\Translator\Criterion\Visitor\CustomField
+        class: Cabbage\Core\Query\Translator\Criterion\Visitor\RawField
 
     cabbage.query_translator.criterion.visitor.document_type:
         class: Cabbage\Core\Query\Translator\Criterion\Visitor\DocumentType
