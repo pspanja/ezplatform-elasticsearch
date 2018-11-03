@@ -8,12 +8,14 @@ use eZ\Publish\SPI\Persistence\Content\Field;
 use eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition;
 
 /**
- * Maps Content Field to an array of search Fields.
+ * Maps Content Field data to an array of search Fields.
+ *
+ * Needs to be implemented per FieldType.
  *
  * @see \eZ\Publish\SPI\Persistence\Content\Field $field
  * @see \eZ\Publish\SPI\Search\Field
  */
-abstract class DocumentFieldMapper
+abstract class DataMapper
 {
     /**
      * @param \eZ\Publish\SPI\Persistence\Content\Field $field
