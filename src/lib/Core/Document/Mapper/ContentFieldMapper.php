@@ -13,10 +13,10 @@ use eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition;
 use RuntimeException;
 
 /**
- * Maps eZ Platform Content Fields to search Fields for indexing.
+ * Maps eZ Platform Content Fields to Document Fields.
  *
  * @see \eZ\Publish\SPI\Persistence\Content\Field
- * @see \Cabbage\SPI\Field
+ * @see \Cabbage\SPI\Document\Field
  */
 final class ContentFieldMapper
 {
@@ -24,13 +24,21 @@ final class ContentFieldMapper
      * @var \Cabbage\Core\FieldType\DataMapperRegistry
      */
     private $dataMapperRegistry;
+    /**
+     * @var \Cabbage\Core\Document\Mapper\ContentFieldNameGenerator
+     */
+    private $nameGenerator;
 
     /**
      * @param \Cabbage\Core\FieldType\DataMapperRegistry $dataMapperRegistry
+     * @param \Cabbage\Core\Document\Mapper\ContentFieldNameGenerator $nameGenerator
      */
-    public function __construct(DataMapperRegistry $dataMapperRegistry)
-    {
+    public function __construct(
+        DataMapperRegistry $dataMapperRegistry,
+        ContentFieldNameGenerator $nameGenerator
+    ) {
         $this->dataMapperRegistry = $dataMapperRegistry;
+        $this->nameGenerator = $nameGenerator;
     }
 
     /**
@@ -61,7 +69,7 @@ final class ContentFieldMapper
 
         foreach ($documentFields as $documentField) {
             $namedDocumentFields[] = new DocumentField(
-                "{$fieldDefinition->identifier}_{$fieldDefinition->fieldType}_{$documentField->name}",
+                $this->nameGenerator->generate($fieldDefinition, $documentField->name),
                 $documentField->value,
                 $documentField->type
             );
