@@ -66,15 +66,15 @@ services:
                 - '@cabbage.document.field.value_mapper.visitor.boolean'
                 - '@cabbage.document.field.value_mapper.visitor.keyword'
 
-    cabbage.document.field.name_generator:
-        class: Cabbage\Core\Document\Field\NameGenerator
+    cabbage.document.field.typed_name_generator:
+        class: Cabbage\Core\Document\Field\TypedNameGenerator
         arguments:
             - '%cabbage.field.name_generator.type_suffix_map%'
 
     cabbage.document.serializer:
         class: Cabbage\Core\Document\Serializer
         arguments:
-            - '@cabbage.document.field.name_generator'
+            - '@cabbage.document.field.typed_name_generator'
             - '@cabbage.document.field.value_mapper'
 
     cabbage.document.bulk_serializer:

@@ -11,7 +11,7 @@ use Cabbage\SPI\Document\Field;
  *
  * @see \Cabbage\SPI\Field
  */
-final class NameGenerator
+final class TypedNameGenerator
 {
     /**
      * @var string[]
