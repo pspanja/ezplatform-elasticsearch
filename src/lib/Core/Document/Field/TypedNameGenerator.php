@@ -7,23 +7,23 @@ namespace Cabbage\Core\Document\Field;
 use Cabbage\SPI\Document\Field;
 
 /**
- * Generates the name of the field in the search engine.
+ * Generates typed name of the Document Field.
  *
- * @see \Cabbage\SPI\Field
+ * @see \Cabbage\SPI\Document\Field
  */
 final class TypedNameGenerator
 {
     /**
      * @var string[]
      */
-    private $typeSuffixMap;
+    private $suffixMap;
 
     /**
-     * @param string[] $typeSuffixMap
+     * @param string[] $suffixMap
      */
-    public function __construct(array $typeSuffixMap)
+    public function __construct(array $suffixMap)
     {
-        $this->typeSuffixMap = $typeSuffixMap;
+        $this->suffixMap = $suffixMap;
     }
 
     /**
@@ -42,8 +42,8 @@ final class TypedNameGenerator
 
     private function getTypeSuffix(string $typeIdentifier): string
     {
-        if (array_key_exists($typeIdentifier, $this->typeSuffixMap)) {
-            return $this->typeSuffixMap[$typeIdentifier];
+        if (array_key_exists($typeIdentifier, $this->suffixMap)) {
+            return $this->suffixMap[$typeIdentifier];
         }
 
         return $typeIdentifier;
