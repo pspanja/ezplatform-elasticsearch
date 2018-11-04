@@ -13,16 +13,16 @@ final class ContentFieldNameGenerator
 {
     /**
      * @param \eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition $fieldDefinition
-     * @param string $valueName
+     * @param string $dataItemName
      *
      * @return string
      */
-    public function generate(FieldDefinition $fieldDefinition, string $valueName): string
+    public function generate(FieldDefinition $fieldDefinition, string $dataItemName): string
     {
         $elements = [
             $fieldDefinition->identifier,
             $fieldDefinition->fieldType,
-            $valueName,
+            $dataItemName,
         ];
 
         return implode('_', $elements);

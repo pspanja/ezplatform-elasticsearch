@@ -65,13 +65,13 @@ final class ContentFieldMapper
     {
         $namedDocumentFields = [];
         $dataMapper = $this->dataMapperRegistry->get($field->type);
-        $documentFields = $dataMapper->map($field, $fieldDefinition);
+        $dataItems = $dataMapper->map($field, $fieldDefinition);
 
-        foreach ($documentFields as $documentField) {
+        foreach ($dataItems as $dataItem) {
             $namedDocumentFields[] = new DocumentField(
-                $this->nameGenerator->generate($fieldDefinition, $documentField->name),
-                $documentField->value,
-                $documentField->type
+                $this->nameGenerator->generate($fieldDefinition, $dataItem->name),
+                $dataItem->value,
+                $dataItem->type
             );
         }
 
