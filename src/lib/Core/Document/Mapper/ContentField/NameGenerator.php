@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Document\Mapper;
+namespace Cabbage\Core\Document\Mapper\ContentField;
 
 use eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition;
 
 /**
  * Generates Document Field name for a Content Field.
  */
-final class ContentFieldNameGenerator
+final class NameGenerator
 {
     /**
      * @param \eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition $fieldDefinition

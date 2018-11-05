@@ -30,14 +30,14 @@ services:
                 ezboolean: '@cabbage.field_type.data_mapper.checkbox'
                 ezstring: '@cabbage.field_type.data_mapper.text_line'
 
-    cabbage.document.mapper.content_field_name_generator:
-        class: Cabbage\Core\Document\Mapper\ContentFieldNameGenerator
+    cabbage.document.mapper.content_field.name_generator:
+        class: Cabbage\Core\Document\Mapper\ContentField\NameGenerator
 
-    cabbage.document.mapper.content_field_mapper:
-        class: Cabbage\Core\Document\Mapper\ContentFieldMapper
+    cabbage.document.mapper.content_field.mapper:
+        class: Cabbage\Core\Document\Mapper\ContentField\Mapper
         arguments:
             - '@cabbage.field_type.data_mapper_registry'
-            - '@cabbage.document.mapper.content_field_name_generator'
+            - '@cabbage.document.mapper.content_field.name_generator'
 
     cabbage.document.id_generator:
         class: Cabbage\Core\Document\IdGenerator
@@ -47,7 +47,7 @@ services:
         arguments:
             - '@ezpublish.spi.persistence.location_handler'
             - '@ezpublish.spi.persistence.content_type_handler'
-            - '@cabbage.document.mapper.content_field_mapper'
+            - '@cabbage.document.mapper.content_field.mapper'
             - '@cabbage.document.id_generator'
 
     cabbage.document.router:
