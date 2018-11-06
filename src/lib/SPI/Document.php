@@ -41,14 +41,14 @@ final class Document
     /**
      * Document's fields.
      *
-     * @var \Cabbage\SPI\Field[]
+     * @var \Cabbage\SPI\Document\Field[]
      */
     public $fields;
 
     /**
      * @param string $id
      * @param string $type
-     * @param \Cabbage\SPI\Field[] $fields
+     * @param \Cabbage\SPI\Document\Field[] $fields
      */
     public function __construct(string $id, string $type, array $fields)
     {
