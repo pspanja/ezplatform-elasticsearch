@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core\Document;
 
 use Cabbage\Core\Document\Mapper\ContentField\Mapper as ContentFieldMapper;
+use Cabbage\Core\Document\Mapper\IdGenerator;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Document\Field;
 use Cabbage\SPI\Document\Field\Type\Boolean;
@@ -38,7 +39,7 @@ final class Mapper
     private $contentFieldMapper;
 
     /**
-     * @var \Cabbage\Core\Document\IdGenerator
+     * @var \Cabbage\Core\Document\Mapper\IdGenerator
      */
     private $idGenerator;
 
@@ -46,7 +47,7 @@ final class Mapper
      * @param \eZ\Publish\SPI\Persistence\Content\Location\Handler $locationHandler
      * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $typeHandler
      * @param \Cabbage\Core\Document\Mapper\ContentField\Mapper $contentFieldMapper
-     * @param \Cabbage\Core\Document\IdGenerator $idGenerator
+     * @param \Cabbage\Core\Document\Mapper\IdGenerator $idGenerator
      */
     public function __construct(
         LocationHandler $locationHandler,

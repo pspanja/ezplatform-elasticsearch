@@ -40,7 +40,7 @@ services:
             - '@cabbage.document.mapper.content_field.name_generator'
 
     cabbage.document.id_generator:
-        class: Cabbage\Core\Document\IdGenerator
+        class: Cabbage\Core\Document\Mapper\IdGenerator
 
     cabbage.document.mapper:
         class: Cabbage\Core\Document\Mapper
