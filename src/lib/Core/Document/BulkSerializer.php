@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Document;
 
+use Cabbage\Core\Document\BulkSerializer\Router;
+use Cabbage\Core\Document\BulkSerializer\Serializer;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Endpoint;
 
@@ -15,18 +17,18 @@ use Cabbage\SPI\Endpoint;
 final class BulkSerializer
 {
     /**
-     * @var \Cabbage\Core\Document\Router
+     * @var \Cabbage\Core\Document\BulkSerializer\Router
      */
     private $documentRouter;
 
     /**
-     * @var \Cabbage\Core\Document\Serializer
+     * @var \Cabbage\Core\Document\BulkSerializer\Serializer
      */
     private $documentSerializer;
 
     /**
-     * @param \Cabbage\Core\Document\Router $documentRouter
-     * @param \Cabbage\Core\Document\Serializer $documentSerializer
+     * @param \Cabbage\Core\Document\BulkSerializer\Router $documentRouter
+     * @param \Cabbage\Core\Document\BulkSerializer\Serializer $documentSerializer
      */
     public function __construct(
         Router $documentRouter,
@@ -56,7 +58,7 @@ final class BulkSerializer
     {
         $endpoint = $this->documentRouter->match($document);
 
-        $metaData = $this->getMetaData($endpoint, $document);
+        $metaData = $this->getTargetMetadata($endpoint, $document);
         $payload = $this->documentSerializer->serialize($document);
 
         return "{$metaData}\n{$payload}\n";
@@ -70,7 +72,7 @@ final class BulkSerializer
      *
      * @return string
      */
-    private function getMetaData(Endpoint $endpoint, Document $document): string
+    private function getTargetMetadata(Endpoint $endpoint, Document $document): string
     {
         return json_encode([
             'index' => [

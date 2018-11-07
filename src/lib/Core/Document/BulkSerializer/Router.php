@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Document;
+namespace Cabbage\Core\Document\BulkSerializer;
 
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Endpoint;

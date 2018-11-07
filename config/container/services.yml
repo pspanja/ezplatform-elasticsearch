@@ -50,8 +50,8 @@ services:
             - '@cabbage.document.mapper.content_field.mapper'
             - '@cabbage.document.id_generator'
 
-    cabbage.document.router:
-        class: Cabbage\Core\Document\Router
+    cabbage.document.bulk_serializer.router:
+        class: Cabbage\Core\Document\BulkSerializer\Router
 
     cabbage.document.field.value_mapper.visitor.boolean:
         class: Cabbage\Core\Document\Field\ValueMapper\Visitor\Boolean
@@ -71,8 +71,8 @@ services:
         arguments:
             - '%cabbage.field.name_generator.type_suffix_map%'
 
-    cabbage.document.serializer:
-        class: Cabbage\Core\Document\Serializer
+    cabbage.document.bulk_serializer.serializer:
+        class: Cabbage\Core\Document\BulkSerializer\Serializer
         arguments:
             - '@cabbage.document.field.typed_name_generator'
             - '@cabbage.document.field.value_mapper'
@@ -80,8 +80,8 @@ services:
     cabbage.document.bulk_serializer:
         class: Cabbage\Core\Document\BulkSerializer
         arguments:
-            - '@cabbage.document.router'
-            - '@cabbage.document.serializer'
+            - '@cabbage.document.bulk_serializer.router'
+            - '@cabbage.document.bulk_serializer.serializer'
 
     cabbage.query_translator.criterion.visitor.custom_field:
         class: Cabbage\Core\Query\Translator\Criterion\Visitor\RawField
