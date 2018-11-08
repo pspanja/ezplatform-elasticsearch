@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Document;
 
-use Cabbage\Core\Document\Serializer\Router;
+use Cabbage\Core\Document\Serializer\IndexResolver;
 use Cabbage\Core\Document\Serializer\FieldSerializer;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Endpoint;
@@ -17,9 +17,9 @@ use Cabbage\SPI\Endpoint;
 final class Serializer
 {
     /**
-     * @var \Cabbage\Core\Document\Serializer\Router
+     * @var \Cabbage\Core\Document\Serializer\IndexResolver
      */
-    private $documentRouter;
+    private $indexResolver;
 
     /**
      * @var \Cabbage\Core\Document\Serializer\FieldSerializer
@@ -27,14 +27,14 @@ final class Serializer
     private $fieldSerializer;
 
     /**
-     * @param \Cabbage\Core\Document\Serializer\Router $documentRouter
+     * @param \Cabbage\Core\Document\Serializer\IndexResolver $indexResolver
      * @param \Cabbage\Core\Document\Serializer\FieldSerializer $fieldSerializer
      */
     public function __construct(
-        Router $documentRouter,
+        IndexResolver $indexResolver,
         FieldSerializer $fieldSerializer
     ) {
-        $this->documentRouter = $documentRouter;
+        $this->indexResolver = $indexResolver;
         $this->fieldSerializer = $fieldSerializer;
     }
 
@@ -56,27 +56,27 @@ final class Serializer
 
     private function getDocumentPayload(Document $document): string
     {
-        $endpoint = $this->documentRouter->match($document);
+        $index = $this->indexResolver->resolve($document);
 
-        $metaData = $this->getTargetMetadata($endpoint, $document);
-        $payload = $this->fieldSerializer->serialize($document);
+        $targetMetaData = $this->getTargetMetadata($index, $document);
+        $fieldPayload = $this->fieldSerializer->serialize($document);
 
-        return "{$metaData}\n{$payload}\n";
+        return "{$targetMetaData}\n{$fieldPayload}\n";
     }
 
     /**
      * Generate action and metadata for the indexed Document.
      *
-     * @param \Cabbage\SPI\Endpoint $endpoint
+     * @param \Cabbage\SPI\Endpoint $index
      * @param \Cabbage\SPI\Document $document
      *
      * @return string
      */
-    private function getTargetMetadata(Endpoint $endpoint, Document $document): string
+    private function getTargetMetadata(Endpoint $index, Document $document): string
     {
         return json_encode([
             'index' => [
-                '_index' => $endpoint->index,
+                '_index' => $index->index,
                 '_type' => '_doc',
                 '_id' => $document->id,
             ],

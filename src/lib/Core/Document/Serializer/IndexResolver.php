@@ -8,11 +8,13 @@ use Cabbage\SPI\Document;
 use Cabbage\SPI\Endpoint;
 
 /**
- * Matches a document to an index.
+ * Resolves an index where a document will be indexed.
+ *
+ * @see \Cabbage\Core\Document\Serializer
  */
-final class Router
+final class IndexResolver
 {
-    public function match(Document $document): Endpoint
+    public function resolve(Document $document): Endpoint
     {
         return Endpoint::fromDsn('http://localhost:9200/index');
     }

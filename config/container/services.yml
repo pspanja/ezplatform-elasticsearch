@@ -50,8 +50,8 @@ services:
             - '@cabbage.document.mapper.content_field.mapper'
             - '@cabbage.document.id_generator'
 
-    cabbage.document.serializer.router:
-        class: Cabbage\Core\Document\Serializer\Router
+    cabbage.document.serializer.index_resolver:
+        class: Cabbage\Core\Document\Serializer\IndexResolver
 
     cabbage.document.serializer.field_serializer.value_mapper.visitor.boolean:
         class: Cabbage\Core\Document\Serializer\FieldSerializer\ValueMapper\Visitor\Boolean
@@ -80,7 +80,7 @@ services:
     cabbage.document.serializer:
         class: Cabbage\Core\Document\Serializer
         arguments:
-            - '@cabbage.document.serializer.router'
+            - '@cabbage.document.serializer.index_resolver'
             - '@cabbage.document.serializer.field_serializer'
 
     cabbage.query_translator.criterion.visitor.custom_field:
