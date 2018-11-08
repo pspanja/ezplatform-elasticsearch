@@ -31,7 +31,7 @@ final class Gateway
      * @param \Cabbage\SPI\Endpoint $endpoint
      * @param string $payload
      */
-    public function bulkIndex(Endpoint $endpoint, string $payload): void
+    public function index(Endpoint $endpoint, string $payload): void
     {
         $url = "{$endpoint->getUrl()}/_bulk";
 

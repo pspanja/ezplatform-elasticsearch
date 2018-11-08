@@ -35,7 +35,7 @@ final class Handler implements HandlerInterface, Capable
     /**
      * @var \Cabbage\Core\Document\Serializer
      */
-    private $documentBulkSerializer;
+    private $documentSerializer;
 
     /**
      * @var \Cabbage\Core\Query\Translator
@@ -55,7 +55,7 @@ final class Handler implements HandlerInterface, Capable
     /**
      * @param \Cabbage\Core\Gateway $gateway
      * @param \Cabbage\Core\Document\Mapper $documentMapper
-     * @param \Cabbage\Core\Document\Serializer $documentBulkSerializer
+     * @param \Cabbage\Core\Document\Serializer $documentSerializer
      * @param \Cabbage\Core\Query\Translator $queryTranslator
      * @param \Cabbage\Core\Query\TargetResolver $targetResolver
      * @param \Cabbage\Core\ResultExtractor $resultExtractor
@@ -63,14 +63,14 @@ final class Handler implements HandlerInterface, Capable
     public function __construct(
         Gateway $gateway,
         Mapper $documentMapper,
-        Serializer $documentBulkSerializer,
+        Serializer $documentSerializer,
         Translator $queryTranslator,
         TargetResolver $targetResolver,
         ResultExtractor $resultExtractor
     ) {
         $this->gateway = $gateway;
         $this->documentMapper = $documentMapper;
-        $this->documentBulkSerializer = $documentBulkSerializer;
+        $this->documentSerializer = $documentSerializer;
         $this->queryTranslator = $queryTranslator;
         $this->targetResolver = $targetResolver;
         $this->resultExtractor = $resultExtractor;
@@ -130,11 +130,12 @@ final class Handler implements HandlerInterface, Capable
 
     public function indexContent(Content $content): void
     {
-        $documents = $this->documentMapper->map($content);
-
-        $payload = $this->documentBulkSerializer->serialize($documents);
-
-        $this->gateway->bulkIndex(Endpoint::fromDsn('http://localhost:9200/index'), $payload);
+        $this->gateway->index(
+            Endpoint::fromDsn('http://localhost:9200/index'),
+            $this->documentSerializer->serialize(
+                $this->documentMapper->map($content)
+            )
+        );
     }
 
     /**
