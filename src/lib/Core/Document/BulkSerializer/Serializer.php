@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Document\BulkSerializer;
 
-use Cabbage\Core\Document\Field\TypedNameGenerator;
-use Cabbage\Core\Document\Field\ValueMapper;
+use Cabbage\Core\Document\BulkSerializer\Field\TypedNameGenerator;
+use Cabbage\Core\Document\BulkSerializer\Field\ValueMapper;
 use Cabbage\SPI\Document;
 use RuntimeException;
 
@@ -17,18 +17,18 @@ use RuntimeException;
 final class Serializer
 {
     /**
-     * @var \Cabbage\Core\Document\Field\TypedNameGenerator
+     * @var \Cabbage\Core\Document\BulkSerializer\Field\TypedNameGenerator
      */
     private $fieldTypedNameGenerator;
 
     /**
-     * @var \Cabbage\Core\Document\Field\ValueMapper
+     * @var \Cabbage\Core\Document\BulkSerializer\Field\ValueMapper
      */
     private $fieldValueMapper;
 
     /**
-     * @param \Cabbage\Core\Document\Field\TypedNameGenerator $fieldTypedNameGenerator
-     * @param \Cabbage\Core\Document\Field\ValueMapper $fieldValueMapper
+     * @param \Cabbage\Core\Document\BulkSerializer\Field\TypedNameGenerator $fieldTypedNameGenerator
+     * @param \Cabbage\Core\Document\BulkSerializer\Field\ValueMapper $fieldValueMapper
      */
     public function __construct(
         TypedNameGenerator $fieldTypedNameGenerator,

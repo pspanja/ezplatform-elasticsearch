@@ -54,20 +54,20 @@ services:
         class: Cabbage\Core\Document\BulkSerializer\Router
 
     cabbage.document.field.value_mapper.visitor.boolean:
-        class: Cabbage\Core\Document\Field\ValueMapper\Visitor\Boolean
+        class: Cabbage\Core\Document\BulkSerializer\Field\ValueMapper\Visitor\Boolean
 
     cabbage.document.field.value_mapper.visitor.keyword:
-        class: Cabbage\Core\Document\Field\ValueMapper\Visitor\Keyword
+        class: Cabbage\Core\Document\BulkSerializer\Field\ValueMapper\Visitor\Keyword
 
     cabbage.document.field.value_mapper:
-        class: Cabbage\Core\Document\Field\ValueMapper
+        class: Cabbage\Core\Document\BulkSerializer\Field\ValueMapper
         arguments:
             -
                 - '@cabbage.document.field.value_mapper.visitor.boolean'
                 - '@cabbage.document.field.value_mapper.visitor.keyword'
 
     cabbage.document.field.typed_name_generator:
-        class: Cabbage\Core\Document\Field\TypedNameGenerator
+        class: Cabbage\Core\Document\BulkSerializer\Field\TypedNameGenerator
         arguments:
             - '%cabbage.field.name_generator.type_suffix_map%'
 
