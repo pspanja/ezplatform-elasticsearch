@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Document;
 
-use Cabbage\Core\Document\BulkSerializer\Router;
-use Cabbage\Core\Document\BulkSerializer\FieldSerializer;
+use Cabbage\Core\Document\Serializer\Router;
+use Cabbage\Core\Document\Serializer\FieldSerializer;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Endpoint;
 
@@ -14,21 +14,21 @@ use Cabbage\SPI\Endpoint;
  *
  * @see \Cabbage\SPI\Document
  */
-final class BulkSerializer
+final class Serializer
 {
     /**
-     * @var \Cabbage\Core\Document\BulkSerializer\Router
+     * @var \Cabbage\Core\Document\Serializer\Router
      */
     private $documentRouter;
 
     /**
-     * @var \Cabbage\Core\Document\BulkSerializer\FieldSerializer
+     * @var \Cabbage\Core\Document\Serializer\FieldSerializer
      */
     private $fieldSerializer;
 
     /**
-     * @param \Cabbage\Core\Document\BulkSerializer\Router $documentRouter
-     * @param \Cabbage\Core\Document\BulkSerializer\FieldSerializer $fieldSerializer
+     * @param \Cabbage\Core\Document\Serializer\Router $documentRouter
+     * @param \Cabbage\Core\Document\Serializer\FieldSerializer $fieldSerializer
      */
     public function __construct(
         Router $documentRouter,

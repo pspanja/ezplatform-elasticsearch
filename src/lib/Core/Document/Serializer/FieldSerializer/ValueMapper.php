@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Document\BulkSerializer\FieldSerializer;
+namespace Cabbage\Core\Document\Serializer\FieldSerializer;
 
-use Cabbage\Core\Document\BulkSerializer\FieldSerializer\ValueMapper\Visitor;
+use Cabbage\Core\Document\Serializer\FieldSerializer\ValueMapper\Visitor;
 use Cabbage\SPI\Document\Field;
 use RuntimeException;
 
@@ -18,12 +18,12 @@ final class ValueMapper
     /**
      * A collection of aggregated visitors.
      *
-     * @var \Cabbage\Core\Document\BulkSerializer\FieldSerializer\ValueMapper\Visitor[]
+     * @var \Cabbage\Core\Document\Serializer\FieldSerializer\ValueMapper\Visitor[]
      */
     private $visitors = [];
 
     /**
-     * @param \Cabbage\Core\Document\BulkSerializer\FieldSerializer\ValueMapper\Visitor[] $visitors
+     * @param \Cabbage\Core\Document\Serializer\FieldSerializer\ValueMapper\Visitor[] $visitors
      */
     public function __construct(array $visitors)
     {
@@ -35,7 +35,7 @@ final class ValueMapper
     /**
      * Add visitor to the internal collection.
      *
-     * @param \Cabbage\Core\Document\BulkSerializer\FieldSerializer\ValueMapper\Visitor $visitor
+     * @param \Cabbage\Core\Document\Serializer\FieldSerializer\ValueMapper\Visitor $visitor
      */
     private function addVisitor(Visitor $visitor): void
     {
