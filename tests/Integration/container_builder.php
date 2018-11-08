@@ -10,7 +10,7 @@ $containerBuilder->addResource(new FileResource(__FILE__));
 
 $loader = new YamlFileLoader(
     $containerBuilder,
-    new FileLocator(__DIR__ . '/../../config/container')
+    new FileLocator(__DIR__ . '/../../config/symfony')
 );
 
 /** @noinspection PhpUnhandledExceptionInspection */
