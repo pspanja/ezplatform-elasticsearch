@@ -101,8 +101,8 @@ services:
         arguments:
             - '@cabbage.query_translator.criterion.converter'
 
-    cabbage.query.router:
-        class: Cabbage\Core\Query\Router
+    cabbage.query.target_resolver:
+        class: Cabbage\Core\Query\TargetResolver
 
     cabbage.result_extractor:
         class: Cabbage\Core\ResultExtractor
@@ -114,5 +114,5 @@ services:
             - '@cabbage.document.mapper'
             - '@cabbage.document.serializer'
             - '@cabbage.query.translator'
-            - '@cabbage.query.router'
+            - '@cabbage.query.target_resolver'
             - '@cabbage.result_extractor'

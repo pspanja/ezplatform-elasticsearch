@@ -6,7 +6,7 @@ namespace Cabbage\Core;
 
 use Cabbage\Core\Document\Serializer;
 use Cabbage\Core\Document\Mapper;
-use Cabbage\Core\Query\Router;
+use Cabbage\Core\Query\TargetResolver;
 use Cabbage\Core\Query\Translator;
 use Cabbage\SPI\Endpoint;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
@@ -43,9 +43,9 @@ final class Handler implements HandlerInterface, Capable
     private $queryTranslator;
 
     /**
-     * @var \Cabbage\Core\Query\Router
+     * @var \Cabbage\Core\Query\TargetResolver
      */
-    private $queryRouter;
+    private $targetResolver;
 
     /**
      * @var \Cabbage\Core\ResultExtractor
@@ -57,7 +57,7 @@ final class Handler implements HandlerInterface, Capable
      * @param \Cabbage\Core\Document\Mapper $documentMapper
      * @param \Cabbage\Core\Document\Serializer $documentBulkSerializer
      * @param \Cabbage\Core\Query\Translator $queryTranslator
-     * @param \Cabbage\Core\Query\Router $queryRouter
+     * @param \Cabbage\Core\Query\TargetResolver $targetResolver
      * @param \Cabbage\Core\ResultExtractor $resultExtractor
      */
     public function __construct(
@@ -65,14 +65,14 @@ final class Handler implements HandlerInterface, Capable
         Mapper $documentMapper,
         Serializer $documentBulkSerializer,
         Translator $queryTranslator,
-        Router $queryRouter,
+        TargetResolver $targetResolver,
         ResultExtractor $resultExtractor
     ) {
         $this->gateway = $gateway;
         $this->documentMapper = $documentMapper;
         $this->documentBulkSerializer = $documentBulkSerializer;
         $this->queryTranslator = $queryTranslator;
-        $this->queryRouter = $queryRouter;
+        $this->targetResolver = $targetResolver;
         $this->resultExtractor = $resultExtractor;
     }
 
@@ -89,12 +89,13 @@ final class Handler implements HandlerInterface, Capable
      */
     public function findContent(Query $query, array $languageFilter = []): SearchResult
     {
-        $endpoint = $this->queryRouter->match($query);
-        $gatewayQuery = $this->queryTranslator->translateContentQuery($query);
-
-        $data = $this->gateway->find($endpoint, $gatewayQuery);
-
-        return $this->resultExtractor->extract($data);
+        return
+            $this->resultExtractor->extract(
+                $this->gateway->find(
+                    $this->targetResolver->resolve($query),
+                    $this->queryTranslator->translateContentQuery($query)
+                )
+            );
     }
 
     /**
@@ -110,12 +111,13 @@ final class Handler implements HandlerInterface, Capable
      */
     public function findLocations(LocationQuery $query, array $languageFilter = []): SearchResult
     {
-        $endpoint = $this->queryRouter->match($query);
-        $gatewayQuery = $this->queryTranslator->translateLocationQuery($query);
-
-        $data = $this->gateway->find($endpoint, $gatewayQuery);
-
-        return $this->resultExtractor->extract($data);
+        return
+            $this->resultExtractor->extract(
+                $this->gateway->find(
+                    $this->targetResolver->resolve($query),
+                    $this->queryTranslator->translateLocationQuery($query)
+                )
+            );
     }
 
     /**

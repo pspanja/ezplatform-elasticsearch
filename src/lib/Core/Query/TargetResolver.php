@@ -10,9 +10,9 @@ use eZ\Publish\API\Repository\Values\Content\Query;
 /**
  * Matches a query to an index.
  */
-final class Router
+final class TargetResolver
 {
-    public function match(Query $query): Endpoint
+    public function resolve(Query $query): Endpoint
     {
         return Endpoint::fromDsn('http://localhost:9200/index');
     }
