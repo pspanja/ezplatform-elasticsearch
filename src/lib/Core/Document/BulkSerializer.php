@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core\Document;
 
 use Cabbage\Core\Document\BulkSerializer\Router;
-use Cabbage\Core\Document\BulkSerializer\Serializer;
+use Cabbage\Core\Document\BulkSerializer\FieldSerializer;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Endpoint;
 
@@ -22,20 +22,20 @@ final class BulkSerializer
     private $documentRouter;
 
     /**
-     * @var \Cabbage\Core\Document\BulkSerializer\Serializer
+     * @var \Cabbage\Core\Document\BulkSerializer\FieldSerializer
      */
-    private $documentSerializer;
+    private $fieldSerializer;
 
     /**
      * @param \Cabbage\Core\Document\BulkSerializer\Router $documentRouter
-     * @param \Cabbage\Core\Document\BulkSerializer\Serializer $documentSerializer
+     * @param \Cabbage\Core\Document\BulkSerializer\FieldSerializer $fieldSerializer
      */
     public function __construct(
         Router $documentRouter,
-        Serializer $documentSerializer
+        FieldSerializer $fieldSerializer
     ) {
         $this->documentRouter = $documentRouter;
-        $this->documentSerializer = $documentSerializer;
+        $this->fieldSerializer = $fieldSerializer;
     }
 
     /**
@@ -59,7 +59,7 @@ final class BulkSerializer
         $endpoint = $this->documentRouter->match($document);
 
         $metaData = $this->getTargetMetadata($endpoint, $document);
-        $payload = $this->documentSerializer->serialize($document);
+        $payload = $this->fieldSerializer->serialize($document);
 
         return "{$metaData}\n{$payload}\n";
     }

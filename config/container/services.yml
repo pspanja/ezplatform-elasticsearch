@@ -53,35 +53,35 @@ services:
     cabbage.document.bulk_serializer.router:
         class: Cabbage\Core\Document\BulkSerializer\Router
 
-    cabbage.document.field.value_mapper.visitor.boolean:
-        class: Cabbage\Core\Document\BulkSerializer\Field\ValueMapper\Visitor\Boolean
+    cabbage.document.bulk_serializer.field_serializer.value_mapper.visitor.boolean:
+        class: Cabbage\Core\Document\BulkSerializer\FieldSerializer\ValueMapper\Visitor\Boolean
 
-    cabbage.document.field.value_mapper.visitor.keyword:
-        class: Cabbage\Core\Document\BulkSerializer\Field\ValueMapper\Visitor\Keyword
+    cabbage.document.bulk_serializer.field_serializer.value_mapper.visitor.keyword:
+        class: Cabbage\Core\Document\BulkSerializer\FieldSerializer\ValueMapper\Visitor\Keyword
 
-    cabbage.document.field.value_mapper:
-        class: Cabbage\Core\Document\BulkSerializer\Field\ValueMapper
+    cabbage.document.bulk_serializer.field_serializer.value_mapper:
+        class: Cabbage\Core\Document\BulkSerializer\FieldSerializer\ValueMapper
         arguments:
             -
-                - '@cabbage.document.field.value_mapper.visitor.boolean'
-                - '@cabbage.document.field.value_mapper.visitor.keyword'
+                - '@cabbage.document.bulk_serializer.field_serializer.value_mapper.visitor.boolean'
+                - '@cabbage.document.bulk_serializer.field_serializer.value_mapper.visitor.keyword'
 
-    cabbage.document.field.typed_name_generator:
-        class: Cabbage\Core\Document\BulkSerializer\Field\TypedNameGenerator
+    cabbage.document.bulk_serializer.field_serializer.typed_name_generator:
+        class: Cabbage\Core\Document\BulkSerializer\FieldSerializer\TypedNameGenerator
         arguments:
             - '%cabbage.field.name_generator.type_suffix_map%'
 
-    cabbage.document.bulk_serializer.serializer:
-        class: Cabbage\Core\Document\BulkSerializer\Serializer
+    cabbage.document.bulk_serializer.field_serializer:
+        class: Cabbage\Core\Document\BulkSerializer\FieldSerializer
         arguments:
-            - '@cabbage.document.field.typed_name_generator'
-            - '@cabbage.document.field.value_mapper'
+            - '@cabbage.document.bulk_serializer.field_serializer.typed_name_generator'
+            - '@cabbage.document.bulk_serializer.field_serializer.value_mapper'
 
     cabbage.document.bulk_serializer:
         class: Cabbage\Core\Document\BulkSerializer
         arguments:
             - '@cabbage.document.bulk_serializer.router'
-            - '@cabbage.document.bulk_serializer.serializer'
+            - '@cabbage.document.bulk_serializer.field_serializer'
 
     cabbage.query_translator.criterion.visitor.custom_field:
         class: Cabbage\Core\Query\Translator\Criterion\Visitor\RawField

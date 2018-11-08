@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Document\BulkSerializer\Field\ValueMapper\Visitor;
+namespace Cabbage\Core\Document\BulkSerializer\FieldSerializer\ValueMapper\Visitor;
 
-use Cabbage\Core\Document\BulkSerializer\Field\ValueMapper\Visitor;
+use Cabbage\Core\Document\BulkSerializer\FieldSerializer\ValueMapper\Visitor;
 use Cabbage\SPI\Document\Field;
 use Cabbage\SPI\Document\Field\Type\Boolean as BooleanType;
 
