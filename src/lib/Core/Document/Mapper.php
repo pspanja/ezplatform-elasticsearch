@@ -13,6 +13,7 @@ use Cabbage\SPI\Document\Field\Type\Keyword;
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Location;
 use eZ\Publish\SPI\Persistence\Content\Location\Handler as LocationHandler;
+use eZ\Publish\SPI\Persistence\Content\Type;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler as TypeHandler;
 
 /**
@@ -71,14 +72,15 @@ final class Mapper
     public function map(Content $content): array
     {
         $documents = [];
+        $type = $this->typeHandler->load($content->versionInfo->contentInfo->contentTypeId);
         $locations = $this->locationHandler->loadLocationsByContent(
             $content->versionInfo->contentInfo->id
         );
 
-        $documents[] = $this->mapContent($content);
+        $documents[] = $this->mapContent($content, $type);
 
         foreach ($locations as $location) {
-            $documents[] = $this->mapLocation($location);
+            $documents[] = $this->mapLocation($location, $content, $type);
         }
 
         return $documents;
@@ -86,15 +88,13 @@ final class Mapper
 
     /**
      * @param \eZ\Publish\SPI\Persistence\Content $content
-     *
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     * @param \eZ\Publish\SPI\Persistence\Content\Type $type
      *
      * @return \Cabbage\SPI\Document
      */
-    private function mapContent(Content $content): Document
+    private function mapContent(Content $content, Type $type): Document
     {
         $fieldsGrouped = [[]];
-        $type = $this->typeHandler->load($content->versionInfo->contentInfo->contentTypeId);
 
         $fieldsGrouped[] = $this->contentFieldMapper->map($content, $type);
         $fieldsGrouped[] = [
@@ -111,12 +111,17 @@ final class Mapper
 
     /**
      * @param \eZ\Publish\SPI\Persistence\Content\Location $location
+     * @param \eZ\Publish\SPI\Persistence\Content $content
+     * @param \eZ\Publish\SPI\Persistence\Content\Type $type
      *
      * @return \Cabbage\SPI\Document
      */
-    private function mapLocation(Location $location): Document
+    private function mapLocation(Location $location, Content $content, Type $type): Document
     {
-        $fields = [
+        $fieldsGrouped = [[]];
+
+        $fieldsGrouped[] = $this->contentFieldMapper->map($content, $type);
+        $fieldsGrouped[] = [
             new Field('test', 'value', new Keyword()),
             new Field('test', true, new Boolean()),
         ];
@@ -124,7 +129,7 @@ final class Mapper
         return new Document(
             $this->idGenerator->generateLocationDocumentId($location),
             Document::TypeLocation,
-            $fields
+            array_merge(...$fieldsGrouped)
         );
     }
 }
