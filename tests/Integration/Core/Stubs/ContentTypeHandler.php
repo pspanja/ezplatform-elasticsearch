@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Tests\Integration\Stubs;
+namespace Cabbage\Tests\Integration\Core\Stubs;
 
 use eZ\Publish\SPI\Persistence\Content\Type;
 use eZ\Publish\SPI\Persistence\Content\Type\CreateStruct;

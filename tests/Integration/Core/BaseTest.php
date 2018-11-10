@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Tests\Integration;
+namespace Cabbage\Tests\Integration\Core;
 
 use PHPUnit\Framework\TestCase;
 use RuntimeException;

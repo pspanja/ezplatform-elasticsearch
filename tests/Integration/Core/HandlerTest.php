@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Tests\Integration;
+namespace Cabbage\Tests\Integration\Core;
 
 use Cabbage\API\Query\Criterion\DocumentType;
 use Cabbage\Core\Handler;
@@ -39,7 +39,7 @@ class HandlerTest extends BaseTest
             $configurator->deleteIndex(self::$endpoint);
         }
 
-        $mapping = \file_get_contents(__DIR__ . '/../../config/elasticsearch/mapping.json');
+        $mapping = \file_get_contents(__DIR__ . '/../../../config/elasticsearch/mapping.json');
 
         $configurator->createIndex(self::$endpoint);
         $configurator->setMapping(self::$endpoint, $mapping);

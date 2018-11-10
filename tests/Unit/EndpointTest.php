@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Tests;
+namespace Cabbage\Tests\Unit;
 
 use Cabbage\SPI\Endpoint;
 use PHPUnit\Framework\TestCase;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Tests\Integration\Http;
+namespace Cabbage\Tests\Integration\Core\Http;
 
 use Cabbage\Core\Http\Client;
 use Cabbage\Core\Http\ConnectionException;
