@@ -128,6 +128,11 @@ final class Handler implements HandlerInterface, Capable
         throw new RuntimeException('Not implemented');
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
     public function indexContent(Content $content): void
     {
         $this->gateway->index(
