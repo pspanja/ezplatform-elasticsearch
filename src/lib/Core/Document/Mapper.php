@@ -7,9 +7,6 @@ namespace Cabbage\Core\Document;
 use Cabbage\Core\Document\Mapper\ContentField\Mapper as ContentFieldMapper;
 use Cabbage\Core\Document\Mapper\IdGenerator;
 use Cabbage\SPI\Document;
-use Cabbage\SPI\Document\Field;
-use Cabbage\SPI\Document\Field\Type\Boolean;
-use Cabbage\SPI\Document\Field\Type\Keyword;
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Location;
 use eZ\Publish\SPI\Persistence\Content\Location\Handler as LocationHandler;
@@ -97,10 +94,6 @@ final class Mapper
         $fieldsGrouped = [[]];
 
         $fieldsGrouped[] = $this->contentFieldMapper->map($content, $type);
-        $fieldsGrouped[] = [
-            new Field('test', 'value', new Keyword()),
-            new Field('test', true, new Boolean()),
-        ];
 
         return new Document(
             $this->idGenerator->generateContentDocumentId($content),
@@ -121,10 +114,6 @@ final class Mapper
         $fieldsGrouped = [[]];
 
         $fieldsGrouped[] = $this->contentFieldMapper->map($content, $type);
-        $fieldsGrouped[] = [
-            new Field('test', 'value', new Keyword()),
-            new Field('test', true, new Boolean()),
-        ];
 
         return new Document(
             $this->idGenerator->generateLocationDocumentId($location),
