@@ -168,4 +168,32 @@ final class Handler implements HandlerInterface, Capable
     {
         throw new RuntimeException('Not implemented');
     }
+
+    /**
+     * @param \eZ\Publish\SPI\Persistence\Content[] $contentItems
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     */
+    public function bulkIndexContent(array $contentItems): void
+    {
+        $payload = '';
+
+        foreach ($contentItems as $content) {
+            $payload .= $this->documentSerializer->serialize(
+                $this->documentMapper->map($content)
+            );
+        }
+
+        $this->gateway->index(
+            Endpoint::fromDsn('http://localhost:9200/index'),
+            $payload
+        );
+    }
+
+    public function flush(): void
+    {
+        $this->gateway->flush(
+            Endpoint::fromDsn('http://localhost:9200/index')
+        );
+    }
 }
