@@ -23,12 +23,16 @@ services:
     cabbage.field_type.data_mapper.text_line:
         class: Cabbage\Core\FieldType\DataMapper\TextLine
 
+    cabbage.field_type.data_mapper.unmapped:
+        class: Cabbage\Core\FieldType\DataMapper\Unmapped
+
     cabbage.field_type.data_mapper_registry:
         class: Cabbage\Core\FieldType\DataMapperRegistry
         arguments:
             -
                 ezboolean: '@cabbage.field_type.data_mapper.checkbox'
                 ezstring: '@cabbage.field_type.data_mapper.text_line'
+                ezrichtext: '@cabbage.field_type.data_mapper.unmapped'
 
     cabbage.document.mapper.content_field.name_generator:
         class: Cabbage\Core\Document\Mapper\ContentField\NameGenerator
