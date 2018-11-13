@@ -88,7 +88,7 @@ final class Mapper
         $map = [];
 
         foreach ($type->fieldDefinitions as $fieldDefinition) {
-            $map[$fieldDefinition->identifier] = $fieldDefinition;
+            $map[$fieldDefinition->id] = $fieldDefinition;
         }
 
         return $map;
