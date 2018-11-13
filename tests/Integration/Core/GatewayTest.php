@@ -113,4 +113,25 @@ EOD;
 
         $this->assertEquals(1, $data->hits->total);
     }
+
+    /**
+     * @testdox Index can be purged
+     * @depends testFindAll
+     */
+    public function testPurge(): void
+    {
+        self::$gateway->purge(self::$endpoint);
+        self::$gateway->flush(self::$endpoint);
+
+        $query = [
+            'query' => [
+                'match_all' => (object)null,
+            ],
+        ];
+
+        $data = self::$gateway->find(self::$endpoint, $query);
+        $data = json_decode($data);
+
+        $this->assertEquals(0, $data->hits->total);
+    }
 }

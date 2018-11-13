@@ -88,4 +88,28 @@ final class Gateway
             );
         }
     }
+
+    /**
+     * @param \Cabbage\SPI\Endpoint $endpoint
+     */
+    public function purge(Endpoint $endpoint): void
+    {
+        $url = "{$endpoint->getUrl()}/_delete_by_query";
+        $query = [
+            'query' => [
+                'match_all' => (object)null,
+            ],
+        ];
+
+        $response = $this->client->post(
+            $url,
+            Message::fromJson((string)json_encode($query))
+        );
+
+        if ($response->status !== 200) {
+            throw new RuntimeException(
+                "Invalid response status {$response->status}"
+            );
+        }
+    }
 }
