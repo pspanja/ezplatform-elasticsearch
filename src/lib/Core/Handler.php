@@ -166,7 +166,9 @@ final class Handler implements HandlerInterface, Capable
 
     public function purgeIndex(): void
     {
-        throw new RuntimeException('Not implemented');
+        $this->gateway->purge(
+            Endpoint::fromDsn('http://localhost:9200/index')
+        );
     }
 
     /**

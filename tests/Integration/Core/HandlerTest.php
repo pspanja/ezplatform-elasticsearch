@@ -109,6 +109,34 @@ class HandlerTest extends BaseTest
     }
 
     /**
+     * @testdox Index can be purged
+     *
+     * @throws \Exception
+     */
+    public function testPurgeIndex(): void
+    {
+        $endpoint = Endpoint::fromDsn('http://localhost:9200/index');
+        $handler = $this->getHandlerUnderTest();
+
+        $handler->purgeIndex();
+        $this->flush($endpoint);
+
+        $query = new Query([
+            'filter' => new DocumentType(Document::TypeContent),
+        ]);
+
+        $searchResult = $handler->findContent($query);
+        $this->assertEquals(0, $searchResult->totalCount);
+
+        $query = new LocationQuery([
+            'filter' => new DocumentType(Document::TypeLocation),
+        ]);
+
+        $searchResult = $handler->findLocations($query);
+        $this->assertEquals(0, $searchResult->totalCount);
+    }
+
+    /**
      * @throws \Exception
      *
      * @return \Cabbage\Core\Handler
