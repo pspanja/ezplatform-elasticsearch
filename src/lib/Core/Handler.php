@@ -153,7 +153,7 @@ final class Handler implements HandlerInterface, Capable
 
     public function indexLocation(Location $location): void
     {
-        throw new RuntimeException('Not implemented');
+        // Does nothing
     }
 
     /**
