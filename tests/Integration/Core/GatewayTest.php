@@ -73,18 +73,16 @@ EOD;
     }
 
     /**
-     * @testdox Documents can be found by field value
+     * @testdox All documents can be found
      * @depends testBulkIndex
      *
      * @throws \Exception
      */
-    public function testFindByFieldValue(): void
+    public function testFindAll(): void
     {
         $query = [
             'query' => [
-                'term' => [
-                    'field_keyword' => 'value',
-                ],
+                'match_all' => (object)null,
             ],
         ];
 
