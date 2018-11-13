@@ -13,6 +13,7 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
+        "ext-pdo": "*",
         "ezsystems/ezpublish-api": "dev-master",
         "ezsystems/ezpublish-spi": "dev-master"
     },
