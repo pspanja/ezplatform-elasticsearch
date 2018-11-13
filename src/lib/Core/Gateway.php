@@ -106,7 +106,7 @@ final class Gateway
             Message::fromJson((string)json_encode($query))
         );
 
-        if ($response->status !== 200) {
+        if ($response->status !== 200 && $response->status !== 404) {
             throw new RuntimeException(
                 "Invalid response status {$response->status}"
             );
