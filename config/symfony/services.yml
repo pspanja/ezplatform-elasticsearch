@@ -33,6 +33,15 @@ services:
                 ezboolean: '@cabbage.field_type.data_mapper.checkbox'
                 ezstring: '@cabbage.field_type.data_mapper.text_line'
                 ezrichtext: '@cabbage.field_type.data_mapper.unmapped'
+                ezpage: '@cabbage.field_type.data_mapper.unmapped'
+                ezkeyword: '@cabbage.field_type.data_mapper.unmapped'
+                ezinisetting: '@cabbage.field_type.data_mapper.unmapped'
+                eztext: '@cabbage.field_type.data_mapper.unmapped'
+                ezemail: '@cabbage.field_type.data_mapper.unmapped'
+                ezuser: '@cabbage.field_type.data_mapper.unmapped'
+                ezimage: '@cabbage.field_type.data_mapper.unmapped'
+                ezpackage: '@cabbage.field_type.data_mapper.unmapped'
+                ezurl: '@cabbage.field_type.data_mapper.unmapped'
 
     cabbage.document.mapper.content_field.name_generator:
         class: Cabbage\Core\Document\Mapper\ContentField\NameGenerator
@@ -120,3 +129,6 @@ services:
             - '@cabbage.query.translator'
             - '@cabbage.query.target_resolver'
             - '@cabbage.result_extractor'
+
+    ezpublish.spi.search_engine:
+        alias: cabbage.handler
