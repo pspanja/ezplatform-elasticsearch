@@ -22,17 +22,11 @@ class HandlerTest extends BaseTest
     private static $endpoint;
 
     /**
-     * @var \Cabbage\Core\Gateway
-     */
-    private static $gateway;
-
-    /**
      * @throws \Exception
      */
     public static function setUpBeforeClass(): void
     {
         self::$endpoint = Endpoint::fromDsn('http://localhost:9200/index');
-        self::$gateway = self::getContainer()->get('cabbage.gateway');
         $configurator = self::getContainer()->get('cabbage.configurator');
 
         if ($configurator->hasIndex(self::$endpoint)) {
