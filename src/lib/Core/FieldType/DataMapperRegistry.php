@@ -17,12 +17,12 @@ final class DataMapperRegistry
     /**
      * A map of data mappers by identifier.
      *
-     * @param \Cabbage\SPI\FieldType\DataMapper[]
+     * @var \Cabbage\SPI\FieldType\DataMapper[]
      */
     private $dataMappersByIdentifier = [];
 
     /**
-     * @param \Cabbage\SPI\FieldType\DataMapper[]
+     * @param \Cabbage\SPI\FieldType\DataMapper[] $dataMappers
      */
     public function __construct(array $dataMappers = [])
     {
