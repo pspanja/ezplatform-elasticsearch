@@ -12,6 +12,7 @@ use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\ContentInfo;
+use eZ\Publish\SPI\Persistence\Content\Location;
 use eZ\Publish\SPI\Persistence\Content\VersionInfo;
 
 class HandlerTest extends BaseTest
@@ -80,6 +81,7 @@ class HandlerTest extends BaseTest
         $searchResult = $handler->findContent($query);
 
         $this->assertEquals(1, $searchResult->totalCount);
+        $this->assertInstanceOf(ContentInfo::class, $searchResult->searchHits[0]->valueObject);
         $this->assertEquals(
             'CONTENT_ID',
             $searchResult->searchHits[0]->valueObject->id
@@ -102,6 +104,7 @@ class HandlerTest extends BaseTest
         $searchResult = $handler->findLocations($query);
 
         $this->assertEquals(1, $searchResult->totalCount);
+        $this->assertInstanceOf(Location::class, $searchResult->searchHits[0]->valueObject);
         $this->assertEquals(
             'LOCATION_ID',
             $searchResult->searchHits[0]->valueObject->id
