@@ -79,7 +79,7 @@ class HandlerTest extends BaseTest
 
         $searchResult = $handler->findContent($query);
 
-        $this->assertGreaterThanOrEqual(1, $searchResult->totalCount);
+        $this->assertEquals(1, $searchResult->totalCount);
         $this->assertEquals(
             'CONTENT_ID',
             $searchResult->searchHits[0]->valueObject->id
@@ -101,7 +101,7 @@ class HandlerTest extends BaseTest
 
         $searchResult = $handler->findLocations($query);
 
-        $this->assertGreaterThanOrEqual(1, $searchResult->totalCount);
+        $this->assertEquals(1, $searchResult->totalCount);
         $this->assertEquals(
             'LOCATION_ID',
             $searchResult->searchHits[0]->valueObject->id
