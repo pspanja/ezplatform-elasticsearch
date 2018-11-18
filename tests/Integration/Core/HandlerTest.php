@@ -40,7 +40,7 @@ class HandlerTest extends BaseTest
     }
 
     /**
-     * @testdox Content can be indexed
+     * @testdox Content can be sent to server for indexing
      *
      * @throws \Exception
      */
@@ -64,7 +64,7 @@ class HandlerTest extends BaseTest
     }
 
     /**
-     * @testdox Content can be found
+     * @testdox Indexed Content can be found
      * @depends testIndexContent
      *
      * @throws \Exception
@@ -81,13 +81,13 @@ class HandlerTest extends BaseTest
 
         $this->assertGreaterThanOrEqual(1, $searchResult->totalCount);
         $this->assertEquals(
-            'content_CONTENT_ID',
-            $searchResult->searchHits[0]->valueObject->_id
+            'CONTENT_ID',
+            $searchResult->searchHits[0]->valueObject->id
         );
     }
 
     /**
-     * @testdox Locations can be found
+     * @testdox Indexed Locations can be found
      * @depends testIndexContent
      *
      * @throws \Exception
@@ -103,8 +103,8 @@ class HandlerTest extends BaseTest
 
         $this->assertGreaterThanOrEqual(1, $searchResult->totalCount);
         $this->assertEquals(
-            'location_LOCATION_ID',
-            $searchResult->searchHits[0]->valueObject->_id
+            'LOCATION_ID',
+            $searchResult->searchHits[0]->valueObject->id
         );
     }
 
