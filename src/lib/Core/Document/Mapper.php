@@ -7,6 +7,8 @@ namespace Cabbage\Core\Document;
 use Cabbage\Core\Document\Mapper\ContentField\Mapper as ContentFieldMapper;
 use Cabbage\Core\Document\Mapper\IdGenerator;
 use Cabbage\SPI\Document;
+use Cabbage\SPI\Document\Field;
+use Cabbage\SPI\Document\Field\Type\Identifier;
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Location;
 use eZ\Publish\SPI\Persistence\Content\Location\Handler as LocationHandler;
@@ -93,6 +95,15 @@ final class Mapper
     {
         $fieldsGrouped = [[]];
 
+        $contentMetadataFields = [
+            new Field(
+                'content_id',
+                $content->versionInfo->contentInfo->id,
+                new Identifier()
+            ),
+        ];
+
+        $fieldsGrouped[] = $contentMetadataFields;
         $fieldsGrouped[] = $this->contentFieldMapper->map($content, $type);
 
         return new Document(
@@ -113,6 +124,24 @@ final class Mapper
     {
         $fieldsGrouped = [[]];
 
+        $contentMetadataFields = [
+            new Field(
+                'content_id',
+                $content->versionInfo->contentInfo->id,
+                new Identifier()
+            ),
+        ];
+
+        $locationMetadataFields = [
+            new Field(
+                'location_id',
+                $location->id,
+                new Identifier()
+            ),
+        ];
+
+        $fieldsGrouped[] = $contentMetadataFields;
+        $fieldsGrouped[] = $locationMetadataFields;
         $fieldsGrouped[] = $this->contentFieldMapper->map($content, $type);
 
         return new Document(
