@@ -1,0 +1,146 @@
+services:
+    ezpublish.search.cabbage.slot:
+        class: eZ\Publish\Core\Search\Common\Slot
+        abstract: true
+        arguments:
+            - '@ezpublish.api.inner_repository'
+            - '@ezpublish.api.persistence_handler'
+            - '@ezpublish.spi.search'
+
+    ezpublish.search.cabbage.slot.publish_version:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\PublishVersion
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: ContentService\PublishVersionSignal }
+
+    ezpublish.search.cabbage.slot.copy_content:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\CopyContent
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: ContentService\CopyContentSignal }
+
+    ezpublish.search.cabbage.slot.delete_content:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\DeleteContent
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: ContentService\DeleteContentSignal }
+
+    ezpublish.search.cabbage.slot.delete_version:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\DeleteVersion
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: ContentService\DeleteVersionSignal }
+
+    ezpublish.search.cabbage.slot.create_location:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\CreateLocation
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: LocationService\CreateLocationSignal }
+
+    ezpublish.search.cabbage.slot.update_location:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\UpdateLocation
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: LocationService\UpdateLocationSignal }
+
+    ezpublish.search.cabbage.slot.delete_location:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\DeleteLocation
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: LocationService\DeleteLocationSignal }
+
+    ezpublish.search.cabbage.slot.create_user:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\CreateUser
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: UserService\CreateUserSignal }
+
+    ezpublish.search.cabbage.slot.delete_user:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\DeleteUser
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: UserService\DeleteUserSignal }
+
+    ezpublish.search.cabbage.slot.create_user_group:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\CreateUserGroup
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: UserService\CreateUserGroupSignal }
+
+    ezpublish.search.cabbage.slot.move_user_group:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\MoveUserGroup
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: UserService\MoveUserGroupSignal }
+
+    ezpublish.search.cabbage.slot.delete_user_group:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\DeleteUserGroup
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: UserService\DeleteUserGroupSignal }
+
+    ezpublish.search.cabbage.slot.copy_subtree:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\CopySubtree
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: LocationService\CopySubtreeSignal }
+
+    ezpublish.search.cabbage.slot.move_subtree:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\MoveSubtree
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: LocationService\MoveSubtreeSignal }
+
+    ezpublish.search.cabbage.slot.trash:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\Trash
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: TrashService\TrashSignal }
+
+    ezpublish.search.cabbage.slot.recover:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\Recover
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: TrashService\RecoverSignal }
+
+    ezpublish.search.cabbage.slot.hide_location:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\HideLocation
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: LocationService\HideLocationSignal }
+
+    ezpublish.search.cabbage.slot.unhide_location:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\UnhideLocation
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: LocationService\UnhideLocationSignal }
+
+    ezpublish.search.cabbage.slot.set_content_state:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\SetContentState
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: ObjectStateService\SetContentStateSignal }
+
+    ezpublish.search.cabbage.slot.swap_location:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\SwapLocation
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: LocationService\SwapLocationSignal }
+
+    ezpublish.search.cabbage.slot.update_content_metadata:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\UpdateContentMetadata
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: ContentService\UpdateContentMetadataSignal }
+
+    ezpublish.search.cabbage.slot.assign_section:
+        parent: ezpublish.search.cabbage.slot
+        class: eZ\Publish\Core\Search\Common\Slot\AssignSection
+        tags:
+            - { name: ezpublish.search.cabbage.slot, signal: SectionService\AssignSectionSignal }
+
+#    ezpublish.search.cabbage.slot.remove_translation:
+#        parent: ezpublish.search.cabbage.slot
+#        class: TODO
+#        tags:
+#            - { name: ezpublish.search.cabbage.slot, signal: ContentService\RemoveTranslationSignal }
