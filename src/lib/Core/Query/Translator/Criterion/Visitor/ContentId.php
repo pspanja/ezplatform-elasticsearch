@@ -25,7 +25,7 @@ final class ContentId extends Visitor
     {
         return [
             'term' => [
-                'content_id' => $criterion->value[0],
+                'content_id_identifier' => $criterion->value[0],
             ],
         ];
     }
