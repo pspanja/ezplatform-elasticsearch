@@ -144,3 +144,9 @@ services:
 
     ezpublish.spi.search_engine:
         alias: cabbage.handler
+
+    ezpublish.signalslot.signal_dispatcher.factory:
+        class: eZ\Publish\Core\Base\Container\ApiLoader\SignalSlot\SignalDispatcherFactory
+        arguments:
+            - '%ezpublish.signalslot.signal_dispatcher.class%'
+            - 'cabbage'
