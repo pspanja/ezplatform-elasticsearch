@@ -119,6 +119,7 @@ services:
             -
                 - '@cabbage.query_translator.criterion.visitor.custom_field'
                 - '@cabbage.query_translator.criterion.visitor.document_type'
+                - '@cabbage.query_translator.criterion.visitor.content_id'
 
     cabbage.query.translator:
         class: Cabbage\Core\Query\Translator
