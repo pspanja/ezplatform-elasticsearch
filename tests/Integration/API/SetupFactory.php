@@ -41,7 +41,7 @@ final class SetupFactory extends CoreSetupFactory
     public function getServiceContainer(): ServiceContainer
     {
         if (self::$serviceContainer === null) {
-            self::$serviceContainer = $this->internalGetServiceContainer();
+            self::$serviceContainer = $this->buildServiceContainer();
         }
 
         return self::$serviceContainer;
@@ -50,23 +50,22 @@ final class SetupFactory extends CoreSetupFactory
     /**
      * @throws \Exception
      */
-    private function internalGetServiceContainer(): ServiceContainer
+    private function buildServiceContainer(): ServiceContainer
     {
         $config = $this->getConfig();
 
+        // Needed by the ContainerBuilder included below
         $installDir = $config['install_dir'];
 
         /** @var \Symfony\Component\DependencyInjection\ContainerBuilder $containerBuilder */
         $containerBuilder = include $config['container_builder_path'];
-
-        /* @see \eZ\Publish\Core\Base\Container\Compiler\Search\SearchEngineSignalSlotPass */
-        $this->localBuildContainer($containerBuilder);
-
         $containerBuilder->setParameter('legacy_dsn', self::$dsn);
         $containerBuilder->setParameter(
             'io_root_dir',
             self::$ioRootDir . '/' . $containerBuilder->getParameter('storage_dir')
         );
+
+        $this->localBuildContainer($containerBuilder);
 
         return new ServiceContainer(
             $containerBuilder,
