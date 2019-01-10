@@ -9,6 +9,12 @@ services:
         ports:
             - "9200:9200"
             - "9300:9300"
+        environment:
+            - discovery.type=single-node
+            - http.host=0.0.0.0
+            - transport.host=127.0.0.1
+            - xpack.security.enabled=false
+            - ES_JAVA_OPTS=-Xms750m -Xmx750m
     kibana:
         build:
             context: .
