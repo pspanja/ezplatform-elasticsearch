@@ -44,4 +44,16 @@ final class Message
     {
         return new self($json, ['Content-Type' => 'application/json']);
     }
+
+    /**
+     * Build the Message instance from the given hash array.
+     *
+     * @param array $hash
+     *
+     * @return \Cabbage\Core\Http\Message
+     */
+    public static function fromJsonHash(array $hash): self
+    {
+        return static::fromJson(json_encode($hash, JSON_THROW_ON_ERROR));
+    }
 }
