@@ -205,4 +205,14 @@ class ContentTypeHandler implements ContentTypeHandlerInterface
     {
         throw new RuntimeException('Not implemented');
     }
+
+    public function loadContentTypeList(array $contentTypeIds): array
+    {
+        throw new RuntimeException('Not implemented');
+    }
+
+    public function removeContentTypeTranslation(int $contentTypeId, string $languageCode): Type
+    {
+        throw new RuntimeException('Not implemented');
+    }
 }

@@ -15,7 +15,15 @@ class LocationHandler implements LocationHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function load($locationId): void
+    public function load($locationId, array $translations = null, bool $useAlwaysAvailable = true): void
+    {
+        throw new RuntimeException('Not implemented');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function loadList(array $locationIds, array $translations = null, bool $useAlwaysAvailable = true): iterable
     {
         throw new RuntimeException('Not implemented');
     }
@@ -31,7 +39,7 @@ class LocationHandler implements LocationHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function loadByRemoteId($remoteId): void
+    public function loadByRemoteId($remoteId, array $translations = null, bool $useAlwaysAvailable = true): void
     {
         throw new RuntimeException('Not implemented');
     }
