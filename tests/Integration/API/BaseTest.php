@@ -43,7 +43,7 @@ abstract class BaseTest extends TestCase
         return $this->repository;
     }
 
-    private function getSetupFactory(): SetupFactory
+    protected function getSetupFactory(): SetupFactory
     {
         if ($this->setupFactory === null) {
             $this->setupFactory = $this->buildSetupFactory();
