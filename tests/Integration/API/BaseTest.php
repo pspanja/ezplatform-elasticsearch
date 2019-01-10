@@ -52,7 +52,7 @@ abstract class BaseTest extends TestCase
         return $this->setupFactory;
     }
 
-    private function buildSetupFactory(): Repository
+    private function buildSetupFactory(): SetupFactory
     {
         $setupClass = getenv('setupFactory');
 
