@@ -89,7 +89,7 @@ EOD;
         $data = self::$gateway->find(self::$endpoint, $query);
         $data = json_decode($data);
 
-        $this->assertEquals(2, $data->hits->total);
+        $this->assertEquals(2, $data->hits->total->value);
     }
 
     /**
@@ -111,7 +111,7 @@ EOD;
         $data = self::$gateway->find(self::$endpoint, $query);
         $data = json_decode($data);
 
-        $this->assertEquals(1, $data->hits->total);
+        $this->assertEquals(1, $data->hits->total->value);
     }
 
     /**
@@ -132,6 +132,6 @@ EOD;
         $data = self::$gateway->find(self::$endpoint, $query);
         $data = json_decode($data);
 
-        $this->assertEquals(0, $data->hits->total);
+        $this->assertEquals(0, $data->hits->total->value);
     }
 }

@@ -36,7 +36,7 @@ final class ResultExtractor
 
         return new SearchResult([
             'searchHits' => $searchHits,
-            'totalCount' => $body->hits->total,
+            'totalCount' => $body->hits->total->value,
         ]);
     }
 
