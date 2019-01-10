@@ -14,8 +14,7 @@
         "php": "^7.3",
         "ext-json": "*",
         "ext-pdo": "*",
-        "ezsystems/ezpublish-api": "dev-master",
-        "ezsystems/ezpublish-spi": "dev-master"
+        "ezsystems/ezpublish-api": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "dev-master",
