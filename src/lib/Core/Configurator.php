@@ -44,7 +44,7 @@ final class Configurator
         ];
 
         $message = new Message(
-            (string)json_encode($body),
+            json_encode($body, JSON_THROW_ON_ERROR),
             [
                 'Content-Type' => 'application/json',
             ]

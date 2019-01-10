@@ -56,7 +56,7 @@ final class FieldSerializer
             $data[$fieldName] = $fieldValue;
         }
 
-        $data = json_encode($data);
+        $data = json_encode($data, JSON_THROW_ON_ERROR);
 
         if ($data === false) {
             throw new RuntimeException('Could not JSON encode given document');

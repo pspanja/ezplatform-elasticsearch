@@ -74,12 +74,15 @@ final class Serializer
      */
     private function getTargetMetadata(Endpoint $index, Document $document): string
     {
-        return json_encode([
-            'index' => [
-                '_index' => $index->index,
-                '_type' => '_doc',
-                '_id' => $document->id,
+        return json_encode(
+            [
+                'index' => [
+                    '_index' => $index->index,
+                    '_type' => '_doc',
+                    '_id' => $document->id,
+                ],
             ],
-        ]);
+            JSON_THROW_ON_ERROR
+        );
     }
 }
