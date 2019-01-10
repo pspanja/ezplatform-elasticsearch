@@ -6,7 +6,6 @@ namespace Cabbage\Tests\Integration\API;
 
 use Cabbage\SPI\Endpoint;
 use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\API\Repository\Tests\BaseTest;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
 
