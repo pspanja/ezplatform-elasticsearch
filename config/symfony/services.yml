@@ -92,17 +92,12 @@ services:
         arguments:
             - '%cabbage.field.name_generator.type_suffix_map%'
 
-    cabbage.document.serializer.field_serializer:
-        class: Cabbage\Core\Document\Serializer\FieldSerializer
-        arguments:
-            - '@cabbage.document.serializer.field_serializer.typed_name_generator'
-            - '@cabbage.document.serializer.field_serializer.value_mapper'
-
     cabbage.document.serializer:
         class: Cabbage\Core\Document\Serializer
         arguments:
             - '@cabbage.document.serializer.index_resolver'
-            - '@cabbage.document.serializer.field_serializer'
+            - '@cabbage.document.serializer.field_serializer.typed_name_generator'
+            - '@cabbage.document.serializer.field_serializer.value_mapper'
 
     cabbage.query_translator.criterion.visitor.custom_field:
         class: Cabbage\Core\Query\Translator\Criterion\Visitor\RawField

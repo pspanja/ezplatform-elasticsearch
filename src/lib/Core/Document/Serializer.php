@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Document;
 
+use Cabbage\Core\Document\Serializer\FieldSerializer\TypedNameGenerator;
+use Cabbage\Core\Document\Serializer\FieldSerializer\ValueMapper;
 use Cabbage\Core\Document\Serializer\IndexResolver;
-use Cabbage\Core\Document\Serializer\FieldSerializer;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Endpoint;
 
@@ -22,20 +23,28 @@ final class Serializer
     private $indexResolver;
 
     /**
-     * @var \Cabbage\Core\Document\Serializer\FieldSerializer
+     * @var \Cabbage\Core\Document\Serializer\FieldSerializer\TypedNameGenerator
      */
-    private $fieldSerializer;
+    private $fieldTypedNameGenerator;
+
+    /**
+     * @var \Cabbage\Core\Document\Serializer\FieldSerializer\ValueMapper
+     */
+    private $fieldValueMapper;
 
     /**
      * @param \Cabbage\Core\Document\Serializer\IndexResolver $indexResolver
-     * @param \Cabbage\Core\Document\Serializer\FieldSerializer $fieldSerializer
+     * @param \Cabbage\Core\Document\Serializer\FieldSerializer\TypedNameGenerator $fieldTypedNameGenerator
+     * @param \Cabbage\Core\Document\Serializer\FieldSerializer\ValueMapper $fieldValueMapper
      */
     public function __construct(
         IndexResolver $indexResolver,
-        FieldSerializer $fieldSerializer
+        TypedNameGenerator $fieldTypedNameGenerator,
+        ValueMapper $fieldValueMapper
     ) {
         $this->indexResolver = $indexResolver;
-        $this->fieldSerializer = $fieldSerializer;
+        $this->fieldValueMapper = $fieldValueMapper;
+        $this->fieldTypedNameGenerator = $fieldTypedNameGenerator;
     }
 
     /**
@@ -59,7 +68,7 @@ final class Serializer
         $index = $this->indexResolver->resolve($document);
 
         $targetMetaData = $this->getTargetMetadata($index, $document);
-        $fieldPayload = $this->fieldSerializer->serialize($document);
+        $fieldPayload = $this->serializeDocument($document);
 
         return "{$targetMetaData}\n{$fieldPayload}\n";
     }
@@ -74,15 +83,35 @@ final class Serializer
      */
     private function getTargetMetadata(Endpoint $index, Document $document): string
     {
-        return json_encode(
-            [
-                'index' => [
-                    '_index' => $index->index,
-                    '_type' => '_doc',
-                    '_id' => $document->id,
-                ],
+        $data = [
+            'index' => [
+                '_index' => $index->index,
+                '_type' => '_doc',
+                '_id' => $document->id,
             ],
-            JSON_THROW_ON_ERROR
-        );
+        ];
+
+        return json_encode($data, JSON_THROW_ON_ERROR);
+    }
+
+    /**
+     * @param \Cabbage\SPI\Document $document
+     *
+     * @return string
+     */
+    private function serializeDocument(Document $document): string
+    {
+        $data = [
+            'type' => $document->type,
+        ];
+
+        foreach ($document->fields as $field) {
+            $fieldName = $this->fieldTypedNameGenerator->generate($field);
+            $fieldValue = $this->fieldValueMapper->map($field);
+
+            $data[$fieldName] = $fieldValue;
+        }
+
+        return json_encode($data, JSON_THROW_ON_ERROR);
     }
 }
