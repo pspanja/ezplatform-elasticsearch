@@ -27,6 +27,16 @@ final class Node
     public $port;
 
     /**
+     * Default properties for the Node.
+     *
+     * @var array
+     */
+    static private $defaults = [
+        'scheme' => 'http',
+        'port' => 9200,
+    ];
+
+    /**
      * @param string $scheme
      * @param string $host
      * @param int $port
@@ -75,10 +85,6 @@ final class Node
      */
     private static function parseDsn(string $dsn): array
     {
-        $defaults = [
-            'scheme' => 'http',
-            'port' => 9200,
-        ];
         $elements = parse_url(rtrim($dsn, '/'));
 
         if ($elements === false) {
@@ -87,6 +93,6 @@ final class Node
             );
         }
 
-        return $elements + $defaults;
+        return $elements + static::$defaults;
     }
 }
