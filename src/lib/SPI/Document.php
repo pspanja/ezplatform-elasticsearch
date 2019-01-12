@@ -24,6 +24,8 @@ final class Document
     public const TypeLocation = 'location';
 
     /**
+     * Unique ID of the Document.
+     *
      * @var string
      */
     public $id;

@@ -14,16 +14,29 @@ use Cabbage\SPI\Document\Field\Type;
 final class Field
 {
     /**
+     * Name of the field.
+     *
+     * Used to generate name of the field in the Elasticsearch index.
+     *
      * @var string
      */
     public $name;
 
     /**
+     * Value of the field.
+     *
+     * The value can be of any type, it will be mapped to a value in the
+     * Elasticsearch index using the type instance.
+     *
+     * @see \Cabbage\SPI\Document\Field::$type
+     *
      * @var mixed
      */
     public $value;
 
     /**
+     * Type of the field's value.
+     *
      * @var \Cabbage\SPI\Document\Field\Type
      */
     public $type;
