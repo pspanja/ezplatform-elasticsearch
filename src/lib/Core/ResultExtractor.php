@@ -49,11 +49,11 @@ final class ResultExtractor
      */
     private function extractSearchHit(object $hit): ValueObject
     {
-        if ($hit->_source->type === 'content') {
+        if ($hit->_source->type_identifier === 'content') {
             return $this->extractContentInfo($hit);
         }
 
-        if ($hit->_source->type === 'location') {
+        if ($hit->_source->type_identifier === 'location') {
             return $this->extractLocation($hit);
         }
 
