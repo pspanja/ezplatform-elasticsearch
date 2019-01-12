@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Document;
 
-use Cabbage\Core\Document\Serializer\FieldSerializer\TypedNameGenerator;
-use Cabbage\Core\Document\Serializer\FieldSerializer\ValueMapper;
+use Cabbage\Core\Document\Serializer\TypedNameGenerator;
+use Cabbage\Core\Document\Serializer\ValueMapper;
 use Cabbage\Core\Document\Serializer\IndexResolver;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Endpoint;
@@ -23,19 +23,19 @@ final class Serializer
     private $indexResolver;
 
     /**
-     * @var \Cabbage\Core\Document\Serializer\FieldSerializer\TypedNameGenerator
+     * @var \Cabbage\Core\Document\Serializer\TypedNameGenerator
      */
     private $fieldTypedNameGenerator;
 
     /**
-     * @var \Cabbage\Core\Document\Serializer\FieldSerializer\ValueMapper
+     * @var \Cabbage\Core\Document\Serializer\ValueMapper
      */
     private $fieldValueMapper;
 
     /**
      * @param \Cabbage\Core\Document\Serializer\IndexResolver $indexResolver
-     * @param \Cabbage\Core\Document\Serializer\FieldSerializer\TypedNameGenerator $fieldTypedNameGenerator
-     * @param \Cabbage\Core\Document\Serializer\FieldSerializer\ValueMapper $fieldValueMapper
+     * @param \Cabbage\Core\Document\Serializer\TypedNameGenerator $fieldTypedNameGenerator
+     * @param \Cabbage\Core\Document\Serializer\ValueMapper $fieldValueMapper
      */
     public function __construct(
         IndexResolver $indexResolver,

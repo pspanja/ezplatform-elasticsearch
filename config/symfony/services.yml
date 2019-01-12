@@ -71,16 +71,16 @@ services:
         class: Cabbage\Core\Document\Serializer\IndexResolver
 
     cabbage.document.serializer.field_serializer.value_mapper.visitor.boolean:
-        class: Cabbage\Core\Document\Serializer\FieldSerializer\ValueMapper\Visitor\Boolean
+        class: Cabbage\Core\Document\Serializer\ValueMapper\Visitor\Boolean
 
     cabbage.document.serializer.field_serializer.value_mapper.visitor.keyword:
-        class: Cabbage\Core\Document\Serializer\FieldSerializer\ValueMapper\Visitor\Keyword
+        class: Cabbage\Core\Document\Serializer\ValueMapper\Visitor\Keyword
 
     cabbage.document.serializer.field_serializer.value_mapper.visitor.identifier:
-        class: Cabbage\Core\Document\Serializer\FieldSerializer\ValueMapper\Visitor\Identifier
+        class: Cabbage\Core\Document\Serializer\ValueMapper\Visitor\Identifier
 
     cabbage.document.serializer.field_serializer.value_mapper:
-        class: Cabbage\Core\Document\Serializer\FieldSerializer\ValueMapper
+        class: Cabbage\Core\Document\Serializer\ValueMapper
         arguments:
             -
                 - '@cabbage.document.serializer.field_serializer.value_mapper.visitor.boolean'
@@ -88,7 +88,7 @@ services:
                 - '@cabbage.document.serializer.field_serializer.value_mapper.visitor.identifier'
 
     cabbage.document.serializer.field_serializer.typed_name_generator:
-        class: Cabbage\Core\Document\Serializer\FieldSerializer\TypedNameGenerator
+        class: Cabbage\Core\Document\Serializer\TypedNameGenerator
         arguments:
             - '%cabbage.field.name_generator.type_suffix_map%'
 
