@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Document;
 
-use Cabbage\Core\Document\Serializer\TypedNameGenerator;
+use Cabbage\Core\Document\Serializer\FieldNameGenerator;
 use Cabbage\Core\Document\Serializer\ValueMapper;
 use Cabbage\Core\Document\Serializer\IndexResolver;
 use Cabbage\SPI\Document;
@@ -23,9 +23,9 @@ final class Serializer
     private $indexResolver;
 
     /**
-     * @var \Cabbage\Core\Document\Serializer\TypedNameGenerator
+     * @var \Cabbage\Core\Document\Serializer\FieldNameGenerator
      */
-    private $fieldTypedNameGenerator;
+    private $fieldNameGenerator;
 
     /**
      * @var \Cabbage\Core\Document\Serializer\ValueMapper
@@ -34,17 +34,17 @@ final class Serializer
 
     /**
      * @param \Cabbage\Core\Document\Serializer\IndexResolver $indexResolver
-     * @param \Cabbage\Core\Document\Serializer\TypedNameGenerator $fieldTypedNameGenerator
+     * @param \Cabbage\Core\Document\Serializer\FieldNameGenerator $fieldNameGenerator
      * @param \Cabbage\Core\Document\Serializer\ValueMapper $fieldValueMapper
      */
     public function __construct(
         IndexResolver $indexResolver,
-        TypedNameGenerator $fieldTypedNameGenerator,
+        FieldNameGenerator $fieldNameGenerator,
         ValueMapper $fieldValueMapper
     ) {
         $this->indexResolver = $indexResolver;
         $this->fieldValueMapper = $fieldValueMapper;
-        $this->fieldTypedNameGenerator = $fieldTypedNameGenerator;
+        $this->fieldNameGenerator = $fieldNameGenerator;
     }
 
     /**
@@ -106,7 +106,7 @@ final class Serializer
         ];
 
         foreach ($document->fields as $field) {
-            $fieldName = $this->fieldTypedNameGenerator->generate($field);
+            $fieldName = $this->fieldNameGenerator->generate($field);
             $fieldValue = $this->fieldValueMapper->map($field);
 
             $data[$fieldName] = $fieldValue;

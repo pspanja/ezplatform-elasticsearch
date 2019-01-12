@@ -88,7 +88,7 @@ services:
                 - '@cabbage.document.serializer.field_serializer.value_mapper.visitor.identifier'
 
     cabbage.document.serializer.field_serializer.typed_name_generator:
-        class: Cabbage\Core\Document\Serializer\TypedNameGenerator
+        class: Cabbage\Core\Document\Serializer\FieldNameGenerator
         arguments:
             - '%cabbage.field.name_generator.type_suffix_map%'
 

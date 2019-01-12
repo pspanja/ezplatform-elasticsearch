@@ -7,11 +7,11 @@ namespace Cabbage\Core\Document\Serializer;
 use Cabbage\SPI\Document\Field;
 
 /**
- * Generates typed name of the Document Field.
+ * Generates name of the Document Field.
  *
  * @see \Cabbage\SPI\Document\Field
  */
-final class TypedNameGenerator
+final class FieldNameGenerator
 {
     /**
      * @var string[]
