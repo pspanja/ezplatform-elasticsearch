@@ -100,9 +100,7 @@ final class Serializer
      */
     private function serializeDocument(Document $document): string
     {
-        $data = [
-            'type' => $document->type,
-        ];
+        $data = [];
 
         foreach ($document->fields as $field) {
             $fieldName = $this->fieldNameGenerator->generate($field);

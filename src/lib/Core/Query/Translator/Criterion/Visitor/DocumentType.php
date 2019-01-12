@@ -25,7 +25,7 @@ final class DocumentType extends Visitor
     {
         return [
             'term' => [
-                'type' => $criterion->value[0],
+                'type_identifier' => $criterion->value[0],
             ],
         ];
     }

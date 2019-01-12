@@ -95,6 +95,14 @@ final class Mapper
     {
         $fieldsGrouped = [[]];
 
+        $commonMetadataFields = [
+            new Field(
+                'type',
+                Document::TypeContent,
+                new Identifier()
+            ),
+        ];
+
         $contentMetadataFields = [
             new Field(
                 'content_id',
@@ -103,6 +111,7 @@ final class Mapper
             ),
         ];
 
+        $fieldsGrouped[] = $commonMetadataFields;
         $fieldsGrouped[] = $contentMetadataFields;
         $fieldsGrouped[] = $this->contentFieldMapper->map($content, $type);
 
@@ -124,6 +133,14 @@ final class Mapper
     {
         $fieldsGrouped = [[]];
 
+        $commonMetadataFields = [
+            new Field(
+                'type',
+                Document::TypeLocation,
+                new Identifier()
+            ),
+        ];
+
         $contentMetadataFields = [
             new Field(
                 'content_id',
@@ -140,6 +157,7 @@ final class Mapper
             ),
         ];
 
+        $fieldsGrouped[] = $commonMetadataFields;
         $fieldsGrouped[] = $contentMetadataFields;
         $fieldsGrouped[] = $locationMetadataFields;
         $fieldsGrouped[] = $this->contentFieldMapper->map($content, $type);
