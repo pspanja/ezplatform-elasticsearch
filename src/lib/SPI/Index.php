@@ -38,6 +38,6 @@ final class Index
     {
         $nodeUrl = $this->node->getUrl();
 
-        return "{$nodeUrl}/{{$this->index}";
+        return "{$nodeUrl}/{$this->index}";
     }
 }
