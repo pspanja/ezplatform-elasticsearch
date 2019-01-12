@@ -117,7 +117,6 @@ final class Mapper
 
         return new Document(
             $this->idGenerator->generateContentDocumentId($content),
-            Document::TypeContent,
             array_merge(...$fieldsGrouped)
         );
     }
@@ -164,7 +163,6 @@ final class Mapper
 
         return new Document(
             $this->idGenerator->generateLocationDocumentId($location),
-            Document::TypeLocation,
             array_merge(...$fieldsGrouped)
         );
     }

@@ -29,16 +29,6 @@ final class Document
     public $id;
 
     /**
-     * Document type identifier.
-     *
-     * @see \Cabbage\SPI\Document::TypeContent
-     * @see \Cabbage\SPI\Document::TypeLocation
-     *
-     * @var string
-     */
-    public $type;
-
-    /**
      * Document's fields.
      *
      * @var \Cabbage\SPI\Document\Field[]
@@ -47,13 +37,11 @@ final class Document
 
     /**
      * @param string $id
-     * @param string $type
      * @param \Cabbage\SPI\Document\Field[] $fields
      */
-    public function __construct(string $id, string $type, array $fields)
+    public function __construct(string $id, array $fields)
     {
         $this->id = $id;
-        $this->type = $type;
         $this->fields = $fields;
     }
 }
