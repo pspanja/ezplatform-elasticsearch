@@ -87,8 +87,6 @@ final class Node
             );
         }
 
-        $elements += $defaults;
-
-        return $elements;
+        return $elements + $defaults;
     }
 }
