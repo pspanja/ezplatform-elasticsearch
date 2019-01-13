@@ -24,6 +24,8 @@ final class MatchNone extends Visitor
 
     public function visit(Criterion $criterion, Converter $converter): array
     {
-        return ['match_none' => new ArrayObject()];
+        return [
+            'match_none' => new ArrayObject(),
+        ];
     }
 }

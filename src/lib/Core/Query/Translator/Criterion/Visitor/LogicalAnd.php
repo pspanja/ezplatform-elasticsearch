@@ -32,6 +32,10 @@ final class LogicalAnd extends Visitor
             $criterion->criteria
         );
 
-        return ['bool' => ['must' => [$criteria]]];
+        return [
+            'bool' => [
+                'must' => [$criteria],
+            ],
+        ];
     }
 }

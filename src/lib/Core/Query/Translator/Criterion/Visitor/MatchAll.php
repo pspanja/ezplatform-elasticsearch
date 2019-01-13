@@ -24,6 +24,8 @@ final class MatchAll extends Visitor
 
     public function visit(Criterion $criterion, Converter $converter): array
     {
-        return ['match_all' => new ArrayObject()];
+        return [
+            'match_all' => new ArrayObject(),
+        ];
     }
 }
