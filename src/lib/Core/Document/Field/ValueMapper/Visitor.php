@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Document\Serializer\FieldValueMapper;
+namespace Cabbage\Core\Document\Field\ValueMapper;
 
 use Cabbage\SPI\Document\Field;
 

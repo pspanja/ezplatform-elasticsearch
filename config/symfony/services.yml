@@ -70,25 +70,25 @@ services:
     cabbage.document.index_resolver:
         class: Cabbage\Core\Document\IndexResolver
 
-    cabbage.document.serializer.field_value_mapper.visitor.boolean:
-        class: Cabbage\Core\Document\Serializer\FieldValueMapper\Visitor\Boolean
+    cabbage.document.field.value_mapper.visitor.boolean:
+        class: Cabbage\Core\Document\Field\ValueMapper\Visitor\Boolean
 
-    cabbage.document.serializer.field_value_mapper.visitor.keyword:
-        class: Cabbage\Core\Document\Serializer\FieldValueMapper\Visitor\Keyword
+    cabbage.document.field.value_mapper.visitor.keyword:
+        class: Cabbage\Core\Document\Field\ValueMapper\Visitor\Keyword
 
-    cabbage.document.serializer.field_value_mapper.visitor.identifier:
-        class: Cabbage\Core\Document\Serializer\FieldValueMapper\Visitor\Identifier
+    cabbage.document.field.value_mapper.visitor.identifier:
+        class: Cabbage\Core\Document\Field\ValueMapper\Visitor\Identifier
 
-    cabbage.document.serializer.field_value_mapper:
-        class: Cabbage\Core\Document\Serializer\FieldValueMapper
+    cabbage.document.field.value_mapper:
+        class: Cabbage\Core\Document\Field\ValueMapper
         arguments:
             -
-                - '@cabbage.document.serializer.field_value_mapper.visitor.boolean'
-                - '@cabbage.document.serializer.field_value_mapper.visitor.keyword'
-                - '@cabbage.document.serializer.field_value_mapper.visitor.identifier'
+                - '@cabbage.document.field.value_mapper.visitor.boolean'
+                - '@cabbage.document.field.value_mapper.visitor.keyword'
+                - '@cabbage.document.field.value_mapper.visitor.identifier'
 
-    cabbage.document.serializer.field_serializer.typed_name_generator:
-        class: Cabbage\Core\Document\Serializer\FieldNameGenerator
+    cabbage.document.field.typed_name_generator:
+        class: Cabbage\Core\Document\Field\TypedNameGenerator
         arguments:
             - '%cabbage.field.name_generator.type_suffix_map%'
 
@@ -96,8 +96,8 @@ services:
         class: Cabbage\Core\Document\Serializer
         arguments:
             - '@cabbage.document.index_resolver'
-            - '@cabbage.document.serializer.field_serializer.typed_name_generator'
-            - '@cabbage.document.serializer.field_value_mapper'
+            - '@cabbage.document.field.typed_name_generator'
+            - '@cabbage.document.field.value_mapper'
 
     cabbage.query_translator.criterion.visitor.content_id:
         class: Cabbage\Core\Query\Translator\Criterion\Visitor\ContentId

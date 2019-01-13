@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Document\Serializer;
+namespace Cabbage\Core\Document\Field;
 
 use Cabbage\SPI\Document\Field;
 
@@ -11,7 +11,7 @@ use Cabbage\SPI\Document\Field;
  *
  * @see \Cabbage\SPI\Document\Field
  */
-final class FieldNameGenerator
+final class TypedNameGenerator
 {
     /**
      * @var string[]

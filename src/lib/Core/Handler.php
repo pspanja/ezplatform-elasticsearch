@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Core;
 
-use Cabbage\Core\Document\Serializer;
 use Cabbage\Core\Document\Mapper;
+use Cabbage\Core\Document\Serializer;
 use Cabbage\Core\Query\TargetResolver;
 use Cabbage\Core\Query\Translator;
 use Cabbage\SPI\Endpoint;

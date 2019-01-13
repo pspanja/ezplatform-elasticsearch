@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Document;
 
-use Cabbage\Core\Document\Serializer\FieldNameGenerator;
-use Cabbage\Core\Document\Serializer\FieldValueMapper;
+use Cabbage\Core\Document\Field\TypedNameGenerator;
+use Cabbage\Core\Document\Field\ValueMapper;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Endpoint;
 
@@ -19,31 +19,31 @@ final class Serializer
     /**
      * @var \Cabbage\Core\Document\IndexResolver
      */
-    private $indexResolver;
+    private $documentIndexResolver;
 
     /**
-     * @var \Cabbage\Core\Document\Serializer\FieldNameGenerator
+     * @var \Cabbage\Core\Document\Field\TypedNameGenerator
      */
-    private $fieldNameGenerator;
+    private $fieldTypedNameGenerator;
 
     /**
-     * @var \Cabbage\Core\Document\Serializer\FieldValueMapper
+     * @var \Cabbage\Core\Document\Field\ValueMapper
      */
     private $fieldValueMapper;
 
     /**
-     * @param \Cabbage\Core\Document\IndexResolver $indexResolver
-     * @param \Cabbage\Core\Document\Serializer\FieldNameGenerator $fieldNameGenerator
-     * @param \Cabbage\Core\Document\Serializer\FieldValueMapper $fieldValueMapper
+     * @param \Cabbage\Core\Document\IndexResolver $documentIndexResolver
+     * @param \Cabbage\Core\Document\Field\TypedNameGenerator $fieldTypedNameGenerator
+     * @param \Cabbage\Core\Document\Field\ValueMapper $fieldValueMapper
      */
     public function __construct(
-        IndexResolver $indexResolver,
-        FieldNameGenerator $fieldNameGenerator,
-        FieldValueMapper $fieldValueMapper
+        IndexResolver $documentIndexResolver,
+        TypedNameGenerator $fieldTypedNameGenerator,
+        ValueMapper $fieldValueMapper
     ) {
-        $this->indexResolver = $indexResolver;
+        $this->documentIndexResolver = $documentIndexResolver;
+        $this->fieldTypedNameGenerator = $fieldTypedNameGenerator;
         $this->fieldValueMapper = $fieldValueMapper;
-        $this->fieldNameGenerator = $fieldNameGenerator;
     }
 
     /**
@@ -64,7 +64,7 @@ final class Serializer
 
     private function getDocumentPayload(Document $document): string
     {
-        $index = $this->indexResolver->resolve($document);
+        $index = $this->documentIndexResolver->resolve($document);
 
         $targetMetaData = $this->getTargetMetadata($index, $document);
         $fieldPayload = $this->serializeDocument($document);
@@ -102,7 +102,7 @@ final class Serializer
         $data = [];
 
         foreach ($document->fields as $field) {
-            $fieldName = $this->fieldNameGenerator->generate($field);
+            $fieldName = $this->fieldTypedNameGenerator->generate($field);
             $fieldValue = $this->fieldValueMapper->map($field);
 
             $data[$fieldName] = $fieldValue;
