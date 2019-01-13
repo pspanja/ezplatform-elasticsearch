@@ -6,7 +6,6 @@ namespace Cabbage\Core\Document;
 
 use Cabbage\Core\Document\Serializer\FieldNameGenerator;
 use Cabbage\Core\Document\Serializer\FieldValueMapper;
-use Cabbage\Core\Document\Serializer\IndexResolver;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Endpoint;
 
@@ -18,7 +17,7 @@ use Cabbage\SPI\Endpoint;
 final class Serializer
 {
     /**
-     * @var \Cabbage\Core\Document\Serializer\IndexResolver
+     * @var \Cabbage\Core\Document\IndexResolver
      */
     private $indexResolver;
 
@@ -33,7 +32,7 @@ final class Serializer
     private $fieldValueMapper;
 
     /**
-     * @param \Cabbage\Core\Document\Serializer\IndexResolver $indexResolver
+     * @param \Cabbage\Core\Document\IndexResolver $indexResolver
      * @param \Cabbage\Core\Document\Serializer\FieldNameGenerator $fieldNameGenerator
      * @param \Cabbage\Core\Document\Serializer\FieldValueMapper $fieldValueMapper
      */

@@ -67,8 +67,8 @@ services:
             - '@cabbage.document.mapper.content_field.mapper'
             - '@cabbage.document.id_generator'
 
-    cabbage.document.serializer.index_resolver:
-        class: Cabbage\Core\Document\Serializer\IndexResolver
+    cabbage.document.index_resolver:
+        class: Cabbage\Core\Document\IndexResolver
 
     cabbage.document.serializer.field_value_mapper.visitor.boolean:
         class: Cabbage\Core\Document\Serializer\FieldValueMapper\Visitor\Boolean
@@ -95,7 +95,7 @@ services:
     cabbage.document.serializer:
         class: Cabbage\Core\Document\Serializer
         arguments:
-            - '@cabbage.document.serializer.index_resolver'
+            - '@cabbage.document.index_resolver'
             - '@cabbage.document.serializer.field_serializer.typed_name_generator'
             - '@cabbage.document.serializer.field_value_mapper'
 
