@@ -97,7 +97,7 @@ final class Configurator
     {
         return $this->client->put(
             $endpoint->getUrl() . '/_mapping/_doc',
-            Message::fromJson($mapping)
+            Message::fromString($mapping)
         );
     }
 }

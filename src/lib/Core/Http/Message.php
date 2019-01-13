@@ -36,13 +36,13 @@ final class Message
     /**
      * Build the Message instance from the given JSON string.
      *
-     * @param string $json
+     * @param string $string
      *
      * @return \Cabbage\Core\Http\Message
      */
-    public static function fromJson(string $json): self
+    public static function fromString(string $string): self
     {
-        return new self($json, ['Content-Type' => 'application/json']);
+        return new self($string, ['Content-Type' => 'application/json']);
     }
 
     /**
@@ -52,8 +52,8 @@ final class Message
      *
      * @return \Cabbage\Core\Http\Message
      */
-    public static function fromJsonHash(array $hash): self
+    public static function fromHash(array $hash): self
     {
-        return static::fromJson(json_encode($hash, JSON_THROW_ON_ERROR));
+        return static::fromString(json_encode($hash, JSON_THROW_ON_ERROR));
     }
 }

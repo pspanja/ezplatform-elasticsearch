@@ -60,7 +60,7 @@ final class Gateway
     public function find(Endpoint $endpoint, array $query): string
     {
         $url = "{$endpoint->getUrl()}/_search";
-        $message = Message::fromJsonHash($query);
+        $message = Message::fromHash($query);
 
         $response = $this->client->get($url, $message);
 
@@ -106,7 +106,7 @@ final class Gateway
 
         $response = $this->client->post(
             $url,
-            Message::fromJsonHash($query)
+            Message::fromHash($query)
         );
 
         if ($response->status !== 200 && $response->status !== 404) {
