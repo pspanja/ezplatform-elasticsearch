@@ -93,7 +93,7 @@ final class Node
 
         self::validate($elements);
 
-        return $elements + static::$defaults;
+        return $elements + self::$defaults;
     }
 
     private static function validate(array $elements): void
