@@ -91,6 +91,13 @@ final class Node
             throw new RuntimeException('Failed to parse the given DSN');
         }
 
+        self::validate($elements);
+
+        return $elements + static::$defaults;
+    }
+
+    private static function validate(array $elements): void
+    {
         if (array_key_exists('user', $elements) || array_key_exists('pass', $elements)) {
             throw new RuntimeException(
                 "DSN does not support the 'user' and 'pass' components"
@@ -108,7 +115,5 @@ final class Node
         if (array_key_exists('fragment', $elements)) {
             throw new RuntimeException("DSN does not support the 'fragment' component");
         }
-
-        return $elements + static::$defaults;
     }
 }
