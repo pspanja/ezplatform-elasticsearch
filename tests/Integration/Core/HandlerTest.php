@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Cabbage\Tests\Integration\Core;
 
 use Cabbage\API\Query\Criterion\DocumentType;
+use Cabbage\Core\Document\Mapper;
 use Cabbage\Core\Handler;
-use Cabbage\SPI\Document;
 use Cabbage\SPI\Index;
 use Cabbage\SPI\Node;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
@@ -76,7 +76,7 @@ class HandlerTest extends BaseTest
     {
         $handler = $this->getHandlerUnderTest();
         $query = new Query([
-            'filter' => new DocumentType(Document::TypeContent),
+            'filter' => new DocumentType(Mapper::TypeContent),
         ]);
 
         $searchResult = $handler->findContent($query);
@@ -99,7 +99,7 @@ class HandlerTest extends BaseTest
     {
         $handler = $this->getHandlerUnderTest();
         $query = new LocationQuery([
-            'filter' => new DocumentType(Document::TypeLocation),
+            'filter' => new DocumentType(Mapper::TypeLocation),
         ]);
 
         $searchResult = $handler->findLocations($query);
@@ -125,14 +125,14 @@ class HandlerTest extends BaseTest
         $this->flush(self::$index);
 
         $query = new Query([
-            'filter' => new DocumentType(Document::TypeContent),
+            'filter' => new DocumentType(Mapper::TypeContent),
         ]);
 
         $searchResult = $handler->findContent($query);
         $this->assertEquals(0, $searchResult->totalCount);
 
         $query = new LocationQuery([
-            'filter' => new DocumentType(Document::TypeLocation),
+            'filter' => new DocumentType(Mapper::TypeLocation),
         ]);
 
         $searchResult = $handler->findLocations($query);

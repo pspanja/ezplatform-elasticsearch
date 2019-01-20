@@ -24,6 +24,20 @@ use eZ\Publish\SPI\Persistence\Content\Type\Handler as TypeHandler;
 final class Mapper
 {
     /**
+     * Content document type identifier.
+     *
+     * @var string
+     */
+    public const TypeContent = 'content';
+
+    /**
+     * Location document type identifier.
+     *
+     * @var string
+     */
+    public const TypeLocation = 'location';
+
+    /**
      * @var \eZ\Publish\SPI\Persistence\Content\Location\Handler
      */
     private $locationHandler;
@@ -98,7 +112,7 @@ final class Mapper
         $commonMetadataFields = [
             new Field(
                 'type',
-                Document::TypeContent,
+                self::TypeContent,
                 new Identifier()
             ),
         ];
@@ -135,7 +149,7 @@ final class Mapper
         $commonMetadataFields = [
             new Field(
                 'type',
-                Document::TypeLocation,
+                self::TypeLocation,
                 new Identifier()
             ),
         ];

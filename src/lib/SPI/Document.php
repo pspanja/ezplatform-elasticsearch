@@ -10,20 +10,6 @@ namespace Cabbage\SPI;
 final class Document
 {
     /**
-     * Content document type identifier.
-     *
-     * @var string
-     */
-    public const TypeContent = 'content';
-
-    /**
-     * Location document type identifier.
-     *
-     * @var string
-     */
-    public const TypeLocation = 'location';
-
-    /**
      * Unique ID of the Document.
      *
      * @var string
