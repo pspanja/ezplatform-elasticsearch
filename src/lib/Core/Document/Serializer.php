@@ -7,7 +7,7 @@ namespace Cabbage\Core\Document;
 use Cabbage\Core\Document\Field\TypedNameGenerator;
 use Cabbage\Core\Document\Field\ValueMapper;
 use Cabbage\SPI\Document;
-use Cabbage\SPI\Endpoint;
+use Cabbage\SPI\Index;
 
 /**
  * Serializes an array of Document objects into a JSON string for bulk indexing.
@@ -75,12 +75,12 @@ final class Serializer
     /**
      * Generate action and metadata for the indexed Document.
      *
-     * @param \Cabbage\SPI\Endpoint $index
+     * @param \Cabbage\SPI\Index $index
      * @param \Cabbage\SPI\Document $document
      *
      * @return string
      */
-    private function getTargetMetadata(Endpoint $index, Document $document): string
+    private function getTargetMetadata(Index $index, Document $document): string
     {
         $data = [
             'index' => [

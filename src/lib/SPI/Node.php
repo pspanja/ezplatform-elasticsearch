@@ -88,9 +88,25 @@ final class Node
         $elements = parse_url(rtrim($dsn, '/'));
 
         if ($elements === false) {
+            throw new RuntimeException('Failed to parse the given DSN');
+        }
+
+        if (array_key_exists('user', $elements) || array_key_exists('pass', $elements)) {
             throw new RuntimeException(
-                'Failed to parse the given DSN'
+                "DSN does not support the 'user' and 'pass' components"
             );
+        }
+
+        if (array_key_exists('path', $elements)) {
+            throw new RuntimeException("DSN does not support the 'path' component");
+        }
+
+        if (array_key_exists('query', $elements)) {
+            throw new RuntimeException("DSN does not support the 'query' component");
+        }
+
+        if (array_key_exists('fragment', $elements)) {
+            throw new RuntimeException("DSN does not support the 'fragment' component");
         }
 
         return $elements + static::$defaults;

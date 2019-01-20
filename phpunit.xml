@@ -8,7 +8,7 @@
     </php>
     <testsuites>
         <testsuite name="Unit tests">
-            <file>./tests/Unit/EndpointTest.php</file>
+            <file>./tests/Unit/NodeTest.php</file>
         </testsuite>
         <testsuite name="Core integration tests">
             <file>./tests/Integration/Core/Http/ClientTest.php</file>

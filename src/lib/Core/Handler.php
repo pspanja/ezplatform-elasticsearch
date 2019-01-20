@@ -8,7 +8,8 @@ use Cabbage\Core\Document\Mapper;
 use Cabbage\Core\Document\Serializer;
 use Cabbage\Core\Query\TargetResolver;
 use Cabbage\Core\Query\Translator;
-use Cabbage\SPI\Endpoint;
+use Cabbage\SPI\Index;
+use Cabbage\SPI\Node;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
@@ -136,7 +137,10 @@ final class Handler implements HandlerInterface, Capable
     public function indexContent(Content $content): void
     {
         $this->gateway->index(
-            Endpoint::fromDsn('http://localhost:9200/index'),
+            new Index(
+                Node::fromDsn('http://localhost:9200'),
+                'index'
+            ),
             $this->documentSerializer->serialize(
                 $this->documentMapper->map($content)
             )
@@ -167,7 +171,10 @@ final class Handler implements HandlerInterface, Capable
     public function purgeIndex(): void
     {
         $this->gateway->purge(
-            Endpoint::fromDsn('http://localhost:9200/index')
+            new Index(
+                Node::fromDsn('http://localhost:9200'),
+                'index'
+            )
         );
     }
 
@@ -187,7 +194,10 @@ final class Handler implements HandlerInterface, Capable
         }
 
         $this->gateway->index(
-            Endpoint::fromDsn('http://localhost:9200/index'),
+            new Index(
+                Node::fromDsn('http://localhost:9200'),
+                'index'
+            ),
             $payload
         );
     }
@@ -195,7 +205,10 @@ final class Handler implements HandlerInterface, Capable
     public function flush(): void
     {
         $this->gateway->flush(
-            Endpoint::fromDsn('http://localhost:9200/index')
+            new Index(
+                Node::fromDsn('http://localhost:9200'),
+                'index'
+            )
         );
     }
 }

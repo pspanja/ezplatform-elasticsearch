@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration\API;
 
-use Cabbage\SPI\Endpoint;
+use Cabbage\SPI\Index;
+use Cabbage\SPI\Node;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentId;
@@ -46,7 +47,12 @@ final class TestTest extends BaseTest
         $contentDraft = $contentService->createContent($struct);
         $content = $contentService->publishVersion($contentDraft->versionInfo);
 
-        $this->flush(Endpoint::fromDsn('http://localhost:9200/index'));
+        $this->flush(
+            new Index(
+                Node::fromDsn('http://localhost:9200'),
+                'index'
+            )
+        );
 
         $query = new Query([
             'filter' => new ContentId($content->id),
@@ -61,10 +67,10 @@ final class TestTest extends BaseTest
     /**
      * @throws \Exception
      *
-     * @param \Cabbage\SPI\Endpoint $endpoint
+     * @param \Cabbage\SPI\Index $index
      */
-    protected function flush(Endpoint $endpoint): void
+    protected function flush(Index $index): void
     {
-        $this->getSetupFactory()->getServiceContainer()->get('cabbage.gateway')->flush($endpoint);
+        $this->getSetupFactory()->getServiceContainer()->get('cabbage.gateway')->flush($index);
     }
 }

@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace Cabbage\Core\Document;
 
 use Cabbage\SPI\Document;
-use Cabbage\SPI\Endpoint;
+use Cabbage\SPI\Index;
+use Cabbage\SPI\Node;
 
 /**
  * Resolves an index where a document will be indexed.
  */
 final class IndexResolver
 {
-    public function resolve(Document $document): Endpoint
+    public function resolve(Document $document): Index
     {
-        return Endpoint::fromDsn('http://localhost:9200/index');
+        return new Index(
+            Node::fromDsn('http://localhost:9200'),
+            'index'
+        );
     }
 }

@@ -6,7 +6,7 @@ namespace Cabbage\Core;
 
 use Cabbage\Core\Http\Client;
 use Cabbage\Core\Http\Message;
-use Cabbage\SPI\Endpoint;
+use Cabbage\SPI\Index;
 use RuntimeException;
 
 /**
@@ -28,12 +28,12 @@ final class Gateway
     }
 
     /**
-     * @param \Cabbage\SPI\Endpoint $endpoint
+     * @param \Cabbage\SPI\Index $index
      * @param string $payload
      */
-    public function index(Endpoint $endpoint, string $payload): void
+    public function index(Index $index, string $payload): void
     {
-        $url = "{$endpoint->getUrl()}/_bulk";
+        $url = "{$index->getUrl()}/_bulk";
 
         $message = new Message(
             $payload,
@@ -52,14 +52,14 @@ final class Gateway
     }
 
     /**
-     * @param \Cabbage\SPI\Endpoint $endpoint
+     * @param \Cabbage\SPI\Index $index
      * @param array|array[] $query
      *
      * @return string
      */
-    public function find(Endpoint $endpoint, array $query): string
+    public function find(Index $index, array $query): string
     {
-        $url = "{$endpoint->getUrl()}/_search";
+        $url = "{$index->getUrl()}/_search";
         $message = Message::fromHash($query);
 
         $response = $this->client->get($url, $message);
@@ -74,11 +74,11 @@ final class Gateway
     }
 
     /**
-     * @param \Cabbage\SPI\Endpoint $endpoint
+     * @param \Cabbage\SPI\Index $index
      */
-    public function flush(Endpoint $endpoint): void
+    public function flush(Index $index): void
     {
-        $url = "{$endpoint->getUrl()}/_flush";
+        $url = "{$index->getUrl()}/_flush";
 
         $response = $this->client->post($url);
 
@@ -93,11 +93,11 @@ final class Gateway
     }
 
     /**
-     * @param \Cabbage\SPI\Endpoint $endpoint
+     * @param \Cabbage\SPI\Index $index
      */
-    public function purge(Endpoint $endpoint): void
+    public function purge(Index $index): void
     {
-        $url = "{$endpoint->getUrl()}/_delete_by_query";
+        $url = "{$index->getUrl()}/_delete_by_query";
         $query = [
             'query' => [
                 'match_all' => (object)null,

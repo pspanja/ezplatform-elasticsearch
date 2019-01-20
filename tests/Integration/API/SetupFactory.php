@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cabbage\Tests\Integration\API;
 
 use Cabbage\Core\Handler;
-use Cabbage\SPI\Endpoint;
 use Doctrine\DBAL\Connection;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Tests\SetupFactory\Legacy as CoreSetupFactory;

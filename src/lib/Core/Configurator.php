@@ -7,7 +7,7 @@ namespace Cabbage\Core;
 use Cabbage\Core\Http\Client;
 use Cabbage\Core\Http\Message;
 use Cabbage\Core\Http\Response;
-use Cabbage\SPI\Endpoint;
+use Cabbage\SPI\Index;
 use RuntimeException;
 
 /**
@@ -30,11 +30,11 @@ final class Configurator
     }
 
     /**
-     * @param \Cabbage\SPI\Endpoint $endpoint
+     * @param \Cabbage\SPI\Index $index
      *
      * @return \Cabbage\Core\Http\Response
      */
-    public function createIndex(Endpoint $endpoint): Response
+    public function createIndex(Index $index): Response
     {
         $body = [
             'settings' => [
@@ -50,19 +50,19 @@ final class Configurator
             ]
         );
 
-        return $this->client->put($endpoint->getUrl(), $message);
+        return $this->client->put($index->getUrl(), $message);
     }
 
     /**
-     * @param \Cabbage\SPI\Endpoint $endpoint
+     * @param \Cabbage\SPI\Index $index
      *
      * @return bool
      */
-    public function hasIndex(Endpoint $endpoint): bool
+    public function hasIndex(Index $index): bool
     {
         $message = new Message();
 
-        $response = $this->client->head($endpoint->getUrl(), $message);
+        $response = $this->client->head($index->getUrl(), $message);
 
         if ($response->status === 200) {
             return true;
@@ -78,25 +78,25 @@ final class Configurator
     }
 
     /**
-     * @param \Cabbage\SPI\Endpoint $endpoint
+     * @param \Cabbage\SPI\Index $index
      *
      * @return \Cabbage\Core\Http\Response
      */
-    public function deleteIndex(Endpoint $endpoint): Response
+    public function deleteIndex(Index $index): Response
     {
-        return $this->client->delete($endpoint->getUrl());
+        return $this->client->delete($index->getUrl());
     }
 
     /**
-     * @param \Cabbage\SPI\Endpoint $endpoint
+     * @param \Cabbage\SPI\Index $index
      * @param string $mapping
      *
      * @return \Cabbage\Core\Http\Response
      */
-    public function setMapping(Endpoint $endpoint, string $mapping): Response
+    public function setMapping(Index $index, string $mapping): Response
     {
         return $this->client->put(
-            $endpoint->getUrl() . '/_mapping/_doc',
+            $index->getUrl() . '/_mapping/_doc',
             Message::fromString($mapping)
         );
     }

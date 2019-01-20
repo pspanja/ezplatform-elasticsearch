@@ -7,7 +7,8 @@ namespace Cabbage\Tests\Integration\Core;
 use Cabbage\API\Query\Criterion\DocumentType;
 use Cabbage\Core\Handler;
 use Cabbage\SPI\Document;
-use Cabbage\SPI\Endpoint;
+use Cabbage\SPI\Index;
+use Cabbage\SPI\Node;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\SPI\Persistence\Content;
@@ -18,26 +19,27 @@ use eZ\Publish\SPI\Persistence\Content\VersionInfo;
 class HandlerTest extends BaseTest
 {
     /**
-     * @var \Cabbage\SPI\Endpoint
+     * @var \Cabbage\SPI\Index
      */
-    private static $endpoint;
+    private static $index;
 
     /**
      * @throws \Exception
      */
     public static function setUpBeforeClass(): void
     {
-        self::$endpoint = Endpoint::fromDsn('http://localhost:9200/index');
+        $node = Node::fromDsn('http://localhost:9200');
+        self::$index = new Index($node, 'index');
         $configurator = self::getContainer()->get('cabbage.configurator');
 
-        if ($configurator->hasIndex(self::$endpoint)) {
-            $configurator->deleteIndex(self::$endpoint);
+        if ($configurator->hasIndex(self::$index)) {
+            $configurator->deleteIndex(self::$index);
         }
 
         $mapping = \file_get_contents(__DIR__ . '/../../../config/elasticsearch/mapping.json');
 
-        $configurator->createIndex(self::$endpoint);
-        $configurator->setMapping(self::$endpoint, $mapping);
+        $configurator->createIndex(self::$index);
+        $configurator->setMapping(self::$index, $mapping);
     }
 
     /**
@@ -47,7 +49,6 @@ class HandlerTest extends BaseTest
      */
     public function testIndexContent(): void
     {
-        $endpoint = Endpoint::fromDsn('http://localhost:9200/index');
         $handler = $this->getHandlerUnderTest();
         $content = new Content([
             'versionInfo' => new VersionInfo([
@@ -59,7 +60,7 @@ class HandlerTest extends BaseTest
         ]);
 
         $handler->indexContent($content);
-        $this->flush($endpoint);
+        $this->flush(self::$index);
 
         $this->addToAssertionCount(1);
     }
@@ -118,11 +119,10 @@ class HandlerTest extends BaseTest
      */
     public function testPurgeIndex(): void
     {
-        $endpoint = Endpoint::fromDsn('http://localhost:9200/index');
         $handler = $this->getHandlerUnderTest();
 
         $handler->purgeIndex();
-        $this->flush($endpoint);
+        $this->flush(self::$index);
 
         $query = new Query([
             'filter' => new DocumentType(Document::TypeContent),
@@ -152,10 +152,10 @@ class HandlerTest extends BaseTest
     /**
      * @throws \Exception
      *
-     * @param \Cabbage\SPI\Endpoint $endpoint
+     * @param \Cabbage\SPI\Index $index
      */
-    protected function flush(Endpoint $endpoint): void
+    protected function flush(Index $index): void
     {
-        self::getContainer()->get('cabbage.gateway')->flush($endpoint);
+        self::getContainer()->get('cabbage.gateway')->flush($index);
     }
 }
