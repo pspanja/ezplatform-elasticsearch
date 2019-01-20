@@ -41,7 +41,7 @@ final class ResultExtractor
     }
 
     /**
-     * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/_the_search_api.html
+     * @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html
      *
      * @param object $hit
      *
