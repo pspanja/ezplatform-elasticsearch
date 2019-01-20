@@ -7,9 +7,11 @@ namespace Cabbage\Core\Document\Field;
 use Cabbage\SPI\Document\Field;
 
 /**
- * Generates name of the Document Field.
+ * Generates name of the Document Field with the type suffix.
  *
- * @see \Cabbage\SPI\Document\Field
+ * Type suffix is used by Elasticsearch to determine the type of the Field's value.
+ *
+ * @see \Cabbage\SPI\Document\Field::$type
  */
 final class TypedNameGenerator
 {
