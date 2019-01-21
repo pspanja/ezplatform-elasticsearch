@@ -61,9 +61,9 @@ class GatewayTest extends BaseTest
     {
         $index = self::$index;
         $payload = <<<EOD
-{"index":{"_index":"{$index->index}","_id":"a_1"}}
+{"index":{"_index":"{$index->name}","_id":"a_1"}}
 {"type_identifier":"type_a","field_keyword":"value"}
-{"index":{"_index":"{$index->index}","_id":"b_1"}}
+{"index":{"_index":"{$index->name}","_id":"b_1"}}
 {"type_identifier":"type_b","field_keyword":"value"}
 
 EOD;

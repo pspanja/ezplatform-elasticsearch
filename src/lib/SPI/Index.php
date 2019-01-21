@@ -15,24 +15,26 @@ final class Index
     public $node;
 
     /**
+     * Name of the index.
+     *
      * @var string
      */
-    public $index;
+    public $name;
 
     /**
      * @param \Cabbage\SPI\Node $node
-     * @param string $index
+     * @param string $name
      */
-    public function __construct(Node $node, string $index)
+    public function __construct(Node $node, string $name)
     {
-        if (\strpos($index, '/') !== false) {
+        if (\strpos($name, '/') !== false) {
             throw new \RuntimeException(
                 'Index name must not contain a slash'
             );
         }
 
         $this->node = $node;
-        $this->index = $index;
+        $this->name = $name;
     }
 
     /**
@@ -44,6 +46,6 @@ final class Index
     {
         $nodeUrl = $this->node->getUrl();
 
-        return "{$nodeUrl}/{$this->index}";
+        return "{$nodeUrl}/{$this->name}";
     }
 }

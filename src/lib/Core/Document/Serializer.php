@@ -84,7 +84,7 @@ final class Serializer
     {
         $data = [
             'index' => [
-                '_index' => $index->index,
+                '_index' => $index->name,
                 '_id' => $document->id,
             ],
         ];
