@@ -7,6 +7,7 @@ namespace Cabbage\Tests\Unit;
 use Cabbage\Core\IndexRegistry;
 use Cabbage\SPI\Index;
 use Cabbage\SPI\Node;
+use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
 
 class IndexRegistryTest extends TestCase
@@ -19,7 +20,6 @@ class IndexRegistryTest extends TestCase
         $registry = $this->getRegistryUnderTest();
 
         $index = new Index(Node::fromDsn('http://localhost:9200'), 'a');
-
         $registry->register('index_a', $index);
 
         $this->addToAssertionCount(1);
@@ -33,6 +33,8 @@ class IndexRegistryTest extends TestCase
     {
         $registry = $this->getRegistryUnderTest();
 
+        $index = new Index(Node::fromDsn('http://localhost:9200'), 'a');
+        $registry->register('index_a', $index);
         $index = $registry->get('index_a');
 
         $this->assertEquals('a', $index->name);
@@ -46,6 +48,8 @@ class IndexRegistryTest extends TestCase
     {
         $registry = $this->getRegistryUnderTest();
 
+        $index = new Index(Node::fromDsn('http://localhost:9200'), 'a');
+        $registry->register('index_a', $index);
         $index = new Index(Node::fromDsn('http://localhost:9200'), 'b');
         $registry->register('index_a', $index);
 
@@ -56,10 +60,11 @@ class IndexRegistryTest extends TestCase
 
     /**
      * @testdox Registry will crash if Index is not found
-     * @expectedException \OutOfBoundsException
      */
     public function testRegistryCanCrash(): void
     {
+        $this->expectException(OutOfBoundsException::class);
+
         $registry = $this->getRegistryUnderTest();
 
         $registry->get('index_c');
