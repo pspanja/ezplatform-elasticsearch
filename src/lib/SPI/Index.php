@@ -27,12 +27,6 @@ final class Index
      */
     public function __construct(Node $node, string $name)
     {
-        if (\strpos($name, '/') !== false) {
-            throw new \RuntimeException(
-                'Index name must not contain a slash'
-            );
-        }
-
         $this->node = $node;
         $this->name = $name;
     }
