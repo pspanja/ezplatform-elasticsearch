@@ -91,12 +91,12 @@ final class Node
             throw new RuntimeException('Failed to parse the given DSN');
         }
 
-        self::validate($elements);
+        self::validateDsnElements($elements);
 
         return $elements + self::$defaults;
     }
 
-    private static function validate(array $elements): void
+    private static function validateDsnElements(array $elements): void
     {
         if (array_key_exists('user', $elements) || array_key_exists('pass', $elements)) {
             throw new RuntimeException(
