@@ -69,6 +69,8 @@ services:
 
     cabbage.document.index_resolver:
         class: Cabbage\Core\Document\IndexResolver
+        arguments:
+            - '@cabbage.index_registry'
 
     cabbage.document.field.value_mapper.visitor.boolean:
         class: Cabbage\Core\Document\Field\ValueMapper\Visitor\Boolean
@@ -131,6 +133,8 @@ services:
 
     cabbage.query.target_resolver:
         class: Cabbage\Core\Query\TargetResolver
+        arguments:
+            - '@cabbage.index_registry'
 
     cabbage.result_extractor:
         class: Cabbage\Core\ResultExtractor
@@ -143,6 +147,7 @@ services:
             - '@cabbage.document.serializer'
             - '@cabbage.query.translator'
             - '@cabbage.query.target_resolver'
+            - '@cabbage.index_registry'
             - '@cabbage.result_extractor'
 
     ezpublish.spi.search_engine:
@@ -153,3 +158,21 @@ services:
         arguments:
             - '%ezpublish.signalslot.signal_dispatcher.class%'
             - 'cabbage'
+
+    cabbage.node.default:
+        class: Cabbage\SPI\Node
+        factory: Cabbage\SPI\Node::fromDsn
+        arguments:
+            - 'http://localhost:9200'
+
+    cabbage.index.default:
+        class: Cabbage\SPI\Index
+        arguments:
+            - '@cabbage.node.default'
+            - 'index'
+
+    cabbage.index_registry:
+        class: Cabbage\Core\IndexRegistry
+        arguments:
+            -
+                default: '@cabbage.index.default'

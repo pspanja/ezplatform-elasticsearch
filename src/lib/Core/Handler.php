@@ -39,6 +39,11 @@ final class Handler implements HandlerInterface, Capable
     private $documentSerializer;
 
     /**
+     * @var \Cabbage\Core\IndexRegistry
+     */
+    private $indexRegistry;
+
+    /**
      * @var \Cabbage\Core\Query\Translator
      */
     private $queryTranslator;
@@ -59,6 +64,7 @@ final class Handler implements HandlerInterface, Capable
      * @param \Cabbage\Core\Document\Serializer $documentSerializer
      * @param \Cabbage\Core\Query\Translator $queryTranslator
      * @param \Cabbage\Core\Query\TargetResolver $targetResolver
+     * @param \Cabbage\Core\IndexRegistry $indexRegistry
      * @param \Cabbage\Core\ResultExtractor $resultExtractor
      */
     public function __construct(
@@ -67,6 +73,7 @@ final class Handler implements HandlerInterface, Capable
         Serializer $documentSerializer,
         Translator $queryTranslator,
         TargetResolver $targetResolver,
+        IndexRegistry $indexRegistry,
         ResultExtractor $resultExtractor
     ) {
         $this->gateway = $gateway;
@@ -74,6 +81,7 @@ final class Handler implements HandlerInterface, Capable
         $this->documentSerializer = $documentSerializer;
         $this->queryTranslator = $queryTranslator;
         $this->targetResolver = $targetResolver;
+        $this->indexRegistry = $indexRegistry;
         $this->resultExtractor = $resultExtractor;
     }
 

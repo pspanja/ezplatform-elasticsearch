@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Query;
 
+use Cabbage\Core\IndexRegistry;
 use Cabbage\SPI\Index;
-use Cabbage\SPI\Node;
 use eZ\Publish\API\Repository\Values\Content\Query;
 
 /**
@@ -13,11 +13,18 @@ use eZ\Publish\API\Repository\Values\Content\Query;
  */
 final class TargetResolver
 {
+    /**
+     * @var \Cabbage\Core\IndexRegistry
+     */
+    private $indexRegistry;
+
+    public function __construct(IndexRegistry $indexRegistry)
+    {
+        $this->indexRegistry = $indexRegistry;
+    }
+
     public function resolve(Query $query): Index
     {
-        return new Index(
-            Node::fromDsn('http://localhost:9200'),
-            'index'
-        );
+        return $this->indexRegistry->get('default');
     }
 }
