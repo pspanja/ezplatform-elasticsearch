@@ -96,7 +96,7 @@ final class Configurator
     public function setMapping(Index $index, string $mapping): Response
     {
         return $this->client->put(
-            $index->getUrl() . '/_mapping/_doc',
+            $index->getUrl() . '/_mapping',
             Message::fromString($mapping)
         );
     }
