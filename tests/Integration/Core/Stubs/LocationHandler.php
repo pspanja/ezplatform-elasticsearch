@@ -161,4 +161,20 @@ class LocationHandler implements LocationHandlerInterface
     {
         throw new RuntimeException('Not implemented');
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setInvisible(int $id): void
+    {
+        throw new RuntimeException('Not implemented');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setVisible(int $id): void
+    {
+        throw new RuntimeException('Not implemented');
+    }
 }
