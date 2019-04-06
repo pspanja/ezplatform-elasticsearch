@@ -219,4 +219,14 @@ final class Handler implements HandlerInterface, Capable
             )
         );
     }
+
+    public function refresh(): void
+    {
+        $this->gateway->refresh(
+            new Index(
+                Node::fromDsn('http://localhost:9200'),
+                'index'
+            )
+        );
+    }
 }

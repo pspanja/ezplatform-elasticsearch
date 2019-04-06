@@ -92,6 +92,22 @@ final class Gateway
     /**
      * @param \Cabbage\SPI\Index $index
      */
+    public function refresh(Index $index): void
+    {
+        $url = "{$index->getUrl()}/_refresh";
+
+        $response = $this->client->post($url);
+
+        if ($response->status !== 200) {
+            throw new RuntimeException(
+                "Invalid response status {$response->status}"
+            );
+        }
+    }
+
+    /**
+     * @param \Cabbage\SPI\Index $index
+     */
     public function purge(Index $index): void
     {
         $url = "{$index->getUrl()}/_delete_by_query";
