@@ -7,7 +7,6 @@ namespace Cabbage\Core\Document;
 use Cabbage\Core\IndexRegistry;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Index;
-use Cabbage\SPI\Node;
 
 /**
  * Resolves an index where a document will be indexed.
