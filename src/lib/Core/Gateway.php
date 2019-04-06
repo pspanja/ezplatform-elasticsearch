@@ -82,9 +82,6 @@ final class Gateway
 
         $response = $this->client->post($url);
 
-        // TODO: temp, should be possible to remove it in the v7 final
-        sleep(1);
-
         if ($response->status !== 200) {
             throw new RuntimeException(
                 "Invalid response status {$response->status}"
