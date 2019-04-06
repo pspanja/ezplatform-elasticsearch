@@ -46,7 +46,7 @@ class GatewayTest extends BaseTest
      */
     public function testFlush(): void
     {
-        self::$gateway->flush(self::$index);
+        self::$gateway->refresh(self::$index);
 
         $this->assertTrue(true);
     }
@@ -69,7 +69,7 @@ class GatewayTest extends BaseTest
 EOD;
 
         self::$gateway->index(self::$index, $payload);
-        self::$gateway->flush(self::$index);
+        self::$gateway->refresh(self::$index);
 
         $this->assertTrue(true);
     }
@@ -123,7 +123,7 @@ EOD;
     public function testPurge(): void
     {
         self::$gateway->purge(self::$index);
-        self::$gateway->flush(self::$index);
+        self::$gateway->refresh(self::$index);
 
         $query = [
             'query' => [

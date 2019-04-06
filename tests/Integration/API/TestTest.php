@@ -47,7 +47,7 @@ final class TestTest extends BaseTest
         $contentDraft = $contentService->createContent($struct);
         $content = $contentService->publishVersion($contentDraft->versionInfo);
 
-        $this->flush(
+        $this->refresh(
             new Index(
                 Node::fromDsn('http://localhost:9200'),
                 'index'
@@ -69,8 +69,8 @@ final class TestTest extends BaseTest
      *
      * @param \Cabbage\SPI\Index $index
      */
-    protected function flush(Index $index): void
+    protected function refresh(Index $index): void
     {
-        $this->getSetupFactory()->getServiceContainer()->get('cabbage.gateway')->flush($index);
+        $this->getSetupFactory()->getServiceContainer()->get('cabbage.gateway')->refresh($index);
     }
 }

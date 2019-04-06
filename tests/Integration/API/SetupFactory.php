@@ -125,6 +125,6 @@ final class SetupFactory extends CoreSetupFactory
 
         $searchHandler->purgeIndex();
         $searchHandler->bulkIndexContent($contentItems);
-        $searchHandler->flush();
+        $searchHandler->refresh();
     }
 }

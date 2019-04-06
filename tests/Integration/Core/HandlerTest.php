@@ -60,7 +60,7 @@ class HandlerTest extends BaseTest
         ]);
 
         $handler->indexContent($content);
-        $this->flush(self::$index);
+        $this->refresh(self::$index);
 
         $this->addToAssertionCount(1);
     }
@@ -122,7 +122,7 @@ class HandlerTest extends BaseTest
         $handler = $this->getHandlerUnderTest();
 
         $handler->purgeIndex();
-        $this->flush(self::$index);
+        $this->refresh(self::$index);
 
         $query = new Query([
             'filter' => new DocumentType(Mapper::TypeContent),
@@ -154,8 +154,8 @@ class HandlerTest extends BaseTest
      *
      * @param \Cabbage\SPI\Index $index
      */
-    protected function flush(Index $index): void
+    protected function refresh(Index $index): void
     {
-        self::getContainer()->get('cabbage.gateway')->flush($index);
+        self::getContainer()->get('cabbage.gateway')->refresh($index);
     }
 }
