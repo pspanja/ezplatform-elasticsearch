@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Document\Mapper;
+namespace Cabbage\Core\Indexer\Document\Mapper;
 
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Location;

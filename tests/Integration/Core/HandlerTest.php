@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Tests\Integration\Core;
 
 use Cabbage\API\Query\Criterion\DocumentType;
-use Cabbage\Core\Document\Mapper;
+use Cabbage\Core\Indexer\Document\Mapper;
 use Cabbage\Core\Handler;
 use Cabbage\SPI\Index;
 use Cabbage\SPI\Node;

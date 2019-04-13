@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Document\Mapper\ContentField;
+namespace Cabbage\Core\Indexer\Document\Mapper\ContentField;
 
 use Cabbage\Core\FieldType\DataMapperRegistry;
 use Cabbage\SPI\Document\Field as DocumentField;
@@ -25,13 +25,13 @@ final class Mapper
      */
     private $dataMapperRegistry;
     /**
-     * @var \Cabbage\Core\Document\Mapper\ContentField\NameGenerator
+     * @var \Cabbage\Core\Indexer\Document\Mapper\ContentField\NameGenerator
      */
     private $nameGenerator;
 
     /**
      * @param \Cabbage\Core\FieldType\DataMapperRegistry $dataMapperRegistry
-     * @param \Cabbage\Core\Document\Mapper\ContentField\NameGenerator $nameGenerator
+     * @param \Cabbage\Core\Indexer\Document\Mapper\ContentField\NameGenerator $nameGenerator
      */
     public function __construct(
         DataMapperRegistry $dataMapperRegistry,

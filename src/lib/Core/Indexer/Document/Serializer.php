@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Document;
+namespace Cabbage\Core\Indexer\Document;
 
-use Cabbage\Core\Document\Field\TypedNameGenerator;
-use Cabbage\Core\Document\Field\ValueMapper;
+use Cabbage\Core\Indexer\Document\Field\TypedNameGenerator;
+use Cabbage\Core\Indexer\Document\Field\ValueMapper;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Index;
 
@@ -17,24 +17,24 @@ use Cabbage\SPI\Index;
 final class Serializer
 {
     /**
-     * @var \Cabbage\Core\Document\DestinationResolver
+     * @var \Cabbage\Core\Indexer\Document\DestinationResolver
      */
     private $destinationResolver;
 
     /**
-     * @var \Cabbage\Core\Document\Field\TypedNameGenerator
+     * @var \Cabbage\Core\Indexer\Document\Field\TypedNameGenerator
      */
     private $fieldTypedNameGenerator;
 
     /**
-     * @var \Cabbage\Core\Document\Field\ValueMapper
+     * @var \Cabbage\Core\Indexer\Document\Field\ValueMapper
      */
     private $fieldValueMapper;
 
     /**
-     * @param \Cabbage\Core\Document\DestinationResolver $destinationResolver
-     * @param \Cabbage\Core\Document\Field\TypedNameGenerator $fieldTypedNameGenerator
-     * @param \Cabbage\Core\Document\Field\ValueMapper $fieldValueMapper
+     * @param \Cabbage\Core\Indexer\Document\DestinationResolver $destinationResolver
+     * @param \Cabbage\Core\Indexer\Document\Field\TypedNameGenerator $fieldTypedNameGenerator
+     * @param \Cabbage\Core\Indexer\Document\Field\ValueMapper $fieldValueMapper
      */
     public function __construct(
         DestinationResolver $destinationResolver,

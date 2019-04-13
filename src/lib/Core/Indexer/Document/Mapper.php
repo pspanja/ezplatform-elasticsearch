@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Document;
+namespace Cabbage\Core\Indexer\Document;
 
-use Cabbage\Core\Document\Mapper\ContentField\Mapper as ContentFieldMapper;
-use Cabbage\Core\Document\Mapper\IdGenerator;
+use Cabbage\Core\Indexer\Document\Mapper\ContentField\Mapper as ContentFieldMapper;
+use Cabbage\Core\Indexer\Document\Mapper\IdGenerator;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Document\Field;
 use Cabbage\SPI\Document\Field\Type\Identifier;
@@ -48,20 +48,20 @@ final class Mapper
     private $typeHandler;
 
     /**
-     * @var \Cabbage\Core\Document\Mapper\ContentField\Mapper
+     * @var \Cabbage\Core\Indexer\Document\Mapper\ContentField\Mapper
      */
     private $contentFieldMapper;
 
     /**
-     * @var \Cabbage\Core\Document\Mapper\IdGenerator
+     * @var \Cabbage\Core\Indexer\Document\Mapper\IdGenerator
      */
     private $idGenerator;
 
     /**
      * @param \eZ\Publish\SPI\Persistence\Content\Location\Handler $locationHandler
      * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $typeHandler
-     * @param \Cabbage\Core\Document\Mapper\ContentField\Mapper $contentFieldMapper
-     * @param \Cabbage\Core\Document\Mapper\IdGenerator $idGenerator
+     * @param \Cabbage\Core\Indexer\Document\Mapper\ContentField\Mapper $contentFieldMapper
+     * @param \Cabbage\Core\Indexer\Document\Mapper\IdGenerator $idGenerator
      */
     public function __construct(
         LocationHandler $locationHandler,

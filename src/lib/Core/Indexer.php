@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Core;
 
-use Cabbage\Core\Document\Mapper;
-use Cabbage\Core\Document\Serializer;
+use Cabbage\Core\Indexer\Document\Mapper;
+use Cabbage\Core\Indexer\Document\Serializer;
 use Cabbage\SPI\Index;
 use Cabbage\SPI\Indexer as SPIIndexer;
 use Cabbage\SPI\Node;
@@ -21,19 +21,19 @@ final class Indexer extends SPIIndexer
     private $gateway;
 
     /**
-     * @var \Cabbage\Core\Document\Mapper
+     * @var \Cabbage\Core\Indexer\Document\Mapper
      */
     private $documentMapper;
 
     /**
-     * @var \Cabbage\Core\Document\Serializer
+     * @var \Cabbage\Core\Indexer\Document\Serializer
      */
     private $documentSerializer;
 
     /**
      * @param \Cabbage\Core\Gateway $gateway
-     * @param \Cabbage\Core\Document\Mapper $documentMapper
-     * @param \Cabbage\Core\Document\Serializer $documentSerializer
+     * @param \Cabbage\Core\Indexer\Document\Mapper $documentMapper
+     * @param \Cabbage\Core\Indexer\Document\Serializer $documentSerializer
      */
     public function __construct(
         Gateway $gateway,
