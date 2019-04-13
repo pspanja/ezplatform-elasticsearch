@@ -7,13 +7,13 @@ namespace Cabbage\Core;
 use Cabbage\Core\Document\Mapper;
 use Cabbage\Core\Document\Serializer;
 use Cabbage\SPI\Index;
-use Cabbage\SPI\Indexer as AbstractIndexer;
+use Cabbage\SPI\Indexer as SPIIndexer;
 use Cabbage\SPI\Node;
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Location;
 use RuntimeException;
 
-final class Indexer extends AbstractIndexer
+final class Indexer extends SPIIndexer
 {
     /**
      * @var \Cabbage\Core\Gateway
