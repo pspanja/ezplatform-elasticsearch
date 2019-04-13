@@ -7,12 +7,13 @@ namespace Cabbage\Core;
 use Cabbage\Core\Document\Mapper;
 use Cabbage\Core\Document\Serializer;
 use Cabbage\SPI\Index;
+use Cabbage\SPI\Indexer as AbstractIndexer;
 use Cabbage\SPI\Node;
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Location;
 use RuntimeException;
 
-final class Indexer
+final class Indexer extends AbstractIndexer
 {
     /**
      * @var \Cabbage\Core\Gateway
@@ -63,10 +64,7 @@ final class Indexer
     }
 
     /**
-     * Deletes a content object from the index.
-     *
-     * @param int $contentId
-     * @param int|null $versionId
+     * {@inheritDoc}
      */
     public function deleteContent($contentId, $versionId = null): void
     {
@@ -79,10 +77,7 @@ final class Indexer
     }
 
     /**
-     * Deletes a location from the index.
-     *
-     * @param mixed $locationId
-     * @param mixed $contentId
+     * {@inheritDoc}
      */
     public function deleteLocation($locationId, $contentId): void
     {
@@ -100,7 +95,7 @@ final class Indexer
     }
 
     /**
-     * @param \eZ\Publish\SPI\Persistence\Content[] $contentItems
+     * {@inheritDoc}
      *
      * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
