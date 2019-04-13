@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Query\Translator\Criterion;
+namespace Cabbage\Core\Searcher\Query\Translator\Criterion;
 
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 
@@ -11,8 +11,8 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
  *
  * It uses criterion converter to translate aggregated criteria like logical operators.
  *
- * @see \Cabbage\Core\Query\Translator
- * @see \Cabbage\Core\Query\Translator\Criterion\Converter
+ * @see \Cabbage\Core\Searcher\Query\Translator
+ * @see \Cabbage\Core\Searcher\Query\Translator\Criterion\Converter
  * @see \eZ\Publish\API\Repository\Values\Content\Query\Criterion
  */
 abstract class Visitor
@@ -30,7 +30,7 @@ abstract class Visitor
      * Visit the criterion using converter for visiting aggregate criteria.
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Query\Criterion $criterion
-     * @param \Cabbage\Core\Query\Translator\Criterion\Converter $converter
+     * @param \Cabbage\Core\Searcher\Query\Translator\Criterion\Converter $converter
      *
      * @return array
      */

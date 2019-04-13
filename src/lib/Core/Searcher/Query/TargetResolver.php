@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Query;
+namespace Cabbage\Core\Searcher\Query;
 
 use Cabbage\Core\IndexRegistry;
 use Cabbage\SPI\Index;

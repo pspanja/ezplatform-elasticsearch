@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Query;
+namespace Cabbage\Core\Searcher\Query;
 
-use Cabbage\Core\Query\Translator\Criterion\Converter;
+use Cabbage\Core\Searcher\Query\Translator\Criterion\Converter;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchAll;
@@ -19,7 +19,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchAll;
 final class Translator
 {
     /**
-     * @var \Cabbage\Core\Query\Translator\Criterion\Converter
+     * @var \Cabbage\Core\Searcher\Query\Translator\Criterion\Converter
      */
     private $criterionConverter;
 

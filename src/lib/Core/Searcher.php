@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Cabbage\Core;
 
-use Cabbage\Core\Query\TargetResolver;
-use Cabbage\Core\Query\Translator;
+use Cabbage\Core\Searcher\Query\TargetResolver;
+use Cabbage\Core\Searcher\Query\Translator;
+use Cabbage\Core\Searcher\ResultExtractor;
 use Cabbage\SPI\Searcher as SPISearcher;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -22,25 +23,25 @@ final class Searcher extends SPISearcher
     private $gateway;
 
     /**
-     * @var \Cabbage\Core\Query\Translator
+     * @var \Cabbage\Core\Searcher\Query\Translator
      */
     private $queryTranslator;
 
     /**
-     * @var \Cabbage\Core\Query\TargetResolver
+     * @var \Cabbage\Core\Searcher\Query\TargetResolver
      */
     private $targetResolver;
 
     /**
-     * @var \Cabbage\Core\ResultExtractor
+     * @var \Cabbage\Core\Searcher\ResultExtractor
      */
     private $resultExtractor;
 
     /**
      * @param \Cabbage\Core\Gateway $gateway
-     * @param \Cabbage\Core\Query\Translator $queryTranslator
-     * @param \Cabbage\Core\Query\TargetResolver $targetResolver
-     * @param \Cabbage\Core\ResultExtractor $resultExtractor
+     * @param \Cabbage\Core\Searcher\Query\Translator $queryTranslator
+     * @param \Cabbage\Core\Searcher\Query\TargetResolver $targetResolver
+     * @param \Cabbage\Core\Searcher\ResultExtractor $resultExtractor
      */
     public function __construct(
         Gateway $gateway,
