@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Cabbage\Core;
 
-use Cabbage\Core\Query\TargetResolver;
-use Cabbage\Core\Query\Translator;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
@@ -25,44 +23,18 @@ final class Handler implements HandlerInterface, Capable
     private $indexer;
 
     /**
-     * @var \Cabbage\Core\Gateway
+     * @var \Cabbage\Core\Searcher
      */
-    private $gateway;
-
-    /**
-     * @var \Cabbage\Core\Query\Translator
-     */
-    private $queryTranslator;
-
-    /**
-     * @var \Cabbage\Core\Query\TargetResolver
-     */
-    private $targetResolver;
-
-    /**
-     * @var \Cabbage\Core\ResultExtractor
-     */
-    private $resultExtractor;
+    private $searcher;
 
     /**
      * @param \Cabbage\Core\Indexer $indexer
-     * @param \Cabbage\Core\Gateway $gateway
-     * @param \Cabbage\Core\Query\Translator $queryTranslator
-     * @param \Cabbage\Core\Query\TargetResolver $targetResolver
-     * @param \Cabbage\Core\ResultExtractor $resultExtractor
+     * @param \Cabbage\Core\Searcher $searcher
      */
-    public function __construct(
-        Indexer $indexer,
-        Gateway $gateway,
-        Translator $queryTranslator,
-        TargetResolver $targetResolver,
-        ResultExtractor $resultExtractor
-    ) {
+    public function __construct(Indexer $indexer, Searcher $searcher)
+    {
         $this->indexer = $indexer;
-        $this->gateway = $gateway;
-        $this->queryTranslator = $queryTranslator;
-        $this->targetResolver = $targetResolver;
-        $this->resultExtractor = $resultExtractor;
+        $this->searcher = $searcher;
     }
 
     /**
@@ -78,13 +50,7 @@ final class Handler implements HandlerInterface, Capable
      */
     public function findContent(Query $query, array $languageFilter = []): SearchResult
     {
-        return
-            $this->resultExtractor->extract(
-                $this->gateway->find(
-                    $this->targetResolver->resolve($query),
-                    $this->queryTranslator->translateContentQuery($query)
-                )
-            );
+        return $this->searcher->findContent($query, $languageFilter);
     }
 
     /**
@@ -92,7 +58,7 @@ final class Handler implements HandlerInterface, Capable
      */
     public function findSingle(Criterion $filter, array $languageFilter = []): ContentInfo
     {
-        throw new RuntimeException('Not implemented');
+        return $this->searcher->findSingle($filter, $languageFilter);
     }
 
     /**
@@ -100,13 +66,7 @@ final class Handler implements HandlerInterface, Capable
      */
     public function findLocations(LocationQuery $query, array $languageFilter = []): SearchResult
     {
-        return
-            $this->resultExtractor->extract(
-                $this->gateway->find(
-                    $this->targetResolver->resolve($query),
-                    $this->queryTranslator->translateLocationQuery($query)
-                )
-            );
+        return $this->searcher->findLocations($query, $languageFilter);
     }
 
     /**
@@ -114,7 +74,7 @@ final class Handler implements HandlerInterface, Capable
      */
     public function suggest($prefix, $fieldPaths = [], $limit = 10, ?Criterion $filter = null): void
     {
-        throw new RuntimeException('Not implemented');
+        $this->searcher->suggest($prefix, $fieldPaths, $limit, $filter);
     }
 
     /**

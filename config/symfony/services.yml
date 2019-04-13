@@ -146,14 +146,19 @@ services:
             - '@cabbage.document.mapper'
             - '@cabbage.document.serializer'
 
-    cabbage.handler:
-        class: Cabbage\Core\Handler
+    cabbage.searcher:
+        class: Cabbage\Core\Searcher
         arguments:
-            - '@cabbage.indexer'
             - '@cabbage.gateway'
             - '@cabbage.query.translator'
             - '@cabbage.query.target_resolver'
             - '@cabbage.result_extractor'
+
+    cabbage.handler:
+        class: Cabbage\Core\Handler
+        arguments:
+            - '@cabbage.indexer'
+            - '@cabbage.searcher'
 
     ezpublish.spi.search_engine:
         alias: cabbage.handler
