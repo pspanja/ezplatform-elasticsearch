@@ -17,9 +17,9 @@ use Cabbage\SPI\Index;
 final class Serializer
 {
     /**
-     * @var \Cabbage\Core\Document\IndexResolver
+     * @var \Cabbage\Core\Document\DestinationResolver
      */
-    private $documentIndexResolver;
+    private $destinationResolver;
 
     /**
      * @var \Cabbage\Core\Document\Field\TypedNameGenerator
@@ -32,16 +32,16 @@ final class Serializer
     private $fieldValueMapper;
 
     /**
-     * @param \Cabbage\Core\Document\IndexResolver $documentIndexResolver
+     * @param \Cabbage\Core\Document\DestinationResolver $destinationResolver
      * @param \Cabbage\Core\Document\Field\TypedNameGenerator $fieldTypedNameGenerator
      * @param \Cabbage\Core\Document\Field\ValueMapper $fieldValueMapper
      */
     public function __construct(
-        IndexResolver $documentIndexResolver,
+        DestinationResolver $destinationResolver,
         TypedNameGenerator $fieldTypedNameGenerator,
         ValueMapper $fieldValueMapper
     ) {
-        $this->documentIndexResolver = $documentIndexResolver;
+        $this->destinationResolver = $destinationResolver;
         $this->fieldTypedNameGenerator = $fieldTypedNameGenerator;
         $this->fieldValueMapper = $fieldValueMapper;
     }
@@ -64,7 +64,7 @@ final class Serializer
 
     private function getDocumentPayload(Document $document): string
     {
-        $index = $this->documentIndexResolver->resolve($document);
+        $index = $this->destinationResolver->resolve($document);
 
         $targetMetaData = $this->getTargetMetadata($index, $document);
         $fieldPayload = $this->serializeDocument($document);

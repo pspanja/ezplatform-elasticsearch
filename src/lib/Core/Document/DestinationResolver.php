@@ -11,7 +11,7 @@ use Cabbage\SPI\Index;
 /**
  * Resolves an index where a document will be indexed.
  */
-final class IndexResolver
+final class DestinationResolver
 {
     /**
      * @var \Cabbage\Core\IndexRegistry
