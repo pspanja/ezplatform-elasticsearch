@@ -1,4 +1,4 @@
-FROM docker.elastic.co/elasticsearch/elasticsearch:7.0.0-rc2
+FROM docker.elastic.co/elasticsearch/elasticsearch:7.0.0
 
 ENV discovery.type single-node
 ENV http.host 0.0.0.0
