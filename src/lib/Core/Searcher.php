@@ -6,6 +6,7 @@ namespace Cabbage\Core;
 
 use Cabbage\Core\Query\TargetResolver;
 use Cabbage\Core\Query\Translator;
+use Cabbage\SPI\Searcher as SPISearcher;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
@@ -13,7 +14,7 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\SPI\Persistence\Content\ContentInfo;
 use RuntimeException;
 
-final class Searcher
+final class Searcher extends SPISearcher
 {
     /**
      * @var \Cabbage\Core\Gateway
@@ -53,14 +54,6 @@ final class Searcher
         $this->resultExtractor = $resultExtractor;
     }
 
-    /**
-     * @see \eZ\Publish\SPI\Search\Handler::findContent()
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Query $query
-     * @param array $languageFilter
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
-     */
     public function findContent(Query $query, array $languageFilter = []): SearchResult
     {
         return
@@ -72,27 +65,11 @@ final class Searcher
             );
     }
 
-    /**
-     * @see \eZ\Publish\SPI\Search\Handler::findSingle()
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Query\Criterion $filter
-     * @param array $languageFilter
-     *
-     * @return \eZ\Publish\SPI\Persistence\Content\ContentInfo
-     */
     public function findSingle(Criterion $filter, array $languageFilter = []): ContentInfo
     {
         throw new RuntimeException('Not implemented');
     }
 
-    /**
-     * @see \eZ\Publish\SPI\Search\Handler::findLocations()
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\LocationQuery $query
-     * @param array $languageFilter
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
-     */
     public function findLocations(LocationQuery $query, array $languageFilter = []): SearchResult
     {
         return
@@ -104,14 +81,6 @@ final class Searcher
             );
     }
 
-    /**
-     * @see \eZ\Publish\SPI\Search\Handler::suggest()
-     *
-     * @param $prefix
-     * @param array $fieldPaths
-     * @param int $limit
-     * @param \eZ\Publish\API\Repository\Values\Content\Query\Criterion|null $filter
-     */
     public function suggest($prefix, $fieldPaths = [], $limit = 10, ?Criterion $filter = null): void
     {
         throw new RuntimeException('Not implemented');

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core;
 
 use Cabbage\SPI\Indexer as SPIIndexer;
+use Cabbage\SPI\Searcher as SPISearcher;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
@@ -24,15 +25,15 @@ final class Handler implements HandlerInterface, Capable
     private $indexer;
 
     /**
-     * @var \Cabbage\Core\Searcher
+     * @var \Cabbage\SPI\Searcher
      */
     private $searcher;
 
     /**
      * @param \Cabbage\SPI\Indexer $indexer
-     * @param \Cabbage\Core\Searcher $searcher
+     * @param \Cabbage\SPI\Searcher $searcher
      */
-    public function __construct(SPIIndexer $indexer, Searcher $searcher)
+    public function __construct(SPIIndexer $indexer, SPISearcher $searcher)
     {
         $this->indexer = $indexer;
         $this->searcher = $searcher;
