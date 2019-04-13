@@ -78,11 +78,6 @@ final class Handler implements HandlerInterface, Capable
         $this->searcher->suggest($prefix, $fieldPaths, $limit, $filter);
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     */
     public function indexContent(Content $content): void
     {
         $this->indexer->indexContent($content);
@@ -116,8 +111,6 @@ final class Handler implements HandlerInterface, Capable
 
     /**
      * @param \eZ\Publish\SPI\Persistence\Content[] $contentItems
-     *
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
      */
     public function bulkIndexContent(array $contentItems): void
     {
