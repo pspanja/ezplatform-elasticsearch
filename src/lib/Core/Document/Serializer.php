@@ -53,23 +53,23 @@ final class Serializer
      */
     public function serialize(array $documents): string
     {
-        $payload = '';
+        $result = '';
 
         foreach ($documents as $document) {
-            $payload .= $this->getDocumentPayload($document);
+            $result .= $this->serializeDocument($document);
         }
 
-        return $payload;
+        return $result;
     }
 
-    private function getDocumentPayload(Document $document): string
+    private function serializeDocument(Document $document): string
     {
         $index = $this->destinationResolver->resolve($document);
 
-        $targetMetaData = $this->getTargetMetadata($index, $document);
-        $fieldPayload = $this->serializeDocument($document);
+        $actionAndMetaData = $this->getActionAndMetaData($index, $document);
+        $payload = $this->getPayload($document);
 
-        return "{$targetMetaData}\n{$fieldPayload}\n";
+        return "{$actionAndMetaData}\n{$payload}\n";
     }
 
     /**
@@ -80,7 +80,7 @@ final class Serializer
      *
      * @return string
      */
-    private function getTargetMetadata(Index $index, Document $document): string
+    private function getActionAndMetaData(Index $index, Document $document): string
     {
         $data = [
             'index' => [
@@ -97,7 +97,7 @@ final class Serializer
      *
      * @return string
      */
-    private function serializeDocument(Document $document): string
+    private function getPayload(Document $document): string
     {
         $data = [];
 
