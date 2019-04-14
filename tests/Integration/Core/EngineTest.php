@@ -15,6 +15,7 @@ use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\ContentInfo;
 use eZ\Publish\SPI\Persistence\Content\Location;
 use eZ\Publish\SPI\Persistence\Content\VersionInfo;
+use function file_get_contents;
 
 class EngineTest extends BaseTest
 {
@@ -36,7 +37,7 @@ class EngineTest extends BaseTest
             $configurator->deleteIndex(self::$index);
         }
 
-        $mapping = \file_get_contents(__DIR__ . '/../../../config/elasticsearch/mapping.json');
+        $mapping = file_get_contents(__DIR__ . '/../../../config/elasticsearch/mapping.json');
 
         $configurator->createIndex(self::$index);
         $configurator->setMapping(self::$index, $mapping);

@@ -6,6 +6,7 @@ namespace Cabbage\Tests\Integration\Core;
 
 use Cabbage\SPI\Index;
 use Cabbage\SPI\Node;
+use function file_get_contents;
 
 class ConfiguratorTest extends BaseTest
 {
@@ -67,7 +68,7 @@ class ConfiguratorTest extends BaseTest
      */
     public function testSetMapping(): void
     {
-        $mapping = \file_get_contents(__DIR__ . '/../../../config/elasticsearch/mapping.json');
+        $mapping = file_get_contents(__DIR__ . '/../../../config/elasticsearch/mapping.json');
 
         $response = self::$configurator->setMapping(self::$index, $mapping);
 

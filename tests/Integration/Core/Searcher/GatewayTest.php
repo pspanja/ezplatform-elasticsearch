@@ -7,6 +7,7 @@ namespace Cabbage\Tests\Integration\Core\Searcher;
 use Cabbage\SPI\Index;
 use Cabbage\SPI\Node;
 use Cabbage\Tests\Integration\Core\BaseTest;
+use function file_get_contents;
 
 class GatewayTest extends BaseTest
 {
@@ -40,7 +41,7 @@ class GatewayTest extends BaseTest
             $configurator->deleteIndex(self::$index);
         }
 
-        $mapping = \file_get_contents(__DIR__ . '/../../../../config/elasticsearch/mapping.json');
+        $mapping = file_get_contents(__DIR__ . '/../../../../config/elasticsearch/mapping.json');
 
         $configurator->createIndex(self::$index);
         $configurator->setMapping(self::$index, $mapping);
