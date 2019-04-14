@@ -11,11 +11,6 @@ services:
     cabbage.http.client:
         class: Cabbage\Core\Http\Client
 
-    cabbage.gateway:
-        class: Cabbage\Core\Gateway
-        arguments:
-            - '@cabbage.http.client'
-
     cabbage.configurator:
         class: Cabbage\Core\Configurator
         arguments:
@@ -139,17 +134,27 @@ services:
     cabbage.result_extractor:
         class: Cabbage\Core\Searcher\ResultExtractor
 
+    cabbage.indexer.gateway:
+        class: Cabbage\Core\Indexer\Gateway
+        arguments:
+            - '@cabbage.http.client'
+
     cabbage.indexer:
         class: Cabbage\Core\Indexer
         arguments:
-            - '@cabbage.gateway'
+            - '@cabbage.indexer.gateway'
             - '@cabbage.document.mapper'
             - '@cabbage.document.serializer'
+
+    cabbage.searcher.gateway:
+        class: Cabbage\Core\Searcher\Gateway
+        arguments:
+            - '@cabbage.http.client'
 
     cabbage.searcher:
         class: Cabbage\Core\Searcher
         arguments:
-            - '@cabbage.gateway'
+            - '@cabbage.searcher.gateway'
             - '@cabbage.query.translator'
             - '@cabbage.query.target_resolver'
             - '@cabbage.result_extractor'

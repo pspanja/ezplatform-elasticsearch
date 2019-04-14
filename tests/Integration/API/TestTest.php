@@ -71,6 +71,6 @@ final class TestTest extends BaseTest
      */
     protected function refresh(Index $index): void
     {
-        $this->getSetupFactory()->getServiceContainer()->get('cabbage.gateway')->refresh($index);
+        $this->getSetupFactory()->getServiceContainer()->get('cabbage.indexer.gateway')->refresh($index);
     }
 }

@@ -156,6 +156,6 @@ class HandlerTest extends BaseTest
      */
     protected function refresh(Index $index): void
     {
-        self::getContainer()->get('cabbage.gateway')->refresh($index);
+        self::getContainer()->get('cabbage.indexer.gateway')->refresh($index);
     }
 }

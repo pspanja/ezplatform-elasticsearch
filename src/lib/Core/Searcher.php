@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core;
 
+use Cabbage\Core\Searcher\Gateway;
 use Cabbage\Core\Searcher\Query\TargetResolver;
 use Cabbage\Core\Searcher\Query\Translator;
 use Cabbage\Core\Searcher\ResultExtractor;
@@ -18,7 +19,7 @@ use RuntimeException;
 final class Searcher extends SPISearcher
 {
     /**
-     * @var \Cabbage\Core\Gateway
+     * @var \Cabbage\Core\Searcher\Gateway
      */
     private $gateway;
 
@@ -38,7 +39,7 @@ final class Searcher extends SPISearcher
     private $resultExtractor;
 
     /**
-     * @param \Cabbage\Core\Gateway $gateway
+     * @param \Cabbage\Core\Searcher\Gateway $gateway
      * @param \Cabbage\Core\Searcher\Query\Translator $queryTranslator
      * @param \Cabbage\Core\Searcher\Query\TargetResolver $targetResolver
      * @param \Cabbage\Core\Searcher\ResultExtractor $resultExtractor

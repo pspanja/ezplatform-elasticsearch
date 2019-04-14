@@ -6,6 +6,7 @@ namespace Cabbage\Core;
 
 use Cabbage\Core\Indexer\Document\Mapper;
 use Cabbage\Core\Indexer\Document\Serializer;
+use Cabbage\Core\Indexer\Gateway;
 use Cabbage\SPI\Index;
 use Cabbage\SPI\Indexer as SPIIndexer;
 use Cabbage\SPI\Node;
@@ -16,7 +17,7 @@ use RuntimeException;
 final class Indexer extends SPIIndexer
 {
     /**
-     * @var \Cabbage\Core\Gateway
+     * @var \Cabbage\Core\Indexer\Gateway
      */
     private $gateway;
 
@@ -31,7 +32,7 @@ final class Indexer extends SPIIndexer
     private $documentSerializer;
 
     /**
-     * @param \Cabbage\Core\Gateway $gateway
+     * @param \Cabbage\Core\Indexer\Gateway $gateway
      * @param \Cabbage\Core\Indexer\Document\Mapper $documentMapper
      * @param \Cabbage\Core\Indexer\Document\Serializer $documentSerializer
      */
