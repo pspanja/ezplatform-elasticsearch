@@ -159,14 +159,14 @@ services:
             - '@cabbage.query.target_resolver'
             - '@cabbage.result_extractor'
 
-    cabbage.handler:
-        class: Cabbage\Core\Handler
+    cabbage.engine:
+        class: Cabbage\Core\Engine
         arguments:
             - '@cabbage.indexer'
             - '@cabbage.searcher'
 
     ezpublish.spi.search_engine:
-        alias: cabbage.handler
+        alias: cabbage.engine
 
     ezpublish.signalslot.signal_dispatcher.factory:
         class: eZ\Publish\Core\Base\Container\ApiLoader\SignalSlot\SignalDispatcherFactory

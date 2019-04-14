@@ -16,7 +16,7 @@
             <file>./tests/Integration/Core/ConfiguratorTest.php</file>
             <file>./tests/Integration/Core/Indexer/GatewayTest.php</file>
             <file>./tests/Integration/Core/Searcher/GatewayTest.php</file>
-            <file>./tests/Integration/Core/HandlerTest.php</file>
+            <file>./tests/Integration/Core/EngineTest.php</file>
         </testsuite>
         <testsuite name="API integration tests">
             <file>./tests/Integration/API/TestTest.php</file>

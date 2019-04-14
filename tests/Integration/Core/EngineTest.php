@@ -6,7 +6,7 @@ namespace Cabbage\Tests\Integration\Core;
 
 use Cabbage\API\Query\Criterion\DocumentType;
 use Cabbage\Core\Indexer\Document\Mapper;
-use Cabbage\Core\Handler;
+use Cabbage\Core\Engine;
 use Cabbage\SPI\Index;
 use Cabbage\SPI\Node;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
@@ -16,7 +16,7 @@ use eZ\Publish\SPI\Persistence\Content\ContentInfo;
 use eZ\Publish\SPI\Persistence\Content\Location;
 use eZ\Publish\SPI\Persistence\Content\VersionInfo;
 
-class HandlerTest extends BaseTest
+class EngineTest extends BaseTest
 {
     /**
      * @var \Cabbage\SPI\Index
@@ -49,7 +49,7 @@ class HandlerTest extends BaseTest
      */
     public function testIndexContent(): void
     {
-        $handler = $this->getHandlerUnderTest();
+        $engine = $this->getEngineUnderTest();
         $content = new Content([
             'versionInfo' => new VersionInfo([
                 'contentInfo' => new ContentInfo([
@@ -59,7 +59,7 @@ class HandlerTest extends BaseTest
             'fields' => [],
         ]);
 
-        $handler->indexContent($content);
+        $engine->indexContent($content);
         $this->refresh(self::$index);
 
         $this->addToAssertionCount(1);
@@ -74,12 +74,12 @@ class HandlerTest extends BaseTest
      */
     public function testFindContent(): void
     {
-        $handler = $this->getHandlerUnderTest();
+        $engine = $this->getEngineUnderTest();
         $query = new Query([
             'filter' => new DocumentType(Mapper::TypeContent),
         ]);
 
-        $searchResult = $handler->findContent($query);
+        $searchResult = $engine->findContent($query);
 
         $this->assertEquals(1, $searchResult->totalCount);
         $this->assertInstanceOf(ContentInfo::class, $searchResult->searchHits[0]->valueObject);
@@ -97,12 +97,12 @@ class HandlerTest extends BaseTest
      */
     public function testFindLocation(): void
     {
-        $handler = $this->getHandlerUnderTest();
+        $engine = $this->getEngineUnderTest();
         $query = new LocationQuery([
             'filter' => new DocumentType(Mapper::TypeLocation),
         ]);
 
-        $searchResult = $handler->findLocations($query);
+        $searchResult = $engine->findLocations($query);
 
         $this->assertEquals(1, $searchResult->totalCount);
         $this->assertInstanceOf(Location::class, $searchResult->searchHits[0]->valueObject);
@@ -119,34 +119,34 @@ class HandlerTest extends BaseTest
      */
     public function testPurgeIndex(): void
     {
-        $handler = $this->getHandlerUnderTest();
+        $engine = $this->getEngineUnderTest();
 
-        $handler->purgeIndex();
+        $engine->purgeIndex();
         $this->refresh(self::$index);
 
         $query = new Query([
             'filter' => new DocumentType(Mapper::TypeContent),
         ]);
 
-        $searchResult = $handler->findContent($query);
+        $searchResult = $engine->findContent($query);
         $this->assertEquals(0, $searchResult->totalCount);
 
         $query = new LocationQuery([
             'filter' => new DocumentType(Mapper::TypeLocation),
         ]);
 
-        $searchResult = $handler->findLocations($query);
+        $searchResult = $engine->findLocations($query);
         $this->assertEquals(0, $searchResult->totalCount);
     }
 
     /**
      * @throws \Exception
      *
-     * @return \Cabbage\Core\Handler
+     * @return \Cabbage\Core\Engine
      */
-    protected function getHandlerUnderTest(): Handler
+    protected function getEngineUnderTest(): Engine
     {
-        return self::getContainer()->get('cabbage.handler');
+        return self::getContainer()->get('cabbage.engine');
     }
 
     /**

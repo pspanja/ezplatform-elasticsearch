@@ -17,7 +17,7 @@ use eZ\Publish\SPI\Search\Capable;
 use eZ\Publish\SPI\Search\Handler as HandlerInterface;
 use RuntimeException;
 
-final class Handler implements HandlerInterface, Capable
+final class Engine implements HandlerInterface, Capable
 {
     /**
      * @var \Cabbage\SPI\Indexer

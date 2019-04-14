@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration\API;
 
-use Cabbage\Core\Handler;
+use Cabbage\Core\Engine;
 use Doctrine\DBAL\Connection;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Tests\SetupFactory\Legacy as CoreSetupFactory;
@@ -103,11 +103,11 @@ final class SetupFactory extends CoreSetupFactory
     private function reindex(): void
     {
         $connection = $this->getServiceContainer()->get('ezpublish.api.storage_engine.legacy.connection');
-        $searchHandler = $this->getServiceContainer()->get('cabbage.handler');
+        $engine = $this->getServiceContainer()->get('cabbage.engine');
         $persistenceHandler = $this->getServiceContainer()->get('ezpublish.spi.persistence.legacy');
 
         \assert($connection instanceof Connection);
-        \assert($searchHandler instanceof Handler);
+        \assert($engine instanceof Engine);
         \assert($persistenceHandler instanceof PersistenceHandler);
 
         $queryBuilder = $connection->createQueryBuilder();
@@ -123,8 +123,8 @@ final class SetupFactory extends CoreSetupFactory
             );
         }
 
-        $searchHandler->purgeIndex();
-        $searchHandler->bulkIndexContent($contentItems);
-        $searchHandler->refresh();
+        $engine->purgeIndex();
+        $engine->bulkIndexContent($contentItems);
+        $engine->refresh();
     }
 }
