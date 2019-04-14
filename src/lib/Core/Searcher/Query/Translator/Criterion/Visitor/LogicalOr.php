@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Searcher\Query\Translator\Criterion\Visitor;
 
+use function assert;
 use Cabbage\Core\Searcher\Query\Translator\Criterion\Visitor;
 use Cabbage\Core\Searcher\Query\Translator\Criterion\Converter;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
@@ -23,7 +24,7 @@ final class LogicalOr extends Visitor
 
     public function visit(Criterion $criterion, Converter $converter): array
     {
-        \assert($criterion instanceof LogicalOrCriterion);
+        assert($criterion instanceof LogicalOrCriterion);
 
         $criteria = array_map(
             function (Criterion $value) use ($converter): array {

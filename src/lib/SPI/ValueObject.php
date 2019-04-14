@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\SPI;
 
+use function get_class;
 use RuntimeException;
 
 abstract class ValueObject
@@ -73,7 +74,7 @@ abstract class ValueObject
 
     private function getFullName(string $name): string
     {
-        $class = \get_class($this);
+        $class = get_class($this);
 
         return "{$class}::\${$name}";
     }

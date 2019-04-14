@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration\API;
 
+use function assert;
 use Cabbage\Core\Engine;
 use Doctrine\DBAL\Connection;
 use eZ\Publish\API\Repository\Repository;
@@ -106,9 +107,9 @@ final class SetupFactory extends CoreSetupFactory
         $engine = $this->getServiceContainer()->get('cabbage.engine');
         $persistenceHandler = $this->getServiceContainer()->get('ezpublish.spi.persistence.legacy');
 
-        \assert($connection instanceof Connection);
-        \assert($engine instanceof Engine);
-        \assert($persistenceHandler instanceof PersistenceHandler);
+        assert($connection instanceof Connection);
+        assert($engine instanceof Engine);
+        assert($persistenceHandler instanceof PersistenceHandler);
 
         $queryBuilder = $connection->createQueryBuilder();
         $queryBuilder->select('id', 'current_version')->from('ezcontentobject');

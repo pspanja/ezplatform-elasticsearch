@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core\Searcher\Query\Translator\Criterion;
 
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
+use function get_class;
 use RuntimeException;
 
 /**
@@ -57,7 +58,7 @@ final class Converter
             }
         }
 
-        $class = \get_class($criterion);
+        $class = get_class($criterion);
 
         throw new RuntimeException(
             "No visitor accepts instance of '{$class}'"
