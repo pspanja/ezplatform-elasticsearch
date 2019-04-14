@@ -122,7 +122,7 @@ class ClientTest extends TestCase
      */
     protected static function isServerReachable(string $host, int $port): bool
     {
-        set_error_handler(function () {return true; });
+        set_error_handler(static function () {return true; });
         $pointer = fsockopen($host, $port);
         restore_error_handler();
 
@@ -158,7 +158,7 @@ class ClientTest extends TestCase
         }
 
         register_shutdown_function(
-            function () use ($pid): void {
+            static function () use ($pid): void {
                 echo "Killing HTTP server process #{$pid}\n";
                 exec("kill {$pid}");
             }

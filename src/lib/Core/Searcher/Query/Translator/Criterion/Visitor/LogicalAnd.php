@@ -27,7 +27,7 @@ final class LogicalAnd extends Visitor
         assert($criterion instanceof LogicalAndCriterion);
 
         $criteria = array_map(
-            function (Criterion $value) use ($converter): array {
+            static function (Criterion $value) use ($converter): array {
                 return $converter->convert($value);
             },
             $criterion->criteria
