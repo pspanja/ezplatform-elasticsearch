@@ -45,8 +45,8 @@ abstract class Searcher
     /**
      * @see \eZ\Publish\SPI\Search\Handler::suggest()
      *
-     * @param $prefix
-     * @param array $fieldPaths
+     * @param string $prefix
+     * @param string[] $fieldPaths
      * @param int $limit
      * @param \eZ\Publish\API\Repository\Values\Content\Query\Criterion $filter
      */
