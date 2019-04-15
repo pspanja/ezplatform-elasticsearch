@@ -9,7 +9,9 @@ use Cabbage\SPI\Index;
 use eZ\Publish\API\Repository\Values\Content\Query;
 
 /**
- * Matches a query to an Index.
+ * Matches a query to a Target.
+ *
+ * @see \Cabbage\Core\Searcher\Query\Target
  */
 final class TargetResolver
 {
@@ -23,8 +25,10 @@ final class TargetResolver
         $this->indexRegistry = $indexRegistry;
     }
 
-    public function resolve(Query $query): Index
+    public function resolve(Query $query): Target
     {
-        return $this->indexRegistry->get('default');
+        $index = $this->indexRegistry->get('default');
+
+        return new Target($index->node, [$index]);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration\Core\Searcher;
 
+use Cabbage\Core\Searcher\Query\Target;
 use Cabbage\SPI\Index;
 use Cabbage\SPI\Node;
 use Cabbage\Tests\Integration\Core\BaseTest;
@@ -73,8 +74,10 @@ EOD;
             ],
         ];
 
-        $data = self::$gateway->find($index, $query);
-        $data = json_decode($data);
+        $target = new Target($index->node, [$index]);
+
+        $data = self::$gateway->find($target, $query);
+        $data = json_decode($data, false);
 
         $this->assertEquals(2, $data->hits->total->value);
     }
@@ -95,8 +98,10 @@ EOD;
             ],
         ];
 
-        $data = self::$gateway->find(self::$index, $query);
-        $data = json_decode($data);
+        $target = new Target(self::$index->node, [self::$index]);
+
+        $data = self::$gateway->find($target, $query);
+        $data = json_decode($data, false);
 
         $this->assertEquals(1, $data->hits->total->value);
     }
@@ -115,8 +120,10 @@ EOD;
             ],
         ];
 
-        $data = self::$gateway->find(self::$index, $query);
-        $data = json_decode($data);
+        $target = new Target(self::$index->node, [self::$index]);
+
+        $data = self::$gateway->find($target, $query);
+        $data = json_decode($data, false);
 
         $this->assertEquals(0, $data->hits->total->value);
     }
@@ -136,8 +143,10 @@ EOD;
             ],
         ];
 
-        $data = self::$gateway->find(self::$index, $query);
-        $data = json_decode($data);
+        $target = new Target(self::$index->node, [self::$index]);
+
+        $data = self::$gateway->find($target, $query);
+        $data = json_decode($data, false);
 
         $this->assertEquals(0, $data->hits->total->value);
     }
