@@ -58,13 +58,12 @@ final class Searcher extends SPISearcher
 
     public function findContent(Query $query, array $languageFilter = []): SearchResult
     {
-        return
-            $this->resultExtractor->extract(
-                $this->gateway->find(
-                    $this->targetResolver->resolve($query),
-                    $this->queryTranslator->translateContentQuery($query)
-                )
-            );
+        $data = $this->gateway->find(
+            $this->targetResolver->resolve($query),
+            $this->queryTranslator->translateContentQuery($query)
+        );
+
+        return $this->resultExtractor->extract($data);
     }
 
     public function findSingle(Criterion $filter, array $languageFilter = []): ContentInfo
@@ -74,13 +73,12 @@ final class Searcher extends SPISearcher
 
     public function findLocations(LocationQuery $query, array $languageFilter = []): SearchResult
     {
-        return
-            $this->resultExtractor->extract(
-                $this->gateway->find(
-                    $this->targetResolver->resolve($query),
-                    $this->queryTranslator->translateLocationQuery($query)
-                )
-            );
+        $data = $this->gateway->find(
+            $this->targetResolver->resolve($query),
+            $this->queryTranslator->translateLocationQuery($query)
+        );
+
+        return $this->resultExtractor->extract($data);
     }
 
     public function suggest($prefix, $fieldPaths = [], $limit = 10, ?Criterion $filter = null): void
