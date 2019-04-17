@@ -1,0 +1,28 @@
+parameters:
+
+services:
+    cabbage.field_type.data_mapper.checkbox:
+        class: Cabbage\Core\FieldType\DataMapper\Checkbox
+
+    cabbage.field_type.data_mapper.text_line:
+        class: Cabbage\Core\FieldType\DataMapper\TextLine
+
+    cabbage.field_type.data_mapper.unmapped:
+        class: Cabbage\Core\FieldType\DataMapper\Unmapped
+
+    cabbage.field_type.data_mapper_registry:
+        class: Cabbage\Core\FieldType\DataMapperRegistry
+        arguments:
+            -
+                ezboolean: '@cabbage.field_type.data_mapper.checkbox'
+                ezstring: '@cabbage.field_type.data_mapper.text_line'
+                ezrichtext: '@cabbage.field_type.data_mapper.unmapped'
+                ezpage: '@cabbage.field_type.data_mapper.unmapped'
+                ezkeyword: '@cabbage.field_type.data_mapper.unmapped'
+                ezinisetting: '@cabbage.field_type.data_mapper.unmapped'
+                eztext: '@cabbage.field_type.data_mapper.unmapped'
+                ezemail: '@cabbage.field_type.data_mapper.unmapped'
+                ezuser: '@cabbage.field_type.data_mapper.unmapped'
+                ezimage: '@cabbage.field_type.data_mapper.unmapped'
+                ezpackage: '@cabbage.field_type.data_mapper.unmapped'
+                ezurl: '@cabbage.field_type.data_mapper.unmapped'

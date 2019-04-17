@@ -1,0 +1,68 @@
+parameters:
+
+services:
+    cabbage.document.mapper.content_field.name_generator:
+        class: Cabbage\Core\Indexer\Document\Mapper\ContentField\NameGenerator
+
+    cabbage.document.mapper.content_field.mapper:
+        class: Cabbage\Core\Indexer\Document\Mapper\ContentField\Mapper
+        arguments:
+            - '@cabbage.field_type.data_mapper_registry'
+            - '@cabbage.document.mapper.content_field.name_generator'
+
+    cabbage.document.id_generator:
+        class: Cabbage\Core\Indexer\Document\Mapper\IdGenerator
+
+    cabbage.document.mapper:
+        class: Cabbage\Core\Indexer\Document\Mapper
+        arguments:
+            - '@ezpublish.spi.persistence.location_handler'
+            - '@ezpublish.spi.persistence.content_type_handler'
+            - '@cabbage.document.mapper.content_field.mapper'
+            - '@cabbage.document.id_generator'
+
+    cabbage.document.destination_resolver:
+        class: Cabbage\Core\Indexer\Document\DestinationResolver
+        arguments:
+            - '@cabbage.index_registry'
+
+    cabbage.document.field.value_mapper.visitor.boolean:
+        class: Cabbage\Core\Indexer\Document\Field\ValueMapper\Visitor\Boolean
+
+    cabbage.document.field.value_mapper.visitor.keyword:
+        class: Cabbage\Core\Indexer\Document\Field\ValueMapper\Visitor\Keyword
+
+    cabbage.document.field.value_mapper.visitor.identifier:
+        class: Cabbage\Core\Indexer\Document\Field\ValueMapper\Visitor\Identifier
+
+    cabbage.document.field.value_mapper:
+        class: Cabbage\Core\Indexer\Document\Field\ValueMapper
+        arguments:
+            -
+                - '@cabbage.document.field.value_mapper.visitor.boolean'
+                - '@cabbage.document.field.value_mapper.visitor.keyword'
+                - '@cabbage.document.field.value_mapper.visitor.identifier'
+
+    cabbage.document.field.typed_name_generator:
+        class: Cabbage\Core\Indexer\Document\Field\TypedNameGenerator
+        arguments:
+            - '%cabbage.field.name_generator.type_suffix_map%'
+
+    cabbage.document.serializer:
+        class: Cabbage\Core\Indexer\Document\Serializer
+        arguments:
+            - '@cabbage.document.destination_resolver'
+            - '@cabbage.document.field.typed_name_generator'
+            - '@cabbage.document.field.value_mapper'
+
+    cabbage.indexer.gateway:
+        class: Cabbage\Core\Indexer\Gateway
+        arguments:
+            - '@cabbage.http.client'
+
+    cabbage.indexer:
+        class: Cabbage\Core\Indexer
+        arguments:
+            - '@cabbage.indexer.gateway'
+            - '@cabbage.document.mapper'
+            - '@cabbage.document.serializer'
