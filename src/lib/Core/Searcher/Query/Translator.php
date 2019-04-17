@@ -35,15 +35,14 @@ final class Translator
      */
     public function translateContentQuery(Query $query): array
     {
+        $must = $query->query ?? new MatchAll();
+        $filter = $query->filter ?? new MatchAll();
+
         return [
             'query' => [
                 'bool' => [
-                    'must' => $this->criterionConverter->convert(
-                        $query->query ?? new MatchAll()
-                    ),
-                    'filter' => $this->criterionConverter->convert(
-                        $query->filter ?? new MatchAll()
-                    ),
+                    'must' => $this->criterionConverter->convert($must),
+                    'filter' => $this->criterionConverter->convert($filter),
                 ],
             ],
             'from' => $query->offset,
@@ -58,15 +57,14 @@ final class Translator
      */
     public function translateLocationQuery(LocationQuery $query): array
     {
+        $must = $query->query ?? new MatchAll();
+        $filter = $query->filter ?? new MatchAll();
+
         return [
             'query' => [
                 'bool' => [
-                    'must' => $this->criterionConverter->convert(
-                        $query->query ?? new MatchAll()
-                    ),
-                    'filter' => $this->criterionConverter->convert(
-                        $query->filter ?? new MatchAll()
-                    ),
+                    'must' => $this->criterionConverter->convert($must),
+                    'filter' => $this->criterionConverter->convert($filter),
                 ],
             ],
             'from' => $query->offset,
