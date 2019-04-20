@@ -8,15 +8,19 @@ language: php
 cache:
     directories:
         - vendor
+php:
+    - 7.3
+    - 7.4snapshot
 
 matrix:
     fast_finish: true
     include:
-        - php: "7.3"
+        - php: 7.3
+          env: CONFIG="phpunit.xml" COVERAGE="all"
+        - php: 7.4snapshot
           env: CONFIG="phpunit.xml" COVERAGE="all"
     allow_failures:
         - php: 7.4snapshot
-          env: CONFIG="phpunit.xml" COVERAGE="all"
 
 branches:
     only:
