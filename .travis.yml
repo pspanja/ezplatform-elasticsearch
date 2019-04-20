@@ -20,8 +20,8 @@ branches:
         - master
 
 before_install:
-    - docker build --file ./config/.docker/elasticsearch/Dockerfile --tag elasticsearch .
-    - docker run --detach --publish 9200:9200 elasticsearch
+    - docker-compose -f ./config/.docker/docker-compose.yml up --build -d
+    - docker ps -a
     - ./bin/wait_for_server.sh
     - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
