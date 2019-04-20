@@ -10,7 +10,6 @@ use Doctrine\DBAL\Connection;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Tests\SetupFactory\Legacy as CoreSetupFactory;
 use eZ\Publish\Core\Base\Container\Compiler;
-use eZ\Publish\Core\Base\ServiceContainer;
 use eZ\Publish\SPI\Persistence\Handler as PersistenceHandler;
 use PDO;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -36,52 +35,11 @@ final class SetupFactory extends CoreSetupFactory
     }
 
     /**
-     * @throws \Exception
-     */
-    public function getServiceContainer(): ServiceContainer
-    {
-        if (self::$serviceContainer === null) {
-            self::$serviceContainer = $this->buildServiceContainer();
-        }
-
-        return self::$serviceContainer;
-    }
-
-    /**
-     * @throws \Exception
-     */
-    private function buildServiceContainer(): ServiceContainer
-    {
-        $config = $this->getConfig();
-
-        // Needed by the ContainerBuilder included below
-        $installDir = $config['install_dir'];
-
-        /** @var \Symfony\Component\DependencyInjection\ContainerBuilder $containerBuilder */
-        $containerBuilder = include $config['container_builder_path'];
-        $containerBuilder->setParameter('legacy_dsn', self::$dsn);
-        $containerBuilder->setParameter(
-            'io_root_dir',
-            self::$ioRootDir . '/' . $containerBuilder->getParameter('storage_dir')
-        );
-
-        $this->localBuildContainer($containerBuilder);
-
-        return new ServiceContainer(
-            $containerBuilder,
-            $installDir,
-            $config['cache_dir'],
-            true,
-            true
-        );
-    }
-
-    /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $containerBuilder
      *
      * @throws \Exception
      */
-    private function localBuildContainer(ContainerBuilder $containerBuilder): void
+    protected function externalBuildContainer(ContainerBuilder $containerBuilder): void
     {
         $settingsPath = __DIR__ . '/../../../config/symfony/';
 
@@ -89,11 +47,6 @@ final class SetupFactory extends CoreSetupFactory
         $solrLoader->load('services.yml');
 
         $containerBuilder->addCompilerPass(new Compiler\Search\SearchEngineSignalSlotPass('cabbage'));
-    }
-
-    private function getConfig(): array
-    {
-        return include __DIR__ . '/../../../vendor/ezsystems/ezpublish-kernel/config.php-DEVELOPMENT';
     }
 
     /**
