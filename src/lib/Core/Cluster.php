@@ -15,7 +15,7 @@ final class Cluster
     /**
      * @var \Cabbage\SPI\Node[]
      */
-    private $coordinatingNodes = [];
+    private $coordinatingNodes;
 
     /**
      * @var \Cabbage\SPI\Index[]
