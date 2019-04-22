@@ -59,7 +59,7 @@ final class Searcher extends SPISearcher
     public function findContent(Query $query, array $languageFilter = []): SearchResult
     {
         $data = $this->gateway->find(
-            $this->targetResolver->resolve($query),
+            $this->targetResolver->resolve($languageFilter),
             $this->queryTranslator->translateContentQuery($query)
         );
 
@@ -74,7 +74,7 @@ final class Searcher extends SPISearcher
     public function findLocations(LocationQuery $query, array $languageFilter = []): SearchResult
     {
         $data = $this->gateway->find(
-            $this->targetResolver->resolve($query),
+            $this->targetResolver->resolve($languageFilter),
             $this->queryTranslator->translateLocationQuery($query)
         );
 

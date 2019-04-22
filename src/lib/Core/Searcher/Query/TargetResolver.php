@@ -25,7 +25,7 @@ final class TargetResolver
         $this->indexRegistry = $indexRegistry;
     }
 
-    public function resolve(Query $query): Target
+    public function resolve(array $languageFilter): Target
     {
         $index = $this->indexRegistry->get('default');
 
