@@ -21,20 +21,14 @@ final class TargetResolver
      */
     private $cluster;
 
-    /**
-     * @var \Cabbage\Core\IndexRegistry
-     */
-    private $indexRegistry;
-
-    public function __construct(Cluster $cluster, IndexRegistry $indexRegistry)
+    public function __construct(Cluster $cluster)
     {
         $this->cluster = $cluster;
-        $this->indexRegistry = $indexRegistry;
     }
 
     public function resolve(LanguageFilter $languageFilter): Target
     {
-        $index = $this->indexRegistry->get('default');
+        $index = $this->cluster->getDefaultIndex();
 
         return new Target($index->node, [$index]);
     }

@@ -35,7 +35,6 @@ services:
         class: Cabbage\Core\Searcher\Query\TargetResolver
         arguments:
             - '@cabbage.cluster'
-            - '@cabbage.index_registry'
 
     cabbage.result_extractor:
         class: Cabbage\Core\Searcher\ResultExtractor
