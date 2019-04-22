@@ -25,7 +25,7 @@ final class ResultExtractor
      */
     public function extract(string $data): SearchResult
     {
-        $body = json_decode($data);
+        $body = json_decode($data, false, 512, JSON_THROW_ON_ERROR);
         $searchHits = [];
 
         foreach ($body->hits->hits as $hit) {
