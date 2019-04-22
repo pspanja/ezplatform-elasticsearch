@@ -47,7 +47,7 @@ final class Target
     public function getUrl(): string
     {
         $nodeUrl = $this->coordinatingNode->getUrl();
-        $indexNames = array_map(static function (Index $index) {return $index->name;}, $this->indices);
+        $indexNames = array_map(static function (Index $index): string {return $index->name;}, $this->indices);
         $indexNames = implode(',', $indexNames);
 
         return "{$nodeUrl}/{$indexNames}/_search";
