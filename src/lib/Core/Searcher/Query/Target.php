@@ -19,12 +19,12 @@ use InvalidArgumentException;
 final class Target
 {
     /**
-     * @var array|\Cabbage\SPI\Node
+     * @var \Cabbage\SPI\Node
      */
     private $coordinatingNode;
 
     /**
-     * @var array|\Cabbage\SPI\Index[]
+     * @var \Cabbage\SPI\Index[]
      */
     private $indices;
 
