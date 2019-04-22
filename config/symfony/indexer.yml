@@ -24,7 +24,7 @@ services:
     cabbage.document.destination_resolver:
         class: Cabbage\Core\Indexer\Document\DestinationResolver
         arguments:
-            - '@cabbage.index_registry'
+            - '@cabbage.cluster'
 
     cabbage.document.field.value_mapper.visitor.boolean:
         class: Cabbage\Core\Indexer\Document\Field\ValueMapper\Visitor\Boolean

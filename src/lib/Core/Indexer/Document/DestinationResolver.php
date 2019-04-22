@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Indexer\Document;
 
-use Cabbage\Core\IndexRegistry;
+use Cabbage\Core\Cluster;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Index;
 
@@ -14,17 +14,17 @@ use Cabbage\SPI\Index;
 final class DestinationResolver
 {
     /**
-     * @var \Cabbage\Core\IndexRegistry
+     * @var \Cabbage\Core\Cluster
      */
-    private $indexRegistry;
+    private $cluster;
 
-    public function __construct(IndexRegistry $indexRegistry)
+    public function __construct(Cluster $cluster)
     {
-        $this->indexRegistry = $indexRegistry;
+        $this->cluster = $cluster;
     }
 
     public function resolve(Document $document): Index
     {
-        return $this->indexRegistry->get('default');
+        return $this->cluster->getDefaultIndex();
     }
 }
