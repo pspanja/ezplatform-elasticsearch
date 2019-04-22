@@ -58,7 +58,7 @@ final class ResultExtractor
         }
 
         throw new RuntimeException(
-            "Document of type '{$hit->_source->type}' is not handled"
+            "Document of type '{$hit->_source->type_identifier}' is not handled"
         );
     }
 
