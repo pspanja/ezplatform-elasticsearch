@@ -31,6 +31,7 @@ final class ResultExtractor
 
         foreach ($body->hits->hits as $hit) {
             $searchHits[] = new SearchHit([
+                'index' => $hit->_index,
                 'valueObject' => $this->extractSearchHit($hit),
             ]);
         }
