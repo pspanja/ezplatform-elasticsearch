@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Core;
 
-use Cabbage\Core\Searcher\LanguageFilter;
 use Cabbage\SPI\Indexer as SPIIndexer;
+use Cabbage\SPI\LanguageFilter;
 use Cabbage\SPI\Searcher as SPISearcher;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;

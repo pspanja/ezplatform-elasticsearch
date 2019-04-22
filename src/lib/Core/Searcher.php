@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Cabbage\Core;
 
 use Cabbage\Core\Searcher\Gateway;
-use Cabbage\Core\Searcher\LanguageFilter;
 use Cabbage\Core\Searcher\Query\TargetResolver;
 use Cabbage\Core\Searcher\Query\Translator;
 use Cabbage\Core\Searcher\ResultExtractor;
+use Cabbage\SPI\LanguageFilter;
 use Cabbage\SPI\Searcher as SPISearcher;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Searcher;
+namespace Cabbage\SPI;
 
 final class LanguageFilter
 {

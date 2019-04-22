@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cabbage\SPI;
 
-use Cabbage\Core\Searcher\LanguageFilter;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
@@ -17,7 +16,7 @@ abstract class Searcher
      * @see \eZ\Publish\SPI\Search\Handler::findContent()
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Query $query
-     * @param \Cabbage\Core\Searcher\LanguageFilter $languageFilter
+     * @param \Cabbage\SPI\LanguageFilter $languageFilter
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
@@ -27,7 +26,7 @@ abstract class Searcher
      * @see \eZ\Publish\SPI\Search\Handler::findSingle()
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Query\Criterion $filter
-     * @param \Cabbage\Core\Searcher\LanguageFilter $languageFilter
+     * @param \Cabbage\SPI\LanguageFilter $languageFilter
      *
      * @return \eZ\Publish\SPI\Persistence\Content\ContentInfo
      */
@@ -37,7 +36,7 @@ abstract class Searcher
      * @see \eZ\Publish\SPI\Search\Handler::findLocations()
      *
      * @param \eZ\Publish\API\Repository\Values\Content\LocationQuery $query
-     * @param \Cabbage\Core\Searcher\LanguageFilter $languageFilter
+     * @param \Cabbage\SPI\LanguageFilter $languageFilter
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */

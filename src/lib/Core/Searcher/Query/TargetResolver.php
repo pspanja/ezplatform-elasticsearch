@@ -6,12 +6,13 @@ namespace Cabbage\Core\Searcher\Query;
 
 use Cabbage\Core\Cluster;
 use Cabbage\Core\IndexRegistry;
-use Cabbage\Core\Searcher\LanguageFilter;
+use Cabbage\SPI\LanguageFilter;
 
 /**
- * Matches a query to a Target.
+ * Matches a LanguageFilter to a Target.
  *
  * @see \Cabbage\Core\Searcher\Query\Target
+ * @see \Cabbage\SPI\LanguageFilter
  */
 final class TargetResolver
 {
