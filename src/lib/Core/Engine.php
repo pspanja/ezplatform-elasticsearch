@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core;
 
+use Cabbage\Core\Searcher\LanguageFilter;
 use Cabbage\SPI\Indexer as SPIIndexer;
 use Cabbage\SPI\Searcher as SPISearcher;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
@@ -52,7 +53,7 @@ final class Engine implements HandlerInterface, Capable
      */
     public function findContent(Query $query, array $languageFilter = []): SearchResult
     {
-        return $this->searcher->findContent($query, $languageFilter);
+        return $this->searcher->findContent($query, $this->buildLanguageFilter($languageFilter));
     }
 
     /**
@@ -60,7 +61,7 @@ final class Engine implements HandlerInterface, Capable
      */
     public function findSingle(Criterion $filter, array $languageFilter = []): ContentInfo
     {
-        return $this->searcher->findSingle($filter, $languageFilter);
+        return $this->searcher->findSingle($filter, $this->buildLanguageFilter($languageFilter));
     }
 
     /**
@@ -68,7 +69,7 @@ final class Engine implements HandlerInterface, Capable
      */
     public function findLocations(LocationQuery $query, array $languageFilter = []): SearchResult
     {
-        return $this->searcher->findLocations($query, $languageFilter);
+        return $this->searcher->findLocations($query, $this->buildLanguageFilter($languageFilter));
     }
 
     /**
@@ -126,5 +127,13 @@ final class Engine implements HandlerInterface, Capable
     public function refresh(): void
     {
         $this->indexer->refresh();
+    }
+
+    private function buildLanguageFilter(array $languageFilter): LanguageFilter
+    {
+        return new LanguageFilter(
+            $languageFilter['languages'] ?? [],
+            $languageFilter['useAlwaysAvailable'] ?? true
+        );
     }
 }

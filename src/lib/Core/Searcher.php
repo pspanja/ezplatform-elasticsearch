@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core;
 
 use Cabbage\Core\Searcher\Gateway;
+use Cabbage\Core\Searcher\LanguageFilter;
 use Cabbage\Core\Searcher\Query\TargetResolver;
 use Cabbage\Core\Searcher\Query\Translator;
 use Cabbage\Core\Searcher\ResultExtractor;
@@ -56,7 +57,7 @@ final class Searcher extends SPISearcher
         $this->resultExtractor = $resultExtractor;
     }
 
-    public function findContent(Query $query, array $languageFilter = []): SearchResult
+    public function findContent(Query $query, LanguageFilter $languageFilter): SearchResult
     {
         $data = $this->gateway->find(
             $this->targetResolver->resolve($languageFilter),
@@ -66,12 +67,12 @@ final class Searcher extends SPISearcher
         return $this->resultExtractor->extract($data);
     }
 
-    public function findSingle(Criterion $filter, array $languageFilter = []): ContentInfo
+    public function findSingle(Criterion $filter, LanguageFilter $languageFilter): ContentInfo
     {
         throw new RuntimeException('Not implemented');
     }
 
-    public function findLocations(LocationQuery $query, array $languageFilter = []): SearchResult
+    public function findLocations(LocationQuery $query, LanguageFilter $languageFilter): SearchResult
     {
         $data = $this->gateway->find(
             $this->targetResolver->resolve($languageFilter),

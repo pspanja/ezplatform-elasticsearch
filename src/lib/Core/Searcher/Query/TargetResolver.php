@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core\Searcher\Query;
 
 use Cabbage\Core\IndexRegistry;
+use Cabbage\Core\Searcher\LanguageFilter;
 
 /**
  * Matches a query to a Target.
@@ -23,7 +24,7 @@ final class TargetResolver
         $this->indexRegistry = $indexRegistry;
     }
 
-    public function resolve(array $languageFilter): Target
+    public function resolve(LanguageFilter $languageFilter): Target
     {
         $index = $this->indexRegistry->get('default');
 
