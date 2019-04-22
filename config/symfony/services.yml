@@ -1,4 +1,5 @@
 imports:
+    - { resource: cluster.yml }
     - { resource: field_type.yml }
     - { resource: indexer.yml }
     - { resource: searcher.yml }
@@ -33,18 +34,6 @@ services:
         arguments:
             - '%ezpublish.signalslot.signal_dispatcher.class%'
             - 'cabbage'
-
-    cabbage.node.default:
-        class: Cabbage\SPI\Node
-        factory: Cabbage\SPI\Node::fromDsn
-        arguments:
-            - 'http://localhost:9200'
-
-    cabbage.index.default:
-        class: Cabbage\SPI\Index
-        arguments:
-            - '@cabbage.node.default'
-            - 'index'
 
     cabbage.index_registry:
         class: Cabbage\Core\IndexRegistry

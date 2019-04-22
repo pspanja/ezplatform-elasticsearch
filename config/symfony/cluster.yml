@@ -1,0 +1,22 @@
+parameters:
+
+services:
+    cabbage.node.default:
+        class: Cabbage\SPI\Node
+        factory: Cabbage\SPI\Node::fromDsn
+        arguments:
+            - 'http://localhost:9200'
+
+    cabbage.index.default:
+        class: Cabbage\SPI\Index
+        arguments:
+            - '@cabbage.node.default'
+            - 'index'
+
+    cabbage.cluster:
+        class: Cabbage\Core\Cluster
+        arguments:
+            - []
+            - []
+            - ~
+            - '@cabbage.index.default'

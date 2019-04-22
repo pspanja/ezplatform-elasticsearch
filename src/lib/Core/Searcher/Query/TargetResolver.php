@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Searcher\Query;
 
+use Cabbage\Core\Cluster;
 use Cabbage\Core\IndexRegistry;
 use Cabbage\Core\Searcher\LanguageFilter;
 
@@ -15,12 +16,18 @@ use Cabbage\Core\Searcher\LanguageFilter;
 final class TargetResolver
 {
     /**
+     * @var \Cabbage\Core\Cluster
+     */
+    private $cluster;
+
+    /**
      * @var \Cabbage\Core\IndexRegistry
      */
     private $indexRegistry;
 
-    public function __construct(IndexRegistry $indexRegistry)
+    public function __construct(Cluster $cluster, IndexRegistry $indexRegistry)
     {
+        $this->cluster = $cluster;
         $this->indexRegistry = $indexRegistry;
     }
 
