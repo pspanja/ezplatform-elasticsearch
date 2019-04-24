@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cabbage\Core\Searcher\Query;
 
 use Cabbage\Core\Cluster;
-use Cabbage\Core\IndexRegistry;
 use Cabbage\SPI\LanguageFilter;
 
 /**
