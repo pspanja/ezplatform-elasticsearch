@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Indexer\Document;
 
-use Cabbage\Core\Indexer\Document\Mapper\ContentField\Mapper as ContentFieldMapper;
+use Cabbage\Core\Indexer\Document\FieldMapper\ContentField\Mapper as ContentFieldMapper;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Document\Field;
 use Cabbage\SPI\Document\Field\Type\Identifier;
@@ -47,7 +47,7 @@ final class Mapper
     private $typeHandler;
 
     /**
-     * @var \Cabbage\Core\Indexer\Document\Mapper\ContentField\Mapper
+     * @var \Cabbage\Core\Indexer\Document\FieldMapper\ContentField\Mapper
      */
     private $contentFieldMapper;
 
@@ -59,7 +59,7 @@ final class Mapper
     /**
      * @param \eZ\Publish\SPI\Persistence\Content\Location\Handler $locationHandler
      * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $typeHandler
-     * @param \Cabbage\Core\Indexer\Document\Mapper\ContentField\Mapper $contentFieldMapper
+     * @param \Cabbage\Core\Indexer\Document\FieldMapper\ContentField\Mapper $contentFieldMapper
      * @param \Cabbage\Core\Indexer\Document\IdGenerator $idGenerator
      */
     public function __construct(

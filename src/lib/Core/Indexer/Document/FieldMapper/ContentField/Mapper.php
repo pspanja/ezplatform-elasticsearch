@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Indexer\Document\Mapper\ContentField;
+namespace Cabbage\Core\Indexer\Document\FieldMapper\ContentField;
 
 use Cabbage\Core\FieldType\DataMapperRegistry;
 use Cabbage\SPI\Document\Field as DocumentField;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Indexer\Document\Mapper\ContentField;
+namespace Cabbage\Core\Indexer\Document\FieldMapper\ContentField;
 
 use eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition;
 

@@ -1,14 +1,14 @@
 parameters:
 
 services:
-    cabbage.document.mapper.content_field.name_generator:
-        class: Cabbage\Core\Indexer\Document\Mapper\ContentField\NameGenerator
+    cabbage.document.field_mapper.content_field.name_generator:
+        class: Cabbage\Core\Indexer\Document\FieldMapper\ContentField\NameGenerator
 
-    cabbage.document.mapper.content_field.mapper:
-        class: Cabbage\Core\Indexer\Document\Mapper\ContentField\Mapper
+    cabbage.document.field_mapper.content_field.mapper:
+        class: Cabbage\Core\Indexer\Document\FieldMapper\ContentField\Mapper
         arguments:
             - '@cabbage.field_type.data_mapper_registry'
-            - '@cabbage.document.mapper.content_field.name_generator'
+            - '@cabbage.document.field_mapper.content_field.name_generator'
 
     cabbage.document.id_generator:
         class: Cabbage\Core\Indexer\Document\IdGenerator
@@ -18,7 +18,7 @@ services:
         arguments:
             - '@ezpublish.spi.persistence.location_handler'
             - '@ezpublish.spi.persistence.content_type_handler'
-            - '@cabbage.document.mapper.content_field.mapper'
+            - '@cabbage.document.field_mapper.content_field.mapper'
             - '@cabbage.document.id_generator'
 
     cabbage.document.destination_resolver:
