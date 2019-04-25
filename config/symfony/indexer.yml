@@ -11,7 +11,7 @@ services:
             - '@cabbage.document.mapper.content_field.name_generator'
 
     cabbage.document.id_generator:
-        class: Cabbage\Core\Indexer\Document\Mapper\IdGenerator
+        class: Cabbage\Core\Indexer\Document\IdGenerator
 
     cabbage.document.mapper:
         class: Cabbage\Core\Indexer\Document\Mapper
