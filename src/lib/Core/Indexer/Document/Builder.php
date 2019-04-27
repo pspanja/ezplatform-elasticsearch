@@ -20,7 +20,7 @@ use eZ\Publish\SPI\Persistence\Content\Type\Handler as TypeHandler;
  * @see \eZ\Publish\SPI\Persistence\Content
  * @see \Cabbage\SPI\Document
  */
-final class Mapper
+final class Builder
 {
     /**
      * Content document type identifier.

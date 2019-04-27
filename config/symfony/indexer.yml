@@ -13,8 +13,8 @@ services:
     cabbage.document.id_generator:
         class: Cabbage\Core\Indexer\Document\IdGenerator
 
-    cabbage.document.mapper:
-        class: Cabbage\Core\Indexer\Document\Mapper
+    cabbage.document.builder:
+        class: Cabbage\Core\Indexer\Document\Builder
         arguments:
             - '@ezpublish.spi.persistence.location_handler'
             - '@ezpublish.spi.persistence.content_type_handler'
@@ -64,5 +64,5 @@ services:
         class: Cabbage\Core\Indexer
         arguments:
             - '@cabbage.indexer.gateway'
-            - '@cabbage.document.mapper'
+            - '@cabbage.document.builder'
             - '@cabbage.document.serializer'

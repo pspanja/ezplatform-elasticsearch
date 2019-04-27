@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Tests\Integration\Core;
 
 use Cabbage\API\Query\Criterion\DocumentType;
-use Cabbage\Core\Indexer\Document\Mapper;
+use Cabbage\Core\Indexer\Document\Builder;
 use Cabbage\Core\Engine;
 use Cabbage\SPI\Index;
 use Cabbage\SPI\Node;
@@ -77,7 +77,7 @@ class EngineTest extends BaseTest
     {
         $engine = $this->getEngineUnderTest();
         $query = new Query([
-            'filter' => new DocumentType(Mapper::TypeContent),
+            'filter' => new DocumentType(Builder::TypeContent),
         ]);
 
         $searchResult = $engine->findContent($query);
@@ -100,7 +100,7 @@ class EngineTest extends BaseTest
     {
         $engine = $this->getEngineUnderTest();
         $query = new LocationQuery([
-            'filter' => new DocumentType(Mapper::TypeLocation),
+            'filter' => new DocumentType(Builder::TypeLocation),
         ]);
 
         $searchResult = $engine->findLocations($query);
@@ -126,14 +126,14 @@ class EngineTest extends BaseTest
         $this->refresh(self::$index);
 
         $query = new Query([
-            'filter' => new DocumentType(Mapper::TypeContent),
+            'filter' => new DocumentType(Builder::TypeContent),
         ]);
 
         $searchResult = $engine->findContent($query);
         $this->assertEquals(0, $searchResult->totalCount);
 
         $query = new LocationQuery([
-            'filter' => new DocumentType(Mapper::TypeLocation),
+            'filter' => new DocumentType(Builder::TypeLocation),
         ]);
 
         $searchResult = $engine->findLocations($query);

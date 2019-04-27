@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core;
 
-use Cabbage\Core\Indexer\Document\Mapper;
+use Cabbage\Core\Indexer\Document\Builder;
 use Cabbage\Core\Indexer\Document\Serializer;
 use Cabbage\Core\Indexer\Gateway;
 use Cabbage\SPI\Index;
@@ -22,9 +22,9 @@ final class Indexer extends SPIIndexer
     private $gateway;
 
     /**
-     * @var \Cabbage\Core\Indexer\Document\Mapper
+     * @var \Cabbage\Core\Indexer\Document\Builder
      */
-    private $documentMapper;
+    private $documentBuilder;
 
     /**
      * @var \Cabbage\Core\Indexer\Document\Serializer
@@ -33,16 +33,16 @@ final class Indexer extends SPIIndexer
 
     /**
      * @param \Cabbage\Core\Indexer\Gateway $gateway
-     * @param \Cabbage\Core\Indexer\Document\Mapper $documentMapper
+     * @param \Cabbage\Core\Indexer\Document\Builder $documentBuilder
      * @param \Cabbage\Core\Indexer\Document\Serializer $documentSerializer
      */
     public function __construct(
         Gateway $gateway,
-        Mapper $documentMapper,
+        Builder $documentBuilder,
         Serializer $documentSerializer
     ) {
         $this->gateway = $gateway;
-        $this->documentMapper = $documentMapper;
+        $this->documentBuilder = $documentBuilder;
         $this->documentSerializer = $documentSerializer;
     }
 
@@ -59,7 +59,7 @@ final class Indexer extends SPIIndexer
                 'index'
             ),
             $this->documentSerializer->serialize(
-                $this->documentMapper->map($content)
+                $this->documentBuilder->map($content)
             )
         );
     }
@@ -106,7 +106,7 @@ final class Indexer extends SPIIndexer
 
         foreach ($contentItems as $content) {
             $payload .= $this->documentSerializer->serialize(
-                $this->documentMapper->map($content)
+                $this->documentBuilder->map($content)
             );
         }
 
