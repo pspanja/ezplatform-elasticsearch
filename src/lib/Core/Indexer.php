@@ -47,24 +47,6 @@ final class Indexer extends SPIIndexer
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
-     */
-    public function indexContent(Content $content): void
-    {
-        $this->gateway->index(
-            new Index(
-                Node::fromDsn('http://localhost:9200'),
-                'index'
-            ),
-            $this->documentSerializer->serialize(
-                $this->documentBuilder->build($content)
-            )
-        );
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function deleteContent($contentId, $versionId = null): void

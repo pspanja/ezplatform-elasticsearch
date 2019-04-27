@@ -82,7 +82,7 @@ final class Engine implements HandlerInterface, Capable
 
     public function indexContent(Content $content): void
     {
-        $this->indexer->indexContent($content);
+        $this->indexer->bulkIndexContent([$content]);
     }
 
     /**

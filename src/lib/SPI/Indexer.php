@@ -10,13 +10,6 @@ use eZ\Publish\SPI\Persistence\Content\Location;
 abstract class Indexer
 {
     /**
-     * @see \eZ\Publish\SPI\Search\Handler::indexContent()
-     *
-     * @param \eZ\Publish\SPI\Persistence\Content $content
-     */
-    abstract public function indexContent(Content $content): void;
-
-    /**
      * @see \eZ\Publish\SPI\Search\Handler::deleteContent()
      *
      * @param int $contentId
