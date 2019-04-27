@@ -25,13 +25,13 @@ final class Mapper
      */
     private $dataMapperRegistry;
     /**
-     * @var \Cabbage\Core\Indexer\Document\Mapper\ContentField\NameGenerator
+     * @var \Cabbage\Core\Indexer\Document\FieldMapper\ContentField\NameGenerator
      */
     private $nameGenerator;
 
     /**
      * @param \Cabbage\Core\FieldType\DataMapperRegistry $dataMapperRegistry
-     * @param \Cabbage\Core\Indexer\Document\Mapper\ContentField\NameGenerator $nameGenerator
+     * @param \Cabbage\Core\Indexer\Document\FieldMapper\ContentField\NameGenerator $nameGenerator
      */
     public function __construct(
         DataMapperRegistry $dataMapperRegistry,
