@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Indexer\Document;
+namespace Cabbage\Core\Indexer;
 
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Location;
@@ -10,7 +10,7 @@ use eZ\Publish\SPI\Persistence\Content\Location;
 /**
  * Generates Content and Location document IDs.
  */
-final class IdGenerator
+final class DocumentIdGenerator
 {
     /**
      * @param \eZ\Publish\SPI\Persistence\Content $content

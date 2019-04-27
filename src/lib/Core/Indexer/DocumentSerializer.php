@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Indexer\Document;
+namespace Cabbage\Core\Indexer;
 
-use Cabbage\Core\Indexer\Document\Serializer\TypedFieldNameGenerator;
-use Cabbage\Core\Indexer\Document\Serializer\FieldValueMapper;
+use Cabbage\Core\Indexer\DocumentSerializer\TypedFieldNameGenerator;
+use Cabbage\Core\Indexer\DocumentSerializer\FieldValueMapper;
 use Cabbage\SPI\Document;
 
 /**
@@ -13,21 +13,21 @@ use Cabbage\SPI\Document;
  *
  * @see \Cabbage\SPI\Document
  */
-final class Serializer
+final class DocumentSerializer
 {
     /**
-     * @var \Cabbage\Core\Indexer\Document\Serializer\TypedFieldNameGenerator
+     * @var \Cabbage\Core\Indexer\DocumentSerializer\TypedFieldNameGenerator
      */
     private $fieldTypedNameGenerator;
 
     /**
-     * @var \Cabbage\Core\Indexer\Document\Serializer\FieldValueMapper
+     * @var \Cabbage\Core\Indexer\DocumentSerializer\FieldValueMapper
      */
     private $fieldValueMapper;
 
     /**
-     * @param \Cabbage\Core\Indexer\Document\Serializer\TypedFieldNameGenerator $fieldTypedNameGenerator
-     * @param \Cabbage\Core\Indexer\Document\Serializer\FieldValueMapper $fieldValueMapper
+     * @param \Cabbage\Core\Indexer\DocumentSerializer\TypedFieldNameGenerator $fieldTypedNameGenerator
+     * @param \Cabbage\Core\Indexer\DocumentSerializer\FieldValueMapper $fieldValueMapper
      */
     public function __construct(
         TypedFieldNameGenerator $fieldTypedNameGenerator,

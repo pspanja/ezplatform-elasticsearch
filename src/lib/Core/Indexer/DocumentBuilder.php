@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Indexer\Document;
+namespace Cabbage\Core\Indexer;
 
-use Cabbage\Core\Indexer\Document\FieldBuilders\Translation\Content\ContentFields;
+use Cabbage\Core\Indexer\FieldBuilders\Translation\Content\ContentFields;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Document\Field;
 use Cabbage\SPI\Document\Field\Type\Identifier;
@@ -20,7 +20,7 @@ use eZ\Publish\SPI\Persistence\Content\Type\Handler as TypeHandler;
  * @see \eZ\Publish\SPI\Persistence\Content
  * @see \Cabbage\SPI\Document
  */
-final class Builder
+final class DocumentBuilder
 {
     /**
      * Content document type identifier.
@@ -47,26 +47,26 @@ final class Builder
     private $typeHandler;
 
     /**
-     * @var \Cabbage\Core\Indexer\Document\FieldBuilders\Translation\Content\ContentFields
+     * @var \Cabbage\Core\Indexer\FieldBuilders\Translation\Content\ContentFields
      */
     private $contentFieldsBuilder;
 
     /**
-     * @var \Cabbage\Core\Indexer\Document\IdGenerator
+     * @var \Cabbage\Core\Indexer\DocumentIdGenerator
      */
     private $idGenerator;
 
     /**
      * @param \eZ\Publish\SPI\Persistence\Content\Location\Handler $locationHandler
      * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $typeHandler
-     * @param \Cabbage\Core\Indexer\Document\FieldBuilders\Translation\Content\ContentFields $contentFieldsBuilder
-     * @param \Cabbage\Core\Indexer\Document\IdGenerator $idGenerator
+     * @param \Cabbage\Core\Indexer\FieldBuilders\Translation\Content\ContentFields $contentFieldsBuilder
+     * @param \Cabbage\Core\Indexer\DocumentIdGenerator $idGenerator
      */
     public function __construct(
         LocationHandler $locationHandler,
         TypeHandler $typeHandler,
         ContentFields $contentFieldsBuilder,
-        IdGenerator $idGenerator
+        DocumentIdGenerator $idGenerator
     ) {
         $this->locationHandler = $locationHandler;
         $this->typeHandler = $typeHandler;

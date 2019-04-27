@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Cabbage\Core;
 
-use Cabbage\Core\Indexer\Document\Builder;
-use Cabbage\Core\Indexer\Document\DestinationResolver;
-use Cabbage\Core\Indexer\Document\Serializer;
+use Cabbage\Core\Indexer\DocumentBuilder;
+use Cabbage\Core\Indexer\DestinationResolver;
+use Cabbage\Core\Indexer\DocumentSerializer;
 use Cabbage\Core\Indexer\Gateway;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Index;
@@ -24,30 +24,30 @@ final class Indexer extends SPIIndexer
     private $gateway;
 
     /**
-     * @var \Cabbage\Core\Indexer\Document\Builder
+     * @var \Cabbage\Core\Indexer\DocumentBuilder
      */
     private $documentBuilder;
 
     /**
-     * @var \Cabbage\Core\Indexer\Document\Serializer
+     * @var \Cabbage\Core\Indexer\DocumentSerializer
      */
     private $documentSerializer;
 
     /**
-     * @var \Cabbage\Core\Indexer\Document\DestinationResolver
+     * @var \Cabbage\Core\Indexer\DestinationResolver
      */
     private $destinationResolver;
 
     /**
      * @param \Cabbage\Core\Indexer\Gateway $gateway
-     * @param \Cabbage\Core\Indexer\Document\Builder $documentBuilder
-     * @param \Cabbage\Core\Indexer\Document\Serializer $documentSerializer
-     * @param \Cabbage\Core\Indexer\Document\DestinationResolver $destinationResolver
+     * @param \Cabbage\Core\Indexer\DocumentBuilder $documentBuilder
+     * @param \Cabbage\Core\Indexer\DocumentSerializer $documentSerializer
+     * @param \Cabbage\Core\Indexer\DestinationResolver $destinationResolver
      */
     public function __construct(
         Gateway $gateway,
-        Builder $documentBuilder,
-        Serializer $documentSerializer,
+        DocumentBuilder $documentBuilder,
+        DocumentSerializer $documentSerializer,
         DestinationResolver $destinationResolver
     ) {
         $this->gateway = $gateway;

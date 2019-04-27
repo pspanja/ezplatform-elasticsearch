@@ -5,58 +5,58 @@ parameters:
         identifier: identifier
 
 services:
-    cabbage.document.field_builder.translation.content.content_field_name_generator:
-        class: Cabbage\Core\Indexer\Document\FieldBuilders\Translation\Content\ContentFieldNameGenerator
+    cabbage.indexer.field_builder.translation.content.content_field_name_generator:
+        class: Cabbage\Core\Indexer\FieldBuilders\Translation\Content\ContentFieldNameGenerator
 
-    cabbage.document.field_builder.translation.content.content_fields:
-        class: Cabbage\Core\Indexer\Document\FieldBuilders\Translation\Content\ContentFields
+    cabbage.indexer.field_builder.translation.content.content_fields:
+        class: Cabbage\Core\Indexer\FieldBuilders\Translation\Content\ContentFields
         arguments:
             - '@cabbage.field_type.data_mapper_registry'
-            - '@cabbage.document.field_builder.translation.content.content_field_name_generator'
+            - '@cabbage.indexer.field_builder.translation.content.content_field_name_generator'
 
-    cabbage.document.id_generator:
-        class: Cabbage\Core\Indexer\Document\IdGenerator
+    cabbage.indexer.document_id_generator:
+        class: Cabbage\Core\Indexer\DocumentIdGenerator
 
-    cabbage.document.builder:
-        class: Cabbage\Core\Indexer\Document\Builder
+    cabbage.indexer.document_builder:
+        class: Cabbage\Core\Indexer\DocumentBuilder
         arguments:
             - '@ezpublish.spi.persistence.location_handler'
             - '@ezpublish.spi.persistence.content_type_handler'
-            - '@cabbage.document.field_builder.translation.content.content_fields'
-            - '@cabbage.document.id_generator'
+            - '@cabbage.indexer.field_builder.translation.content.content_fields'
+            - '@cabbage.indexer.document_id_generator'
 
-    cabbage.document.destination_resolver:
-        class: Cabbage\Core\Indexer\Document\DestinationResolver
+    cabbage.indexer.destination_resolver:
+        class: Cabbage\Core\Indexer\DestinationResolver
         arguments:
             - '@cabbage.cluster'
 
-    cabbage.document.serializer.field_value_mapper.visitor.boolean:
-        class: Cabbage\Core\Indexer\Document\Serializer\FieldValueMapper\Visitor\Boolean
+    cabbage.indexer.document_serializer.field_value_mapper.visitor.boolean:
+        class: Cabbage\Core\Indexer\DocumentSerializer\FieldValueMapper\Visitor\Boolean
 
-    cabbage.document.serializer.field_value_mapper.visitor.keyword:
-        class: Cabbage\Core\Indexer\Document\Serializer\FieldValueMapper\Visitor\Keyword
+    cabbage.indexer.document_serializer.field_value_mapper.visitor.keyword:
+        class: Cabbage\Core\Indexer\DocumentSerializer\FieldValueMapper\Visitor\Keyword
 
-    cabbage.document.serializer.field_value_mapper.visitor.identifier:
-        class: Cabbage\Core\Indexer\Document\Serializer\FieldValueMapper\Visitor\Identifier
+    cabbage.indexer.document_serializer.field_value_mapper.visitor.identifier:
+        class: Cabbage\Core\Indexer\DocumentSerializer\FieldValueMapper\Visitor\Identifier
 
-    cabbage.document.serializer.field_value_mapper:
-        class: Cabbage\Core\Indexer\Document\Serializer\FieldValueMapper
+    cabbage.indexer.document_serializer.field_value_mapper:
+        class: Cabbage\Core\Indexer\DocumentSerializer\FieldValueMapper
         arguments:
             -
-                - '@cabbage.document.serializer.field_value_mapper.visitor.boolean'
-                - '@cabbage.document.serializer.field_value_mapper.visitor.keyword'
-                - '@cabbage.document.serializer.field_value_mapper.visitor.identifier'
+                - '@cabbage.indexer.document_serializer.field_value_mapper.visitor.boolean'
+                - '@cabbage.indexer.document_serializer.field_value_mapper.visitor.keyword'
+                - '@cabbage.indexer.document_serializer.field_value_mapper.visitor.identifier'
 
-    cabbage.document.serializer.typed_field_name_generator:
-        class: Cabbage\Core\Indexer\Document\Serializer\TypedFieldNameGenerator
+    cabbage.indexer.document_serializer.typed_field_name_generator:
+        class: Cabbage\Core\Indexer\DocumentSerializer\TypedFieldNameGenerator
         arguments:
             - '%cabbage.document.field.type_suffix_map%'
 
-    cabbage.document.serializer:
-        class: Cabbage\Core\Indexer\Document\Serializer
+    cabbage.indexer.document_serializer:
+        class: Cabbage\Core\Indexer\DocumentSerializer
         arguments:
-            - '@cabbage.document.serializer.typed_field_name_generator'
-            - '@cabbage.document.serializer.field_value_mapper'
+            - '@cabbage.indexer.document_serializer.typed_field_name_generator'
+            - '@cabbage.indexer.document_serializer.field_value_mapper'
 
     cabbage.indexer.gateway:
         class: Cabbage\Core\Indexer\Gateway
@@ -67,6 +67,6 @@ services:
         class: Cabbage\Core\Indexer
         arguments:
             - '@cabbage.indexer.gateway'
-            - '@cabbage.document.builder'
-            - '@cabbage.document.serializer'
-            - '@cabbage.document.destination_resolver'
+            - '@cabbage.indexer.document_builder'
+            - '@cabbage.indexer.document_serializer'
+            - '@cabbage.indexer.destination_resolver'

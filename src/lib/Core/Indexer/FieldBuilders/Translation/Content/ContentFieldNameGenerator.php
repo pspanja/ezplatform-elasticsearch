@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Indexer\Document\FieldBuilders\Translation\Content;
+namespace Cabbage\Core\Indexer\FieldBuilders\Translation\Content;
 
 use eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition;
 
