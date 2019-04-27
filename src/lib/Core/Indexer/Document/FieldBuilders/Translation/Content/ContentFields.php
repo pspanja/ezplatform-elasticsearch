@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Indexer\Document\FieldMapper\ContentField;
+namespace Cabbage\Core\Indexer\Document\FieldBuilders\Translation\Content;
 
 use Cabbage\Core\FieldType\DataMapperRegistry;
 use Cabbage\SPI\Document\Field as DocumentField;
@@ -18,24 +18,24 @@ use RuntimeException;
  * @see \eZ\Publish\SPI\Persistence\Content\Field
  * @see \Cabbage\SPI\Document\Field
  */
-final class Mapper
+final class ContentFields
 {
     /**
      * @var \Cabbage\Core\FieldType\DataMapperRegistry
      */
     private $dataMapperRegistry;
     /**
-     * @var \Cabbage\Core\Indexer\Document\FieldMapper\ContentField\NameGenerator
+     * @var \Cabbage\Core\Indexer\Document\FieldBuilders\Translation\Content\ContentFieldNameGenerator
      */
     private $nameGenerator;
 
     /**
      * @param \Cabbage\Core\FieldType\DataMapperRegistry $dataMapperRegistry
-     * @param \Cabbage\Core\Indexer\Document\FieldMapper\ContentField\NameGenerator $nameGenerator
+     * @param \Cabbage\Core\Indexer\Document\FieldBuilders\Translation\Content\ContentFieldNameGenerator
      */
     public function __construct(
         DataMapperRegistry $dataMapperRegistry,
-        NameGenerator $nameGenerator
+        ContentFieldNameGenerator $nameGenerator
     ) {
         $this->dataMapperRegistry = $dataMapperRegistry;
         $this->nameGenerator = $nameGenerator;
@@ -47,7 +47,7 @@ final class Mapper
      *
      * @return \Cabbage\SPI\Document\Field[]
      */
-    public function map(Content $content, Type $type): array
+    public function build(Content $content, Type $type): array
     {
         $documentFieldGrouped = [[]];
 
@@ -55,13 +55,13 @@ final class Mapper
 
         foreach ($content->fields as $field) {
             $fieldDefinition = $this->getFieldDefinition($field, $fieldDefinitionMapById);
-            $documentFieldGrouped[] = $this->mapField($field, $fieldDefinition);
+            $documentFieldGrouped[] = $this->buildFields($field, $fieldDefinition);
         }
 
         return array_merge(...$documentFieldGrouped);
     }
 
-    private function mapField(ContentField $field, FieldDefinition $fieldDefinition): array
+    private function buildFields(ContentField $field, FieldDefinition $fieldDefinition): array
     {
         $namedDocumentFields = [];
         $dataMapper = $this->dataMapperRegistry->get($field->type);
