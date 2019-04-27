@@ -81,7 +81,7 @@ final class Builder
      *
      * @return \Cabbage\SPI\Document[]
      */
-    public function map(Content $content): array
+    public function build(Content $content): array
     {
         $documents = [];
         $type = $this->typeHandler->load($content->versionInfo->contentInfo->contentTypeId);
@@ -89,10 +89,10 @@ final class Builder
             $content->versionInfo->contentInfo->id
         );
 
-        $documents[] = $this->mapContent($content, $type);
+        $documents[] = $this->buildContentDocument($content, $type);
 
         foreach ($locations as $location) {
-            $documents[] = $this->mapLocation($location, $content, $type);
+            $documents[] = $this->buildLocationDocument($location, $content, $type);
         }
 
         return $documents;
@@ -104,7 +104,7 @@ final class Builder
      *
      * @return \Cabbage\SPI\Document
      */
-    private function mapContent(Content $content, Type $type): Document
+    private function buildContentDocument(Content $content, Type $type): Document
     {
         $fieldsGrouped = [[]];
 
@@ -141,7 +141,7 @@ final class Builder
      *
      * @return \Cabbage\SPI\Document
      */
-    private function mapLocation(Location $location, Content $content, Type $type): Document
+    private function buildLocationDocument(Location $location, Content $content, Type $type): Document
     {
         $fieldsGrouped = [[]];
 

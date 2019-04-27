@@ -59,7 +59,7 @@ final class Indexer extends SPIIndexer
                 'index'
             ),
             $this->documentSerializer->serialize(
-                $this->documentBuilder->map($content)
+                $this->documentBuilder->build($content)
             )
         );
     }
@@ -106,7 +106,7 @@ final class Indexer extends SPIIndexer
 
         foreach ($contentItems as $content) {
             $payload .= $this->documentSerializer->serialize(
-                $this->documentBuilder->map($content)
+                $this->documentBuilder->build($content)
             );
         }
 
