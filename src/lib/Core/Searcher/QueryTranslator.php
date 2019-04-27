@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Searcher\Query;
+namespace Cabbage\Core\Searcher;
 
-use Cabbage\Core\Searcher\Query\Translator\Criterion\Converter;
+use Cabbage\Core\Searcher\QueryTranslator\Criterion\Converter;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchAll;
@@ -16,10 +16,10 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchAll;
  * @see \eZ\Publish\API\Repository\Values\Content\Query
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
  */
-final class Translator
+final class QueryTranslator
 {
     /**
-     * @var \Cabbage\Core\Searcher\Query\Translator\Criterion\Converter
+     * @var \Cabbage\Core\Searcher\QueryTranslator\Criterion\Converter
      */
     private $criterionConverter;
 

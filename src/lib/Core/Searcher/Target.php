@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Searcher\Query;
+namespace Cabbage\Core\Searcher;
 
 use function array_map;
 use Cabbage\SPI\Index;

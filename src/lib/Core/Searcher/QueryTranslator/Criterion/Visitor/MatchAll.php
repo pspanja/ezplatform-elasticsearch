@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Searcher\Query\Translator\Criterion\Visitor;
+namespace Cabbage\Core\Searcher\QueryTranslator\Criterion\Visitor;
 
 use ArrayObject;
-use Cabbage\Core\Searcher\Query\Translator\Criterion\Visitor;
-use Cabbage\Core\Searcher\Query\Translator\Criterion\Converter;
+use Cabbage\Core\Searcher\QueryTranslator\Criterion\Visitor;
+use Cabbage\Core\Searcher\QueryTranslator\Criterion\Converter;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\MatchAll as MatchAllCriterion;
 

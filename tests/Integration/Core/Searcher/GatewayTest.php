@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration\Core\Searcher;
 
-use Cabbage\Core\Searcher\Query\Target;
+use Cabbage\Core\Searcher\Target;
 use Cabbage\SPI\Index;
 use Cabbage\SPI\Node;
 use Cabbage\Tests\Integration\Core\BaseTest;

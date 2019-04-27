@@ -6,7 +6,6 @@ namespace Cabbage\Core\Searcher;
 
 use Cabbage\Core\Http\Client;
 use Cabbage\Core\Http\Message;
-use Cabbage\Core\Searcher\Query\Target;
 use RuntimeException;
 
 /**
@@ -28,7 +27,7 @@ final class Gateway
     }
 
     /**
-     * @param \Cabbage\Core\Searcher\Query\Target $target
+     * @param \Cabbage\Core\Searcher\Target $target
      * @param array|array[] $query
      *
      * @return string

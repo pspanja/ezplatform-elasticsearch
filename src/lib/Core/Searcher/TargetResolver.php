@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Searcher\Query;
+namespace Cabbage\Core\Searcher;
 
 use Cabbage\Core\Cluster;
 use Cabbage\SPI\LanguageFilter;
@@ -10,7 +10,7 @@ use Cabbage\SPI\LanguageFilter;
 /**
  * Matches a LanguageFilter to a Target.
  *
- * @see \Cabbage\Core\Searcher\Query\Target
+ * @see \Cabbage\Core\Searcher\Target
  * @see \Cabbage\SPI\LanguageFilter
  */
 final class TargetResolver
