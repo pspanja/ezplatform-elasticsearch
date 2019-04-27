@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Cabbage\Core;
 
 use Cabbage\Core\Indexer\Document\Builder;
+use Cabbage\Core\Indexer\Document\DestinationResolver;
 use Cabbage\Core\Indexer\Document\Serializer;
 use Cabbage\Core\Indexer\Gateway;
+use Cabbage\SPI\Document;
 use Cabbage\SPI\Index;
 use Cabbage\SPI\Indexer as SPIIndexer;
 use Cabbage\SPI\Node;
@@ -32,18 +34,26 @@ final class Indexer extends SPIIndexer
     private $documentSerializer;
 
     /**
+     * @var \Cabbage\Core\Indexer\Document\DestinationResolver
+     */
+    private $destinationResolver;
+
+    /**
      * @param \Cabbage\Core\Indexer\Gateway $gateway
      * @param \Cabbage\Core\Indexer\Document\Builder $documentBuilder
      * @param \Cabbage\Core\Indexer\Document\Serializer $documentSerializer
+     * @param \Cabbage\Core\Indexer\Document\DestinationResolver $destinationResolver
      */
     public function __construct(
         Gateway $gateway,
         Builder $documentBuilder,
-        Serializer $documentSerializer
+        Serializer $documentSerializer,
+        DestinationResolver $destinationResolver
     ) {
         $this->gateway = $gateway;
         $this->documentBuilder = $documentBuilder;
         $this->documentSerializer = $documentSerializer;
+        $this->destinationResolver = $destinationResolver;
     }
 
     /**
@@ -87,9 +97,7 @@ final class Indexer extends SPIIndexer
         $payload = '';
 
         foreach ($contentItems as $content) {
-            $payload .= $this->documentSerializer->serialize(
-                $this->documentBuilder->build($content)
-            );
+            $payload .= $this->getIndexingPayloadForContent($content);
         }
 
         $this->gateway->index(
@@ -99,6 +107,49 @@ final class Indexer extends SPIIndexer
             ),
             $payload
         );
+    }
+
+    /**
+     * @param \eZ\Publish\SPI\Persistence\Content $content
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\NotFoundException
+     *
+     * @return string
+     */
+    private function getIndexingPayloadForContent(Content $content): string
+    {
+        $payload = '';
+        $documents = $this->documentBuilder->build($content);
+
+        foreach ($documents as $document) {
+            $actionAndMetaData = $this->getActionAndMetaData($document);
+            $serializedDocument = $this->documentSerializer->serialize($document);
+
+            $payload .= "{$actionAndMetaData}\n{$serializedDocument}\n";
+        }
+
+        return $payload;
+    }
+
+    /**
+     * Generate action and metadata for the indexed Document.
+     *
+     * @param \Cabbage\SPI\Document $document
+     *
+     * @return string
+     */
+    private function getActionAndMetaData(Document $document): string
+    {
+        $index = $this->destinationResolver->resolve($document);
+
+        $data = [
+            'index' => [
+                '_index' => $index->name,
+                '_id' => $document->id,
+            ],
+        ];
+
+        return json_encode($data, JSON_THROW_ON_ERROR);
     }
 
     public function flush(): void
