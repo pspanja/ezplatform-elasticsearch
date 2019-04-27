@@ -1,4 +1,8 @@
 parameters:
+    cabbage.document.field.type_suffix_map:
+        boolean: boolean
+        keyword: keyword
+        identifier: identifier
 
 services:
     cabbage.document.field_mapper.content_field.name_generator:
@@ -26,33 +30,33 @@ services:
         arguments:
             - '@cabbage.cluster'
 
-    cabbage.document.field.value_mapper.visitor.boolean:
-        class: Cabbage\Core\Indexer\Document\Field\ValueMapper\Visitor\Boolean
+    cabbage.document.serializer.field_value_mapper.visitor.boolean:
+        class: Cabbage\Core\Indexer\Document\Serializer\FieldValueMapper\Visitor\Boolean
 
-    cabbage.document.field.value_mapper.visitor.keyword:
-        class: Cabbage\Core\Indexer\Document\Field\ValueMapper\Visitor\Keyword
+    cabbage.document.serializer.field_value_mapper.visitor.keyword:
+        class: Cabbage\Core\Indexer\Document\Serializer\FieldValueMapper\Visitor\Keyword
 
-    cabbage.document.field.value_mapper.visitor.identifier:
-        class: Cabbage\Core\Indexer\Document\Field\ValueMapper\Visitor\Identifier
+    cabbage.document.serializer.field_value_mapper.visitor.identifier:
+        class: Cabbage\Core\Indexer\Document\Serializer\FieldValueMapper\Visitor\Identifier
 
-    cabbage.document.field.value_mapper:
-        class: Cabbage\Core\Indexer\Document\Field\ValueMapper
+    cabbage.document.serializer.field_value_mapper:
+        class: Cabbage\Core\Indexer\Document\Serializer\FieldValueMapper
         arguments:
             -
-                - '@cabbage.document.field.value_mapper.visitor.boolean'
-                - '@cabbage.document.field.value_mapper.visitor.keyword'
-                - '@cabbage.document.field.value_mapper.visitor.identifier'
+                - '@cabbage.document.serializer.field_value_mapper.visitor.boolean'
+                - '@cabbage.document.serializer.field_value_mapper.visitor.keyword'
+                - '@cabbage.document.serializer.field_value_mapper.visitor.identifier'
 
-    cabbage.document.field.typed_name_generator:
-        class: Cabbage\Core\Indexer\Document\Field\TypedNameGenerator
+    cabbage.document.serializer.typed_field_name_generator:
+        class: Cabbage\Core\Indexer\Document\Serializer\TypedFieldNameGenerator
         arguments:
-            - '%cabbage.field.name_generator.type_suffix_map%'
+            - '%cabbage.document.field.type_suffix_map%'
 
     cabbage.document.serializer:
         class: Cabbage\Core\Indexer\Document\Serializer
         arguments:
-            - '@cabbage.document.field.typed_name_generator'
-            - '@cabbage.document.field.value_mapper'
+            - '@cabbage.document.serializer.typed_field_name_generator'
+            - '@cabbage.document.serializer.field_value_mapper'
 
     cabbage.indexer.gateway:
         class: Cabbage\Core\Indexer\Gateway

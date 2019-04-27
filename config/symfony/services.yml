@@ -6,10 +6,6 @@ imports:
     - { resource: slots.yml }
 
 parameters:
-    cabbage.field.name_generator.type_suffix_map:
-        boolean: boolean
-        keyword: keyword
-        identifier: identifier
 
 services:
     cabbage.http.client:

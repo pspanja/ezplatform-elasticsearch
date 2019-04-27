@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Indexer\Document;
 
-use Cabbage\Core\Indexer\Document\Field\TypedNameGenerator;
-use Cabbage\Core\Indexer\Document\Field\ValueMapper;
+use Cabbage\Core\Indexer\Document\Serializer\TypedFieldNameGenerator;
+use Cabbage\Core\Indexer\Document\Serializer\FieldValueMapper;
 use Cabbage\SPI\Document;
 
 /**
@@ -16,22 +16,22 @@ use Cabbage\SPI\Document;
 final class Serializer
 {
     /**
-     * @var \Cabbage\Core\Indexer\Document\Field\TypedNameGenerator
+     * @var \Cabbage\Core\Indexer\Document\Serializer\TypedFieldNameGenerator
      */
     private $fieldTypedNameGenerator;
 
     /**
-     * @var \Cabbage\Core\Indexer\Document\Field\ValueMapper
+     * @var \Cabbage\Core\Indexer\Document\Serializer\FieldValueMapper
      */
     private $fieldValueMapper;
 
     /**
-     * @param \Cabbage\Core\Indexer\Document\Field\TypedNameGenerator $fieldTypedNameGenerator
-     * @param \Cabbage\Core\Indexer\Document\Field\ValueMapper $fieldValueMapper
+     * @param \Cabbage\Core\Indexer\Document\Serializer\TypedFieldNameGenerator $fieldTypedNameGenerator
+     * @param \Cabbage\Core\Indexer\Document\Serializer\FieldValueMapper $fieldValueMapper
      */
     public function __construct(
-        TypedNameGenerator $fieldTypedNameGenerator,
-        ValueMapper $fieldValueMapper
+        TypedFieldNameGenerator $fieldTypedNameGenerator,
+        FieldValueMapper $fieldValueMapper
     ) {
         $this->fieldTypedNameGenerator = $fieldTypedNameGenerator;
         $this->fieldValueMapper = $fieldValueMapper;

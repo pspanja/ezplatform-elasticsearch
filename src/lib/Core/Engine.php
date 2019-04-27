@@ -15,10 +15,10 @@ use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\ContentInfo;
 use eZ\Publish\SPI\Persistence\Content\Location;
 use eZ\Publish\SPI\Search\Capable;
-use eZ\Publish\SPI\Search\Handler as HandlerInterface;
+use eZ\Publish\SPI\Search\Handler;
 use RuntimeException;
 
-final class Engine implements HandlerInterface, Capable
+final class Engine implements Handler, Capable
 {
     /**
      * @var \Cabbage\SPI\Indexer
