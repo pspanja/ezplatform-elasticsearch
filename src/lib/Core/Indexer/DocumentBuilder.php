@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Indexer;
 
+use Cabbage\Core\Indexer\FieldBuilders\TranslationContent;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFields;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Document\Field;
@@ -47,9 +48,9 @@ final class DocumentBuilder
     private $typeHandler;
 
     /**
-     * @var \Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFields
+     * @var \Cabbage\Core\Indexer\FieldBuilders\TranslationContent
      */
-    private $contentFieldsBuilder;
+    private $translationContentFieldsBuilder;
 
     /**
      * @var \Cabbage\Core\Indexer\DocumentIdGenerator
@@ -59,18 +60,18 @@ final class DocumentBuilder
     /**
      * @param \eZ\Publish\SPI\Persistence\Content\Location\Handler $locationHandler
      * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $typeHandler
-     * @param \Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFields $contentFieldsBuilder
+     * @param \Cabbage\Core\Indexer\FieldBuilders\TranslationContent $translationContentFieldsBuilder
      * @param \Cabbage\Core\Indexer\DocumentIdGenerator $idGenerator
      */
     public function __construct(
         LocationHandler $locationHandler,
         TypeHandler $typeHandler,
-        ContentFields $contentFieldsBuilder,
+        TranslationContent $translationContentFieldsBuilder,
         DocumentIdGenerator $idGenerator
     ) {
         $this->locationHandler = $locationHandler;
         $this->typeHandler = $typeHandler;
-        $this->contentFieldsBuilder = $contentFieldsBuilder;
+        $this->translationContentFieldsBuilder = $translationContentFieldsBuilder;
         $this->idGenerator = $idGenerator;
     }
 
@@ -126,7 +127,7 @@ final class DocumentBuilder
 
         $fieldsGrouped[] = $commonMetadataFields;
         $fieldsGrouped[] = $contentMetadataFields;
-        $fieldsGrouped[] = $this->contentFieldsBuilder->build($content, $type);
+        $fieldsGrouped[] = $this->translationContentFieldsBuilder->build($content, $type);
 
         return new Document(
             $this->idGenerator->generateContentDocumentId($content),
@@ -172,7 +173,7 @@ final class DocumentBuilder
         $fieldsGrouped[] = $commonMetadataFields;
         $fieldsGrouped[] = $contentMetadataFields;
         $fieldsGrouped[] = $locationMetadataFields;
-        $fieldsGrouped[] = $this->contentFieldsBuilder->build($content, $type);
+        $fieldsGrouped[] = $this->translationContentFieldsBuilder->build($content, $type);
 
         return new Document(
             $this->idGenerator->generateLocationDocumentId($location),

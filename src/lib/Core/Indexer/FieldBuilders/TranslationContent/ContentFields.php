@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core\Indexer\FieldBuilders\TranslationContent;
 
 use Cabbage\Core\FieldType\DataMapperRegistry;
+use Cabbage\Core\Indexer\FieldBuilders\TranslationContent;
 use Cabbage\SPI\Document\Field as DocumentField;
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Field as ContentField;
@@ -18,7 +19,7 @@ use RuntimeException;
  * @see \eZ\Publish\SPI\Persistence\Content\Field
  * @see \Cabbage\SPI\Document\Field
  */
-final class ContentFields
+final class ContentFields extends TranslationContent
 {
     /**
      * @var \Cabbage\Core\FieldType\DataMapperRegistry
