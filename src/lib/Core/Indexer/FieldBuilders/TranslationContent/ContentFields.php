@@ -41,6 +41,11 @@ final class ContentFields
         $this->nameGenerator = $nameGenerator;
     }
 
+    public function accept(Content $content, Type $type): bool
+    {
+        return true;
+    }
+
     /**
      * @param \eZ\Publish\SPI\Persistence\Content $content
      * @param \eZ\Publish\SPI\Persistence\Content\Type $type
