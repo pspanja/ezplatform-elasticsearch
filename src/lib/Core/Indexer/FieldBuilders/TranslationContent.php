@@ -8,7 +8,7 @@ use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Type;
 
 /**
- * Resolves an index where a document will be indexed.
+ * Base class for building Fields for Content Documents in a specific translation.
  */
 abstract class TranslationContent
 {
