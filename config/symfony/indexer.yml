@@ -14,6 +14,12 @@ services:
             - '@cabbage.field_type.data_mapper_registry'
             - '@cabbage.indexer.field_builder.translation.content.content_field_name_generator'
 
+    cabbage.indexer.field_builder.translation_content:
+        class: Cabbage\Core\Indexer\FieldBuilders\TranslationContent\Aggregate
+        arguments:
+            -
+                - '@cabbage.indexer.field_builder.translation_content.content_fields'
+
     cabbage.indexer.document_id_generator:
         class: Cabbage\Core\Indexer\DocumentIdGenerator
 
@@ -22,7 +28,7 @@ services:
         arguments:
             - '@ezpublish.spi.persistence.location_handler'
             - '@ezpublish.spi.persistence.content_type_handler'
-            - '@cabbage.indexer.field_builder.translation_content.content_fields'
+            - '@cabbage.indexer.field_builder.translation_content'
             - '@cabbage.indexer.document_id_generator'
 
     cabbage.indexer.destination_resolver:
