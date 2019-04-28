@@ -8,6 +8,11 @@ services:
     cabbage.indexer.field_builder.translation.content.content_field_name_generator:
         class: Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFieldNameGenerator
 
+    cabbage.indexer.field_builder.content:
+        class: Cabbage\Core\Indexer\FieldBuilders\TranslationContent\Aggregate
+        arguments:
+            - []
+
     cabbage.indexer.field_builder.translation_content.content_fields:
         class: Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFields
         arguments:
