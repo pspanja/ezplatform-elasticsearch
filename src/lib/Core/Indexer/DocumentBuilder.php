@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Cabbage\Core\Indexer;
 
 use Cabbage\Core\Indexer\FieldBuilders\Content;
+use Cabbage\Core\Indexer\FieldBuilders\Location;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationContent;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFields;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Document\Field;
 use Cabbage\SPI\Document\Field\Type\Identifier;
 use eZ\Publish\SPI\Persistence\Content as SPIContent;
-use eZ\Publish\SPI\Persistence\Content\Location;
+use eZ\Publish\SPI\Persistence\Content\Location as SPILocation;
 use eZ\Publish\SPI\Persistence\Content\Location\Handler as LocationHandler;
 use eZ\Publish\SPI\Persistence\Content\Type;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler as TypeHandler;
@@ -54,6 +55,11 @@ final class DocumentBuilder
     private $contentFieldBuilder;
 
     /**
+     * @var \Cabbage\Core\Indexer\FieldBuilders\Location
+     */
+    private $locationFieldBuilder;
+
+    /**
      * @var \Cabbage\Core\Indexer\FieldBuilders\TranslationContent
      */
     private $translationContentFieldBuilder;
@@ -67,6 +73,7 @@ final class DocumentBuilder
      * @param \eZ\Publish\SPI\Persistence\Content\Location\Handler $locationHandler
      * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $typeHandler
      * @param \Cabbage\Core\Indexer\FieldBuilders\Content $contentFieldBuilder
+     * @param \Cabbage\Core\Indexer\FieldBuilders\Location $locationFieldBuilder
      * @param \Cabbage\Core\Indexer\FieldBuilders\TranslationContent $translationContentFieldBuilder
      * @param \Cabbage\Core\Indexer\DocumentIdGenerator $idGenerator
      */
@@ -74,12 +81,14 @@ final class DocumentBuilder
         LocationHandler $locationHandler,
         TypeHandler $typeHandler,
         Content $contentFieldBuilder,
+        Location $locationFieldBuilder,
         TranslationContent $translationContentFieldBuilder,
         DocumentIdGenerator $idGenerator
     ) {
         $this->locationHandler = $locationHandler;
         $this->typeHandler = $typeHandler;
         $this->contentFieldBuilder = $contentFieldBuilder;
+        $this->locationFieldBuilder = $locationFieldBuilder;
         $this->translationContentFieldBuilder = $translationContentFieldBuilder;
         $this->idGenerator = $idGenerator;
     }
@@ -151,7 +160,7 @@ final class DocumentBuilder
      *
      * @return \Cabbage\SPI\Document
      */
-    private function buildLocationDocument(Location $location, SPIContent $content, Type $type): Document
+    private function buildLocationDocument(SPILocation $location, SPIContent $content, Type $type): Document
     {
         $fieldsGrouped = [[]];
 

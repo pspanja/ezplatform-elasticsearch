@@ -15,7 +15,7 @@ abstract class Content
     abstract public function accept(SPIContent $content, Type $type, array $locations): bool;
 
     /**
-     * @param \Cabbage\Core\Indexer\FieldBuilders\Content $content
+     * @param \eZ\Publish\SPI\Persistence\Content $content
      * @param \eZ\Publish\SPI\Persistence\Content\Type $type
      * @param \eZ\Publish\SPI\Persistence\Content\Location[] $locations
      *
