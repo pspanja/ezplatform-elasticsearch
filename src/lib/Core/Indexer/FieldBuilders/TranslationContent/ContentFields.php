@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Indexer\FieldBuilders\Translation\Content;
+namespace Cabbage\Core\Indexer\FieldBuilders\TranslationContent;
 
 use Cabbage\Core\FieldType\DataMapperRegistry;
 use Cabbage\SPI\Document\Field as DocumentField;
@@ -25,13 +25,13 @@ final class ContentFields
      */
     private $dataMapperRegistry;
     /**
-     * @var \Cabbage\Core\Indexer\FieldBuilders\Translation\Content\ContentFieldNameGenerator
+     * @var \Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFieldNameGenerator
      */
     private $nameGenerator;
 
     /**
      * @param \Cabbage\Core\FieldType\DataMapperRegistry $dataMapperRegistry
-     * @param \Cabbage\Core\Indexer\FieldBuilders\Translation\Content\ContentFieldNameGenerator
+     * @param \Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFieldNameGenerator
      */
     public function __construct(
         DataMapperRegistry $dataMapperRegistry,

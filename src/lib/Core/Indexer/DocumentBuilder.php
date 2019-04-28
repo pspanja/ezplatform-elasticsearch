@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Indexer;
 
-use Cabbage\Core\Indexer\FieldBuilders\Translation\Content\ContentFields;
+use Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFields;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Document\Field;
 use Cabbage\SPI\Document\Field\Type\Identifier;
@@ -47,7 +47,7 @@ final class DocumentBuilder
     private $typeHandler;
 
     /**
-     * @var \Cabbage\Core\Indexer\FieldBuilders\Translation\Content\ContentFields
+     * @var \Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFields
      */
     private $contentFieldsBuilder;
 
@@ -59,7 +59,7 @@ final class DocumentBuilder
     /**
      * @param \eZ\Publish\SPI\Persistence\Content\Location\Handler $locationHandler
      * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $typeHandler
-     * @param \Cabbage\Core\Indexer\FieldBuilders\Translation\Content\ContentFields $contentFieldsBuilder
+     * @param \Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFields $contentFieldsBuilder
      * @param \Cabbage\Core\Indexer\DocumentIdGenerator $idGenerator
      */
     public function __construct(
