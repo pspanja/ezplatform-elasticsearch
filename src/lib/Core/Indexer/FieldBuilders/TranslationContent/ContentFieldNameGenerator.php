@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Indexer\FieldBuilders\TranslationContent;
 
+use Cabbage\SPI\FieldType\DataItem;
 use eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition;
 
 /**
@@ -13,16 +14,16 @@ final class ContentFieldNameGenerator
 {
     /**
      * @param \eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition $fieldDefinition
-     * @param string $dataItemName
+     * @param \Cabbage\SPI\FieldType\DataItem $dataItem
      *
      * @return string
      */
-    public function generate(FieldDefinition $fieldDefinition, string $dataItemName): string
+    public function generate(FieldDefinition $fieldDefinition, DataItem $dataItem): string
     {
         $elements = [
             $fieldDefinition->identifier,
             $fieldDefinition->fieldType,
-            $dataItemName,
+            $dataItem->name,
         ];
 
         return implode('_', $elements);

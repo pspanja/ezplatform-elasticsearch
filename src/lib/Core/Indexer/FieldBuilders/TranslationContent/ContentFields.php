@@ -75,7 +75,7 @@ final class ContentFields extends TranslationContent
 
         foreach ($dataItems as $dataItem) {
             $namedDocumentFields[] = new DocumentField(
-                $this->nameGenerator->generate($fieldDefinition, $dataItem->name),
+                $this->nameGenerator->generate($fieldDefinition, $dataItem),
                 $dataItem->value,
                 $dataItem->type
             );
