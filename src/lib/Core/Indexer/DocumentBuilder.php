@@ -7,7 +7,6 @@ namespace Cabbage\Core\Indexer;
 use Cabbage\Core\Indexer\FieldBuilders\Content;
 use Cabbage\Core\Indexer\FieldBuilders\Location;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationContent;
-use Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFields;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationLocation;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Document\Field;
