@@ -30,6 +30,11 @@ services:
             -
                 - '@cabbage.indexer.field_builder.translation_content.content_fields'
 
+    cabbage.indexer.field_builder.translation_location:
+        class: Cabbage\Core\Indexer\FieldBuilders\TranslationLocation\Aggregate
+        arguments:
+            - []
+
     cabbage.indexer.document_id_generator:
         class: Cabbage\Core\Indexer\DocumentIdGenerator
 
@@ -41,6 +46,7 @@ services:
             - '@cabbage.indexer.field_builder.content'
             - '@cabbage.indexer.field_builder.location'
             - '@cabbage.indexer.field_builder.translation_content'
+            - '@cabbage.indexer.field_builder.translation_location'
             - '@cabbage.indexer.document_id_generator'
 
     cabbage.indexer.destination_resolver:

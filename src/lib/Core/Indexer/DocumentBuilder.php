@@ -8,6 +8,7 @@ use Cabbage\Core\Indexer\FieldBuilders\Content;
 use Cabbage\Core\Indexer\FieldBuilders\Location;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationContent;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFields;
+use Cabbage\Core\Indexer\FieldBuilders\TranslationLocation;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Document\Field;
 use Cabbage\SPI\Document\Field\Type\Identifier;
@@ -65,6 +66,11 @@ final class DocumentBuilder
     private $translationContentFieldBuilder;
 
     /**
+     * @var \Cabbage\Core\Indexer\FieldBuilders\TranslationLocation
+     */
+    private $translationLocationFieldBuilder;
+
+    /**
      * @var \Cabbage\Core\Indexer\DocumentIdGenerator
      */
     private $idGenerator;
@@ -75,6 +81,7 @@ final class DocumentBuilder
      * @param \Cabbage\Core\Indexer\FieldBuilders\Content $contentFieldBuilder
      * @param \Cabbage\Core\Indexer\FieldBuilders\Location $locationFieldBuilder
      * @param \Cabbage\Core\Indexer\FieldBuilders\TranslationContent $translationContentFieldBuilder
+     * @param \Cabbage\Core\Indexer\FieldBuilders\TranslationLocation $translationLocationFieldBuilder
      * @param \Cabbage\Core\Indexer\DocumentIdGenerator $idGenerator
      */
     public function __construct(
@@ -83,6 +90,7 @@ final class DocumentBuilder
         Content $contentFieldBuilder,
         Location $locationFieldBuilder,
         TranslationContent $translationContentFieldBuilder,
+        TranslationLocation $translationLocationFieldBuilder,
         DocumentIdGenerator $idGenerator
     ) {
         $this->locationHandler = $locationHandler;
@@ -90,6 +98,7 @@ final class DocumentBuilder
         $this->contentFieldBuilder = $contentFieldBuilder;
         $this->locationFieldBuilder = $locationFieldBuilder;
         $this->translationContentFieldBuilder = $translationContentFieldBuilder;
+        $this->translationLocationFieldBuilder = $translationLocationFieldBuilder;
         $this->idGenerator = $idGenerator;
     }
 
