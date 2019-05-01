@@ -16,7 +16,7 @@ abstract class TranslationCommon
      * @param string $languageCode
      * @param \eZ\Publish\SPI\Persistence\Content $content
      * @param \eZ\Publish\SPI\Persistence\Content\Type $type
-     * @param array $locations
+     * @param \eZ\Publish\SPI\Persistence\Content\Location[] $locations
      *
      * @return bool
      */
