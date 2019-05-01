@@ -12,6 +12,12 @@ use eZ\Publish\SPI\Persistence\Content\Type;
  */
 abstract class TranslationContent
 {
+    /**
+     * @param \eZ\Publish\SPI\Persistence\Content $content
+     * @param \eZ\Publish\SPI\Persistence\Content\Type $type
+     *
+     * @return bool
+     */
     abstract public function accept(Content $content, Type $type): bool;
 
     /**

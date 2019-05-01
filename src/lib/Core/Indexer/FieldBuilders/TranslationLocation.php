@@ -13,6 +13,14 @@ use eZ\Publish\SPI\Persistence\Content\Type;
  */
 abstract class TranslationLocation
 {
+    /**
+     * @param string $languageCode
+     * @param \eZ\Publish\SPI\Persistence\Content\Location $location
+     * @param \eZ\Publish\SPI\Persistence\Content $content
+     * @param \eZ\Publish\SPI\Persistence\Content\Type $type
+     *
+     * @return bool
+     */
     abstract public function accept(string $languageCode, Location $location, Content $content, Type $type): bool;
 
     /**

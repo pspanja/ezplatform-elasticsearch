@@ -12,6 +12,13 @@ use eZ\Publish\SPI\Persistence\Content\Type;
  */
 abstract class Common
 {
+    /**
+     * @param \eZ\Publish\SPI\Persistence\Content $content
+     * @param \eZ\Publish\SPI\Persistence\Content\Type $type
+     * @param \eZ\Publish\SPI\Persistence\Content\Location[] $locations
+     *
+     * @return bool
+     */
     abstract public function accept(Content $content, Type $type, array $locations): bool;
 
     /**

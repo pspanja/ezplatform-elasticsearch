@@ -13,6 +13,13 @@ use eZ\Publish\SPI\Persistence\Content\Type;
  */
 abstract class Location
 {
+    /**
+     * @param \eZ\Publish\SPI\Persistence\Content\Location $location
+     * @param \eZ\Publish\SPI\Persistence\Content $content
+     * @param \eZ\Publish\SPI\Persistence\Content\Type $type
+     *
+     * @return bool
+     */
     abstract public function accept(SPILocation $location, Content $content, Type $type): bool;
 
     /**
