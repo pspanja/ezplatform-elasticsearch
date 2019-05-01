@@ -130,9 +130,47 @@ final class DocumentBuilder
     {
         $documents = [];
         $type = $this->typeHandler->load($content->versionInfo->contentInfo->contentTypeId);
-        $locations = $this->locationHandler->loadLocationsByContent(
-            $content->versionInfo->contentInfo->id
-        );
+        $locations = $this->locationHandler->loadLocationsByContent($content->versionInfo->contentInfo->id);
+        $contentDocuments = [];
+        $locationDocuments = [];
+        $commonFields = $this->getCommonFields();
+        $contentFields = $this->getContentFields();
+        $locationFieldsById = [];
+
+        foreach ($locations as $location) {
+            $locationFieldsById[$location->id] = $this->getLocationFields();
+        }
+
+        foreach ($content->versionInfo->languageCodes as $languageCode) {
+            $translationCommonFields = $this->getTranslationCommonFields();
+            $translationContentFields = $this->getTranslationContentFields();
+
+            foreach ($locations as $location) {
+                $translationLocationFields = $this->getTranslationLocationFields();
+
+                $locationDocuments[] = new Document(
+                    $this->idGenerator->generateLocationDocumentId($location),
+                    array_merge(
+                        $commonFields,
+                        $locationFieldsById[$location->id],
+                        $translationCommonFields,
+                        $translationLocationFields
+                    )
+                );
+            }
+
+            $contentDocuments[] = new Document(
+                $this->idGenerator->generateContentDocumentId($content),
+                array_merge(
+                    $commonFields,
+                    $contentFields,
+                    $translationCommonFields,
+                    $translationContentFields
+                )
+            );
+        }
+
+        $documentsToReturn = array_merge($contentDocuments, $locationDocuments);
 
         $documents[] = $this->buildContentDocument($content, $type, $locations);
 
@@ -141,6 +179,54 @@ final class DocumentBuilder
         }
 
         return $documents;
+    }
+
+    /**
+     * @return \Cabbage\SPI\Document\Field[]
+     */
+    private function getCommonFields(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Cabbage\SPI\Document\Field[]
+     */
+    private function getContentFields(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Cabbage\SPI\Document\Field[]
+     */
+    private function getLocationFields(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Cabbage\SPI\Document\Field[]
+     */
+    private function getTranslationCommonFields(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Cabbage\SPI\Document\Field[]
+     */
+    private function getTranslationContentFields(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Cabbage\SPI\Document\Field[]
+     */
+    private function getTranslationLocationFields(): array
+    {
+        return [];
     }
 
     /**
