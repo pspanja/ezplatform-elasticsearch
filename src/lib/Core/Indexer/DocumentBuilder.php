@@ -133,20 +133,20 @@ final class DocumentBuilder
         $locations = $this->locationHandler->loadLocationsByContent($content->versionInfo->contentInfo->id);
         $contentDocuments = [];
         $locationDocuments = [];
-        $commonFields = $this->getCommonFields();
-        $contentFields = $this->getContentFields();
+        $commonFields = $this->getCommonFields($content, $type, $locations);
+        $contentFields = $this->getContentFields($content, $type, $locations);
         $locationFieldsById = [];
 
         foreach ($locations as $location) {
-            $locationFieldsById[$location->id] = $this->getLocationFields();
+            $locationFieldsById[$location->id] = $this->getLocationFields($location, $content, $type);
         }
 
         foreach ($content->versionInfo->languageCodes as $languageCode) {
-            $translationCommonFields = $this->getTranslationCommonFields();
-            $translationContentFields = $this->getTranslationContentFields();
+            $translationCommonFields = $this->getTranslationCommonFields($languageCode, $content, $type, $locations);
+            $translationContentFields = $this->getTranslationContentFields($content, $type, $locations);
 
             foreach ($locations as $location) {
-                $translationLocationFields = $this->getTranslationLocationFields();
+                $translationLocationFields = $this->getTranslationLocationFields($languageCode, $location, $content, $type);
 
                 $locationDocuments[] = new Document(
                     $this->idGenerator->generateLocationDocumentId($location),
@@ -181,51 +181,57 @@ final class DocumentBuilder
         return $documents;
     }
 
-    /**
-     * @return \Cabbage\SPI\Document\Field[]
-     */
-    private function getCommonFields(): array
+    private function getCommonFields(SPIContent $content, Type $type, array $locations): array
     {
+        if ($this->commonFieldBuilder->accept($content, $type, $locations)) {
+            return $this->commonFieldBuilder->build($content, $type, $locations);
+        }
+
         return [];
     }
 
-    /**
-     * @return \Cabbage\SPI\Document\Field[]
-     */
-    private function getContentFields(): array
+    private function getContentFields(SPIContent $content, Type $type, array $locations): array
     {
+        if ($this->contentFieldBuilder->accept($content, $type, $locations)) {
+            return $this->contentFieldBuilder->build($content, $type, $locations);
+        }
+
         return [];
     }
 
-    /**
-     * @return \Cabbage\SPI\Document\Field[]
-     */
-    private function getLocationFields(): array
+    private function getLocationFields(SPILocation $location, SPIContent $content, Type $type): array
     {
+        if ($this->locationFieldBuilder->accept($location, $content, $type)) {
+            return $this->locationFieldBuilder->build($location, $content, $type);
+        }
+
         return [];
     }
 
-    /**
-     * @return \Cabbage\SPI\Document\Field[]
-     */
-    private function getTranslationCommonFields(): array
+    private function getTranslationCommonFields(string $languageCode, SPIContent $content, Type $type, array $locations): array
     {
+        if ($this->translationCommonFieldBuilder->accept($languageCode, $content, $type, $locations)) {
+            return $this->translationCommonFieldBuilder->build($languageCode, $content, $type, $locations);
+        }
+
         return [];
     }
 
-    /**
-     * @return \Cabbage\SPI\Document\Field[]
-     */
-    private function getTranslationContentFields(): array
+    private function getTranslationContentFields(SPIContent $content, Type $type, array $locations): array
     {
+        if ($this->translationContentFieldBuilder->accept($content, $type, $locations)) {
+            return $this->translationContentFieldBuilder->build($content, $type, $locations);
+        }
+
         return [];
     }
 
-    /**
-     * @return \Cabbage\SPI\Document\Field[]
-     */
-    private function getTranslationLocationFields(): array
+    private function getTranslationLocationFields(string $languageCode, SPILocation $location, SPIContent $content, Type $type): array
     {
+        if ($this->translationLocationFieldBuilder->accept($languageCode, $location, $content, $type)) {
+            return $this->translationLocationFieldBuilder->build($languageCode, $location, $content, $type);
+        }
+
         return [];
     }
 
