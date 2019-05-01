@@ -54,7 +54,7 @@ final class DocumentBuilder
     /**
      * @var \Cabbage\Core\Indexer\FieldBuilders\Common
      */
-    private $common;
+    private $commonFieldBuilder;
 
     /**
      * @var \Cabbage\Core\Indexer\FieldBuilders\Content
@@ -89,7 +89,7 @@ final class DocumentBuilder
     /**
      * @param \eZ\Publish\SPI\Persistence\Content\Location\Handler $locationHandler
      * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $typeHandler
-     * @param \Cabbage\Core\Indexer\FieldBuilders\Common $common
+     * @param \Cabbage\Core\Indexer\FieldBuilders\Common $commonFieldBuilder
      * @param \Cabbage\Core\Indexer\FieldBuilders\Content $contentFieldBuilder
      * @param \Cabbage\Core\Indexer\FieldBuilders\Location $locationFieldBuilder
      * @param \Cabbage\Core\Indexer\FieldBuilders\TranslationCommon $translationCommonFieldBuilder
@@ -100,7 +100,7 @@ final class DocumentBuilder
     public function __construct(
         LocationHandler $locationHandler,
         TypeHandler $typeHandler,
-        Common $common,
+        Common $commonFieldBuilder,
         Content $contentFieldBuilder,
         Location $locationFieldBuilder,
         TranslationCommon $translationCommonFieldBuilder,
@@ -110,7 +110,7 @@ final class DocumentBuilder
     ) {
         $this->locationHandler = $locationHandler;
         $this->typeHandler = $typeHandler;
-        $this->common = $common;
+        $this->commonFieldBuilder = $commonFieldBuilder;
         $this->contentFieldBuilder = $contentFieldBuilder;
         $this->locationFieldBuilder = $locationFieldBuilder;
         $this->translationCommonFieldBuilder = $translationCommonFieldBuilder;
