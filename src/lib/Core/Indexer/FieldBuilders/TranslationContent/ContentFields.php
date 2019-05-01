@@ -42,7 +42,7 @@ final class ContentFields extends TranslationContent
         $this->nameGenerator = $nameGenerator;
     }
 
-    public function accept(Content $content, Type $type): bool
+    public function accept(Content $content, Type $type, array $locations): bool
     {
         return true;
     }
@@ -53,7 +53,7 @@ final class ContentFields extends TranslationContent
      *
      * @return \Cabbage\SPI\Document\Field[]
      */
-    public function build(Content $content, Type $type): array
+    public function build(Content $content, Type $type, array $locations): array
     {
         $documentFieldGrouped = [[]];
 

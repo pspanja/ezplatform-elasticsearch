@@ -15,16 +15,18 @@ abstract class TranslationContent
     /**
      * @param \eZ\Publish\SPI\Persistence\Content $content
      * @param \eZ\Publish\SPI\Persistence\Content\Type $type
+     * @param \eZ\Publish\SPI\Persistence\Content\Location[] $locations
      *
      * @return bool
      */
-    abstract public function accept(Content $content, Type $type): bool;
+    abstract public function accept(Content $content, Type $type, array $locations): bool;
 
     /**
      * @param \eZ\Publish\SPI\Persistence\Content $content
      * @param \eZ\Publish\SPI\Persistence\Content\Type $type
+     * @param \eZ\Publish\SPI\Persistence\Content\Location[] $locations
      *
      * @return \Cabbage\SPI\Document\Field[]
      */
-    abstract public function build(Content $content, Type $type): array;
+    abstract public function build(Content $content, Type $type, array $locations): array;
 }

@@ -33,18 +33,18 @@ final class Aggregate extends TranslationContent
         $this->builders[] = $builder;
     }
 
-    public function accept(Content $content, Type $type): bool
+    public function accept(Content $content, Type $type, array $locations): bool
     {
         return true;
     }
 
-    public function build(Content $content, Type $type): array
+    public function build(Content $content, Type $type, array $locations): array
     {
         $fieldsGrouped = [[]];
 
         foreach ($this->builders as $builder) {
-            if ($builder->accept($content, $type)) {
-                $fieldsGrouped[] = $builder->build($content, $type);
+            if ($builder->accept($content, $type, $locations)) {
+                $fieldsGrouped[] = $builder->build($content, $type, $locations);
             }
         }
 

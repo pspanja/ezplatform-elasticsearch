@@ -134,10 +134,10 @@ final class DocumentBuilder
             $content->versionInfo->contentInfo->id
         );
 
-        $documents[] = $this->buildContentDocument($content, $type);
+        $documents[] = $this->buildContentDocument($content, $type, $locations);
 
         foreach ($locations as $location) {
-            $documents[] = $this->buildLocationDocument($location, $content, $type);
+            $documents[] = $this->buildLocationDocument($location, $content, $type, $locations);
         }
 
         return $documents;
@@ -146,10 +146,11 @@ final class DocumentBuilder
     /**
      * @param \eZ\Publish\SPI\Persistence\Content $content
      * @param \eZ\Publish\SPI\Persistence\Content\Type $type
+     * @param \eZ\Publish\SPI\Persistence\Content\Location[] $locations
      *
      * @return \Cabbage\SPI\Document
      */
-    private function buildContentDocument(SPIContent $content, Type $type): Document
+    private function buildContentDocument(SPIContent $content, Type $type, array $locations): Document
     {
         $fieldsGrouped = [[]];
 
@@ -171,7 +172,7 @@ final class DocumentBuilder
 
         $fieldsGrouped[] = $commonMetadataFields;
         $fieldsGrouped[] = $contentMetadataFields;
-        $fieldsGrouped[] = $this->translationContentFieldBuilder->build($content, $type);
+        $fieldsGrouped[] = $this->translationContentFieldBuilder->build($content, $type, $locations);
 
         return new Document(
             $this->idGenerator->generateContentDocumentId($content),
@@ -183,10 +184,11 @@ final class DocumentBuilder
      * @param \eZ\Publish\SPI\Persistence\Content\Location $location
      * @param \eZ\Publish\SPI\Persistence\Content $content
      * @param \eZ\Publish\SPI\Persistence\Content\Type $type
+     * @param \eZ\Publish\SPI\Persistence\Content\Location[] $locations
      *
      * @return \Cabbage\SPI\Document
      */
-    private function buildLocationDocument(SPILocation $location, SPIContent $content, Type $type): Document
+    private function buildLocationDocument(SPILocation $location, SPIContent $content, Type $type, array $locations): Document
     {
         $fieldsGrouped = [[]];
 
@@ -217,7 +219,7 @@ final class DocumentBuilder
         $fieldsGrouped[] = $commonMetadataFields;
         $fieldsGrouped[] = $contentMetadataFields;
         $fieldsGrouped[] = $locationMetadataFields;
-        $fieldsGrouped[] = $this->translationContentFieldBuilder->build($content, $type);
+        $fieldsGrouped[] = $this->translationContentFieldBuilder->build($content, $type, $locations);
 
         return new Document(
             $this->idGenerator->generateLocationDocumentId($location),
