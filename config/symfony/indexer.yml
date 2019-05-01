@@ -29,6 +29,11 @@ services:
             - '@cabbage.field_type.data_mapper_registry'
             - '@cabbage.indexer.field_builder.translation.content.content_field_name_generator'
 
+    cabbage.indexer.field_builder.translation_common:
+        class: Cabbage\Core\Indexer\FieldBuilders\TranslationCommon\Aggregate
+        arguments:
+            - []
+
     cabbage.indexer.field_builder.translation_content:
         class: Cabbage\Core\Indexer\FieldBuilders\TranslationContent\Aggregate
         arguments:
@@ -51,6 +56,7 @@ services:
             - '@cabbage.indexer.field_builder.common'
             - '@cabbage.indexer.field_builder.content'
             - '@cabbage.indexer.field_builder.location'
+            - '@cabbage.indexer.field_builder.translation_common'
             - '@cabbage.indexer.field_builder.translation_content'
             - '@cabbage.indexer.field_builder.translation_location'
             - '@cabbage.indexer.document_id_generator'

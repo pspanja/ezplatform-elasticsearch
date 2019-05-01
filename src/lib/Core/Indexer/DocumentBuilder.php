@@ -7,6 +7,7 @@ namespace Cabbage\Core\Indexer;
 use Cabbage\Core\Indexer\FieldBuilders\Common;
 use Cabbage\Core\Indexer\FieldBuilders\Content;
 use Cabbage\Core\Indexer\FieldBuilders\Location;
+use Cabbage\Core\Indexer\FieldBuilders\TranslationCommon;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationContent;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationLocation;
 use Cabbage\SPI\Document;
@@ -66,6 +67,11 @@ final class DocumentBuilder
     private $locationFieldBuilder;
 
     /**
+     * @var \Cabbage\Core\Indexer\FieldBuilders\TranslationCommon
+     */
+    private $translationCommonFieldBuilder;
+
+    /**
      * @var \Cabbage\Core\Indexer\FieldBuilders\TranslationContent
      */
     private $translationContentFieldBuilder;
@@ -86,6 +92,7 @@ final class DocumentBuilder
      * @param \Cabbage\Core\Indexer\FieldBuilders\Common $common
      * @param \Cabbage\Core\Indexer\FieldBuilders\Content $contentFieldBuilder
      * @param \Cabbage\Core\Indexer\FieldBuilders\Location $locationFieldBuilder
+     * @param \Cabbage\Core\Indexer\FieldBuilders\TranslationCommon $translationCommonFieldBuilder
      * @param \Cabbage\Core\Indexer\FieldBuilders\TranslationContent $translationContentFieldBuilder
      * @param \Cabbage\Core\Indexer\FieldBuilders\TranslationLocation $translationLocationFieldBuilder
      * @param \Cabbage\Core\Indexer\DocumentIdGenerator $idGenerator
@@ -96,6 +103,7 @@ final class DocumentBuilder
         Common $common,
         Content $contentFieldBuilder,
         Location $locationFieldBuilder,
+        TranslationCommon $translationCommonFieldBuilder,
         TranslationContent $translationContentFieldBuilder,
         TranslationLocation $translationLocationFieldBuilder,
         DocumentIdGenerator $idGenerator
@@ -105,6 +113,7 @@ final class DocumentBuilder
         $this->common = $common;
         $this->contentFieldBuilder = $contentFieldBuilder;
         $this->locationFieldBuilder = $locationFieldBuilder;
+        $this->translationCommonFieldBuilder = $translationCommonFieldBuilder;
         $this->translationContentFieldBuilder = $translationContentFieldBuilder;
         $this->translationLocationFieldBuilder = $translationLocationFieldBuilder;
         $this->idGenerator = $idGenerator;
