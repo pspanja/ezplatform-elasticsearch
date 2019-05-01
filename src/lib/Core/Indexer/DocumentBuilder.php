@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Indexer;
 
+use Cabbage\Core\Indexer\FieldBuilders\Common;
 use Cabbage\Core\Indexer\FieldBuilders\Content;
 use Cabbage\Core\Indexer\FieldBuilders\Location;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationContent;
@@ -50,6 +51,11 @@ final class DocumentBuilder
     private $typeHandler;
 
     /**
+     * @var \Cabbage\Core\Indexer\FieldBuilders\Common
+     */
+    private $common;
+
+    /**
      * @var \Cabbage\Core\Indexer\FieldBuilders\Content
      */
     private $contentFieldBuilder;
@@ -77,6 +83,7 @@ final class DocumentBuilder
     /**
      * @param \eZ\Publish\SPI\Persistence\Content\Location\Handler $locationHandler
      * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $typeHandler
+     * @param \Cabbage\Core\Indexer\FieldBuilders\Common $common
      * @param \Cabbage\Core\Indexer\FieldBuilders\Content $contentFieldBuilder
      * @param \Cabbage\Core\Indexer\FieldBuilders\Location $locationFieldBuilder
      * @param \Cabbage\Core\Indexer\FieldBuilders\TranslationContent $translationContentFieldBuilder
@@ -86,6 +93,7 @@ final class DocumentBuilder
     public function __construct(
         LocationHandler $locationHandler,
         TypeHandler $typeHandler,
+        Common $common,
         Content $contentFieldBuilder,
         Location $locationFieldBuilder,
         TranslationContent $translationContentFieldBuilder,
@@ -94,6 +102,7 @@ final class DocumentBuilder
     ) {
         $this->locationHandler = $locationHandler;
         $this->typeHandler = $typeHandler;
+        $this->common = $common;
         $this->contentFieldBuilder = $contentFieldBuilder;
         $this->locationFieldBuilder = $locationFieldBuilder;
         $this->translationContentFieldBuilder = $translationContentFieldBuilder;

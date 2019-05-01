@@ -8,6 +8,11 @@ services:
     cabbage.indexer.field_builder.translation.content.content_field_name_generator:
         class: Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFieldNameGenerator
 
+    cabbage.indexer.field_builder.common:
+        class: Cabbage\Core\Indexer\FieldBuilders\Common\Aggregate
+        arguments:
+            - []
+
     cabbage.indexer.field_builder.content:
         class: Cabbage\Core\Indexer\FieldBuilders\Content\Aggregate
         arguments:
@@ -43,6 +48,7 @@ services:
         arguments:
             - '@ezpublish.spi.persistence.location_handler'
             - '@ezpublish.spi.persistence.content_type_handler'
+            - '@cabbage.indexer.field_builder.common'
             - '@cabbage.indexer.field_builder.content'
             - '@cabbage.indexer.field_builder.location'
             - '@cabbage.indexer.field_builder.translation_content'
