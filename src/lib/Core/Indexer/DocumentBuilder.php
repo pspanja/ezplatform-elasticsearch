@@ -128,7 +128,6 @@ final class DocumentBuilder
      */
     public function build(SPIContent $content): array
     {
-        $documents = [];
         $type = $this->typeHandler->load($content->versionInfo->contentInfo->contentTypeId);
         $locations = $this->locationHandler->loadLocationsByContent($content->versionInfo->contentInfo->id);
         $contentDocuments = [];
@@ -141,6 +140,19 @@ final class DocumentBuilder
             $locationFieldsById[$location->id] = $this->getLocationFields($location, $content, $type);
         }
 
+        $tempContentField = [
+            new Field(
+                'type',
+                self::TypeContent,
+                new Identifier()
+            ),
+            new Field(
+                'content_id',
+                $content->versionInfo->contentInfo->id,
+                new Identifier()
+            ),
+        ];
+
         foreach ($content->versionInfo->languageCodes as $languageCode) {
             $translationCommonFields = $this->getTranslationCommonFields($languageCode, $content, $type, $locations);
             $translationContentFields = $this->getTranslationContentFields($content, $type, $locations);
@@ -148,13 +160,32 @@ final class DocumentBuilder
             foreach ($locations as $location) {
                 $translationLocationFields = $this->getTranslationLocationFields($languageCode, $location, $content, $type);
 
+                $tempLocationFields = [
+                    new Field(
+                        'type',
+                        self::TypeLocation,
+                        new Identifier()
+                    ),
+                    new Field(
+                        'content_id',
+                        $content->versionInfo->contentInfo->id,
+                        new Identifier()
+                    ),
+                    new Field(
+                        'location_id',
+                        $location->id,
+                        new Identifier()
+                    ),
+                ];
+
                 $locationDocuments[] = new Document(
                     $this->idGenerator->generateLocationDocumentId($location),
                     array_merge(
                         $commonFields,
                         $locationFieldsById[$location->id],
                         $translationCommonFields,
-                        $translationLocationFields
+                        $translationLocationFields,
+                        $tempLocationFields
                     )
                 );
             }
@@ -165,20 +196,13 @@ final class DocumentBuilder
                     $commonFields,
                     $contentFields,
                     $translationCommonFields,
-                    $translationContentFields
+                    $translationContentFields,
+                    $tempContentField
                 )
             );
         }
 
-        $documentsToReturn = array_merge($contentDocuments, $locationDocuments);
-
-        $documents[] = $this->buildContentDocument($content, $type, $locations);
-
-        foreach ($locations as $location) {
-            $documents[] = $this->buildLocationDocument($location, $content, $type, $locations);
-        }
-
-        return $documents;
+        return array_merge($contentDocuments, $locationDocuments);
     }
 
     private function getCommonFields(SPIContent $content, Type $type, array $locations): array
@@ -233,89 +257,5 @@ final class DocumentBuilder
         }
 
         return [];
-    }
-
-    /**
-     * @param \eZ\Publish\SPI\Persistence\Content $content
-     * @param \eZ\Publish\SPI\Persistence\Content\Type $type
-     * @param \eZ\Publish\SPI\Persistence\Content\Location[] $locations
-     *
-     * @return \Cabbage\SPI\Document
-     */
-    private function buildContentDocument(SPIContent $content, Type $type, array $locations): Document
-    {
-        $fieldsGrouped = [[]];
-
-        $commonMetadataFields = [
-            new Field(
-                'type',
-                self::TypeContent,
-                new Identifier()
-            ),
-        ];
-
-        $contentMetadataFields = [
-            new Field(
-                'content_id',
-                $content->versionInfo->contentInfo->id,
-                new Identifier()
-            ),
-        ];
-
-        $fieldsGrouped[] = $commonMetadataFields;
-        $fieldsGrouped[] = $contentMetadataFields;
-        $fieldsGrouped[] = $this->translationContentFieldBuilder->build($content, $type, $locations);
-
-        return new Document(
-            $this->idGenerator->generateContentDocumentId($content),
-            array_merge(...$fieldsGrouped)
-        );
-    }
-
-    /**
-     * @param \eZ\Publish\SPI\Persistence\Content\Location $location
-     * @param \eZ\Publish\SPI\Persistence\Content $content
-     * @param \eZ\Publish\SPI\Persistence\Content\Type $type
-     * @param \eZ\Publish\SPI\Persistence\Content\Location[] $locations
-     *
-     * @return \Cabbage\SPI\Document
-     */
-    private function buildLocationDocument(SPILocation $location, SPIContent $content, Type $type, array $locations): Document
-    {
-        $fieldsGrouped = [[]];
-
-        $commonMetadataFields = [
-            new Field(
-                'type',
-                self::TypeLocation,
-                new Identifier()
-            ),
-        ];
-
-        $contentMetadataFields = [
-            new Field(
-                'content_id',
-                $content->versionInfo->contentInfo->id,
-                new Identifier()
-            ),
-        ];
-
-        $locationMetadataFields = [
-            new Field(
-                'location_id',
-                $location->id,
-                new Identifier()
-            ),
-        ];
-
-        $fieldsGrouped[] = $commonMetadataFields;
-        $fieldsGrouped[] = $contentMetadataFields;
-        $fieldsGrouped[] = $locationMetadataFields;
-        $fieldsGrouped[] = $this->translationContentFieldBuilder->build($content, $type, $locations);
-
-        return new Document(
-            $this->idGenerator->generateLocationDocumentId($location),
-            array_merge(...$fieldsGrouped)
-        );
     }
 }

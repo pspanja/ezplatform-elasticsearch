@@ -56,6 +56,7 @@ class EngineTest extends BaseTest
                 'contentInfo' => new ContentInfo([
                     'id' => 'CONTENT_ID',
                 ]),
+                'languageCodes' => ['cro-HR'],
             ]),
             'fields' => [],
         ]);
