@@ -17,6 +17,13 @@ final class Document
     public $id;
 
     /**
+     * Identifier of the document's type.
+     *
+     * @var string
+     */
+    public $type;
+
+    /**
      * Document's fields.
      *
      * @var \Cabbage\SPI\Document\Field[]
@@ -25,11 +32,13 @@ final class Document
 
     /**
      * @param string $id
+     * @param string $type
      * @param \Cabbage\SPI\Document\Field[] $fields
      */
-    public function __construct(string $id, array $fields)
+    public function __construct(string $id, string $type, array $fields)
     {
         $this->id = $id;
+        $this->type = $type;
         $this->fields = $fields;
     }
 }

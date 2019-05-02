@@ -142,11 +142,6 @@ final class DocumentBuilder
 
         $tempContentField = [
             new Field(
-                'type',
-                self::TypeContent,
-                new Identifier()
-            ),
-            new Field(
                 'content_id',
                 $content->versionInfo->contentInfo->id,
                 new Identifier()
@@ -162,11 +157,6 @@ final class DocumentBuilder
 
                 $tempLocationFields = [
                     new Field(
-                        'type',
-                        self::TypeLocation,
-                        new Identifier()
-                    ),
-                    new Field(
                         'content_id',
                         $content->versionInfo->contentInfo->id,
                         new Identifier()
@@ -180,6 +170,7 @@ final class DocumentBuilder
 
                 $locationDocuments[] = new Document(
                     $this->idGenerator->generateLocationDocumentId($location),
+                    self::TypeLocation,
                     array_merge(
                         $commonFields,
                         $locationFieldsById[$location->id],
@@ -192,6 +183,7 @@ final class DocumentBuilder
 
             $contentDocuments[] = new Document(
                 $this->idGenerator->generateContentDocumentId($content),
+                self::TypeContent,
                 array_merge(
                     $commonFields,
                     $contentFields,
