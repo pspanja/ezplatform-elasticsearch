@@ -24,7 +24,7 @@ final class Main extends Content
                 'content_id',
                 $content->versionInfo->contentInfo->id,
                 new Identifier()
-            )
+            ),
         ];
     }
 }
