@@ -152,7 +152,7 @@ final class DocumentBuilder
                     self::TypeLocation,
                     $languageCode,
                     $isMainTranslation,
-                    $contentInfo->alwaysAvailable,
+                    (bool)$contentInfo->alwaysAvailable,
                     array_merge(
                         $commonFields,
                         $locationFieldsById[$location->id],
@@ -167,7 +167,7 @@ final class DocumentBuilder
                 self::TypeContent,
                 $languageCode,
                 $isMainTranslation,
-                $contentInfo->alwaysAvailable,
+                (bool)$contentInfo->alwaysAvailable,
                 array_merge(
                     $commonFields,
                     $contentFields,
