@@ -126,8 +126,9 @@ final class DocumentBuilder
      */
     public function build(SPIContent $content): array
     {
-        $type = $this->typeHandler->load($content->versionInfo->contentInfo->contentTypeId);
-        $locations = $this->locationHandler->loadLocationsByContent($content->versionInfo->contentInfo->id);
+        $contentInfo = $content->versionInfo->contentInfo;
+        $type = $this->typeHandler->load($contentInfo->contentTypeId);
+        $locations = $this->locationHandler->loadLocationsByContent($contentInfo->id);
         $contentDocuments = [];
         $locationDocuments = [];
         $commonFields = $this->getCommonFields($content, $type, $locations);
@@ -141,7 +142,7 @@ final class DocumentBuilder
         foreach ($content->versionInfo->languageCodes as $languageCode) {
             $translationCommonFields = $this->getTranslationCommonFields($languageCode, $content, $type, $locations);
             $translationContentFields = $this->getTranslationContentFields($content, $type, $locations);
-            $isMainTranslation = $content->versionInfo->contentInfo->mainLanguageCode === $languageCode;
+            $isMainTranslation = $contentInfo->mainLanguageCode === $languageCode;
 
             foreach ($locations as $location) {
                 $translationLocationFields = $this->getTranslationLocationFields($languageCode, $location, $content, $type);
