@@ -1,6 +1,7 @@
 imports:
     - { resource: cluster.yml }
     - { resource: field_type.yml }
+    - { resource: field_builders.yml }
     - { resource: indexer.yml }
     - { resource: searcher.yml }
     - { resource: slots.yml }

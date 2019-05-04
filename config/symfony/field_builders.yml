@@ -1,0 +1,42 @@
+parameters:
+
+services:
+    cabbage.indexer.field_builder.translation.content.content_field_name_generator:
+        class: Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFieldNameGenerator
+
+    cabbage.indexer.field_builder.common:
+        class: Cabbage\Core\Indexer\FieldBuilders\Common\Aggregate
+        arguments:
+            - []
+
+    cabbage.indexer.field_builder.content:
+        class: Cabbage\Core\Indexer\FieldBuilders\Content\Aggregate
+        arguments:
+            - []
+
+    cabbage.indexer.field_builder.location:
+        class: Cabbage\Core\Indexer\FieldBuilders\Location\Aggregate
+        arguments:
+            - []
+
+    cabbage.indexer.field_builder.translation_content.content_fields:
+        class: Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFields
+        arguments:
+            - '@cabbage.field_type.data_mapper_registry'
+            - '@cabbage.indexer.field_builder.translation.content.content_field_name_generator'
+
+    cabbage.indexer.field_builder.translation_common:
+        class: Cabbage\Core\Indexer\FieldBuilders\TranslationCommon\Aggregate
+        arguments:
+            - []
+
+    cabbage.indexer.field_builder.translation_content:
+        class: Cabbage\Core\Indexer\FieldBuilders\TranslationContent\Aggregate
+        arguments:
+            -
+                - '@cabbage.indexer.field_builder.translation_content.content_fields'
+
+    cabbage.indexer.field_builder.translation_location:
+        class: Cabbage\Core\Indexer\FieldBuilders\TranslationLocation\Aggregate
+        arguments:
+            - []
