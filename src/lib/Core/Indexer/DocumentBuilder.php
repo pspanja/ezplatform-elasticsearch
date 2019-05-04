@@ -140,14 +140,6 @@ final class DocumentBuilder
             $locationFieldsById[$location->id] = $this->getLocationFields($location, $content, $type);
         }
 
-        $tempContentField = [
-            new Field(
-                'content_id',
-                $content->versionInfo->contentInfo->id,
-                new Identifier()
-            ),
-        ];
-
         foreach ($content->versionInfo->languageCodes as $languageCode) {
             $translationCommonFields = $this->getTranslationCommonFields($languageCode, $content, $type, $locations);
             $translationContentFields = $this->getTranslationContentFields($content, $type, $locations);
@@ -188,8 +180,7 @@ final class DocumentBuilder
                     $commonFields,
                     $contentFields,
                     $translationCommonFields,
-                    $translationContentFields,
-                    $tempContentField
+                    $translationContentFields
                 )
             );
         }
