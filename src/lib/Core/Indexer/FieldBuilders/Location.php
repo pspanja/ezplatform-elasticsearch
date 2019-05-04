@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Indexer\FieldBuilders;
 
-use eZ\Publish\SPI\Persistence\Content;
+use eZ\Publish\SPI\Persistence\Content as SPIContent;
 use eZ\Publish\SPI\Persistence\Content\Location as SPILocation;
 use eZ\Publish\SPI\Persistence\Content\Type;
 
@@ -20,7 +20,7 @@ abstract class Location
      *
      * @return bool
      */
-    abstract public function accept(SPILocation $location, Content $content, Type $type): bool;
+    abstract public function accept(SPILocation $location, SPIContent $content, Type $type): bool;
 
     /**
      * @param \eZ\Publish\SPI\Persistence\Content\Location $location
@@ -29,5 +29,5 @@ abstract class Location
      *
      * @return \Cabbage\SPI\Document\Field[]
      */
-    abstract public function build(SPILocation $location, Content $content, Type $type): array;
+    abstract public function build(SPILocation $location, SPIContent $content, Type $type): array;
 }

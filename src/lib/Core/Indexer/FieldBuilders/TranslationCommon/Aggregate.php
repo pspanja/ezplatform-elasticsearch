@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core\Indexer\FieldBuilders\TranslationCommon;
 
 use Cabbage\Core\Indexer\FieldBuilders\TranslationCommon;
-use eZ\Publish\SPI\Persistence\Content;
+use eZ\Publish\SPI\Persistence\Content as SPIContent;
 use eZ\Publish\SPI\Persistence\Content\Type;
 
 /**
@@ -33,12 +33,12 @@ final class Aggregate extends TranslationCommon
         $this->builders[] = $builder;
     }
 
-    public function accept(string $languageCode, Content $content, Type $type, array $locations): bool
+    public function accept(string $languageCode, SPIContent $content, Type $type, array $locations): bool
     {
         return true;
     }
 
-    public function build(string $languageCode, Content $content, Type $type, array $locations): array
+    public function build(string $languageCode, SPIContent $content, Type $type, array $locations): array
     {
         $fieldsGrouped = [[]];
 

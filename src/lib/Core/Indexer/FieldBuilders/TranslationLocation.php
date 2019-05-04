@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Indexer\FieldBuilders;
 
-use eZ\Publish\SPI\Persistence\Content;
-use eZ\Publish\SPI\Persistence\Content\Location;
+use eZ\Publish\SPI\Persistence\Content as SPIContent;
+use eZ\Publish\SPI\Persistence\Content\Location as SPILocation;
 use eZ\Publish\SPI\Persistence\Content\Type;
 
 /**
@@ -21,7 +21,7 @@ abstract class TranslationLocation
      *
      * @return bool
      */
-    abstract public function accept(string $languageCode, Location $location, Content $content, Type $type): bool;
+    abstract public function accept(string $languageCode, SPILocation $location, SPIContent $content, Type $type): bool;
 
     /**
      * @param string $languageCode
@@ -31,5 +31,5 @@ abstract class TranslationLocation
      *
      * @return \Cabbage\SPI\Document\Field[]
      */
-    abstract public function build(string $languageCode, Location $location, Content $content, Type $type): array;
+    abstract public function build(string $languageCode, SPILocation $location, SPIContent $content, Type $type): array;
 }

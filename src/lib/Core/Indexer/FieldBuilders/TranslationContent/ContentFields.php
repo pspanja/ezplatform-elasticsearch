@@ -7,7 +7,7 @@ namespace Cabbage\Core\Indexer\FieldBuilders\TranslationContent;
 use Cabbage\Core\FieldType\DataMapperRegistry;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationContent;
 use Cabbage\SPI\Document\Field as DocumentField;
-use eZ\Publish\SPI\Persistence\Content;
+use eZ\Publish\SPI\Persistence\Content as SPIContent;
 use eZ\Publish\SPI\Persistence\Content\Field as ContentField;
 use eZ\Publish\SPI\Persistence\Content\Type;
 use eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition;
@@ -42,18 +42,12 @@ final class ContentFields extends TranslationContent
         $this->nameGenerator = $nameGenerator;
     }
 
-    public function accept(Content $content, Type $type, array $locations): bool
+    public function accept(SPIContent $content, Type $type, array $locations): bool
     {
         return true;
     }
 
-    /**
-     * @param \eZ\Publish\SPI\Persistence\Content $content
-     * @param \eZ\Publish\SPI\Persistence\Content\Type $type
-     *
-     * @return \Cabbage\SPI\Document\Field[]
-     */
-    public function build(Content $content, Type $type, array $locations): array
+    public function build(SPIContent $content, Type $type, array $locations): array
     {
         $documentFieldGrouped = [[]];
 
@@ -84,11 +78,6 @@ final class ContentFields extends TranslationContent
         return $namedDocumentFields;
     }
 
-    /**
-     * @param \eZ\Publish\SPI\Persistence\Content\Type $type
-     *
-     * @return \eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition[]
-     */
     private function mapFieldDefinitionsById(Type $type): array
     {
         $map = [];

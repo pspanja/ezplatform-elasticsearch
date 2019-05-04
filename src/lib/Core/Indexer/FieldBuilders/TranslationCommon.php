@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Indexer\FieldBuilders;
 
-use eZ\Publish\SPI\Persistence\Content;
+use eZ\Publish\SPI\Persistence\Content as SPIContent;
 use eZ\Publish\SPI\Persistence\Content\Type;
 
 /**
@@ -20,7 +20,7 @@ abstract class TranslationCommon
      *
      * @return bool
      */
-    abstract public function accept(string $languageCode, Content $content, Type $type, array $locations): bool;
+    abstract public function accept(string $languageCode, SPIContent $content, Type $type, array $locations): bool;
 
     /**
      * @param string $languageCode
@@ -30,5 +30,5 @@ abstract class TranslationCommon
      *
      * @return \Cabbage\SPI\Document\Field[]
      */
-    abstract public function build(string $languageCode, Content $content, Type $type, array $locations): array;
+    abstract public function build(string $languageCode, SPIContent $content, Type $type, array $locations): array;
 }

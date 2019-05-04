@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core\Indexer\FieldBuilders\Location;
 
 use Cabbage\Core\Indexer\FieldBuilders\Location;
-use eZ\Publish\SPI\Persistence\Content;
+use eZ\Publish\SPI\Persistence\Content as SPIContent;
 use eZ\Publish\SPI\Persistence\Content\Location as SPILocation;
 use eZ\Publish\SPI\Persistence\Content\Type;
 
@@ -34,12 +34,12 @@ final class Aggregate extends Location
         $this->builders[] = $builder;
     }
 
-    public function accept(SPILocation $location, Content $content, Type $type): bool
+    public function accept(SPILocation $location, SPIContent $content, Type $type): bool
     {
         return true;
     }
 
-    public function build(SPILocation $location, Content $content, Type $type): array
+    public function build(SPILocation $location, SPIContent $content, Type $type): array
     {
         $fieldsGrouped = [[]];
 
