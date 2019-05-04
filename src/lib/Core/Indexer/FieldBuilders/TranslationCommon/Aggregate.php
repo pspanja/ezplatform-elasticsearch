@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Indexer\FieldBuilders\TranslationCommon;
 
-use Cabbage\Core\Indexer\FieldBuilders\Common;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationCommon;
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Type;
