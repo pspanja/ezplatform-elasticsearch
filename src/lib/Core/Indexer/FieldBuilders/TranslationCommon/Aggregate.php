@@ -29,7 +29,7 @@ final class Aggregate extends TranslationCommon
         }
     }
 
-    public function addBuilder(Common $builder): void
+    public function addBuilder(TranslationCommon $builder): void
     {
         $this->builders[] = $builder;
     }
