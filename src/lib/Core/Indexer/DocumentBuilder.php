@@ -11,8 +11,6 @@ use Cabbage\Core\Indexer\FieldBuilders\TranslationCommon;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationContent;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationLocation;
 use Cabbage\SPI\Document;
-use Cabbage\SPI\Document\Field;
-use Cabbage\SPI\Document\Field\Type\Identifier;
 use eZ\Publish\SPI\Persistence\Content as SPIContent;
 use eZ\Publish\SPI\Persistence\Content\Location as SPILocation;
 use eZ\Publish\SPI\Persistence\Content\Location\Handler as LocationHandler;
