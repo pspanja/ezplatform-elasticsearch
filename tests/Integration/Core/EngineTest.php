@@ -55,6 +55,8 @@ class EngineTest extends BaseTest
             'versionInfo' => new VersionInfo([
                 'contentInfo' => new ContentInfo([
                     'id' => 'CONTENT_ID',
+                    'mainLanguageCode' => 'cro-HR',
+                    'alwaysAvailable' => true,
                 ]),
                 'languageCodes' => ['cro-HR'],
             ]),
