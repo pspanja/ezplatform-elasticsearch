@@ -14,12 +14,12 @@ use eZ\Publish\SPI\Persistence\Content\Type;
 final class Aggregate extends Common
 {
     /**
-     * @var \Cabbage\Core\Indexer\FieldBuilders\Content[]
+     * @var \Cabbage\Core\Indexer\FieldBuilders\Common[]
      */
     private $builders = [];
 
     /**
-     * @param \Cabbage\Core\Indexer\FieldBuilders\Content[] $builders
+     * @param \Cabbage\Core\Indexer\FieldBuilders\Common[] $builders
      */
     public function __construct(array $builders)
     {
