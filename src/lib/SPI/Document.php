@@ -29,6 +29,11 @@ final class Document
     public $languageCode;
 
     /**
+     * @var bool
+     */
+    public $isMainTranslation;
+
+    /**
      * Document's fields.
      *
      * @var \Cabbage\SPI\Document\Field[]
@@ -39,13 +44,20 @@ final class Document
      * @param string $id
      * @param string $type
      * @param string $languageCode
+     * @param bool $isMainTranslation
      * @param \Cabbage\SPI\Document\Field[] $fields
      */
-    public function __construct(string $id, string $type, string $languageCode, array $fields)
-    {
+    public function __construct(
+        string $id,
+        string $type,
+        string $languageCode,
+        bool $isMainTranslation,
+        array $fields
+    ) {
         $this->id = $id;
         $this->type = $type;
         $this->languageCode = $languageCode;
+        $this->isMainTranslation = $isMainTranslation;
         $this->fields = $fields;
     }
 }

@@ -141,6 +141,7 @@ final class DocumentBuilder
         foreach ($content->versionInfo->languageCodes as $languageCode) {
             $translationCommonFields = $this->getTranslationCommonFields($languageCode, $content, $type, $locations);
             $translationContentFields = $this->getTranslationContentFields($content, $type, $locations);
+            $isMainTranslation = $content->versionInfo->contentInfo->mainLanguageCode === $languageCode;
 
             foreach ($locations as $location) {
                 $translationLocationFields = $this->getTranslationLocationFields($languageCode, $location, $content, $type);
@@ -149,6 +150,7 @@ final class DocumentBuilder
                     $this->idGenerator->generateLocationDocumentId($location),
                     self::TypeLocation,
                     $languageCode,
+                    $isMainTranslation,
                     array_merge(
                         $commonFields,
                         $locationFieldsById[$location->id],
@@ -162,6 +164,7 @@ final class DocumentBuilder
                 $this->idGenerator->generateContentDocumentId($content),
                 self::TypeContent,
                 $languageCode,
+                $isMainTranslation,
                 array_merge(
                     $commonFields,
                     $contentFields,
