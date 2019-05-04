@@ -34,6 +34,11 @@ final class Document
     public $isMainTranslation;
 
     /**
+     * @var bool
+     */
+    public $useMainTranslationFallback;
+
+    /**
      * Document's fields.
      *
      * @var \Cabbage\SPI\Document\Field[]
@@ -45,6 +50,7 @@ final class Document
      * @param string $type
      * @param string $languageCode
      * @param bool $isMainTranslation
+     * @param bool $useMainTranslationFallback
      * @param \Cabbage\SPI\Document\Field[] $fields
      */
     public function __construct(
@@ -52,12 +58,14 @@ final class Document
         string $type,
         string $languageCode,
         bool $isMainTranslation,
+        bool $useMainTranslationFallback,
         array $fields
     ) {
         $this->id = $id;
         $this->type = $type;
         $this->languageCode = $languageCode;
         $this->isMainTranslation = $isMainTranslation;
+        $this->useMainTranslationFallback = $useMainTranslationFallback;
         $this->fields = $fields;
     }
 }
