@@ -22,11 +22,6 @@ final class Main extends Location
     {
         return [
             new Field(
-                'content_id',
-                $content->versionInfo->contentInfo->id,
-                new Identifier()
-            ),
-            new Field(
                 'location_id',
                 $location->id,
                 new Identifier()

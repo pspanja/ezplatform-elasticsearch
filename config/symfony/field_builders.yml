@@ -1,10 +1,14 @@
 parameters:
 
 services:
+    cabbage.indexer.field_builder.common.main:
+        class: Cabbage\Core\Indexer\FieldBuilders\Common\Main
+
     cabbage.indexer.field_builder.common:
         class: Cabbage\Core\Indexer\FieldBuilders\Common\Aggregate
         arguments:
-            - []
+            -
+                - '@cabbage.indexer.field_builder.common.main'
 
     cabbage.indexer.field_builder.content.main:
         class: Cabbage\Core\Indexer\FieldBuilders\Content\Main
