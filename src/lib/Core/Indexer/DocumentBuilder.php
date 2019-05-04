@@ -148,6 +148,7 @@ final class DocumentBuilder
                 $locationDocuments[] = new Document(
                     $this->idGenerator->generateLocationDocumentId($location),
                     self::TypeLocation,
+                    $languageCode,
                     array_merge(
                         $commonFields,
                         $locationFieldsById[$location->id],
@@ -160,6 +161,7 @@ final class DocumentBuilder
             $contentDocuments[] = new Document(
                 $this->idGenerator->generateContentDocumentId($content),
                 self::TypeContent,
+                $languageCode,
                 array_merge(
                     $commonFields,
                     $contentFields,

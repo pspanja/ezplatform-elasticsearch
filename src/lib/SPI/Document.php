@@ -24,6 +24,11 @@ final class Document
     public $type;
 
     /**
+     * @var string
+     */
+    public $languageCode;
+
+    /**
      * Document's fields.
      *
      * @var \Cabbage\SPI\Document\Field[]
@@ -33,12 +38,14 @@ final class Document
     /**
      * @param string $id
      * @param string $type
+     * @param string $languageCode
      * @param \Cabbage\SPI\Document\Field[] $fields
      */
-    public function __construct(string $id, string $type, array $fields)
+    public function __construct(string $id, string $type, string $languageCode, array $fields)
     {
         $this->id = $id;
         $this->type = $type;
+        $this->languageCode = $languageCode;
         $this->fields = $fields;
     }
 }
