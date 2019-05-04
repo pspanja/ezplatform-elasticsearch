@@ -14,16 +14,16 @@ final class LanguageFilter
     /**
      * @var bool
      */
-    private $useMainLanguageFallback;
+    private $useMainTranslationFallback;
 
     /**
      * @param array $prioritizedLanguageCodeList
-     * @param bool $useMainLanguageFallback
+     * @param bool $useMainTranslationFallback
      */
-    public function __construct(array $prioritizedLanguageCodeList, bool $useMainLanguageFallback)
+    public function __construct(array $prioritizedLanguageCodeList, bool $useMainTranslationFallback)
     {
         $this->prioritizedLanguageCodeList = $prioritizedLanguageCodeList;
-        $this->useMainLanguageFallback = $useMainLanguageFallback;
+        $this->useMainTranslationFallback = $useMainTranslationFallback;
     }
 
     public function getPrioritizedLanguageCodeList(): array
@@ -31,8 +31,8 @@ final class LanguageFilter
         return $this->prioritizedLanguageCodeList;
     }
 
-    public function useMainLanguageFallback(): bool
+    public function useMainTranslationFallback(): bool
     {
-        return $this->useMainLanguageFallback;
+        return $this->useMainTranslationFallback;
     }
 }
