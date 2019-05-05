@@ -66,7 +66,7 @@ class GatewayTest extends BaseTest
 EOD;
 
         self::$indexerGateway->index($index->node, $payload);
-        self::$indexerGateway->refresh($index);
+        self::$indexerGateway->refresh($index->node);
 
         $query = [
             'query' => [
@@ -135,7 +135,7 @@ EOD;
     public function testFindNoneAfterPurge(): void
     {
         self::$indexerGateway->purge(self::$index);
-        self::$indexerGateway->refresh(self::$index);
+        self::$indexerGateway->refresh(self::$index->node);
 
         $query = [
             'query' => [

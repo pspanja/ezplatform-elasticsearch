@@ -47,12 +47,7 @@ final class TestTest extends BaseTest
         $contentDraft = $contentService->createContent($struct);
         $content = $contentService->publishVersion($contentDraft->versionInfo);
 
-        $this->refresh(
-            new Index(
-                Node::fromDsn('http://localhost:9200'),
-                'index'
-            )
-        );
+        $this->refresh(Node::fromDsn('http://localhost:9200'));
 
         $query = new Query([
             'filter' => new ContentId($content->id),
@@ -67,10 +62,10 @@ final class TestTest extends BaseTest
     /**
      * @throws \Exception
      *
-     * @param \Cabbage\SPI\Index $index
+     * @param \Cabbage\SPI\Node $node
      */
-    protected function refresh(Index $index): void
+    protected function refresh(Node $node): void
     {
-        $this->getSetupFactory()->getServiceContainer()->get('cabbage.indexer.gateway')->refresh($index);
+        $this->getSetupFactory()->getServiceContainer()->get('cabbage.indexer.gateway')->refresh($node);
     }
 }

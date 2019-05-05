@@ -53,11 +53,11 @@ final class Gateway
     }
 
     /**
-     * @param \Cabbage\SPI\Index $index
+     * @param \Cabbage\SPI\Node $node
      */
-    public function flush(Index $index): void
+    public function flush(Node $node): void
     {
-        $url = "{$index->getUrl()}/_flush";
+        $url = "{$node->getUrl()}/_all/_flush";
 
         $response = $this->client->post($url);
 
@@ -69,11 +69,11 @@ final class Gateway
     }
 
     /**
-     * @param \Cabbage\SPI\Index $index
+     * @param \Cabbage\SPI\Node $node
      */
-    public function refresh(Index $index): void
+    public function refresh(Node $node): void
     {
-        $url = "{$index->getUrl()}/_refresh";
+        $url = "{$node->getUrl()}/_all/_refresh";
 
         $response = $this->client->post($url);
 

@@ -64,7 +64,7 @@ class EngineTest extends BaseTest
         ]);
 
         $engine->indexContent($content);
-        $this->refresh(self::$index);
+        $this->refresh(self::$index->node);
 
         $this->addToAssertionCount(1);
     }
@@ -126,7 +126,7 @@ class EngineTest extends BaseTest
         $engine = $this->getEngineUnderTest();
 
         $engine->purgeIndex();
-        $this->refresh(self::$index);
+        $this->refresh(self::$index->node);
 
         $query = new Query([
             'filter' => new DocumentType(DocumentBuilder::TypeContent),
@@ -156,10 +156,10 @@ class EngineTest extends BaseTest
     /**
      * @throws \Exception
      *
-     * @param \Cabbage\SPI\Index $index
+     * @param \Cabbage\SPI\Node $node
      */
-    protected function refresh(Index $index): void
+    protected function refresh(Node $node): void
     {
-        self::getContainer()->get('cabbage.indexer.gateway')->refresh($index);
+        self::getContainer()->get('cabbage.indexer.gateway')->refresh($node);
     }
 }

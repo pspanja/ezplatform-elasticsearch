@@ -151,21 +151,11 @@ final class Indexer extends SPIIndexer
 
     public function flush(): void
     {
-        $this->gateway->flush(
-            new Index(
-                Node::fromDsn('http://localhost:9200'),
-                'index'
-            )
-        );
+        $this->gateway->flush(Node::fromDsn('http://localhost:9200'));
     }
 
     public function refresh(): void
     {
-        $this->gateway->refresh(
-            new Index(
-                Node::fromDsn('http://localhost:9200'),
-                'index'
-            )
-        );
+        $this->gateway->refresh(Node::fromDsn('http://localhost:9200'));
     }
 }

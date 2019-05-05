@@ -48,7 +48,7 @@ class GatewayTest extends BaseTest
      */
     public function testRefresh(): void
     {
-        self::$gateway->refresh(self::$index);
+        self::$gateway->refresh(self::$index->node);
 
         $this->addToAssertionCount(1);
     }
@@ -71,7 +71,7 @@ class GatewayTest extends BaseTest
 EOD;
 
         self::$gateway->index(self::$index->node, $payload);
-        self::$gateway->refresh(self::$index);
+        self::$gateway->refresh(self::$index->node);
 
         $this->addToAssertionCount(1);
     }
@@ -83,7 +83,7 @@ EOD;
     public function testPurge(): void
     {
         self::$gateway->purge(self::$index);
-        self::$gateway->refresh(self::$index);
+        self::$gateway->refresh(self::$index->node);
 
         $this->addToAssertionCount(1);
     }
