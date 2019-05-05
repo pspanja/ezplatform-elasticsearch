@@ -65,7 +65,7 @@ class GatewayTest extends BaseTest
 
 EOD;
 
-        self::$indexerGateway->index($index, $payload);
+        self::$indexerGateway->index($index->node, $payload);
         self::$indexerGateway->refresh($index);
 
         $query = [

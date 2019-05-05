@@ -101,10 +101,7 @@ final class Indexer extends SPIIndexer
         }
 
         $this->gateway->index(
-            new Index(
-                Node::fromDsn('http://localhost:9200'),
-                'index'
-            ),
+            Node::fromDsn('http://localhost:9200'),
             $payload
         );
     }

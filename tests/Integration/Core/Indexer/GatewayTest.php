@@ -70,7 +70,7 @@ class GatewayTest extends BaseTest
 
 EOD;
 
-        self::$gateway->index(self::$index, $payload);
+        self::$gateway->index(self::$index->node, $payload);
         self::$gateway->refresh(self::$index);
 
         $this->addToAssertionCount(1);

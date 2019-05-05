@@ -7,6 +7,7 @@ namespace Cabbage\Core\Indexer;
 use Cabbage\Core\Http\Client;
 use Cabbage\Core\Http\Message;
 use Cabbage\SPI\Index;
+use Cabbage\SPI\Node;
 use RuntimeException;
 
 /**
@@ -28,12 +29,12 @@ final class Gateway
     }
 
     /**
-     * @param \Cabbage\SPI\Index $index
+     * @param \Cabbage\SPI\Node $node
      * @param string $payload
      */
-    public function index(Index $index, string $payload): void
+    public function index(Node $node, string $payload): void
     {
-        $url = "{$index->getUrl()}/_bulk";
+        $url = "{$node->getUrl()}/_bulk";
 
         $message = new Message(
             $payload,
