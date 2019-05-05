@@ -25,6 +25,10 @@ final class DestinationResolver
 
     public function resolve(Document $document): Index
     {
-        return $this->cluster->getIndexForLanguage($document->languageCode);
+        if ($this->cluster->hasIndexForLanguage($document->languageCode)) {
+            $this->cluster->getIndexForLanguage($document->languageCode);
+        }
+
+        return $this->cluster->getDefaultIndex();
     }
 }

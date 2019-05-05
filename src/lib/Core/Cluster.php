@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core;
 
 use Cabbage\SPI\Index;
+use Cabbage\SPI\LanguageFilter;
 use RuntimeException;
 
 /**
@@ -25,7 +26,7 @@ final class Cluster
     /**
      * @var ?\Cabbage\SPI\Index
      */
-    private $indexForMainLanguages;
+    private $indexForMainTranslations;
 
     /**
      * @var ?\Cabbage\SPI\Index
@@ -35,18 +36,18 @@ final class Cluster
     /**
      * @param \Cabbage\SPI\Node[] $coordinatingNodes
      * @param \Cabbage\SPI\Index[] $indexByLanguageCode
-     * @param \Cabbage\SPI\Index $indexForMainLanguages
+     * @param \Cabbage\SPI\Index $indexForMainTranslations
      * @param \Cabbage\SPI\Index $defaultIndex
      */
     public function __construct(
         array $coordinatingNodes,
         array $indexByLanguageCode,
-        ?Index $indexForMainLanguages,
+        ?Index $indexForMainTranslations,
         ?Index $defaultIndex
     ) {
         $this->coordinatingNodes = $coordinatingNodes;
         $this->defaultIndex = $defaultIndex;
-        $this->indexForMainLanguages = $indexForMainLanguages;
+        $this->indexForMainTranslations = $indexForMainTranslations;
         $this->indexByLanguageCode = $indexByLanguageCode;
     }
 
@@ -61,22 +62,36 @@ final class Cluster
         );
     }
 
-    public function getIndexForMainLanguages(): Index
+    public function hasIndexForMainTranslations(): bool
     {
-        if ($this->indexForMainLanguages instanceof Index) {
-            return $this->indexForMainLanguages;
+        return $this->indexForMainTranslations instanceof Index;
+    }
+
+    public function getIndexForMainTranslations(): Index
+    {
+        if ($this->hasIndexForMainTranslations()) {
+            return $this->indexForMainTranslations;
         }
 
-        return $this->getDefaultIndex();
+        throw new RuntimeException(
+            'Index for main translations is not defined'
+        );
+    }
+
+    public function hasIndexForLanguage(string $languageCode): bool
+    {
+        return array_key_exists($languageCode, $this->indexByLanguageCode);
     }
 
     public function getIndexForLanguage(string $languageCode): Index
     {
-        if (array_key_exists($languageCode, $this->indexByLanguageCode)) {
+        if ($this->hasIndexForLanguage($languageCode)) {
             return $this->indexByLanguageCode[$languageCode];
         }
 
-        return $this->getDefaultIndex();
+        throw new RuntimeException(
+            "Index for language with code '{$languageCode}' is not defined"
+        );
     }
 
     public function getCoordinatingNodes(): array
