@@ -51,9 +51,14 @@ final class Cluster
         $this->indexByLanguageCode = $indexByLanguageCode;
     }
 
+    public function hasDefaultIndex(): bool
+    {
+        return $this->defaultIndex instanceof Index;
+    }
+
     public function getDefaultIndex(): Index
     {
-        if ($this->defaultIndex instanceof Index) {
+        if ($this->hasDefaultIndex()) {
             return $this->defaultIndex;
         }
 
