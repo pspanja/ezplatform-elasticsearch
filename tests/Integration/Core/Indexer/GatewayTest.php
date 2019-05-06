@@ -82,7 +82,7 @@ EOD;
      */
     public function testPurge(): void
     {
-        self::$gateway->purge(self::$index);
+        self::$gateway->purge(self::$index->node);
         self::$gateway->refresh(self::$index->node);
 
         $this->addToAssertionCount(1);

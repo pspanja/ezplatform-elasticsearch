@@ -79,12 +79,7 @@ final class Indexer extends SPIIndexer
 
     public function purgeIndex(): void
     {
-        $this->gateway->purge(
-            new Index(
-                Node::fromDsn('http://localhost:9200'),
-                'index'
-            )
-        );
+        $this->gateway->purge(Node::fromDsn('http://localhost:9200'));
     }
 
     /**

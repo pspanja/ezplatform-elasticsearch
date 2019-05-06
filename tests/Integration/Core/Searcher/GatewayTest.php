@@ -134,7 +134,7 @@ EOD;
      */
     public function testFindNoneAfterPurge(): void
     {
-        self::$indexerGateway->purge(self::$index);
+        self::$indexerGateway->purge(self::$index->node);
         self::$indexerGateway->refresh(self::$index->node);
 
         $query = [

@@ -6,7 +6,6 @@ namespace Cabbage\Core\Indexer;
 
 use Cabbage\Core\Http\Client;
 use Cabbage\Core\Http\Message;
-use Cabbage\SPI\Index;
 use Cabbage\SPI\Node;
 use RuntimeException;
 
@@ -85,11 +84,11 @@ final class Gateway
     }
 
     /**
-     * @param \Cabbage\SPI\Index $index
+     * @param \Cabbage\SPI\Node $node
      */
-    public function purge(Index $index): void
+    public function purge(Node $node): void
     {
-        $url = "{$index->getUrl()}/_delete_by_query";
+        $url = "{$node->getUrl()}/_all/_delete_by_query";
         $query = [
             'query' => [
                 'match_all' => (object)null,
