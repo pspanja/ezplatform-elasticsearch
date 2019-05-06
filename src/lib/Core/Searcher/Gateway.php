@@ -35,8 +35,8 @@ final class Gateway
     public function find(Target $target, array $query): string
     {
         $response = $this->client->get(
-            $target->getUrl(),
-            Message::fromHash($query)
+            Message::fromHash($query),
+            $target->getUrl()
         );
 
         if ($response->status !== 200) {

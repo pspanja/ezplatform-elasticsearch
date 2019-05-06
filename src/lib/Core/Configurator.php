@@ -50,7 +50,7 @@ final class Configurator
             ]
         );
 
-        return $this->client->put($index->getUrl(), $message);
+        return $this->client->put($message, $index->getUrl());
     }
 
     /**
@@ -62,7 +62,7 @@ final class Configurator
     {
         $message = new Message();
 
-        $response = $this->client->head($index->getUrl(), $message);
+        $response = $this->client->head($message, $index->getUrl());
 
         if ($response->status === 200) {
             return true;
@@ -84,7 +84,7 @@ final class Configurator
      */
     public function deleteIndex(Index $index): Response
     {
-        return $this->client->delete($index->getUrl());
+        return $this->client->delete(new Message(), $index->getUrl());
     }
 
     /**
@@ -96,8 +96,8 @@ final class Configurator
     public function setMapping(Index $index, string $mapping): Response
     {
         return $this->client->put(
-            $index->getUrl() . '/_mapping',
-            Message::fromString($mapping)
+            Message::fromString($mapping),
+            $index->getUrl() . '/_mapping'
         );
     }
 }

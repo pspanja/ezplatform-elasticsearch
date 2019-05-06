@@ -5,114 +5,88 @@ declare(strict_types=1);
 namespace Cabbage\Core\Http;
 
 /**
- * Allows communication with Elasticsearch server.
+ * Provides HTTP communication with Elasticsearch server.
  *
  * This HTTP client is based on PHP stream.
  */
 final class Client
 {
     /**
-     * HTTP GET method.
-     */
-    private const GET = 'GET';
-
-    /**
-     * HTTP HEAD method.
-     */
-    private const HEAD = 'HEAD';
-
-    /**
-     * HTTP PUT method.
-     */
-    private const POST = 'POST';
-
-    /**
-     * HTTP PUT method.
-     */
-    private const PUT = 'PUT';
-
-    /**
-     * HTTP DELETE method.
-     */
-    private const DELETE = 'DELETE';
-
-    /**
      * Perform GET request to the URL with the given message.
      *
+     * @param \Cabbage\Core\Http\Message $message
      * @param string $url
-     * @param \Cabbage\Core\Http\Message|null $message
      *
      * @return \Cabbage\Core\Http\Response
      */
-    public function get(string $url, ?Message $message = null): Response
+    public function get(Message $message, string $url): Response
     {
-        return $this->request(self::GET, $url, $message);
+        return $this->send($message, 'GET', $url);
     }
 
     /**
      * Perform PUT request to the URL with the given message.
      *
      * @param string $url
-     * @param \Cabbage\Core\Http\Message|null $message
+     * @param \Cabbage\Core\Http\Message $message
      *
      * @return \Cabbage\Core\Http\Response
      */
-    public function put(string $url, ?Message $message = null): Response
+    public function put(Message $message, string $url): Response
     {
-        return $this->request(self::PUT, $url, $message);
+        return $this->send($message, 'PUT', $url);
     }
 
     /**
      * Perform POST request to the URL with the given message.
      *
+     * @param \Cabbage\Core\Http\Message $message
      * @param string $url
-     * @param \Cabbage\Core\Http\Message|null $message
      *
      * @return \Cabbage\Core\Http\Response
      */
-    public function post(string $url, ?Message $message = null): Response
+    public function post(Message $message, string $url): Response
     {
-        return $this->request(self::POST, $url, $message);
+        return $this->send($message, 'POST', $url);
     }
 
     /**
      * Perform DELETE request to the URL with the given message.
      *
+     * @param \Cabbage\Core\Http\Message $message
      * @param string $url
-     * @param \Cabbage\Core\Http\Message|null $message
      *
      * @return \Cabbage\Core\Http\Response
      */
-    public function delete(string $url, ?Message $message = null): Response
+    public function delete(Message $message, string $url): Response
     {
-        return $this->request(self::DELETE, $url, $message);
+        return $this->send($message, 'DELETE', $url);
     }
 
     /**
      * Perform HEAD request to the URL with the given message.
      *
+     * @param \Cabbage\Core\Http\Message $message
      * @param string $url
-     * @param \Cabbage\Core\Http\Message|null $message
      *
      * @return \Cabbage\Core\Http\Response
      */
-    public function head(string $url, ?Message $message = null): Response
+    public function head(Message $message, string $url): Response
     {
-        return $this->request(self::HEAD, $url, $message);
+        return $this->send($message, 'HEAD', $url);
     }
 
     /**
      * Send $message with $method and return the response.
      *
+     * @param \Cabbage\Core\Http\Message $message
      * @param string $method
      * @param string $url
-     * @param \Cabbage\Core\Http\Message|null $message
      *
      * @return \Cabbage\Core\Http\Response
      */
-    private function request(string $method, string $url, ?Message $message = null): Response
+    private function send(Message $message, string $method, string $url): Response
     {
-        $message = $message ?? new Message();
         $context = stream_context_create($this->getStreamContextOptions($message, $method));
 
         $level = error_reporting(0);

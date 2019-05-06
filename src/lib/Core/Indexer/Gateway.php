@@ -43,7 +43,7 @@ final class Gateway
             ]
         );
 
-        $response = $this->client->post($url, $message);
+        $response = $this->client->post($message, $url);
 
         if ($response->status !== 200) {
             throw new RuntimeException(
@@ -59,7 +59,7 @@ final class Gateway
     {
         $url = "{$node->getUrl()}/_all/_flush";
 
-        $response = $this->client->post($url);
+        $response = $this->client->post(new Message(), $url);
 
         if ($response->status !== 200) {
             throw new RuntimeException(
@@ -75,7 +75,7 @@ final class Gateway
     {
         $url = "{$node->getUrl()}/_all/_refresh";
 
-        $response = $this->client->post($url);
+        $response = $this->client->post(new Message(), $url);
 
         if ($response->status !== 200) {
             throw new RuntimeException(
@@ -97,8 +97,8 @@ final class Gateway
         ];
 
         $response = $this->client->post(
-            $url,
-            Message::fromHash($query)
+            Message::fromHash($query),
+            $url
         );
 
         if ($response->status !== 200 && $response->status !== 404) {
