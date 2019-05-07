@@ -26,6 +26,11 @@ final class LanguageFilter
         $this->useMainTranslationFallback = $useMainTranslationFallback;
     }
 
+    public function hasPrioritizedTranslationLanguageCodes(): bool
+    {
+        return !empty($this->prioritizedTranslationLanguageCodes);
+    }
+
     public function getPrioritizedTranslationLanguageCodes(): array
     {
         return $this->prioritizedTranslationLanguageCodes;
