@@ -99,6 +99,11 @@ final class Cluster
         );
     }
 
+    public function getIndicesForAllLanguages(): array
+    {
+        return array_values($this->indexByLanguageCode);
+    }
+
     public function getCoordinatingNodes(): array
     {
         return $this->coordinatingNodes;
