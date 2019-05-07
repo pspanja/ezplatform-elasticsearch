@@ -16,7 +16,8 @@ services:
     cabbage.cluster:
         class: Cabbage\Core\Cluster
         arguments:
-            - []
+            -
+                - '@cabbage.node.default'
             - []
             - ~
             - '@cabbage.index.default'
