@@ -71,10 +71,12 @@ final class Response
                 $version = $matches['version'];
                 $status = (int)$matches['status'];
                 $headers = [];
-            } else {
-                [$key, $value] = explode(':', $responseHeader, 2);
-                $headers[$key] = trim($value);
+
+                continue;
             }
+
+            [$key, $value] = explode(':', $responseHeader, 2);
+            $headers[$key] = trim($value);
         }
 
         return new self($version, $status, $body, $headers);
