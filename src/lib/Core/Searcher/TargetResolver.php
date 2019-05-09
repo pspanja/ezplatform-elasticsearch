@@ -33,7 +33,7 @@ final class TargetResolver
 
         if (empty($indices)) {
             throw new RuntimeException(
-                'No indices were resolved for the given LanguageFilter'
+                'No indices could be resolved for the given LanguageFilter'
             );
         }
 
