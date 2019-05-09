@@ -9,9 +9,7 @@ use Cabbage\Core\Indexer\DestinationResolver;
 use Cabbage\Core\Indexer\DocumentSerializer;
 use Cabbage\Core\Indexer\Gateway;
 use Cabbage\SPI\Document;
-use Cabbage\SPI\Index;
 use Cabbage\SPI\Indexer as SPIIndexer;
-use Cabbage\SPI\Node;
 use eZ\Publish\SPI\Persistence\Content;
 use eZ\Publish\SPI\Persistence\Content\Location;
 use RuntimeException;
@@ -39,21 +37,29 @@ final class Indexer extends SPIIndexer
     private $destinationResolver;
 
     /**
+     * @var \Cabbage\Core\Cluster
+     */
+    private $cluster;
+
+    /**
      * @param \Cabbage\Core\Indexer\Gateway $gateway
      * @param \Cabbage\Core\Indexer\DocumentBuilder $documentBuilder
      * @param \Cabbage\Core\Indexer\DocumentSerializer $documentSerializer
      * @param \Cabbage\Core\Indexer\DestinationResolver $destinationResolver
+     * @param \Cabbage\Core\Cluster $cluster
      */
     public function __construct(
         Gateway $gateway,
         DocumentBuilder $documentBuilder,
         DocumentSerializer $documentSerializer,
-        DestinationResolver $destinationResolver
+        DestinationResolver $destinationResolver,
+        Cluster $cluster
     ) {
         $this->gateway = $gateway;
         $this->documentBuilder = $documentBuilder;
         $this->documentSerializer = $documentSerializer;
         $this->destinationResolver = $destinationResolver;
+        $this->cluster = $cluster;
     }
 
     /**
@@ -79,7 +85,9 @@ final class Indexer extends SPIIndexer
 
     public function purgeIndex(): void
     {
-        $this->gateway->purge(Node::fromDsn('http://localhost:9200'));
+        $this->gateway->purge(
+            $this->cluster->selectCoordinatingNode()
+        );
     }
 
     /**
@@ -96,7 +104,7 @@ final class Indexer extends SPIIndexer
         }
 
         $this->gateway->index(
-            Node::fromDsn('http://localhost:9200'),
+            $this->cluster->selectCoordinatingNode(),
             $payload
         );
     }
@@ -146,11 +154,15 @@ final class Indexer extends SPIIndexer
 
     public function flush(): void
     {
-        $this->gateway->flush(Node::fromDsn('http://localhost:9200'));
+        $this->gateway->flush(
+            $this->cluster->selectCoordinatingNode()
+        );
     }
 
     public function refresh(): void
     {
-        $this->gateway->refresh(Node::fromDsn('http://localhost:9200'));
+        $this->gateway->refresh(
+            $this->cluster->selectCoordinatingNode()
+        );
     }
 }
