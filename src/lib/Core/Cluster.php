@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core;
 
 use Cabbage\SPI\Index;
-use Cabbage\SPI\LanguageFilter;
+use Cabbage\SPI\Node;
 use RuntimeException;
 
 /**
@@ -107,5 +107,16 @@ final class Cluster
     public function getCoordinatingNodes(): array
     {
         return $this->coordinatingNodes;
+    }
+
+    public function selectCoordinatingNode(): Node
+    {
+        if (empty($this->coordinatingNodes)) {
+            throw new RuntimeException(
+                'No coordinating Nodes are defined'
+            );
+        }
+
+        return $this->coordinatingNodes[array_rand($this->coordinatingNodes, 1)];
     }
 }
