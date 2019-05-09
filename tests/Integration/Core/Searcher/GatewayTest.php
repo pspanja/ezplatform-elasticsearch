@@ -76,7 +76,7 @@ EOD;
 
         $target = new Target($index->node, [$index]);
 
-        $data = self::$gateway->find($target, $query);
+        $data = self::$gateway->find($index->node, $target, $query);
         $data = json_decode($data, false);
 
         $this->assertEquals(2, $data->hits->total->value);
@@ -100,7 +100,7 @@ EOD;
 
         $target = new Target(self::$index->node, [self::$index]);
 
-        $data = self::$gateway->find($target, $query);
+        $data = self::$gateway->find(self::$index->node, $target, $query);
         $data = json_decode($data, false);
 
         $this->assertEquals(1, $data->hits->total->value);
@@ -122,7 +122,7 @@ EOD;
 
         $target = new Target(self::$index->node, [self::$index]);
 
-        $data = self::$gateway->find($target, $query);
+        $data = self::$gateway->find(self::$index->node, $target, $query);
         $data = json_decode($data, false);
 
         $this->assertEquals(0, $data->hits->total->value);
@@ -145,7 +145,7 @@ EOD;
 
         $target = new Target(self::$index->node, [self::$index]);
 
-        $data = self::$gateway->find($target, $query);
+        $data = self::$gateway->find(self::$index->node, $target, $query);
         $data = json_decode($data, false);
 
         $this->assertEquals(0, $data->hits->total->value);

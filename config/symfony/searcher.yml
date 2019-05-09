@@ -51,3 +51,4 @@ services:
             - '@cabbage.searcher.query_translator'
             - '@cabbage.searcher.target_resolver'
             - '@cabbage.searcher.result_extractor'
+            - '@cabbage.cluster'

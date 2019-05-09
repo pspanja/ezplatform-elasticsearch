@@ -40,26 +40,35 @@ final class Searcher extends SPISearcher
     private $resultExtractor;
 
     /**
+     * @var \Cabbage\Core\Cluster
+     */
+    private $cluster;
+
+    /**
      * @param \Cabbage\Core\Searcher\Gateway $gateway
      * @param \Cabbage\Core\Searcher\QueryTranslator $queryTranslator
      * @param \Cabbage\Core\Searcher\TargetResolver $targetResolver
      * @param \Cabbage\Core\Searcher\ResultExtractor $resultExtractor
+     * @param \Cabbage\Core\Cluster $cluster
      */
     public function __construct(
         Gateway $gateway,
         QueryTranslator $queryTranslator,
         TargetResolver $targetResolver,
-        ResultExtractor $resultExtractor
+        ResultExtractor $resultExtractor,
+        Cluster $cluster
     ) {
         $this->gateway = $gateway;
         $this->queryTranslator = $queryTranslator;
         $this->targetResolver = $targetResolver;
         $this->resultExtractor = $resultExtractor;
+        $this->cluster = $cluster;
     }
 
     public function findContent(Query $query, LanguageFilter $languageFilter): SearchResult
     {
         $data = $this->gateway->find(
+            $this->cluster->selectCoordinatingNode(),
             $this->targetResolver->resolve($languageFilter),
             $this->queryTranslator->translateContentQuery($query)
         );
@@ -75,6 +84,7 @@ final class Searcher extends SPISearcher
     public function findLocations(LocationQuery $query, LanguageFilter $languageFilter): SearchResult
     {
         $data = $this->gateway->find(
+            $this->cluster->selectCoordinatingNode(),
             $this->targetResolver->resolve($languageFilter),
             $this->queryTranslator->translateLocationQuery($query)
         );

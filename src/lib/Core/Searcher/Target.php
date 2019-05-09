@@ -44,12 +44,13 @@ final class Target
         $this->indices = $indices;
     }
 
-    public function getUrl(): string
+    public function getIndices(): string
     {
-        $nodeUrl = $this->coordinatingNode->getUrl();
-        $indexNames = array_map(static function (Index $index): string {return $index->name;}, $this->indices);
-        $indexNames = implode(',', $indexNames);
+        $indexNames = array_map(
+            static function (Index $index): string {return $index->name;},
+            $this->indices
+        );
 
-        return "{$nodeUrl}/{$indexNames}/_search";
+        return implode(',', $indexNames);
     }
 }
