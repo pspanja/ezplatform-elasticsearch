@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Indexer;
+namespace Cabbage\Core\Cluster;
 
 use Cabbage\Core\Cluster;
 use Cabbage\SPI\Document;

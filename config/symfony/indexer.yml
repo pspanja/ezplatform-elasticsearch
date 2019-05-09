@@ -21,9 +21,6 @@ services:
             - '@cabbage.indexer.field_builder.translation_location'
             - '@cabbage.indexer.document_id_generator'
 
-    cabbage.indexer.destination_resolver:
-        class: Cabbage\Core\Indexer\DestinationResolver
-
     cabbage.indexer.document_serializer.field_value_mapper.visitor.boolean:
         class: Cabbage\Core\Indexer\DocumentSerializer\FieldValueMapper\Visitor\Boolean
 

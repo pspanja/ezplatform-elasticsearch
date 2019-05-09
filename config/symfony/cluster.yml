@@ -16,11 +16,14 @@ services:
     cabbage.cluster.target_resolver:
         class: Cabbage\Core\Cluster\TargetResolver
 
+    cabbage.cluster.destination_resolver:
+        class: Cabbage\Core\Cluster\DestinationResolver
+
     cabbage.cluster:
         class: Cabbage\Core\Cluster
         arguments:
             - '@cabbage.cluster.target_resolver'
-            - '@cabbage.indexer.destination_resolver'
+            - '@cabbage.cluster.destination_resolver'
             -
                 - '@cabbage.node.default'
             - []
