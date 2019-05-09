@@ -74,7 +74,7 @@ EOD;
             ],
         ];
 
-        $target = new Target($index->node, [$index]);
+        $target = new Target([$index]);
 
         $data = self::$gateway->find($index->node, $target, $query);
         $data = json_decode($data, false);
@@ -98,7 +98,7 @@ EOD;
             ],
         ];
 
-        $target = new Target(self::$index->node, [self::$index]);
+        $target = new Target([self::$index]);
 
         $data = self::$gateway->find(self::$index->node, $target, $query);
         $data = json_decode($data, false);
@@ -120,7 +120,7 @@ EOD;
             ],
         ];
 
-        $target = new Target(self::$index->node, [self::$index]);
+        $target = new Target([self::$index]);
 
         $data = self::$gateway->find(self::$index->node, $target, $query);
         $data = json_decode($data, false);
@@ -143,7 +143,7 @@ EOD;
             ],
         ];
 
-        $target = new Target(self::$index->node, [self::$index]);
+        $target = new Target([self::$index]);
 
         $data = self::$gateway->find(self::$index->node, $target, $query);
         $data = json_decode($data, false);

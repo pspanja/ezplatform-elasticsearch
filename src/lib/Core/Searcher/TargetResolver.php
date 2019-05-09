@@ -37,7 +37,7 @@ final class TargetResolver
             );
         }
 
-        return new Target($indices[0]->node, $indices);
+        return new Target($indices);
     }
 
     /**
