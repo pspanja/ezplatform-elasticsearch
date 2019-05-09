@@ -17,19 +17,9 @@ use RuntimeException;
  */
 final class TargetResolver
 {
-    /**
-     * @var \Cabbage\Core\Cluster
-     */
-    private $cluster;
-
-    public function __construct(Cluster $cluster)
+    public function resolve(Cluster $cluster, LanguageFilter $languageFilter): Target
     {
-        $this->cluster = $cluster;
-    }
-
-    public function resolve(LanguageFilter $languageFilter): Target
-    {
-        $indices = $this->resolveIndices($languageFilter);
+        $indices = $this->resolveIndices($cluster, $languageFilter);
 
         if (empty($indices)) {
             throw new RuntimeException(
@@ -41,79 +31,83 @@ final class TargetResolver
     }
 
     /**
+     * @param \Cabbage\Core\Cluster $cluster
      * @param \Cabbage\SPI\LanguageFilter $languageFilter
      *
      * @return \Cabbage\SPI\Index[]
      */
-    private function resolveIndices(LanguageFilter $languageFilter): array
+    private function resolveIndices(Cluster $cluster, LanguageFilter $languageFilter): array
     {
-        if ($this->cluster->hasIndexForMainTranslations()) {
-            return $this->resolveWithIndexForMainTranslations($languageFilter);
+        if ($cluster->hasIndexForMainTranslations()) {
+            return $this->resolveWithIndexForMainTranslations($cluster, $languageFilter);
         }
 
-        return $this->resolveWithoutIndexForMainTranslations($languageFilter);
+        return $this->resolveWithoutIndexForMainTranslations($cluster, $languageFilter);
     }
 
     /**
+     * @param \Cabbage\Core\Cluster $cluster
      * @param \Cabbage\SPI\LanguageFilter $languageFilter
      *
      * @return \Cabbage\SPI\Index[]
      */
-    private function resolveWithIndexForMainTranslations(LanguageFilter $languageFilter): array
+    private function resolveWithIndexForMainTranslations(Cluster $cluster, LanguageFilter $languageFilter): array
     {
-        $indices = $this->getIndicesByPrioritizedTranslationLanguageCodes($languageFilter);
+        $indices = $this->getIndicesByPrioritizedTranslationLanguageCodes($cluster, $languageFilter);
 
         if (empty($indices) || $languageFilter->useMainTranslationFallback()) {
-            $indices[] = $this->cluster->getIndexForMainTranslations();
+            $indices[] = $cluster->getIndexForMainTranslations();
         }
 
         return $indices;
     }
 
     /**
+     * @param \Cabbage\Core\Cluster $cluster
      * @param \Cabbage\SPI\LanguageFilter $languageFilter
      *
      * @return \Cabbage\SPI\Index[]
      */
-    private function resolveWithoutIndexForMainTranslations(LanguageFilter $languageFilter): array
+    private function resolveWithoutIndexForMainTranslations(Cluster $cluster, LanguageFilter $languageFilter): array
     {
         if ($languageFilter->useMainTranslationFallback() || !$languageFilter->hasPrioritizedTranslationLanguageCodes()) {
-            $indices = $this->cluster->getIndicesForAllLanguages();
+            $indices = $cluster->getIndicesForAllLanguages();
 
-            if ($this->cluster->hasDefaultIndex()) {
-                $indices[] = $this->cluster->getDefaultIndex();
+            if ($cluster->hasDefaultIndex()) {
+                $indices[] = $cluster->getDefaultIndex();
             }
 
             return $indices;
         }
 
-        return $this->getIndicesByPrioritizedTranslationLanguageCodes($languageFilter);
+        return $this->getIndicesByPrioritizedTranslationLanguageCodes($cluster, $languageFilter);
     }
 
     /**
+     * @param \Cabbage\Core\Cluster $cluster
      * @param \Cabbage\SPI\LanguageFilter $languageFilter
      *
      * @return \Cabbage\SPI\Index[]
      */
-    private function getIndicesByPrioritizedTranslationLanguageCodes(LanguageFilter $languageFilter): array
+    private function getIndicesByPrioritizedTranslationLanguageCodes(Cluster $cluster, LanguageFilter $languageFilter): array
     {
         $indices = [];
 
         foreach ($languageFilter->getPrioritizedTranslationLanguageCodes() as $languageCode) {
-            $indices[] = $this->getIndexForLanguage($languageCode);
+            $indices[] = $this->getIndexForLanguage($cluster, $languageCode);
         }
 
         return $indices;
     }
 
-    private function getIndexForLanguage(string $languageCode): Index
+    private function getIndexForLanguage(Cluster $cluster, string $languageCode): Index
     {
-        if ($this->cluster->hasIndexForLanguage($languageCode)) {
-            return $this->cluster->getIndexForLanguage($languageCode);
+        if ($cluster->hasIndexForLanguage($languageCode)) {
+            return $cluster->getIndexForLanguage($languageCode);
         }
 
-        if ($this->cluster->hasDefaultIndex()) {
-            return $this->cluster->getDefaultIndex();
+        if ($cluster->hasDefaultIndex()) {
+            return $cluster->getDefaultIndex();
         }
 
         throw new RuntimeException(

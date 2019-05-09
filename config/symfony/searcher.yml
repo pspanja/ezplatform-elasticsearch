@@ -33,8 +33,6 @@ services:
 
     cabbage.searcher.target_resolver:
         class: Cabbage\Core\Searcher\TargetResolver
-        arguments:
-            - '@cabbage.cluster'
 
     cabbage.searcher.result_extractor:
         class: Cabbage\Core\Searcher\ResultExtractor
@@ -49,6 +47,5 @@ services:
         arguments:
             - '@cabbage.searcher.gateway'
             - '@cabbage.searcher.query_translator'
-            - '@cabbage.searcher.target_resolver'
             - '@cabbage.searcher.result_extractor'
             - '@cabbage.cluster'

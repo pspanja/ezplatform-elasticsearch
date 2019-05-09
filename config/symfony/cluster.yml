@@ -16,6 +16,7 @@ services:
     cabbage.cluster:
         class: Cabbage\Core\Cluster
         arguments:
+            - '@cabbage.searcher.target_resolver'
             -
                 - '@cabbage.node.default'
             - []

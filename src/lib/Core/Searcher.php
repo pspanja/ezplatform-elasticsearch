@@ -7,7 +7,6 @@ namespace Cabbage\Core;
 use Cabbage\Core\Searcher\Gateway;
 use Cabbage\Core\Searcher\QueryTranslator;
 use Cabbage\Core\Searcher\ResultExtractor;
-use Cabbage\Core\Searcher\TargetResolver;
 use Cabbage\SPI\LanguageFilter;
 use Cabbage\SPI\Searcher as SPISearcher;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
@@ -28,12 +27,6 @@ final class Searcher extends SPISearcher
      * @var \Cabbage\Core\Searcher\QueryTranslator
      */
     private $queryTranslator;
-
-    /**
-     * @var \Cabbage\Core\Searcher\TargetResolver
-     */
-    private $targetResolver;
-
     /**
      * @var \Cabbage\Core\Searcher\ResultExtractor
      */
@@ -47,20 +40,17 @@ final class Searcher extends SPISearcher
     /**
      * @param \Cabbage\Core\Searcher\Gateway $gateway
      * @param \Cabbage\Core\Searcher\QueryTranslator $queryTranslator
-     * @param \Cabbage\Core\Searcher\TargetResolver $targetResolver
      * @param \Cabbage\Core\Searcher\ResultExtractor $resultExtractor
      * @param \Cabbage\Core\Cluster $cluster
      */
     public function __construct(
         Gateway $gateway,
         QueryTranslator $queryTranslator,
-        TargetResolver $targetResolver,
         ResultExtractor $resultExtractor,
         Cluster $cluster
     ) {
         $this->gateway = $gateway;
         $this->queryTranslator = $queryTranslator;
-        $this->targetResolver = $targetResolver;
         $this->resultExtractor = $resultExtractor;
         $this->cluster = $cluster;
     }
@@ -69,7 +59,7 @@ final class Searcher extends SPISearcher
     {
         $data = $this->gateway->find(
             $this->cluster->selectCoordinatingNode(),
-            $this->targetResolver->resolve($languageFilter),
+            $this->cluster->getSearchTargetForLanguageFilter($languageFilter),
             $this->queryTranslator->translateContentQuery($query)
         );
 
@@ -85,7 +75,7 @@ final class Searcher extends SPISearcher
     {
         $data = $this->gateway->find(
             $this->cluster->selectCoordinatingNode(),
-            $this->targetResolver->resolve($languageFilter),
+            $this->cluster->getSearchTargetForLanguageFilter($languageFilter),
             $this->queryTranslator->translateLocationQuery($query)
         );
 
