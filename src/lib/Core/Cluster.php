@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Cabbage\Core;
 
+use Cabbage\Core\Indexer\DestinationResolver;
 use Cabbage\Core\Searcher\Target;
 use Cabbage\Core\Cluster\TargetResolver;
+use Cabbage\SPI\Document;
 use Cabbage\SPI\Index;
 use Cabbage\SPI\LanguageFilter;
 use Cabbage\SPI\Node;
@@ -20,6 +22,11 @@ final class Cluster
      * @var \Cabbage\Core\Cluster\TargetResolver
      */
     private $targetResolver;
+
+    /**
+     * @var \Cabbage\Core\Indexer\DestinationResolver
+     */
+    private $destinationResolver;
 
     /**
      * @var \Cabbage\SPI\Node[]
@@ -43,6 +50,7 @@ final class Cluster
 
     /**
      * @param \Cabbage\Core\Cluster\TargetResolver $targetResolver
+     * @param \Cabbage\Core\Indexer\DestinationResolver $destinationResolver
      * @param \Cabbage\SPI\Node[] $coordinatingNodes
      * @param \Cabbage\SPI\Index[] $indexByLanguageCode
      * @param \Cabbage\SPI\Index $indexForMainTranslations
@@ -50,12 +58,15 @@ final class Cluster
      */
     public function __construct(
         TargetResolver $targetResolver,
+        DestinationResolver $destinationResolver,
         array $coordinatingNodes,
         array $indexByLanguageCode,
         ?Index $indexForMainTranslations,
         ?Index $defaultIndex
     ) {
         $this->targetResolver = $targetResolver;
+        $this->destinationResolver = $destinationResolver;
+
         $this->coordinatingNodes = $coordinatingNodes;
         $this->defaultIndex = $defaultIndex;
         $this->indexForMainTranslations = $indexForMainTranslations;
@@ -118,6 +129,11 @@ final class Cluster
     public function getCoordinatingNodes(): array
     {
         return $this->coordinatingNodes;
+    }
+
+    public function getIndexForDocument(Document $document): Index
+    {
+        return $this->destinationResolver->resolve($this, $document);
     }
 
     public function getSearchTargetForLanguageFilter(LanguageFilter $languageFilter): Target

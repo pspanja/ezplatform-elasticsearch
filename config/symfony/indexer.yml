@@ -23,8 +23,6 @@ services:
 
     cabbage.indexer.destination_resolver:
         class: Cabbage\Core\Indexer\DestinationResolver
-        arguments:
-            - '@cabbage.cluster'
 
     cabbage.indexer.document_serializer.field_value_mapper.visitor.boolean:
         class: Cabbage\Core\Indexer\DocumentSerializer\FieldValueMapper\Visitor\Boolean
@@ -65,5 +63,4 @@ services:
             - '@cabbage.indexer.gateway'
             - '@cabbage.indexer.document_builder'
             - '@cabbage.indexer.document_serializer'
-            - '@cabbage.indexer.destination_resolver'
             - '@cabbage.cluster'
