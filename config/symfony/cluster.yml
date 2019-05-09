@@ -13,10 +13,13 @@ services:
             - '@cabbage.node.default'
             - 'index'
 
+    cabbage.cluster.target_resolver:
+        class: Cabbage\Core\Cluster\TargetResolver
+
     cabbage.cluster:
         class: Cabbage\Core\Cluster
         arguments:
-            - '@cabbage.searcher.target_resolver'
+            - '@cabbage.cluster.target_resolver'
             -
                 - '@cabbage.node.default'
             - []

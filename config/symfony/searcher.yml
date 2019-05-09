@@ -31,9 +31,6 @@ services:
         arguments:
             - '@cabbage.searcher.query_translator.criterion.converter'
 
-    cabbage.searcher.target_resolver:
-        class: Cabbage\Core\Searcher\TargetResolver
-
     cabbage.searcher.result_extractor:
         class: Cabbage\Core\Searcher\ResultExtractor
 

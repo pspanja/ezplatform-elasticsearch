@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core;
 
 use Cabbage\Core\Searcher\Target;
-use Cabbage\Core\Searcher\TargetResolver;
+use Cabbage\Core\Cluster\TargetResolver;
 use Cabbage\SPI\Index;
 use Cabbage\SPI\LanguageFilter;
 use Cabbage\SPI\Node;
@@ -17,7 +17,7 @@ use RuntimeException;
 final class Cluster
 {
     /**
-     * @var \Cabbage\Core\Searcher\TargetResolver
+     * @var \Cabbage\Core\Cluster\TargetResolver
      */
     private $targetResolver;
 
@@ -42,7 +42,7 @@ final class Cluster
     private $defaultIndex;
 
     /**
-     * @param \Cabbage\Core\Searcher\TargetResolver $targetResolver
+     * @param \Cabbage\Core\Cluster\TargetResolver $targetResolver
      * @param \Cabbage\SPI\Node[] $coordinatingNodes
      * @param \Cabbage\SPI\Index[] $indexByLanguageCode
      * @param \Cabbage\SPI\Index $indexForMainTranslations

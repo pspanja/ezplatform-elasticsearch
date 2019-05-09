@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Searcher;
+namespace Cabbage\Core\Cluster;
 
 use Cabbage\Core\Cluster;
+use Cabbage\Core\Searcher\Target;
 use Cabbage\SPI\Index;
 use Cabbage\SPI\LanguageFilter;
 use RuntimeException;
