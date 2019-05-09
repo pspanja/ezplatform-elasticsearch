@@ -7,6 +7,7 @@ namespace Cabbage\Core\Indexer;
 use Cabbage\Core\Cluster;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Index;
+use RuntimeException;
 
 /**
  * Resolves an index where a document will be indexed.
@@ -26,9 +27,15 @@ final class DestinationResolver
     public function resolve(Document $document): Index
     {
         if ($this->cluster->hasIndexForLanguage($document->languageCode)) {
-            $this->cluster->getIndexForLanguage($document->languageCode);
+            return $this->cluster->getIndexForLanguage($document->languageCode);
         }
 
-        return $this->cluster->getDefaultIndex();
+        if ($this->cluster->hasDefaultIndex()) {
+            return $this->cluster->getDefaultIndex();
+        }
+
+        throw new RuntimeException(
+            "Couldn't resolve index for Document with language code '{$document->languageCode}'"
+        );
     }
 }
