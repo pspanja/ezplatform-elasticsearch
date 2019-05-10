@@ -11,7 +11,7 @@ use RuntimeException;
 /**
  * Resolves an index where a document will be indexed.
  */
-final class DestinationResolver
+final class DocumentIndexResolver
 {
     /**
      * @var \Cabbage\Core\Cluster\Configuration

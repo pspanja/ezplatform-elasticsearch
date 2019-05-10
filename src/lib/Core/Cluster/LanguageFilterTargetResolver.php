@@ -15,7 +15,7 @@ use RuntimeException;
  * @see \Cabbage\Core\Searcher\Target
  * @see \Cabbage\SPI\LanguageFilter
  */
-final class TargetResolver
+final class LanguageFilterTargetResolver
 {
     /**
      * @var \Cabbage\Core\Cluster\Configuration

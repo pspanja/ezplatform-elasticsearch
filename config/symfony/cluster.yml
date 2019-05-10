@@ -22,13 +22,13 @@ services:
             - ~
             - '@cabbage.index.default'
 
-    cabbage.cluster.target_resolver:
-        class: Cabbage\Core\Cluster\TargetResolver
+    cabbage.cluster.language_filter_target_resolver:
+        class: Cabbage\Core\Cluster\LanguageFilterTargetResolver
         arguments:
             - '@cabbage.cluster.configuration'
 
-    cabbage.cluster.destination_resolver:
-        class: Cabbage\Core\Cluster\DestinationResolver
+    cabbage.cluster.document_index_resolver:
+        class: Cabbage\Core\Cluster\DocumentIndexResolver
         arguments:
             - '@cabbage.cluster.configuration'
 
@@ -40,6 +40,6 @@ services:
     cabbage.cluster:
         class: Cabbage\Core\Cluster
         arguments:
-            - '@cabbage.cluster.target_resolver'
-            - '@cabbage.cluster.destination_resolver'
+            - '@cabbage.cluster.language_filter_target_resolver'
+            - '@cabbage.cluster.document_index_resolver'
             - '@cabbage.cluster.coordinating_node_selector'
