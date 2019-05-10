@@ -33,7 +33,7 @@ final class TargetResolver
 
         if (empty($indices)) {
             throw new RuntimeException(
-                'No indices could be resolved for the given LanguageFilter'
+                'No indices are configured for the given LanguageFilter'
             );
         }
 
@@ -117,7 +117,7 @@ final class TargetResolver
         }
 
         throw new RuntimeException(
-            "Couldn't resolve index for language code '{$languageCode}'"
+            "No index is configured for language code '{$languageCode}'"
         );
     }
 }

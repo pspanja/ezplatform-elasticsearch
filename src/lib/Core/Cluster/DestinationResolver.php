@@ -34,7 +34,7 @@ final class DestinationResolver
         }
 
         throw new RuntimeException(
-            "Couldn't resolve index for Document with language code '{$document->languageCode}'"
+            "No index is configured for Document with language code '{$document->languageCode}'"
         );
     }
 }
