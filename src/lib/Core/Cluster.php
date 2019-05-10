@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core;
 
+use Cabbage\Core\Cluster\CoordinatingNodeSelector;
 use Cabbage\Core\Cluster\DestinationResolver;
 use Cabbage\Core\Searcher\Target;
 use Cabbage\Core\Cluster\TargetResolver;
@@ -29,23 +30,23 @@ final class Cluster
     private $destinationResolver;
 
     /**
-     * @var \Cabbage\SPI\Node[]
+     * @var \Cabbage\Core\Cluster\CoordinatingNodeSelector
      */
-    private $coordinatingNodes;
+    private $coordinatingNodeSelector;
 
     /**
      * @param \Cabbage\Core\Cluster\TargetResolver $targetResolver
      * @param \Cabbage\Core\Cluster\DestinationResolver $destinationResolver
-     * @param \Cabbage\SPI\Node[] $coordinatingNodes
+     * @param \Cabbage\Core\Cluster\CoordinatingNodeSelector $coordinatingNodeSelector
      */
     public function __construct(
         TargetResolver $targetResolver,
         DestinationResolver $destinationResolver,
-        array $coordinatingNodes
+        CoordinatingNodeSelector $coordinatingNodeSelector
     ) {
         $this->targetResolver = $targetResolver;
         $this->destinationResolver = $destinationResolver;
-        $this->coordinatingNodes = $coordinatingNodes;
+        $this->coordinatingNodeSelector = $coordinatingNodeSelector;
     }
 
     public function getIndexForDocument(Document $document): Index
@@ -60,12 +61,6 @@ final class Cluster
 
     public function selectCoordinatingNode(): Node
     {
-        if (empty($this->coordinatingNodes)) {
-            throw new RuntimeException(
-                'No coordinating Nodes are defined'
-            );
-        }
-
-        return $this->coordinatingNodes[array_rand($this->coordinatingNodes, 1)];
+        return $this->coordinatingNodeSelector->select();
     }
 }

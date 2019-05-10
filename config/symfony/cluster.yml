@@ -32,10 +32,14 @@ services:
         arguments:
             - '@cabbage.cluster.configuration'
 
+    cabbage.cluster.coordinating_node_selector:
+        class: Cabbage\Core\Cluster\CoordinatingNodeSelector
+        arguments:
+            - '@cabbage.cluster.configuration'
+            -
     cabbage.cluster:
         class: Cabbage\Core\Cluster
         arguments:
             - '@cabbage.cluster.target_resolver'
             - '@cabbage.cluster.destination_resolver'
-            -
-                - '@cabbage.node.default'
+            - '@cabbage.cluster.coordinating_node_selector'
