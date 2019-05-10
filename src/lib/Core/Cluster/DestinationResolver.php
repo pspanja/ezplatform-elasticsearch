@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Cluster;
 
-use Cabbage\Core\Cluster;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Index;
 use RuntimeException;
@@ -14,14 +13,24 @@ use RuntimeException;
  */
 final class DestinationResolver
 {
-    public function resolve(Cluster $cluster, Document $document): Index
+    /**
+     * @var \Cabbage\Core\Cluster\Configuration
+     */
+    private $configuration;
+
+    public function __construct(Configuration $configuration)
     {
-        if ($cluster->hasIndexForLanguage($document->languageCode)) {
-            return $cluster->getIndexForLanguage($document->languageCode);
+        $this->configuration = $configuration;
+    }
+
+    public function resolve(Document $document): Index
+    {
+        if ($this->configuration->hasIndexForLanguage($document->languageCode)) {
+            return $this->configuration->getIndexForLanguage($document->languageCode);
         }
 
-        if ($cluster->hasDefaultIndex()) {
-            return $cluster->getDefaultIndex();
+        if ($this->configuration->hasDefaultIndex()) {
+            return $this->configuration->getDefaultIndex();
         }
 
         throw new RuntimeException(

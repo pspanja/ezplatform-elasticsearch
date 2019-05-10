@@ -13,11 +13,24 @@ services:
             - '@cabbage.node.default'
             - 'index'
 
+    cabbage.cluster.configuration:
+        class: Cabbage\Core\Cluster\Configuration
+        arguments:
+            -
+                - '@cabbage.node.default'
+            - []
+            - ~
+            - '@cabbage.index.default'
+
     cabbage.cluster.target_resolver:
         class: Cabbage\Core\Cluster\TargetResolver
+        arguments:
+            - '@cabbage.cluster.configuration'
 
     cabbage.cluster.destination_resolver:
         class: Cabbage\Core\Cluster\DestinationResolver
+        arguments:
+            - '@cabbage.cluster.configuration'
 
     cabbage.cluster:
         class: Cabbage\Core\Cluster
@@ -26,6 +39,3 @@ services:
             - '@cabbage.cluster.destination_resolver'
             -
                 - '@cabbage.node.default'
-            - []
-            - ~
-            - '@cabbage.index.default'
