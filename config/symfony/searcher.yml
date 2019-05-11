@@ -31,6 +31,11 @@ services:
         arguments:
             - '@cabbage.searcher.query_translator.criterion.converter'
 
+    cabbage.searcher.language_filter_target_resolver:
+        class: Cabbage\Core\Searcher\LanguageFilterTargetResolver
+        arguments:
+            - '@cabbage.cluster.configuration'
+
     cabbage.searcher.result_extractor:
         class: Cabbage\Core\Searcher\ResultExtractor
 
@@ -43,6 +48,7 @@ services:
         class: Cabbage\Core\Searcher
         arguments:
             - '@cabbage.searcher.gateway'
+            - '@cabbage.searcher.language_filter_target_resolver'
             - '@cabbage.searcher.query_translator'
             - '@cabbage.searcher.result_extractor'
             - '@cabbage.cluster'

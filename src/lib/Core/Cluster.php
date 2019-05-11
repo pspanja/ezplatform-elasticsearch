@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace Cabbage\Core;
 
 use Cabbage\Core\Cluster\CoordinatingNodeSelector;
-use Cabbage\Core\Searcher\Target;
-use Cabbage\Core\Cluster\LanguageFilterTargetResolver;
-use Cabbage\SPI\LanguageFilter;
 use Cabbage\SPI\Node;
 
 /**
@@ -16,30 +13,16 @@ use Cabbage\SPI\Node;
 final class Cluster
 {
     /**
-     * @var \Cabbage\Core\Cluster\LanguageFilterTargetResolver
-     */
-    private $languageFilterTargetResolver;
-
-    /**
      * @var \Cabbage\Core\Cluster\CoordinatingNodeSelector
      */
     private $coordinatingNodeSelector;
 
     /**
-     * @param \Cabbage\Core\Cluster\LanguageFilterTargetResolver $languageFilterTargetResolver
      * @param \Cabbage\Core\Cluster\CoordinatingNodeSelector $coordinatingNodeSelector
      */
-    public function __construct(
-        LanguageFilterTargetResolver $languageFilterTargetResolver,
-        CoordinatingNodeSelector $coordinatingNodeSelector
-    ) {
-        $this->languageFilterTargetResolver = $languageFilterTargetResolver;
-        $this->coordinatingNodeSelector = $coordinatingNodeSelector;
-    }
-
-    public function getSearchTargetForLanguageFilter(LanguageFilter $languageFilter): Target
+    public function __construct(CoordinatingNodeSelector $coordinatingNodeSelector)
     {
-        return $this->languageFilterTargetResolver->resolve($languageFilter);
+        $this->coordinatingNodeSelector = $coordinatingNodeSelector;
     }
 
     public function selectCoordinatingNode(): Node

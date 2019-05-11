@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core;
 
 use Cabbage\Core\Searcher\Gateway;
+use Cabbage\Core\Searcher\LanguageFilterTargetResolver;
 use Cabbage\Core\Searcher\QueryTranslator;
 use Cabbage\Core\Searcher\ResultExtractor;
 use Cabbage\SPI\LanguageFilter;
@@ -24,9 +25,15 @@ final class Searcher extends SPISearcher
     private $gateway;
 
     /**
+     * @var \Cabbage\Core\Searcher\LanguageFilterTargetResolver
+     */
+    private $languageFilterTargetResolver;
+
+    /**
      * @var \Cabbage\Core\Searcher\QueryTranslator
      */
     private $queryTranslator;
+
     /**
      * @var \Cabbage\Core\Searcher\ResultExtractor
      */
@@ -39,17 +46,20 @@ final class Searcher extends SPISearcher
 
     /**
      * @param \Cabbage\Core\Searcher\Gateway $gateway
+     * @param \Cabbage\Core\Searcher\LanguageFilterTargetResolver $languageFilterTargetResolver
      * @param \Cabbage\Core\Searcher\QueryTranslator $queryTranslator
      * @param \Cabbage\Core\Searcher\ResultExtractor $resultExtractor
      * @param \Cabbage\Core\Cluster $cluster
      */
     public function __construct(
         Gateway $gateway,
+        LanguageFilterTargetResolver $languageFilterTargetResolver,
         QueryTranslator $queryTranslator,
         ResultExtractor $resultExtractor,
         Cluster $cluster
     ) {
         $this->gateway = $gateway;
+        $this->languageFilterTargetResolver = $languageFilterTargetResolver;
         $this->queryTranslator = $queryTranslator;
         $this->resultExtractor = $resultExtractor;
         $this->cluster = $cluster;
@@ -59,7 +69,7 @@ final class Searcher extends SPISearcher
     {
         $data = $this->gateway->find(
             $this->cluster->selectCoordinatingNode(),
-            $this->cluster->getSearchTargetForLanguageFilter($languageFilter),
+            $this->languageFilterTargetResolver->resolve($languageFilter),
             $this->queryTranslator->translateContentQuery($query)
         );
 
@@ -75,7 +85,7 @@ final class Searcher extends SPISearcher
     {
         $data = $this->gateway->find(
             $this->cluster->selectCoordinatingNode(),
-            $this->cluster->getSearchTargetForLanguageFilter($languageFilter),
+            $this->languageFilterTargetResolver->resolve($languageFilter),
             $this->queryTranslator->translateLocationQuery($query)
         );
 

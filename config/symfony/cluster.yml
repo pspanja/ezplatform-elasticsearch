@@ -22,11 +22,6 @@ services:
             - ~
             - '@cabbage.index.default'
 
-    cabbage.cluster.language_filter_target_resolver:
-        class: Cabbage\Core\Cluster\LanguageFilterTargetResolver
-        arguments:
-            - '@cabbage.cluster.configuration'
-
     cabbage.cluster.coordinating_node_selector:
         class: Cabbage\Core\Cluster\CoordinatingNodeSelector
         arguments:
@@ -35,5 +30,4 @@ services:
     cabbage.cluster:
         class: Cabbage\Core\Cluster
         arguments:
-            - '@cabbage.cluster.language_filter_target_resolver'
             - '@cabbage.cluster.coordinating_node_selector'
