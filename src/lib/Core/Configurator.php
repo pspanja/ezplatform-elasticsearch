@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Cabbage\Core;
 
-use Cabbage\Core\Http\Client;
-use Cabbage\Core\Http\Message;
-use Cabbage\Core\Http\Response;
+use Cabbage\Core\HttpClient\Client;
+use Cabbage\Core\HttpClient\Message;
+use Cabbage\Core\HttpClient\Response;
 use Cabbage\SPI\Node;
 use RuntimeException;
 
@@ -17,12 +17,12 @@ use RuntimeException;
 final class Configurator
 {
     /**
-     * @var \Cabbage\Core\Http\Client
+     * @var \Cabbage\Core\HttpClient\Client
      */
     private $client;
 
     /**
-     * @param \Cabbage\Core\Http\Client $client
+     * @param \Cabbage\Core\HttpClient\Client $client
      */
     public function __construct(Client $client)
     {
@@ -33,7 +33,7 @@ final class Configurator
      * @param \Cabbage\SPI\Node $node
      * @param string $index
      *
-     * @return \Cabbage\Core\Http\Response
+     * @return \Cabbage\Core\HttpClient\Response
      */
     public function createIndex(Node $node, string $index): Response
     {
@@ -85,7 +85,7 @@ final class Configurator
      * @param \Cabbage\SPI\Node $node
      * @param string $index
      *
-     * @return \Cabbage\Core\Http\Response
+     * @return \Cabbage\Core\HttpClient\Response
      */
     public function deleteIndex(Node $node, string $index): Response
     {
@@ -99,7 +99,7 @@ final class Configurator
      * @param string $index
      * @param string $mapping
      *
-     * @return \Cabbage\Core\Http\Response
+     * @return \Cabbage\Core\HttpClient\Response
      */
     public function setMapping(Node $node, string $index, string $mapping): Response
     {

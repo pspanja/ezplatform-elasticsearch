@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Http;
+namespace Cabbage\Core\HttpClient;
 
 use RuntimeException;
 

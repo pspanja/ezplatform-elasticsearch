@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Searcher;
 
-use Cabbage\Core\Http\Client;
-use Cabbage\Core\Http\Message;
+use Cabbage\Core\HttpClient\Client;
+use Cabbage\Core\HttpClient\Message;
 use Cabbage\SPI\Node;
 use RuntimeException;
 
@@ -15,12 +15,12 @@ use RuntimeException;
 final class Gateway
 {
     /**
-     * @var \Cabbage\Core\Http\Client
+     * @var \Cabbage\Core\HttpClient\Client
      */
     private $client;
 
     /**
-     * @param \Cabbage\Core\Http\Client $client
+     * @param \Cabbage\Core\HttpClient\Client $client
      */
     public function __construct(Client $client)
     {

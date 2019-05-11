@@ -9,13 +9,13 @@ imports:
 parameters:
 
 services:
-    cabbage.http.client:
-        class: Cabbage\Core\Http\Client
+    cabbage.http_client:
+        class: Cabbage\Core\HttpClient\Client
 
     cabbage.configurator:
         class: Cabbage\Core\Configurator
         arguments:
-            - '@cabbage.http.client'
+            - '@cabbage.http_client'
 
     cabbage.engine:
         class: Cabbage\Core\Engine

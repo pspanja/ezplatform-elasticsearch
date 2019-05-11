@@ -12,7 +12,7 @@
             <file>./tests/Unit/NodeTest.php</file>
         </testsuite>
         <testsuite name="Core integration tests">
-            <file>./tests/Integration/Core/Http/ClientTest.php</file>
+            <file>./tests/Integration/Core/HttpClient/ClientTest.php</file>
             <file>./tests/Integration/Core/ConfiguratorTest.php</file>
             <file>./tests/Integration/Core/Indexer/GatewayTest.php</file>
             <file>./tests/Integration/Core/Searcher/GatewayTest.php</file>

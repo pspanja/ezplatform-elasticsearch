@@ -20,7 +20,7 @@ services:
     cabbage.searcher.gateway:
         class: Cabbage\Core\Searcher\Gateway
         arguments:
-            - '@cabbage.http.client'
+            - '@cabbage.http_client'
 
     cabbage.searcher:
         class: Cabbage\Core\Searcher

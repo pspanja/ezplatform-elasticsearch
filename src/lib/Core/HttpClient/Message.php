@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Http;
+namespace Cabbage\Core\HttpClient;
 
 /**
  * Represents a HTTP request message.
@@ -38,7 +38,7 @@ final class Message
      *
      * @param string $string
      *
-     * @return \Cabbage\Core\Http\Message
+     * @return \Cabbage\Core\HttpClient\Message
      */
     public static function fromString(string $string): self
     {
@@ -50,7 +50,7 @@ final class Message
      *
      * @param array $hash
      *
-     * @return \Cabbage\Core\Http\Message
+     * @return \Cabbage\Core\HttpClient\Message
      */
     public static function fromHash(array $hash): self
     {

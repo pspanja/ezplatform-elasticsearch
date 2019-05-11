@@ -57,7 +57,7 @@ services:
     cabbage.indexer.gateway:
         class: Cabbage\Core\Indexer\Gateway
         arguments:
-            - '@cabbage.http.client'
+            - '@cabbage.http_client'
 
     cabbage.indexer:
         class: Cabbage\Core\Indexer
