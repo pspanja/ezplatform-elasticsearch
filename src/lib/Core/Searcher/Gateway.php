@@ -6,7 +6,6 @@ namespace Cabbage\Core\Searcher;
 
 use Cabbage\Core\Http\Client;
 use Cabbage\Core\Http\Message;
-use Cabbage\SPI\Index;
 use Cabbage\SPI\Node;
 use RuntimeException;
 
@@ -37,15 +36,14 @@ final class Gateway
      */
     public function find(Node $node, Target $target, array $query): string
     {
-        $nodeUrl = $node->getUrl();
         $indices = $target->getIndices();
-        $url = "{$nodeUrl}/{$indices}/_search";
+        $url = $node->getUrl(). '/' . $indices . '/_search';
 
         $response = $this->client->get(Message::fromHash($query), $url);
 
         if ($response->status !== 200) {
             throw new RuntimeException(
-                "Invalid response status {$response->status}"
+                'Invalid response status ' . $response->status
             );
         }
 
