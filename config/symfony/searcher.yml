@@ -1,31 +1,9 @@
+imports:
+    - { resource: searcher/criterion_converters.yml }
+
 parameters:
 
 services:
-    cabbage.searcher.query_translator.criterion.visitor.content_id:
-        class: Cabbage\Core\Searcher\QueryTranslator\Criterion\Visitor\ContentId
-
-    cabbage.searcher.query_translator.criterion.visitor.document_type:
-        class: Cabbage\Core\Searcher\QueryTranslator\Criterion\Visitor\DocumentType
-
-    cabbage.searcher.query_translator.criterion.visitor.match_all:
-        class: Cabbage\Core\Searcher\QueryTranslator\Criterion\Visitor\MatchAll
-
-    cabbage.searcher.query_translator.criterion.visitor.match_none:
-        class: Cabbage\Core\Searcher\QueryTranslator\Criterion\Visitor\MatchNone
-
-    cabbage.searcher.query_translator.criterion.visitor.raw_field:
-        class: Cabbage\Core\Searcher\QueryTranslator\Criterion\Visitor\RawField
-
-    cabbage.searcher.query_translator.criterion.converter:
-        class: Cabbage\Core\Searcher\QueryTranslator\Criterion\Converter
-        arguments:
-            -
-                - '@cabbage.searcher.query_translator.criterion.visitor.content_id'
-                - '@cabbage.searcher.query_translator.criterion.visitor.document_type'
-                - '@cabbage.searcher.query_translator.criterion.visitor.match_all'
-                - '@cabbage.searcher.query_translator.criterion.visitor.match_none'
-                - '@cabbage.searcher.query_translator.criterion.visitor.raw_field'
-
     cabbage.searcher.query_translator:
         class: Cabbage\Core\Searcher\QueryTranslator
         arguments:
