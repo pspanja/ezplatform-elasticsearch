@@ -11,7 +11,7 @@ use Cabbage\SPI\Document\Field;
 use Cabbage\SPI\Document\Field\Type\Identifier;
 
 /**
- * Serializes an array of Document objects into a JSON string for bulk indexing.
+ * Serializes a document into a JSON string for bulk indexing.
  *
  * @see \Cabbage\SPI\Document
  */
