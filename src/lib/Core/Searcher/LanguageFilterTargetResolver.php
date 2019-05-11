@@ -61,7 +61,9 @@ final class LanguageFilterTargetResolver
      */
     private function resolveWithIndexForMainTranslations(LanguageFilter $languageFilter): array
     {
-        $indices = $this->getIndicesByPrioritizedTranslationLanguageCodes($languageFilter);
+        $indices = $this->getIndicesByLanguageCodes(
+            $languageFilter->getPrioritizedTranslationsLanguageCodes()
+        );
 
         if (empty($indices) || $languageFilter->useMainTranslationFallback()) {
             $indices[] = $this->configuration->getIndexForMainTranslations();
@@ -77,7 +79,7 @@ final class LanguageFilterTargetResolver
      */
     private function resolveWithoutIndexForMainTranslations(LanguageFilter $languageFilter): array
     {
-        if ($languageFilter->useMainTranslationFallback() || !$languageFilter->hasPrioritizedTranslationLanguageCodes()) {
+        if ($languageFilter->useMainTranslationFallback() || !$languageFilter->hasPrioritizedTranslationsLanguageCodes()) {
             $indices = $this->configuration->getIndicesForAllLanguages();
 
             if ($this->configuration->hasDefaultIndex()) {
@@ -87,19 +89,21 @@ final class LanguageFilterTargetResolver
             return $indices;
         }
 
-        return $this->getIndicesByPrioritizedTranslationLanguageCodes($languageFilter);
+        return $this->getIndicesByLanguageCodes(
+            $languageFilter->getPrioritizedTranslationsLanguageCodes()
+        );
     }
 
     /**
-     * @param \Cabbage\SPI\LanguageFilter $languageFilter
+     * @param string[] $languageCodes
      *
      * @return \Cabbage\SPI\Index[]
      */
-    private function getIndicesByPrioritizedTranslationLanguageCodes(LanguageFilter $languageFilter): array
+    private function getIndicesByLanguageCodes(array $languageCodes): array
     {
         $indices = [];
 
-        foreach ($languageFilter->getPrioritizedTranslationLanguageCodes() as $languageCode) {
+        foreach ($languageCodes as $languageCode) {
             $indices[] = $this->getIndexForLanguage($languageCode);
         }
 
