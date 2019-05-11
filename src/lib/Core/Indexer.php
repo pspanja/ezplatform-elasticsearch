@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core;
 
 use Cabbage\Core\Indexer\DocumentBuilder;
+use Cabbage\Core\Indexer\DocumentIndexResolver;
 use Cabbage\Core\Indexer\DocumentSerializer;
 use Cabbage\Core\Indexer\Gateway;
 use Cabbage\SPI\Document;
@@ -26,6 +27,11 @@ final class Indexer extends SPIIndexer
     private $documentBuilder;
 
     /**
+     * @var \Cabbage\Core\Indexer\DocumentIndexResolver
+     */
+    private $documentIndexResolver;
+
+    /**
      * @var \Cabbage\Core\Indexer\DocumentSerializer
      */
     private $documentSerializer;
@@ -38,17 +44,20 @@ final class Indexer extends SPIIndexer
     /**
      * @param \Cabbage\Core\Indexer\Gateway $gateway
      * @param \Cabbage\Core\Indexer\DocumentBuilder $documentBuilder
+     * @param \Cabbage\Core\Indexer\DocumentIndexResolver $documentIndexResolver
      * @param \Cabbage\Core\Indexer\DocumentSerializer $documentSerializer
      * @param \Cabbage\Core\Cluster $cluster
      */
     public function __construct(
         Gateway $gateway,
         DocumentBuilder $documentBuilder,
+        DocumentIndexResolver $documentIndexResolver,
         DocumentSerializer $documentSerializer,
         Cluster $cluster
     ) {
         $this->gateway = $gateway;
         $this->documentBuilder = $documentBuilder;
+        $this->documentIndexResolver = $documentIndexResolver;
         $this->documentSerializer = $documentSerializer;
         $this->cluster = $cluster;
     }
@@ -131,7 +140,7 @@ final class Indexer extends SPIIndexer
      */
     private function getActionAndMetaData(Document $document): string
     {
-        $index = $this->cluster->getIndexForDocument($document);
+        $index = $this->documentIndexResolver->resolve($document);
 
         $data = [
             'index' => [

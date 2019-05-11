@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cabbage\Core\Cluster;
+namespace Cabbage\Core\Indexer;
 
+use Cabbage\Core\Cluster\Configuration;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Index;
 use RuntimeException;
