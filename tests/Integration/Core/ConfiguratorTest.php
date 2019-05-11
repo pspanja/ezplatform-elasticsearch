@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration\Core;
 
-use Cabbage\SPI\Index;
 use Cabbage\SPI\Node;
 use function file_get_contents;
 
 class ConfiguratorTest extends BaseTest
 {
     /**
-     * @var \Cabbage\SPI\Index
+     * @var \Cabbage\SPI\Node
+     */
+    private static $node;
+
+    /**
+     * @var string
      */
     private static $index;
 
@@ -25,12 +29,12 @@ class ConfiguratorTest extends BaseTest
      */
     public static function setUpBeforeClass(): void
     {
-        $node = Node::fromDsn('http://localhost:9200');
-        self::$index = new Index($node, 'configurator_test');
+        self::$node = Node::fromDsn('http://localhost:9200');
+        self::$index = 'configurator_test';
         self::$configurator = self::getContainer()->get('cabbage.configurator');
 
-        if (self::$configurator->hasIndex(self::$index)) {
-            self::$configurator->deleteIndex(self::$index);
+        if (self::$configurator->hasIndex(self::$node, self::$index)) {
+            self::$configurator->deleteIndex(self::$node, self::$index);
         }
     }
 
@@ -39,7 +43,7 @@ class ConfiguratorTest extends BaseTest
      */
     public function testDoesNotHaveIndexUntilCreated(): void
     {
-        $this->assertFalse(self::$configurator->hasIndex(self::$index));
+        $this->assertFalse(self::$configurator->hasIndex(self::$node, self::$index));
     }
 
     /**
@@ -48,7 +52,7 @@ class ConfiguratorTest extends BaseTest
      */
     public function testCreateIndex(): void
     {
-        $response = self::$configurator->createIndex(self::$index);
+        $response = self::$configurator->createIndex(self::$node, self::$index);
 
         $this->assertEquals(200, $response->status);
     }
@@ -59,7 +63,7 @@ class ConfiguratorTest extends BaseTest
      */
     public function testHasIndexAfterCreated(): void
     {
-        $this->assertTrue(self::$configurator->hasIndex(self::$index));
+        $this->assertTrue(self::$configurator->hasIndex(self::$node, self::$index));
     }
 
     /**
@@ -70,7 +74,7 @@ class ConfiguratorTest extends BaseTest
     {
         $mapping = file_get_contents(__DIR__ . '/../../../config/elasticsearch/mapping.json');
 
-        $response = self::$configurator->setMapping(self::$index, $mapping);
+        $response = self::$configurator->setMapping(self::$node, self::$index, $mapping);
 
         $this->assertEquals(200, $response->status);
     }
@@ -81,7 +85,7 @@ class ConfiguratorTest extends BaseTest
      */
     public function testDeleteIndex(): void
     {
-        $response = self::$configurator->deleteIndex(self::$index);
+        $response = self::$configurator->deleteIndex(self::$node, self::$index);
 
         $this->assertEquals(200, $response->status);
     }
@@ -92,6 +96,6 @@ class ConfiguratorTest extends BaseTest
      */
     public function testDoesNotHaveIndexAfterDeleted(): void
     {
-        $this->assertFalse(self::$configurator->hasIndex(self::$index));
+        $this->assertFalse(self::$configurator->hasIndex(self::$node, self::$index));
     }
 }

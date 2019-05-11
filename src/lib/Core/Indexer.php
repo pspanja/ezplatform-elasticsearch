@@ -144,7 +144,7 @@ final class Indexer extends SPIIndexer
 
         $data = [
             'index' => [
-                '_index' => $index->name,
+                '_index' => $index,
                 '_id' => $document->id,
             ],
         ];

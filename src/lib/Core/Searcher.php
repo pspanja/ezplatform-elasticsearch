@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core;
 
 use Cabbage\Core\Searcher\Gateway;
-use Cabbage\Core\Searcher\LanguageFilterTargetResolver;
+use Cabbage\Core\Searcher\LanguageFilterIndicesResolver;
 use Cabbage\Core\Searcher\QueryTranslator;
 use Cabbage\Core\Searcher\ResultExtractor;
 use Cabbage\SPI\LanguageFilter;
@@ -25,9 +25,9 @@ final class Searcher extends SPISearcher
     private $gateway;
 
     /**
-     * @var \Cabbage\Core\Searcher\LanguageFilterTargetResolver
+     * @var \Cabbage\Core\Searcher\LanguageFilterIndicesResolver
      */
-    private $languageFilterTargetResolver;
+    private $languageFilterIndicesResolver;
 
     /**
      * @var \Cabbage\Core\Searcher\QueryTranslator
@@ -46,20 +46,20 @@ final class Searcher extends SPISearcher
 
     /**
      * @param \Cabbage\Core\Searcher\Gateway $gateway
-     * @param \Cabbage\Core\Searcher\LanguageFilterTargetResolver $languageFilterTargetResolver
+     * @param \Cabbage\Core\Searcher\LanguageFilterIndicesResolver $languageFilterIndicesResolver
      * @param \Cabbage\Core\Searcher\QueryTranslator $queryTranslator
      * @param \Cabbage\Core\Searcher\ResultExtractor $resultExtractor
      * @param \Cabbage\Core\Cluster $cluster
      */
     public function __construct(
         Gateway $gateway,
-        LanguageFilterTargetResolver $languageFilterTargetResolver,
+        LanguageFilterIndicesResolver $languageFilterIndicesResolver,
         QueryTranslator $queryTranslator,
         ResultExtractor $resultExtractor,
         Cluster $cluster
     ) {
         $this->gateway = $gateway;
-        $this->languageFilterTargetResolver = $languageFilterTargetResolver;
+        $this->languageFilterIndicesResolver = $languageFilterIndicesResolver;
         $this->queryTranslator = $queryTranslator;
         $this->resultExtractor = $resultExtractor;
         $this->cluster = $cluster;
@@ -69,7 +69,7 @@ final class Searcher extends SPISearcher
     {
         $data = $this->gateway->find(
             $this->cluster->selectCoordinatingNode(),
-            $this->languageFilterTargetResolver->resolve($languageFilter),
+            $this->languageFilterIndicesResolver->resolve($languageFilter),
             $this->queryTranslator->translateContentQuery($query)
         );
 
@@ -85,7 +85,7 @@ final class Searcher extends SPISearcher
     {
         $data = $this->gateway->find(
             $this->cluster->selectCoordinatingNode(),
-            $this->languageFilterTargetResolver->resolve($languageFilter),
+            $this->languageFilterIndicesResolver->resolve($languageFilter),
             $this->queryTranslator->translateLocationQuery($query)
         );
 

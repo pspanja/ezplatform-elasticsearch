@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration\Core\Indexer;
 
-use Cabbage\SPI\Index;
 use Cabbage\SPI\Node;
 use Cabbage\Tests\Integration\Core\BaseTest;
 use function file_get_contents;
@@ -12,7 +11,12 @@ use function file_get_contents;
 class GatewayTest extends BaseTest
 {
     /**
-     * @var \Cabbage\SPI\Index
+     * @var \Cabbage\SPI\Node
+     */
+    private static $node;
+
+    /**
+     * @var string
      */
     private static $index;
 
@@ -26,19 +30,19 @@ class GatewayTest extends BaseTest
      */
     public static function setUpBeforeClass(): void
     {
-        $node = Node::fromDsn('http://localhost:9200');
-        self::$index = new Index($node, 'indexer_gateway_test');
+        self::$node = Node::fromDsn('http://localhost:9200');
+        self::$index = 'indexer_gateway_test';
         self::$gateway = self::getContainer()->get('cabbage.indexer.gateway');
         $configurator = self::getContainer()->get('cabbage.configurator');
 
-        if ($configurator->hasIndex(self::$index)) {
-            $configurator->deleteIndex(self::$index);
+        if ($configurator->hasIndex(self::$node, self::$index)) {
+            $configurator->deleteIndex(self::$node, self::$index);
         }
 
         $mapping = file_get_contents(__DIR__ . '/../../../../config/elasticsearch/mapping.json');
 
-        $configurator->createIndex(self::$index);
-        $configurator->setMapping(self::$index, $mapping);
+        $configurator->createIndex(self::$node, self::$index);
+        $configurator->setMapping(self::$node, self::$index, $mapping);
     }
 
     /**
@@ -48,7 +52,7 @@ class GatewayTest extends BaseTest
      */
     public function testRefresh(): void
     {
-        self::$gateway->refresh(self::$index->node);
+        self::$gateway->refresh(self::$node);
 
         $this->addToAssertionCount(1);
     }
@@ -63,15 +67,15 @@ class GatewayTest extends BaseTest
     {
         $index = self::$index;
         $payload = <<<EOD
-{"index":{"_index":"{$index->name}","_id":"a_1"}}
+{"index":{"_index":"{$index}","_id":"a_1"}}
 {"type_identifier":"type_a","field_keyword":"value"}
-{"index":{"_index":"{$index->name}","_id":"b_1"}}
+{"index":{"_index":"{$index}","_id":"b_1"}}
 {"type_identifier":"type_b","field_keyword":"value"}
 
 EOD;
 
-        self::$gateway->index(self::$index->node, $payload);
-        self::$gateway->refresh(self::$index->node);
+        self::$gateway->index(self::$node, $payload);
+        self::$gateway->refresh(self::$node);
 
         $this->addToAssertionCount(1);
     }
@@ -82,8 +86,8 @@ EOD;
      */
     public function testPurge(): void
     {
-        self::$gateway->purge(self::$index->node);
-        self::$gateway->refresh(self::$index->node);
+        self::$gateway->purge(self::$node);
+        self::$gateway->refresh(self::$node);
 
         $this->addToAssertionCount(1);
     }

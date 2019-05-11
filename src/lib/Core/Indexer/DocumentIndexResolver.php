@@ -6,7 +6,6 @@ namespace Cabbage\Core\Indexer;
 
 use Cabbage\Core\Cluster\Configuration;
 use Cabbage\SPI\Document;
-use Cabbage\SPI\Index;
 use RuntimeException;
 
 /**
@@ -24,7 +23,7 @@ final class DocumentIndexResolver
         $this->configuration = $configuration;
     }
 
-    public function resolve(Document $document): Index
+    public function resolve(Document $document): string
     {
         if ($this->configuration->hasIndexForLanguage($document->languageCode)) {
             return $this->configuration->getIndexForLanguage($document->languageCode);

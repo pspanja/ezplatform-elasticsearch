@@ -5,17 +5,15 @@ declare(strict_types=1);
 namespace Cabbage\Core\Searcher;
 
 use Cabbage\Core\Cluster\Configuration;
-use Cabbage\SPI\Index;
 use Cabbage\SPI\LanguageFilter;
 use RuntimeException;
 
 /**
- * Matches a LanguageFilter to a Target.
+ * Matches a LanguageFilter to an array of indices.
  *
- * @see \Cabbage\Core\Searcher\Target
  * @see \Cabbage\SPI\LanguageFilter
  */
-final class LanguageFilterTargetResolver
+final class LanguageFilterIndicesResolver
 {
     /**
      * @var \Cabbage\Core\Cluster\Configuration
@@ -27,7 +25,12 @@ final class LanguageFilterTargetResolver
         $this->configuration = $configuration;
     }
 
-    public function resolve(LanguageFilter $languageFilter): Target
+    /**
+     * @param \Cabbage\SPI\LanguageFilter $languageFilter
+     *
+     * @return string[]
+     */
+    public function resolve(LanguageFilter $languageFilter): array
     {
         $indices = $this->resolveIndices($languageFilter);
 
@@ -37,13 +40,13 @@ final class LanguageFilterTargetResolver
             );
         }
 
-        return new Target($indices);
+        return $indices;
     }
 
     /**
      * @param \Cabbage\SPI\LanguageFilter $languageFilter
      *
-     * @return \Cabbage\SPI\Index[]
+     * @return string[]
      */
     private function resolveIndices(LanguageFilter $languageFilter): array
     {
@@ -57,7 +60,7 @@ final class LanguageFilterTargetResolver
     /**
      * @param \Cabbage\SPI\LanguageFilter $languageFilter
      *
-     * @return \Cabbage\SPI\Index[]
+     * @return string[]
      */
     private function resolveWithIndexForMainTranslations(LanguageFilter $languageFilter): array
     {
@@ -75,18 +78,12 @@ final class LanguageFilterTargetResolver
     /**
      * @param \Cabbage\SPI\LanguageFilter $languageFilter
      *
-     * @return \Cabbage\SPI\Index[]
+     * @return string[]
      */
     private function resolveWithoutIndexForMainTranslations(LanguageFilter $languageFilter): array
     {
         if ($languageFilter->useMainTranslationFallback() || !$languageFilter->hasPrioritizedTranslationsLanguageCodes()) {
-            $indices = $this->configuration->getIndicesForAllLanguages();
-
-            if ($this->configuration->hasDefaultIndex()) {
-                $indices[] = $this->configuration->getDefaultIndex();
-            }
-
-            return $indices;
+            return $this->configuration->getAllIndices();
         }
 
         return $this->getIndicesByLanguageCodes(
@@ -97,7 +94,7 @@ final class LanguageFilterTargetResolver
     /**
      * @param string[] $languageCodes
      *
-     * @return \Cabbage\SPI\Index[]
+     * @return string[]
      */
     private function getIndicesByLanguageCodes(array $languageCodes): array
     {
@@ -110,7 +107,7 @@ final class LanguageFilterTargetResolver
         return $indices;
     }
 
-    private function getIndexForLanguage(string $languageCode): Index
+    private function getIndexForLanguage(string $languageCode): string
     {
         if ($this->configuration->hasIndexForLanguage($languageCode)) {
             return $this->configuration->getIndexForLanguage($languageCode);

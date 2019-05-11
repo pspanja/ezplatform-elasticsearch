@@ -7,7 +7,6 @@ namespace Cabbage\Tests\Integration\Core;
 use Cabbage\API\Query\Criterion\DocumentType;
 use Cabbage\Core\Indexer\DocumentBuilder;
 use Cabbage\Core\Engine;
-use Cabbage\SPI\Index;
 use Cabbage\SPI\Node;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -20,7 +19,12 @@ use function file_get_contents;
 class EngineTest extends BaseTest
 {
     /**
-     * @var \Cabbage\SPI\Index
+     * @var \Cabbage\SPI\Node
+     */
+    private static $node;
+
+    /**
+     * @var string
      */
     private static $index;
 
@@ -29,18 +33,18 @@ class EngineTest extends BaseTest
      */
     public static function setUpBeforeClass(): void
     {
-        $node = Node::fromDsn('http://localhost:9200');
-        self::$index = new Index($node, 'index');
+        self::$node = Node::fromDsn('http://localhost:9200');
+        self::$index = 'index';
         $configurator = self::getContainer()->get('cabbage.configurator');
 
-        if ($configurator->hasIndex(self::$index)) {
-            $configurator->deleteIndex(self::$index);
+        if ($configurator->hasIndex(self::$node, self::$index)) {
+            $configurator->deleteIndex(self::$node, self::$index);
         }
 
         $mapping = file_get_contents(__DIR__ . '/../../../config/elasticsearch/mapping.json');
 
-        $configurator->createIndex(self::$index);
-        $configurator->setMapping(self::$index, $mapping);
+        $configurator->createIndex(self::$node, self::$index);
+        $configurator->setMapping(self::$node, self::$index, $mapping);
     }
 
     /**
@@ -64,7 +68,7 @@ class EngineTest extends BaseTest
         ]);
 
         $engine->indexContent($content);
-        $this->refresh(self::$index->node);
+        $this->refresh(self::$node);
 
         $this->addToAssertionCount(1);
     }
@@ -126,7 +130,7 @@ class EngineTest extends BaseTest
         $engine = $this->getEngineUnderTest();
 
         $engine->purgeIndex();
-        $this->refresh(self::$index->node);
+        $this->refresh(self::$node);
 
         $query = new Query([
             'filter' => new DocumentType(DocumentBuilder::TypeContent),

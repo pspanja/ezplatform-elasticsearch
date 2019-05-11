@@ -31,9 +31,3 @@ services:
         arguments:
             - '%ezpublish.signalslot.signal_dispatcher.class%'
             - 'cabbage'
-
-    cabbage.index_registry:
-        class: Cabbage\Core\IndexRegistry
-        arguments:
-            -
-                default: '@cabbage.index.default'

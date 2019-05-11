@@ -7,7 +7,7 @@ namespace Cabbage\Core;
 use Cabbage\Core\Http\Client;
 use Cabbage\Core\Http\Message;
 use Cabbage\Core\Http\Response;
-use Cabbage\SPI\Index;
+use Cabbage\SPI\Node;
 use RuntimeException;
 
 /**
@@ -30,11 +30,12 @@ final class Configurator
     }
 
     /**
-     * @param \Cabbage\SPI\Index $index
+     * @param \Cabbage\SPI\Node $node
+     * @param string $index
      *
      * @return \Cabbage\Core\Http\Response
      */
-    public function createIndex(Index $index): Response
+    public function createIndex(Node $node, string $index): Response
     {
         $body = [
             'settings' => [
@@ -43,6 +44,7 @@ final class Configurator
             ],
         ];
 
+        $url = $node->getUrl() . '/' . $index;
         $message = new Message(
             json_encode($body, JSON_THROW_ON_ERROR),
             [
@@ -50,19 +52,21 @@ final class Configurator
             ]
         );
 
-        return $this->client->put($message, $index->getUrl());
+        return $this->client->put($message, $url);
     }
 
     /**
-     * @param \Cabbage\SPI\Index $index
+     * @param \Cabbage\SPI\Node $node
+     * @param string $index
      *
      * @return bool
      */
-    public function hasIndex(Index $index): bool
+    public function hasIndex(Node $node, string $index): bool
     {
+        $url = $node->getUrl() . '/' . $index;
         $message = new Message();
 
-        $response = $this->client->head($message, $index->getUrl());
+        $response = $this->client->head($message, $url);
 
         if ($response->status === 200) {
             return true;
@@ -78,26 +82,29 @@ final class Configurator
     }
 
     /**
-     * @param \Cabbage\SPI\Index $index
+     * @param \Cabbage\SPI\Node $node
+     * @param string $index
      *
      * @return \Cabbage\Core\Http\Response
      */
-    public function deleteIndex(Index $index): Response
+    public function deleteIndex(Node $node, string $index): Response
     {
-        return $this->client->delete(new Message(), $index->getUrl());
+        $url = $node->getUrl() . '/' . $index;
+
+        return $this->client->delete(new Message(), $url);
     }
 
     /**
-     * @param \Cabbage\SPI\Index $index
+     * @param \Cabbage\SPI\Node $node
+     * @param string $index
      * @param string $mapping
      *
      * @return \Cabbage\Core\Http\Response
      */
-    public function setMapping(Index $index, string $mapping): Response
+    public function setMapping(Node $node, string $index, string $mapping): Response
     {
-        return $this->client->put(
-            Message::fromString($mapping),
-            $index->getUrl() . '/_mapping'
-        );
+        $url = $node->getUrl() . '/' . $index . '/_mapping';
+
+        return $this->client->put(Message::fromString($mapping), $url);
     }
 }

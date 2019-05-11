@@ -29,15 +29,14 @@ final class Gateway
 
     /**
      * @param \Cabbage\SPI\Node $node
-     * @param \Cabbage\Core\Searcher\Target $target
+     * @param string[] $indices
      * @param array|array[] $query
      *
      * @return string
      */
-    public function find(Node $node, Target $target, array $query): string
+    public function find(Node $node, array $indices, array $query): string
     {
-        $indices = $target->getIndices();
-        $url = $node->getUrl(). '/' . $indices . '/_search';
+        $url = $node->getUrl(). '/' . implode(',', $indices) . '/_search';
 
         $response = $this->client->get(Message::fromHash($query), $url);
 

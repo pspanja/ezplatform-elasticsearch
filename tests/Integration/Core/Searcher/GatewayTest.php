@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Cabbage\Tests\Integration\Core\Searcher;
 
-use Cabbage\Core\Searcher\Target;
-use Cabbage\SPI\Index;
 use Cabbage\SPI\Node;
 use Cabbage\Tests\Integration\Core\BaseTest;
 use function file_get_contents;
@@ -13,7 +11,12 @@ use function file_get_contents;
 class GatewayTest extends BaseTest
 {
     /**
-     * @var \Cabbage\SPI\Index
+     * @var \Cabbage\SPI\Node
+     */
+    private static $node;
+
+    /**
+     * @var string
      */
     private static $index;
 
@@ -32,20 +35,20 @@ class GatewayTest extends BaseTest
      */
     public static function setUpBeforeClass(): void
     {
-        $node = Node::fromDsn('http://localhost:9200');
-        self::$index = new Index($node, 'searcher_gateway_test');
+        self::$node = Node::fromDsn('http://localhost:9200');
+        self::$index = 'searcher_gateway_test';
         self::$indexerGateway = self::getContainer()->get('cabbage.indexer.gateway');
         self::$gateway = self::getContainer()->get('cabbage.searcher.gateway');
         $configurator = self::getContainer()->get('cabbage.configurator');
 
-        if ($configurator->hasIndex(self::$index)) {
-            $configurator->deleteIndex(self::$index);
+        if ($configurator->hasIndex(self::$node, self::$index)) {
+            $configurator->deleteIndex(self::$node, self::$index);
         }
 
         $mapping = file_get_contents(__DIR__ . '/../../../../config/elasticsearch/mapping.json');
 
-        $configurator->createIndex(self::$index);
-        $configurator->setMapping(self::$index, $mapping);
+        $configurator->createIndex(self::$node, self::$index);
+        $configurator->setMapping(self::$node, self::$index, $mapping);
     }
 
     /**
@@ -58,15 +61,15 @@ class GatewayTest extends BaseTest
     {
         $index = self::$index;
         $payload = <<<EOD
-{"index":{"_index":"{$index->name}","_id":"a_1"}}
+{"index":{"_index":"{$index}","_id":"a_1"}}
 {"type_identifier":"type_a","field_keyword":"value"}
-{"index":{"_index":"{$index->name}","_id":"b_1"}}
+{"index":{"_index":"{$index}","_id":"b_1"}}
 {"type_identifier":"type_b","field_keyword":"value"}
 
 EOD;
 
-        self::$indexerGateway->index($index->node, $payload);
-        self::$indexerGateway->refresh($index->node);
+        self::$indexerGateway->index(self::$node, $payload);
+        self::$indexerGateway->refresh(self::$node);
 
         $query = [
             'query' => [
@@ -74,9 +77,7 @@ EOD;
             ],
         ];
 
-        $target = new Target([$index]);
-
-        $data = self::$gateway->find($index->node, $target, $query);
+        $data = self::$gateway->find(self::$node, [$index], $query);
         $data = json_decode($data, false);
 
         $this->assertEquals(2, $data->hits->total->value);
@@ -98,9 +99,7 @@ EOD;
             ],
         ];
 
-        $target = new Target([self::$index]);
-
-        $data = self::$gateway->find(self::$index->node, $target, $query);
+        $data = self::$gateway->find(self::$node, [self::$index], $query);
         $data = json_decode($data, false);
 
         $this->assertEquals(1, $data->hits->total->value);
@@ -120,9 +119,7 @@ EOD;
             ],
         ];
 
-        $target = new Target([self::$index]);
-
-        $data = self::$gateway->find(self::$index->node, $target, $query);
+        $data = self::$gateway->find(self::$node, [self::$index], $query);
         $data = json_decode($data, false);
 
         $this->assertEquals(0, $data->hits->total->value);
@@ -134,8 +131,8 @@ EOD;
      */
     public function testFindNoneAfterPurge(): void
     {
-        self::$indexerGateway->purge(self::$index->node);
-        self::$indexerGateway->refresh(self::$index->node);
+        self::$indexerGateway->purge(self::$node);
+        self::$indexerGateway->refresh(self::$node);
 
         $query = [
             'query' => [
@@ -143,9 +140,7 @@ EOD;
             ],
         ];
 
-        $target = new Target([self::$index]);
-
-        $data = self::$gateway->find(self::$index->node, $target, $query);
+        $data = self::$gateway->find(self::$node, [self::$index], $query);
         $data = json_decode($data, false);
 
         $this->assertEquals(0, $data->hits->total->value);

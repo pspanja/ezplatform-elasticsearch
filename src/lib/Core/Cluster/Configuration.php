@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Cluster;
 
-use Cabbage\SPI\Index;
 use RuntimeException;
 
 /**
@@ -18,44 +17,44 @@ final class Configuration
     private $coordinatingNodes;
 
     /**
-     * @var \Cabbage\SPI\Index[]
+     * @var string[]
      */
     private $indexByLanguageCode;
 
     /**
-     * @var ?\Cabbage\SPI\Index
+     * @var ?string
      */
     private $indexForMainTranslations;
 
     /**
-     * @var ?\Cabbage\SPI\Index
+     * @var ?string
      */
     private $defaultIndex;
 
     /**
      * @param \Cabbage\SPI\Node[] $coordinatingNodes
-     * @param \Cabbage\SPI\Index[] $indexByLanguageCode
-     * @param \Cabbage\SPI\Index $indexForMainTranslations
-     * @param \Cabbage\SPI\Index $defaultIndex
+     * @param string[] $indexByLanguageCode
+     * @param string $indexForMainTranslations
+     * @param string $defaultIndex
      */
     public function __construct(
         array $coordinatingNodes,
         array $indexByLanguageCode,
-        ?Index $indexForMainTranslations,
-        ?Index $defaultIndex
+        ?string $indexForMainTranslations,
+        ?string $defaultIndex
     ) {
         $this->coordinatingNodes = $coordinatingNodes;
-        $this->defaultIndex = $defaultIndex;
-        $this->indexForMainTranslations = $indexForMainTranslations;
         $this->indexByLanguageCode = $indexByLanguageCode;
+        $this->indexForMainTranslations = $indexForMainTranslations;
+        $this->defaultIndex = $defaultIndex;
     }
 
     public function hasDefaultIndex(): bool
     {
-        return $this->defaultIndex instanceof Index;
+        return $this->defaultIndex !== null;
     }
 
-    public function getDefaultIndex(): Index
+    public function getDefaultIndex(): string
     {
         if ($this->hasDefaultIndex()) {
             return $this->defaultIndex;
@@ -68,10 +67,10 @@ final class Configuration
 
     public function hasIndexForMainTranslations(): bool
     {
-        return $this->indexForMainTranslations instanceof Index;
+        return $this->indexForMainTranslations !== null;
     }
 
-    public function getIndexForMainTranslations(): Index
+    public function getIndexForMainTranslations(): string
     {
         if ($this->hasIndexForMainTranslations()) {
             return $this->indexForMainTranslations;
@@ -87,7 +86,7 @@ final class Configuration
         return array_key_exists($languageCode, $this->indexByLanguageCode);
     }
 
-    public function getIndexForLanguage(string $languageCode): Index
+    public function getIndexForLanguage(string $languageCode): string
     {
         if ($this->hasIndexForLanguage($languageCode)) {
             return $this->indexByLanguageCode[$languageCode];
@@ -98,9 +97,15 @@ final class Configuration
         );
     }
 
-    public function getIndicesForAllLanguages(): array
+    public function getAllIndices(): array
     {
-        return array_values($this->indexByLanguageCode);
+        $indexSet = array_flip($this->indexByLanguageCode);
+
+        if ($this->hasDefaultIndex()) {
+            $indexSet[$this->getDefaultIndex()] = true;
+        }
+
+        return array_keys($indexSet);
     }
 
     public function getCoordinatingNodes(): array
