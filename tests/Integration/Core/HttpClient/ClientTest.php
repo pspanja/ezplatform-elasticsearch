@@ -78,10 +78,13 @@ class ClientTest extends TestCase
     {
         $client = $this->getClientUnderTest();
 
+        $url = 'http://remotehost:12345/passwords.txt';
+
         $this->expectException(ConnectionException::class);
+        $this->expectExceptionMessage('Could not connect to "' . $url . '"');
 
         $message = new Message();
-        $client->get($message, 'http://remotehost:12345/passwords.txt');
+        $client->get($message, $url);
     }
 
     protected function getClientUnderTest(): Client
