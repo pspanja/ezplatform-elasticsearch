@@ -12,10 +12,11 @@ use RuntimeException;
 final class ConnectionException extends RuntimeException
 {
     /**
-     * @param string $server
+     * @param string $url
+     * @param string $error
      */
-    public function __construct(string $server)
+    public function __construct(string $url, string $error)
     {
-        parent::__construct("Couldn't connect to server '{$server}'");
+        parent::__construct('Could not connect to "' . $url . '": ' . $error);
     }
 }

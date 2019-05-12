@@ -98,7 +98,7 @@ final class Client
             $error = error_get_last();
             $errorMessage = $error['message'] ?? 'Unknown error';
 
-            throw new ConnectionException($errorMessage);
+            throw new ConnectionException($url, $errorMessage);
         }
 
         return Response::fromHeadersAndBody($http_response_header, $body);
