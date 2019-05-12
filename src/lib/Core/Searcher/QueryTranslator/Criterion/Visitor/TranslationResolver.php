@@ -26,12 +26,12 @@ final class TranslationResolver extends Visitor
     public function visit(Criterion $criterion, Converter $converter): array
     {
         /** @var \Cabbage\API\Query\Criterion\TranslationResolver $criterion */
-        $criteria = $this->getTranslationCriteria($criterion->translationFilter);
+        $criteria = $this->buildCriteria($criterion->translationFilter);
 
         return $converter->convert($criteria);
     }
 
-    private function getTranslationCriteria(TranslationFilter $translationFilter): Criterion
+    private function buildCriteria(TranslationFilter $translationFilter): Criterion
     {
         return new MatchAll();
     }
