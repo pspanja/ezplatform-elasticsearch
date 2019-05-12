@@ -7,8 +7,6 @@ namespace Cabbage\Core\Indexer;
 use Cabbage\Core\Indexer\DocumentSerializer\TypedFieldNameGenerator;
 use Cabbage\Core\Indexer\DocumentSerializer\FieldValueMapper;
 use Cabbage\SPI\Document;
-use Cabbage\SPI\Document\Field;
-use Cabbage\SPI\Document\Field\Type\Identifier;
 
 /**
  * Serializes a document into a JSON string for bulk indexing.
@@ -47,18 +45,13 @@ final class DocumentSerializer
     public function serialize(Document $document): string
     {
         $data = [];
-        $fields = $document->fields;
 
-        $fields[] = new Field('type', $document->type, new Identifier());
-
-        foreach ($fields as $field) {
+        foreach ($document->fields as $field) {
             $fieldName = $this->fieldTypedNameGenerator->generate($field);
             $fieldValue = $this->fieldValueMapper->map($field);
 
             $data[$fieldName] = $fieldValue;
         }
-
-        $data[] = 1;
 
         return json_encode($data, JSON_THROW_ON_ERROR);
     }
