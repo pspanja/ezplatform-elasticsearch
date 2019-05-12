@@ -28,7 +28,7 @@ final class TranslationFilter
 
     public function hasPrioritizedTranslationsLanguageCodes(): bool
     {
-        return !empty($this->prioritizedTranslationLanguageCodes);
+        return !empty($this->prioritizedTranslationsLanguageCodes);
     }
 
     public function getPrioritizedTranslationsLanguageCodes(): array
