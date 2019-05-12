@@ -104,7 +104,7 @@ final class ContentFields extends TranslationContent
         }
 
         throw new RuntimeException(
-            "Couldn't find field definition with ID '{$field->fieldDefinitionId}'"
+            'Could not find field definition with ID "' . $field->fieldDefinitionId . '"'
         );
     }
 }
