@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Cabbage\Core\Searcher;
 
 use Cabbage\Core\Cluster\Configuration;
-use Cabbage\SPI\LanguageFilter;
+use Cabbage\SPI\TranslationFilter;
 use RuntimeException;
 
 /**
- * Matches a LanguageFilter to an array of indices.
+ * Matches a TranslationFilter to an array of indices.
  *
- * @see \Cabbage\SPI\LanguageFilter
+ * @see \Cabbage\SPI\TranslationFilter
  */
-final class LanguageFilterIndicesResolver
+final class TranslationFilterIndicesResolver
 {
     /**
      * @var \Cabbage\Core\Cluster\Configuration
@@ -26,17 +26,17 @@ final class LanguageFilterIndicesResolver
     }
 
     /**
-     * @param \Cabbage\SPI\LanguageFilter $languageFilter
+     * @param \Cabbage\SPI\TranslationFilter $translationFilter
      *
      * @return string[]
      */
-    public function resolve(LanguageFilter $languageFilter): array
+    public function resolve(TranslationFilter $translationFilter): array
     {
-        $indices = $this->resolveIndices($languageFilter);
+        $indices = $this->resolveIndices($translationFilter);
 
         if (empty($indices)) {
             throw new RuntimeException(
-                'No indices are configured for the given LanguageFilter'
+                'No indices are configured for the given TranslationFilter'
             );
         }
 
@@ -44,31 +44,31 @@ final class LanguageFilterIndicesResolver
     }
 
     /**
-     * @param \Cabbage\SPI\LanguageFilter $languageFilter
+     * @param \Cabbage\SPI\TranslationFilter $translationFilter
      *
      * @return string[]
      */
-    private function resolveIndices(LanguageFilter $languageFilter): array
+    private function resolveIndices(TranslationFilter $translationFilter): array
     {
         if ($this->configuration->hasIndexForMainTranslations()) {
-            return $this->resolveWithIndexForMainTranslations($languageFilter);
+            return $this->resolveWithIndexForMainTranslations($translationFilter);
         }
 
-        return $this->resolveWithoutIndexForMainTranslations($languageFilter);
+        return $this->resolveWithoutIndexForMainTranslations($translationFilter);
     }
 
     /**
-     * @param \Cabbage\SPI\LanguageFilter $languageFilter
+     * @param \Cabbage\SPI\TranslationFilter $translationFilter
      *
      * @return string[]
      */
-    private function resolveWithIndexForMainTranslations(LanguageFilter $languageFilter): array
+    private function resolveWithIndexForMainTranslations(TranslationFilter $translationFilter): array
     {
         $indices = $this->getIndicesByLanguageCodes(
-            $languageFilter->getPrioritizedTranslationsLanguageCodes()
+            $translationFilter->getPrioritizedTranslationsLanguageCodes()
         );
 
-        if (empty($indices) || $languageFilter->useMainTranslationFallback()) {
+        if (empty($indices) || $translationFilter->useMainTranslationFallback()) {
             $indices[] = $this->configuration->getIndexForMainTranslations();
         }
 
@@ -76,18 +76,18 @@ final class LanguageFilterIndicesResolver
     }
 
     /**
-     * @param \Cabbage\SPI\LanguageFilter $languageFilter
+     * @param \Cabbage\SPI\TranslationFilter $translationFilter
      *
      * @return string[]
      */
-    private function resolveWithoutIndexForMainTranslations(LanguageFilter $languageFilter): array
+    private function resolveWithoutIndexForMainTranslations(TranslationFilter $translationFilter): array
     {
-        if ($languageFilter->useMainTranslationFallback() || !$languageFilter->hasPrioritizedTranslationsLanguageCodes()) {
+        if ($translationFilter->useMainTranslationFallback() || !$translationFilter->hasPrioritizedTranslationsLanguageCodes()) {
             return $this->configuration->getAllIndices();
         }
 
         return $this->getIndicesByLanguageCodes(
-            $languageFilter->getPrioritizedTranslationsLanguageCodes()
+            $translationFilter->getPrioritizedTranslationsLanguageCodes()
         );
     }
 

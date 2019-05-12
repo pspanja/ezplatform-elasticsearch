@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Cabbage\Core;
 
 use Cabbage\Core\Searcher\Gateway;
-use Cabbage\Core\Searcher\LanguageFilterIndicesResolver;
+use Cabbage\Core\Searcher\TranslationFilterIndicesResolver;
 use Cabbage\Core\Searcher\QueryTranslator;
 use Cabbage\Core\Searcher\ResultExtractor;
-use Cabbage\SPI\LanguageFilter;
+use Cabbage\SPI\TranslationFilter;
 use Cabbage\SPI\Searcher as SPISearcher;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -25,9 +25,9 @@ final class Searcher extends SPISearcher
     private $gateway;
 
     /**
-     * @var \Cabbage\Core\Searcher\LanguageFilterIndicesResolver
+     * @var \Cabbage\Core\Searcher\TranslationFilterIndicesResolver
      */
-    private $languageFilterIndicesResolver;
+    private $translationFilterIndicesResolver;
 
     /**
      * @var \Cabbage\Core\Searcher\QueryTranslator
@@ -46,46 +46,46 @@ final class Searcher extends SPISearcher
 
     /**
      * @param \Cabbage\Core\Searcher\Gateway $gateway
-     * @param \Cabbage\Core\Searcher\LanguageFilterIndicesResolver $languageFilterIndicesResolver
+     * @param \Cabbage\Core\Searcher\TranslationFilterIndicesResolver $translationFilterIndicesResolver
      * @param \Cabbage\Core\Searcher\QueryTranslator $queryTranslator
      * @param \Cabbage\Core\Searcher\ResultExtractor $resultExtractor
      * @param \Cabbage\Core\Cluster $cluster
      */
     public function __construct(
         Gateway $gateway,
-        LanguageFilterIndicesResolver $languageFilterIndicesResolver,
+        TranslationFilterIndicesResolver $translationFilterIndicesResolver,
         QueryTranslator $queryTranslator,
         ResultExtractor $resultExtractor,
         Cluster $cluster
     ) {
         $this->gateway = $gateway;
-        $this->languageFilterIndicesResolver = $languageFilterIndicesResolver;
+        $this->translationFilterIndicesResolver = $translationFilterIndicesResolver;
         $this->queryTranslator = $queryTranslator;
         $this->resultExtractor = $resultExtractor;
         $this->cluster = $cluster;
     }
 
-    public function findContent(Query $query, LanguageFilter $languageFilter): SearchResult
+    public function findContent(Query $query, TranslationFilter $translationFilter): SearchResult
     {
         $data = $this->gateway->find(
             $this->cluster->selectCoordinatingNode(),
-            $this->languageFilterIndicesResolver->resolve($languageFilter),
+            $this->translationFilterIndicesResolver->resolve($translationFilter),
             $this->queryTranslator->translateContentQuery($query)
         );
 
         return $this->resultExtractor->extract($data);
     }
 
-    public function findSingle(Criterion $filter, LanguageFilter $languageFilter): ContentInfo
+    public function findSingle(Criterion $filter, TranslationFilter $translationFilter): ContentInfo
     {
         throw new RuntimeException('Not implemented');
     }
 
-    public function findLocations(LocationQuery $query, LanguageFilter $languageFilter): SearchResult
+    public function findLocations(LocationQuery $query, TranslationFilter $translationFilter): SearchResult
     {
         $data = $this->gateway->find(
             $this->cluster->selectCoordinatingNode(),
-            $this->languageFilterIndicesResolver->resolve($languageFilter),
+            $this->translationFilterIndicesResolver->resolve($translationFilter),
             $this->queryTranslator->translateLocationQuery($query)
         );
 

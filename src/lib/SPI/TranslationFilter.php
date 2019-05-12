@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\SPI;
 
-final class LanguageFilter
+final class TranslationFilter
 {
     /**
      * @var string[]

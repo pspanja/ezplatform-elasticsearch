@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Cabbage\Core;
 
 use Cabbage\SPI\Indexer as SPIIndexer;
-use Cabbage\SPI\LanguageFilter;
+use Cabbage\SPI\TranslationFilter;
 use Cabbage\SPI\Searcher as SPISearcher;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -51,25 +51,25 @@ final class Engine implements Handler, Capable
     /**
      * {@inheritdoc}
      */
-    public function findContent(Query $query, array $languageFilter = []): SearchResult
+    public function findContent(Query $query, array $translationFilter = []): SearchResult
     {
-        return $this->searcher->findContent($query, $this->buildLanguageFilter($languageFilter));
+        return $this->searcher->findContent($query, $this->buildTranslationFilter($translationFilter));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function findSingle(Criterion $filter, array $languageFilter = []): ContentInfo
+    public function findSingle(Criterion $filter, array $translationFilter = []): ContentInfo
     {
-        return $this->searcher->findSingle($filter, $this->buildLanguageFilter($languageFilter));
+        return $this->searcher->findSingle($filter, $this->buildTranslationFilter($translationFilter));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function findLocations(LocationQuery $query, array $languageFilter = []): SearchResult
+    public function findLocations(LocationQuery $query, array $translationFilter = []): SearchResult
     {
-        return $this->searcher->findLocations($query, $this->buildLanguageFilter($languageFilter));
+        return $this->searcher->findLocations($query, $this->buildTranslationFilter($translationFilter));
     }
 
     /**
@@ -129,11 +129,11 @@ final class Engine implements Handler, Capable
         $this->indexer->refresh();
     }
 
-    private function buildLanguageFilter(array $languageFilter): LanguageFilter
+    private function buildTranslationFilter(array $translationFilter): TranslationFilter
     {
-        return new LanguageFilter(
-            $languageFilter['languages'] ?? [],
-            $languageFilter['useAlwaysAvailable'] ?? true
+        return new TranslationFilter(
+            $translationFilter['languages'] ?? [],
+            $translationFilter['useAlwaysAvailable'] ?? true
         );
     }
 }
