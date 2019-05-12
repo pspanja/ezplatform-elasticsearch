@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Cabbage\SPI;
 
-use eZ\Publish\SPI\Persistence\Content\Location;
-
 abstract class Indexer
 {
     /**
@@ -15,13 +13,6 @@ abstract class Indexer
      * @param int|null $versionId
      */
     abstract public function deleteContent($contentId, $versionId = null): void;
-
-    /**
-     * @see \eZ\Publish\SPI\Search\Handler::indexLocation()
-     *
-     * @param \eZ\Publish\SPI\Persistence\Content\Location $location
-     */
-    abstract public function indexLocation(Location $location): void;
 
     /**
      * @see \eZ\Publish\SPI\Search\Handler::deleteLocation()

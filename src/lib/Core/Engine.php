@@ -95,7 +95,7 @@ final class Engine implements Handler, Capable
 
     public function indexLocation(Location $location): void
     {
-        $this->indexer->indexLocation($location);
+        // Does nothing
     }
 
     /**

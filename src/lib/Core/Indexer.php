@@ -70,11 +70,6 @@ final class Indexer extends SPIIndexer
         throw new RuntimeException('Not implemented');
     }
 
-    public function indexLocation(Location $location): void
-    {
-        // Does nothing
-    }
-
     /**
      * {@inheritDoc}
      */
