@@ -28,10 +28,14 @@ services:
             -
                 - '@cabbage.indexer.field_builder.location.main'
 
+    cabbage.indexer.field_builder.translation_common.internal:
+        class: Cabbage\Core\Indexer\FieldBuilders\TranslationCommon\Internal
+
     cabbage.indexer.field_builder.translation_common:
         class: Cabbage\Core\Indexer\FieldBuilders\TranslationCommon\Aggregate
         arguments:
-            - []
+            -
+                - '@cabbage.indexer.field_builder.translation_common.internal'
 
     cabbage.indexer.field_builder.translation.content.content_field_name_generator:
         class: Cabbage\Core\Indexer\FieldBuilders\TranslationContent\ContentFieldNameGenerator
