@@ -10,9 +10,9 @@ use Cabbage\Core\Searcher\QueryTranslator\Criterion\Converter;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 
 /**
- * Visits CustomField criterion.
+ * Visits RawField criterion.
  *
- * @see \Cabbage\API\Query\Criterion\CustomField
+ * @see \Cabbage\API\Query\Criterion\RawField
  */
 final class RawField extends Visitor
 {

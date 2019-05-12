@@ -67,10 +67,12 @@ final class Searcher extends SPISearcher
 
     public function findContent(Query $query, TranslationFilter $translationFilter): SearchResult
     {
+        //$translationFilterCriterion = new Tra
+
         $data = $this->gateway->find(
             $this->cluster->selectCoordinatingNode(),
             $this->translationFilterIndicesResolver->resolve($translationFilter),
-            $this->queryTranslator->translateContentQuery($query)
+            $this->queryTranslator->translateContentQuery($query, $translationFilter)
         );
 
         return $this->resultExtractor->extract($data);
@@ -86,7 +88,7 @@ final class Searcher extends SPISearcher
         $data = $this->gateway->find(
             $this->cluster->selectCoordinatingNode(),
             $this->translationFilterIndicesResolver->resolve($translationFilter),
-            $this->queryTranslator->translateLocationQuery($query)
+            $this->queryTranslator->translateLocationQuery($query, $translationFilter)
         );
 
         return $this->resultExtractor->extract($data);
