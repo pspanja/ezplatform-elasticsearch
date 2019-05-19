@@ -11,7 +11,6 @@ use Cabbage\Core\Indexer\Gateway;
 use Cabbage\SPI\Document;
 use Cabbage\SPI\Indexer as SPIIndexer;
 use eZ\Publish\SPI\Persistence\Content;
-use eZ\Publish\SPI\Persistence\Content\Location;
 use RuntimeException;
 
 final class Indexer extends SPIIndexer
@@ -135,11 +134,9 @@ final class Indexer extends SPIIndexer
      */
     private function getActionAndMetaData(Document $document): string
     {
-        $index = $this->documentIndexResolver->resolve($document);
-
         $data = [
             'index' => [
-                '_index' => $index,
+                '_index' => $document->index,
                 '_id' => $document->id,
             ],
         ];

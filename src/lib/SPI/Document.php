@@ -17,26 +17,11 @@ final class Document
     public $id;
 
     /**
-     * Identifier of the document's type.
+     * Index where the Document is to be indexed.
      *
      * @var string
      */
-    public $type;
-
-    /**
-     * @var string
-     */
-    public $languageCode;
-
-    /**
-     * @var bool
-     */
-    public $isMainTranslation;
-
-    /**
-     * @var bool
-     */
-    public $useMainTranslationFallback;
+    public $index;
 
     /**
      * Document's fields.
@@ -47,25 +32,16 @@ final class Document
 
     /**
      * @param string $id
-     * @param string $type
-     * @param string $languageCode
-     * @param bool $isMainTranslation
-     * @param bool $useMainTranslationFallback
+     * @param string $index
      * @param \Cabbage\SPI\Document\Field[] $fields
      */
     public function __construct(
         string $id,
-        string $type,
-        string $languageCode,
-        bool $isMainTranslation,
-        bool $useMainTranslationFallback,
+        string $index,
         array $fields
     ) {
         $this->id = $id;
-        $this->type = $type;
-        $this->languageCode = $languageCode;
-        $this->isMainTranslation = $isMainTranslation;
-        $this->useMainTranslationFallback = $useMainTranslationFallback;
+        $this->index = $index;
         $this->fields = $fields;
     }
 }

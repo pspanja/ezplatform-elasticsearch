@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cabbage\Core\Indexer;
 
+use Cabbage\Core\Cluster\Configuration;
 use Cabbage\Core\Indexer\FieldBuilders\Common;
 use Cabbage\Core\Indexer\FieldBuilders\Content;
 use Cabbage\Core\Indexer\FieldBuilders\Location;
@@ -11,11 +12,14 @@ use Cabbage\Core\Indexer\FieldBuilders\TranslationCommon;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationContent;
 use Cabbage\Core\Indexer\FieldBuilders\TranslationLocation;
 use Cabbage\SPI\Document;
+use Cabbage\SPI\Document\Field;
+use Cabbage\SPI\Document\Field\Type\Boolean;
 use eZ\Publish\SPI\Persistence\Content as SPIContent;
 use eZ\Publish\SPI\Persistence\Content\Location as SPILocation;
 use eZ\Publish\SPI\Persistence\Content\Location\Handler as LocationHandler;
 use eZ\Publish\SPI\Persistence\Content\Type;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler as TypeHandler;
+use RuntimeException;
 
 /**
  * Maps eZ Platform Content to an array of Document instances.
@@ -38,6 +42,11 @@ final class DocumentBuilder
      * @var string
      */
     public const TypeLocation = 'location';
+
+    /**
+     * @var \Cabbage\Core\Cluster\Configuration
+     */
+    private $configuration;
 
     /**
      * @var \eZ\Publish\SPI\Persistence\Content\Location\Handler
@@ -85,6 +94,7 @@ final class DocumentBuilder
     private $idGenerator;
 
     /**
+     * @param \Cabbage\Core\Cluster\Configuration $configuration
      * @param \eZ\Publish\SPI\Persistence\Content\Location\Handler $locationHandler
      * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $typeHandler
      * @param \Cabbage\Core\Indexer\FieldBuilders\Common $commonFieldBuilder
@@ -96,6 +106,7 @@ final class DocumentBuilder
      * @param \Cabbage\Core\Indexer\DocumentIdGenerator $idGenerator
      */
     public function __construct(
+        Configuration $configuration,
         LocationHandler $locationHandler,
         TypeHandler $typeHandler,
         Common $commonFieldBuilder,
@@ -106,6 +117,7 @@ final class DocumentBuilder
         TranslationLocation $translationLocationFieldBuilder,
         DocumentIdGenerator $idGenerator
     ) {
+        $this->configuration = $configuration;
         $this->locationHandler = $locationHandler;
         $this->typeHandler = $typeHandler;
         $this->commonFieldBuilder = $commonFieldBuilder;
@@ -131,12 +143,8 @@ final class DocumentBuilder
         $locations = $this->locationHandler->loadLocationsByContent($contentInfo->id);
         $commonFields = $this->getCommonFields($content, $type, $locations);
         $contentFields = $this->getContentFields($content, $type, $locations);
-        $locationFieldsById = [];
+        $locationFieldsById = $this->mapLocationFieldsById($locations, $content, $type);
         $documentsGrouped = [[]];
-
-        foreach ($locations as $location) {
-            $locationFieldsById[$location->id] = $this->getLocationFields($location, $content, $type);
-        }
 
         foreach ($content->versionInfo->languageCodes as $languageCode) {
             $translationCommonFields = $this->getTranslationCommonFields($languageCode, $content, $type, $locations);
@@ -167,19 +175,70 @@ final class DocumentBuilder
         return array_merge(...$documentsGrouped);
     }
 
+    private function mapLocationFieldsById(
+        array $locations,
+        SPIContent $content,
+        Type $type
+    ): array
+    {
+        $map = [];
+
+        foreach ($locations as $location) {
+            $map[$location->id] = $this->getLocationFields($location, $content, $type);
+        }
+
+        return $map;
+    }
+
     private function getContentDocuments(SPIContent $content, string $languageCode, array $fieldsGrouped): array
     {
         $contentInfo = $content->versionInfo->contentInfo;
+        $regularTranslationIndex = $this->getIndexForLanguage($languageCode);
+        $mainTranslationIndex = $this->getMainTranslationIndex();
+        $documents = [];
 
-        return [
-            new Document(
+        $isMainTranslation = $contentInfo->mainLanguageCode === $languageCode;
+        $hasMainTranslationPlacement = $isMainTranslation && $this->configuration->hasIndexForMainTranslations();
+        $hasDedicatedMainTranslationPlacement = $hasMainTranslationPlacement && $regularTranslationIndex !== $mainTranslationIndex;
+
+        if ($hasDedicatedMainTranslationPlacement) {
+            $documents[] = new Document(
                 $this->idGenerator->generateContentDocumentId($content),
-                self::TypeContent,
-                $languageCode,
-                $contentInfo->mainLanguageCode === $languageCode,
-                (bool)$contentInfo->alwaysAvailable,
-                array_merge(...$fieldsGrouped)
+                $mainTranslationIndex,
+                array_merge(
+                    $this->getPlacementFields(false, true),
+                    ...$fieldsGrouped
+                )
+            );
+        }
+
+        $isMainTranslationPlacement = $hasMainTranslationPlacement && !$hasDedicatedMainTranslationPlacement;
+
+        $documents[] = new Document(
+            $this->idGenerator->generateContentDocumentId($content),
+            $regularTranslationIndex,
+            array_merge(
+                $this->getPlacementFields(true, $isMainTranslationPlacement),
+                ...$fieldsGrouped
             )
+        );
+
+        return $documents;
+    }
+
+    private function getPlacementFields(bool $isRegularTranslationPlacement, bool $isMainTranslationPlacement): array
+    {
+        return [
+            new Field(
+                'document_translation_placement_regular',
+                $isRegularTranslationPlacement,
+                new Boolean()
+            ),
+            new Field(
+                'document_translation_placement_main',
+                $isMainTranslationPlacement,
+                new Boolean()
+            ),
         ];
     }
 
@@ -218,17 +277,58 @@ final class DocumentBuilder
         array $fieldsGrouped
     ): array {
         $contentInfo = $content->versionInfo->contentInfo;
+        $regularTranslationIndex = $this->getIndexForLanguage($languageCode);
+        $mainTranslationIndex = $this->getMainTranslationIndex();
+        $documents = [];
 
-        return [
-            new Document(
+        $isMainTranslation = $contentInfo->mainLanguageCode === $languageCode;
+        $hasMainTranslationPlacement = $isMainTranslation && $this->configuration->hasIndexForMainTranslations();
+        $hasSamePlacements = $regularTranslationIndex === $mainTranslationIndex;
+
+        if ($hasMainTranslationPlacement && !$hasSamePlacements) {
+            $placementFields = $this->getPlacementFields(false, true);
+
+            $documents[] = new Document(
                 $this->idGenerator->generateLocationDocumentId($location),
-                self::TypeLocation,
-                $languageCode,
-                $contentInfo->mainLanguageCode === $languageCode,
-                (bool)$contentInfo->alwaysAvailable,
-                array_merge(...$fieldsGrouped)
-            ),
-        ];
+                $mainTranslationIndex,
+                array_merge($placementFields, ...$fieldsGrouped)
+            );
+        }
+
+        $isMainTranslationPlacement = $hasMainTranslationPlacement && $hasSamePlacements;
+        $placementFields = $this->getPlacementFields(true, $isMainTranslationPlacement);
+
+        $documents[] = new Document(
+            $this->idGenerator->generateLocationDocumentId($location),
+            $regularTranslationIndex,
+            array_merge($placementFields, ...$fieldsGrouped)
+        );
+
+        return $documents;
+    }
+
+    public function getIndexForLanguage(string $languageCode): string
+    {
+        if ($this->configuration->hasIndexForLanguage($languageCode)) {
+            return $this->configuration->getIndexForLanguage($languageCode);
+        }
+
+        if ($this->configuration->hasDefaultIndex()) {
+            return $this->configuration->getDefaultIndex();
+        }
+
+        throw new RuntimeException(
+            "No index is configured for language code '{$languageCode}'"
+        );
+    }
+
+    private function getMainTranslationIndex(): ?string
+    {
+        if ($this->configuration->hasIndexForMainTranslations()) {
+            return $this->configuration->getIndexForMainTranslations();
+        }
+
+        return null;
     }
 
     private function getCommonFields(SPIContent $content, Type $type, array $locations): array

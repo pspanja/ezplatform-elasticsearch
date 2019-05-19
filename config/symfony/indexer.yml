@@ -11,6 +11,7 @@ services:
     cabbage.indexer.document_builder:
         class: Cabbage\Core\Indexer\DocumentBuilder
         arguments:
+            - '@cabbage.cluster.configuration'
             - '@ezpublish.spi.persistence.location_handler'
             - '@ezpublish.spi.persistence.content_type_handler'
             - '@cabbage.indexer.field_builder.common'
