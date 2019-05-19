@@ -15,6 +15,7 @@ use Cabbage\SPI\Document;
 use Cabbage\SPI\Document\Field;
 use Cabbage\SPI\Document\Field\Type\Boolean;
 use eZ\Publish\SPI\Persistence\Content as SPIContent;
+use eZ\Publish\SPI\Persistence\Content\ContentInfo;
 use eZ\Publish\SPI\Persistence\Content\Location as SPILocation;
 use eZ\Publish\SPI\Persistence\Content\Location\Handler as LocationHandler;
 use eZ\Publish\SPI\Persistence\Content\Type;
@@ -193,18 +194,12 @@ final class DocumentBuilder
     private function getContentDocuments(SPIContent $content, string $languageCode, array $fieldsGrouped): array
     {
         $contentInfo = $content->versionInfo->contentInfo;
-        $regularTranslationIndex = $this->getIndexForLanguage($languageCode);
-        $mainTranslationIndex = $this->getMainTranslationIndex();
         $documents = [];
 
-        $isMainTranslation = $contentInfo->mainLanguageCode === $languageCode;
-        $hasMainTranslationPlacement = $isMainTranslation && $this->configuration->hasIndexForMainTranslations();
-        $hasDedicatedMainTranslationPlacement = $hasMainTranslationPlacement && $regularTranslationIndex !== $mainTranslationIndex;
-
-        if ($hasDedicatedMainTranslationPlacement) {
+        if ($this->hasDedicatedMainTranslationPlacement($contentInfo, $languageCode)) {
             $documents[] = new Document(
                 $this->idGenerator->generateContentDocumentId($content),
-                $mainTranslationIndex,
+                $this->configuration->getIndexForMainTranslations(),
                 array_merge(
                     $this->getPlacementFields(false, true),
                     ...$fieldsGrouped
@@ -212,13 +207,13 @@ final class DocumentBuilder
             );
         }
 
-        $isMainTranslationPlacement = $hasMainTranslationPlacement && !$hasDedicatedMainTranslationPlacement;
+        $hasSharedMainTranslationPlacement = $this->hasSharedMainTranslationPlacement($contentInfo, $languageCode);
 
         $documents[] = new Document(
             $this->idGenerator->generateContentDocumentId($content),
-            $regularTranslationIndex,
+            $this->getIndexForLanguage($languageCode),
             array_merge(
-                $this->getPlacementFields(true, $isMainTranslationPlacement),
+                $this->getPlacementFields(true, $hasSharedMainTranslationPlacement),
                 ...$fieldsGrouped
             )
         );
@@ -277,37 +272,63 @@ final class DocumentBuilder
         array $fieldsGrouped
     ): array {
         $contentInfo = $content->versionInfo->contentInfo;
-        $regularTranslationIndex = $this->getIndexForLanguage($languageCode);
-        $mainTranslationIndex = $this->getMainTranslationIndex();
         $documents = [];
 
-        $isMainTranslation = $contentInfo->mainLanguageCode === $languageCode;
-        $hasMainTranslationPlacement = $isMainTranslation && $this->configuration->hasIndexForMainTranslations();
-        $hasSamePlacements = $regularTranslationIndex === $mainTranslationIndex;
-
-        if ($hasMainTranslationPlacement && !$hasSamePlacements) {
+        if ($this->hasDedicatedMainTranslationPlacement($contentInfo, $languageCode)) {
             $placementFields = $this->getPlacementFields(false, true);
 
             $documents[] = new Document(
                 $this->idGenerator->generateLocationDocumentId($location),
-                $mainTranslationIndex,
+                $this->configuration->getIndexForMainTranslations(),
                 array_merge($placementFields, ...$fieldsGrouped)
             );
         }
 
-        $isMainTranslationPlacement = $hasMainTranslationPlacement && $hasSamePlacements;
-        $placementFields = $this->getPlacementFields(true, $isMainTranslationPlacement);
+        $hasSharedMainTranslationPlacement = $this->hasSharedMainTranslationPlacement($contentInfo, $languageCode);
 
         $documents[] = new Document(
             $this->idGenerator->generateLocationDocumentId($location),
-            $regularTranslationIndex,
-            array_merge($placementFields, ...$fieldsGrouped)
+            $this->getIndexForLanguage($languageCode),
+            array_merge(
+                $this->getPlacementFields(true, $hasSharedMainTranslationPlacement),
+                ...$fieldsGrouped
+            )
         );
 
         return $documents;
     }
 
-    public function getIndexForLanguage(string $languageCode): string
+    private function hasDedicatedMainTranslationPlacement(ContentInfo $contentInfo, string $languageCode): bool
+    {
+        if ($contentInfo->mainLanguageCode !== $languageCode) {
+            return false;
+        }
+
+        try {
+            $mainTranslationIndex = $this->configuration->getIndexForMainTranslations();
+        } catch (RuntimeException $e) {
+            return false;
+        }
+
+        return $mainTranslationIndex !== $this->getIndexForLanguage($languageCode);
+    }
+
+    private function hasSharedMainTranslationPlacement(ContentInfo $contentInfo, string $languageCode): bool
+    {
+        if ($contentInfo->mainLanguageCode !== $languageCode) {
+            return false;
+        }
+
+        try {
+            $mainTranslationIndex = $this->configuration->getIndexForMainTranslations();
+        } catch (RuntimeException $e) {
+            return false;
+        }
+
+        return $mainTranslationIndex === $this->getIndexForLanguage($languageCode);
+    }
+
+    private function getIndexForLanguage(string $languageCode): string
     {
         if ($this->configuration->hasIndexForLanguage($languageCode)) {
             return $this->configuration->getIndexForLanguage($languageCode);
@@ -320,15 +341,6 @@ final class DocumentBuilder
         throw new RuntimeException(
             "No index is configured for language code '{$languageCode}'"
         );
-    }
-
-    private function getMainTranslationIndex(): ?string
-    {
-        if ($this->configuration->hasIndexForMainTranslations()) {
-            return $this->configuration->getIndexForMainTranslations();
-        }
-
-        return null;
     }
 
     private function getCommonFields(SPIContent $content, Type $type, array $locations): array
