@@ -44,11 +44,6 @@ services:
         arguments:
             - '%cabbage.document.field.type_suffix_map%'
 
-    cabbage.indexer.document_index_resolver:
-        class: Cabbage\Core\Indexer\DocumentIndexResolver
-        arguments:
-            - '@cabbage.cluster.configuration'
-
     cabbage.indexer.document_serializer:
         class: Cabbage\Core\Indexer\DocumentSerializer
         arguments:
@@ -65,6 +60,5 @@ services:
         arguments:
             - '@cabbage.indexer.gateway'
             - '@cabbage.indexer.document_builder'
-            - '@cabbage.indexer.document_index_resolver'
             - '@cabbage.indexer.document_serializer'
             - '@cabbage.cluster'

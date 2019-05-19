@@ -26,11 +26,6 @@ final class Indexer extends SPIIndexer
     private $documentBuilder;
 
     /**
-     * @var \Cabbage\Core\Indexer\DocumentIndexResolver
-     */
-    private $documentIndexResolver;
-
-    /**
      * @var \Cabbage\Core\Indexer\DocumentSerializer
      */
     private $documentSerializer;
@@ -43,20 +38,17 @@ final class Indexer extends SPIIndexer
     /**
      * @param \Cabbage\Core\Indexer\Gateway $gateway
      * @param \Cabbage\Core\Indexer\DocumentBuilder $documentBuilder
-     * @param \Cabbage\Core\Indexer\DocumentIndexResolver $documentIndexResolver
      * @param \Cabbage\Core\Indexer\DocumentSerializer $documentSerializer
      * @param \Cabbage\Core\Cluster $cluster
      */
     public function __construct(
         Gateway $gateway,
         DocumentBuilder $documentBuilder,
-        DocumentIndexResolver $documentIndexResolver,
         DocumentSerializer $documentSerializer,
         Cluster $cluster
     ) {
         $this->gateway = $gateway;
         $this->documentBuilder = $documentBuilder;
-        $this->documentIndexResolver = $documentIndexResolver;
         $this->documentSerializer = $documentSerializer;
         $this->cluster = $cluster;
     }
