@@ -129,11 +129,10 @@ final class DocumentBuilder
         $contentInfo = $content->versionInfo->contentInfo;
         $type = $this->typeHandler->load($contentInfo->contentTypeId);
         $locations = $this->locationHandler->loadLocationsByContent($contentInfo->id);
-        $contentDocuments = [];
-        $locationDocuments = [];
         $commonFields = $this->getCommonFields($content, $type, $locations);
         $contentFields = $this->getContentFields($content, $type, $locations);
         $locationFieldsById = [];
+        $documentsGrouped = [[]];
 
         foreach ($locations as $location) {
             $locationFieldsById[$location->id] = $this->getLocationFields($location, $content, $type);
@@ -141,43 +140,95 @@ final class DocumentBuilder
 
         foreach ($content->versionInfo->languageCodes as $languageCode) {
             $translationCommonFields = $this->getTranslationCommonFields($languageCode, $content, $type, $locations);
-            $translationContentFields = $this->getTranslationContentFields($content, $type, $locations);
-            $isMainTranslation = $contentInfo->mainLanguageCode === $languageCode;
 
-            foreach ($locations as $location) {
-                $translationLocationFields = $this->getTranslationLocationFields($languageCode, $location, $content, $type);
-
-                $locationDocuments[] = new Document(
-                    $this->idGenerator->generateLocationDocumentId($location),
-                    self::TypeLocation,
-                    $languageCode,
-                    $isMainTranslation,
-                    (bool)$contentInfo->alwaysAvailable,
-                    array_merge(
-                        $commonFields,
-                        $locationFieldsById[$location->id],
-                        $translationCommonFields,
-                        $translationLocationFields
-                    )
-                );
-            }
-
-            $contentDocuments[] = new Document(
-                $this->idGenerator->generateContentDocumentId($content),
-                self::TypeContent,
+            $documentsGrouped[] = $this->getLocationDocuments(
+                $content,
+                $type,
                 $languageCode,
-                $isMainTranslation,
-                (bool)$contentInfo->alwaysAvailable,
-                array_merge(
+                $locationFieldsById,
+                [
+                    $commonFields,
+                    $translationCommonFields
+                ]
+            );
+
+            $documentsGrouped[] = $this->getContentDocuments(
+                $content,
+                $languageCode,
+                [
                     $commonFields,
                     $contentFields,
                     $translationCommonFields,
-                    $translationContentFields
-                )
+                    $this->getTranslationContentFields($content, $type, $locations)
+                ]
             );
         }
 
-        return array_merge($contentDocuments, $locationDocuments);
+        return array_merge(...$documentsGrouped);
+    }
+
+    private function getContentDocuments(SPIContent $content, string $languageCode, array $fieldsGrouped): array
+    {
+        $contentInfo = $content->versionInfo->contentInfo;
+
+        return [
+            new Document(
+                $this->idGenerator->generateContentDocumentId($content),
+                self::TypeContent,
+                $languageCode,
+                $contentInfo->mainLanguageCode === $languageCode,
+                (bool)$contentInfo->alwaysAvailable,
+                array_merge(...$fieldsGrouped)
+            )
+        ];
+    }
+
+    private function getLocationDocuments(
+        SPIContent $content,
+        Type $type,
+        string $languageCode,
+        array $locationFieldsById,
+        array $fieldsGrouped
+    ): array {
+        $contentInfo = $content->versionInfo->contentInfo;
+        $locations = $this->locationHandler->loadLocationsByContent($contentInfo->id);
+        $fields = array_merge(...$fieldsGrouped);
+        $documentsGrouped = [[]];
+
+        foreach ($locations as $location) {
+            $documentsGrouped[] = $this->getSingleLocationDocuments(
+                $location,
+                $content,
+                $languageCode,
+                [
+                    $fields,
+                    $locationFieldsById[$location->id],
+                    $this->getTranslationLocationFields($languageCode, $location, $content, $type)
+                ]
+            );
+        }
+
+        return array_merge(...$documentsGrouped);
+    }
+
+    private function getSingleLocationDocuments(
+        SPILocation $location,
+        SPIContent $content,
+        string $languageCode,
+        array $fieldsGrouped
+    ): array {
+        $contentInfo = $content->versionInfo->contentInfo;
+
+        return [
+            new Document(
+                $this->idGenerator->generateLocationDocumentId($location),
+                self::TypeLocation,
+                $languageCode,
+                $contentInfo->mainLanguageCode === $languageCode,
+                (bool)$contentInfo->alwaysAvailable,
+                array_merge(...$fieldsGrouped)
+            ),
+        ];
     }
 
     private function getCommonFields(SPIContent $content, Type $type, array $locations): array
