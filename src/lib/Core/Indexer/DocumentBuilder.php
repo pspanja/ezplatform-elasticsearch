@@ -155,21 +155,17 @@ final class DocumentBuilder
                 $type,
                 $languageCode,
                 $locationFieldsById,
-                [
-                    $commonFields,
-                    $translationCommonFields
-                ]
+                $commonFields,
+                $translationCommonFields
             );
 
             $documentsGrouped[] = $this->getContentDocuments(
                 $content,
                 $languageCode,
-                [
-                    $commonFields,
-                    $contentFields,
-                    $translationCommonFields,
-                    $this->getTranslationContentFields($content, $type, $locations)
-                ]
+                $commonFields,
+                $contentFields,
+                $translationCommonFields,
+                $this->getTranslationContentFields($content, $type, $locations)
             );
         }
 
@@ -191,7 +187,7 @@ final class DocumentBuilder
         return $map;
     }
 
-    private function getContentDocuments(SPIContent $content, string $languageCode, array $fieldsGrouped): array
+    private function getContentDocuments(SPIContent $content, string $languageCode, ...$fields): array
     {
         $contentInfo = $content->versionInfo->contentInfo;
         $documents = [];
@@ -202,7 +198,7 @@ final class DocumentBuilder
                 $this->configuration->getIndexForMainTranslations(),
                 array_merge(
                     $this->getPlacementFields(false, true),
-                    ...$fieldsGrouped
+                    ...$fields
                 )
             );
         }
@@ -214,7 +210,7 @@ final class DocumentBuilder
             $this->getIndexForLanguage($languageCode),
             array_merge(
                 $this->getPlacementFields(true, $hasSharedMainTranslationPlacement),
-                ...$fieldsGrouped
+                ...$fields
             )
         );
 
@@ -242,11 +238,10 @@ final class DocumentBuilder
         Type $type,
         string $languageCode,
         array $locationFieldsById,
-        array $fieldsGrouped
+        ...$fields
     ): array {
         $contentInfo = $content->versionInfo->contentInfo;
         $locations = $this->locationHandler->loadLocationsByContent($contentInfo->id);
-        $fields = array_merge(...$fieldsGrouped);
         $documentsGrouped = [[]];
 
         foreach ($locations as $location) {
@@ -254,11 +249,9 @@ final class DocumentBuilder
                 $location,
                 $content,
                 $languageCode,
-                [
-                    $fields,
-                    $locationFieldsById[$location->id],
-                    $this->getTranslationLocationFields($languageCode, $location, $content, $type)
-                ]
+                array_merge(...$fields),
+                $locationFieldsById[$location->id],
+                $this->getTranslationLocationFields($languageCode, $location, $content, $type)
             );
         }
 
@@ -269,7 +262,7 @@ final class DocumentBuilder
         SPILocation $location,
         SPIContent $content,
         string $languageCode,
-        array $fieldsGrouped
+        ...$fields
     ): array {
         $contentInfo = $content->versionInfo->contentInfo;
         $documents = [];
@@ -280,7 +273,7 @@ final class DocumentBuilder
             $documents[] = new Document(
                 $this->idGenerator->generateLocationDocumentId($location),
                 $this->configuration->getIndexForMainTranslations(),
-                array_merge($placementFields, ...$fieldsGrouped)
+                array_merge($placementFields, ...$fields)
             );
         }
 
@@ -291,7 +284,7 @@ final class DocumentBuilder
             $this->getIndexForLanguage($languageCode),
             array_merge(
                 $this->getPlacementFields(true, $hasSharedMainTranslationPlacement),
-                ...$fieldsGrouped
+                ...$fields
             )
         );
 
