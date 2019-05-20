@@ -192,24 +192,25 @@ final class DocumentBuilder
         $contentInfo = $content->versionInfo->contentInfo;
         $documents = [];
 
-        if ($this->hasDedicatedMainTranslationPlacement($contentInfo, $languageCode)) {
+        if ($this->inDedicatedMainTranslationIndex($contentInfo, $languageCode)) {
             $documents[] = new Document(
                 $this->idGenerator->generateContentDocumentId($content),
                 $this->configuration->getIndexForMainTranslations(),
                 array_merge(
-                    $this->getPlacementFields(false, true),
+                    $this->getTranslationIndexFields(false, true),
                     ...$fields
                 )
             );
         }
 
-        $hasSharedMainTranslationPlacement = $this->hasSharedMainTranslationPlacement($contentInfo, $languageCode);
-
         $documents[] = new Document(
             $this->idGenerator->generateContentDocumentId($content),
             $this->getIndexForLanguage($languageCode),
             array_merge(
-                $this->getPlacementFields(true, $hasSharedMainTranslationPlacement),
+                $this->getTranslationIndexFields(
+                    true,
+                    $this->inSharedMainTranslationIndex($contentInfo, $languageCode)
+                ),
                 ...$fields
             )
         );
@@ -217,17 +218,17 @@ final class DocumentBuilder
         return $documents;
     }
 
-    private function getPlacementFields(bool $isRegularTranslationPlacement, bool $isMainTranslationPlacement): array
+    private function getTranslationIndexFields(bool $regularTranslationIndex, bool $mainTranslationIndex): array
     {
         return [
             new Field(
-                'document_translation_placement_regular',
-                $isRegularTranslationPlacement,
+                'document_translation_index_regular',
+                $regularTranslationIndex,
                 new Boolean()
             ),
             new Field(
-                'document_translation_placement_main',
-                $isMainTranslationPlacement,
+                'document_translation_index_main',
+                $mainTranslationIndex,
                 new Boolean()
             ),
         ];
@@ -267,23 +268,25 @@ final class DocumentBuilder
         $contentInfo = $content->versionInfo->contentInfo;
         $documents = [];
 
-        if ($this->hasDedicatedMainTranslationPlacement($contentInfo, $languageCode)) {
-            $placementFields = $this->getPlacementFields(false, true);
-
+        if ($this->inDedicatedMainTranslationIndex($contentInfo, $languageCode)) {
             $documents[] = new Document(
                 $this->idGenerator->generateLocationDocumentId($location),
                 $this->configuration->getIndexForMainTranslations(),
-                array_merge($placementFields, ...$fields)
+                array_merge(
+                    $this->getTranslationIndexFields(false, true),
+                    ...$fields
+                )
             );
         }
-
-        $hasSharedMainTranslationPlacement = $this->hasSharedMainTranslationPlacement($contentInfo, $languageCode);
 
         $documents[] = new Document(
             $this->idGenerator->generateLocationDocumentId($location),
             $this->getIndexForLanguage($languageCode),
             array_merge(
-                $this->getPlacementFields(true, $hasSharedMainTranslationPlacement),
+                $this->getTranslationIndexFields(
+                    true,
+                    $this->inSharedMainTranslationIndex($contentInfo, $languageCode)
+                ),
                 ...$fields
             )
         );
@@ -291,7 +294,7 @@ final class DocumentBuilder
         return $documents;
     }
 
-    private function hasDedicatedMainTranslationPlacement(ContentInfo $contentInfo, string $languageCode): bool
+    private function inDedicatedMainTranslationIndex(ContentInfo $contentInfo, string $languageCode): bool
     {
         if ($contentInfo->mainLanguageCode !== $languageCode) {
             return false;
@@ -306,7 +309,7 @@ final class DocumentBuilder
         return $mainTranslationIndex !== $this->getIndexForLanguage($languageCode);
     }
 
-    private function hasSharedMainTranslationPlacement(ContentInfo $contentInfo, string $languageCode): bool
+    private function inSharedMainTranslationIndex(ContentInfo $contentInfo, string $languageCode): bool
     {
         if ($contentInfo->mainLanguageCode !== $languageCode) {
             return false;
