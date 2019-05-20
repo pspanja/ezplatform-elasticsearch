@@ -165,7 +165,7 @@ final class DocumentBuilder
                 $commonFields,
                 $contentFields,
                 $translationCommonFields,
-                $this->getTranslationContentFields($content, $type, $locations)
+                $this->getTranslationContentFields($languageCode, $content, $type, $locations)
             );
         }
 
@@ -375,10 +375,10 @@ final class DocumentBuilder
         return [];
     }
 
-    private function getTranslationContentFields(SPIContent $content, Type $type, array $locations): array
+    private function getTranslationContentFields(string $languageCode, SPIContent $content, Type $type, array $locations): array
     {
-        if ($this->translationContentFieldBuilder->accept($content, $type, $locations)) {
-            return $this->translationContentFieldBuilder->build($content, $type, $locations);
+        if ($this->translationContentFieldBuilder->accept($languageCode, $content, $type, $locations)) {
+            return $this->translationContentFieldBuilder->build($languageCode, $content, $type, $locations);
         }
 
         return [];

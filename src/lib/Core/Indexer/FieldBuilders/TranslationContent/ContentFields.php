@@ -42,18 +42,22 @@ final class ContentFields extends TranslationContent
         $this->nameGenerator = $nameGenerator;
     }
 
-    public function accept(SPIContent $content, Type $type, array $locations): bool
+    public function accept(string $languageCode, SPIContent $content, Type $type, array $locations): bool
     {
         return true;
     }
 
-    public function build(SPIContent $content, Type $type, array $locations): array
+    public function build(string $languageCode, SPIContent $content, Type $type, array $locations): array
     {
         $documentFieldGrouped = [[]];
 
         $fieldDefinitionMapById = $this->mapFieldDefinitionsById($type);
 
         foreach ($content->fields as $field) {
+            if ($field->languageCode !== $languageCode) {
+                continue;
+            }
+
             $fieldDefinition = $this->getFieldDefinition($field, $fieldDefinitionMapById);
             $documentFieldGrouped[] = $this->buildFields($field, $fieldDefinition);
         }

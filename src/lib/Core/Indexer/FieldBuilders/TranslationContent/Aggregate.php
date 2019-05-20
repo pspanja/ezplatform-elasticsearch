@@ -33,18 +33,18 @@ final class Aggregate extends TranslationContent
         $this->builders[] = $builder;
     }
 
-    public function accept(SPIContent $content, Type $type, array $locations): bool
+    public function accept(string $languageCode, SPIContent $content, Type $type, array $locations): bool
     {
         return true;
     }
 
-    public function build(SPIContent $content, Type $type, array $locations): array
+    public function build(string $languageCode, SPIContent $content, Type $type, array $locations): array
     {
         $fieldsGrouped = [[]];
 
         foreach ($this->builders as $builder) {
-            if ($builder->accept($content, $type, $locations)) {
-                $fieldsGrouped[] = $builder->build($content, $type, $locations);
+            if ($builder->accept($languageCode, $content, $type, $locations)) {
+                $fieldsGrouped[] = $builder->build($languageCode, $content, $type, $locations);
             }
         }
 

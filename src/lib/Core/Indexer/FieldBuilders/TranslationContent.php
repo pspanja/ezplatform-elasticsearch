@@ -13,20 +13,22 @@ use eZ\Publish\SPI\Persistence\Content\Type;
 abstract class TranslationContent
 {
     /**
+     * @param string $languageCode
      * @param \eZ\Publish\SPI\Persistence\Content $content
      * @param \eZ\Publish\SPI\Persistence\Content\Type $type
      * @param \eZ\Publish\SPI\Persistence\Content\Location[] $locations
      *
      * @return bool
      */
-    abstract public function accept(SPIContent $content, Type $type, array $locations): bool;
+    abstract public function accept(string $languageCode, SPIContent $content, Type $type, array $locations): bool;
 
     /**
+     * @param string $languageCode
      * @param \eZ\Publish\SPI\Persistence\Content $content
      * @param \eZ\Publish\SPI\Persistence\Content\Type $type
      * @param \eZ\Publish\SPI\Persistence\Content\Location[] $locations
      *
      * @return \Cabbage\SPI\Document\Field[]
      */
-    abstract public function build(SPIContent $content, Type $type, array $locations): array;
+    abstract public function build(string $languageCode, SPIContent $content, Type $type, array $locations): array;
 }
