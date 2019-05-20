@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cabbage\Core;
 
 use Cabbage\Core\Indexer\DocumentBuilder;
-use Cabbage\Core\Indexer\DocumentIndexResolver;
 use Cabbage\Core\Indexer\DocumentSerializer;
 use Cabbage\Core\Indexer\Gateway;
 use Cabbage\SPI\Document;
