@@ -85,7 +85,7 @@ final class Indexer extends SPIIndexer
         $payload = '';
 
         foreach ($contentItems as $content) {
-            $payload .= $this->getIndexingPayloadForContent($content);
+            $payload .= $this->getIndexPayload($content);
         }
 
         $this->gateway->index(
@@ -101,38 +101,16 @@ final class Indexer extends SPIIndexer
      *
      * @return string
      */
-    private function getIndexingPayloadForContent(Content $content): string
+    private function getIndexPayload(Content $content): string
     {
         $payload = '';
         $documents = $this->documentBuilder->build($content);
 
         foreach ($documents as $document) {
-            $actionAndMetaData = $this->getActionAndMetaData($document);
-            $serializedDocument = $this->documentSerializer->serialize($document);
-
-            $payload .= "{$actionAndMetaData}\n{$serializedDocument}\n";
+            $payload .= $this->documentSerializer->serialize($document);
         }
 
         return $payload;
-    }
-
-    /**
-     * Generate action and metadata for the indexed Document.
-     *
-     * @param \Cabbage\SPI\Document $document
-     *
-     * @return string
-     */
-    private function getActionAndMetaData(Document $document): string
-    {
-        $data = [
-            'index' => [
-                '_index' => $document->index,
-                '_id' => $document->id,
-            ],
-        ];
-
-        return json_encode($data, JSON_THROW_ON_ERROR);
     }
 
     public function flush(): void

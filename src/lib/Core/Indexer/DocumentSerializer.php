@@ -53,6 +53,28 @@ final class DocumentSerializer
             $data[$fieldName] = $fieldValue;
         }
 
+        $actionAndMetaData = $this->getActionAndMetaData($document);
+        $payload = json_encode($data, JSON_THROW_ON_ERROR);
+
+        return $actionAndMetaData . "\n" . $payload . "\n";
+    }
+
+    /**
+     * Generate action and metadata for the indexed Document.
+     *
+     * @param \Cabbage\SPI\Document $document
+     *
+     * @return string
+     */
+    private function getActionAndMetaData(Document $document): string
+    {
+        $data = [
+            'index' => [
+                '_index' => $document->index,
+                '_id' => $document->id,
+            ],
+        ];
+
         return json_encode($data, JSON_THROW_ON_ERROR);
     }
 }
